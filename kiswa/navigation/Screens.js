@@ -20,6 +20,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 
+//drivers
+import Drivers from "../screens/Asmaa/Drivers";
+import AdminHome from "../screens/Asmaa/AdminHome";
+
 const { width } = Dimensions.get("screen");
 
 const Stack = createStackNavigator();
@@ -213,6 +217,10 @@ export default function OnboardingStack(props) {
       />
       <Stack.Screen name="App" component={AppStack} />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Drivers" component={Drivers} />
+      <Stack.Screen name="AdminHome" component={AdminHome} />
+
+
 
     </Stack.Navigator>
   );
