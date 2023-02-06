@@ -34,17 +34,17 @@ class Onboarding extends React.Component {
               <Block style={styles.title}>
                 <Block>
                   <Text color="white" size={60}>
-                    Design
+                    Kiswa
                   </Text>
                 </Block>
                 <Block>
                   <Text color="white" size={60}>
-                    System
+                    
                   </Text>
                 </Block>
                 <Block style={styles.subTitle}>
                   <Text color="white" size={16}>
-                    Fully coded React Native components.
+                  First cloths donation App in Qatar!
                   </Text>
                 </Block>
               </Block>
@@ -52,7 +52,7 @@ class Onboarding extends React.Component {
                 <Button
                   style={styles.button}
                   color={argonTheme.COLORS.SECONDARY}
-                  onPress={() => navigation.navigate("App")}
+                  onPress={() => navigation.navigate("Login")}
                   textStyle={{ color: argonTheme.COLORS.BLACK }}
                 >
                   Get Started
