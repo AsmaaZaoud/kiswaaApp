@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -12,10 +12,44 @@ import { Block, Checkbox, Text, theme } from "galio-framework";
 import { Button, Icon, Input } from "../../components";
 import { Images, argonTheme } from "../../constants";
 
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../config";
+
+import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import { db } from "../../config";
+
 const { width, height } = Dimensions.get("screen");
 
-class Login extends React.Component {
-  render() {
+const Login = ({navigation}) => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+    const [signedIn, setSignedIn] = useState(false);
+
+
+ let user = auth?.currentUser?.email;
+  console.log('user logged in: ', user)
+
+   const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("Logged in");
+        console.log('handle login user: ', user)
+        setSignedIn(true);
+        
+        navigation.replace("App");
+        
+      })
+      .catch((error) => {
+        console.log(error.message);
+        alert(error.message);
+
+        setSignedIn(false);
+      });
+  };
+  
     return (
       <Block flex middle>
         <StatusBar hidden />
@@ -41,6 +75,8 @@ class Login extends React.Component {
                       <Input
                         borderless
                         placeholder="Email"
+                         value={email}
+                        onChangeText={setEmail}
                         iconContent={
                           <Icon
                             size={16}
@@ -57,6 +93,8 @@ class Login extends React.Component {
                         password
                         borderless
                         placeholder="Password"
+                         value={password}
+                        onChangeText={setPassword}
                         iconContent={
                           <Icon
                             size={16}
@@ -71,7 +109,11 @@ class Login extends React.Component {
                     </Block>
                    
                     <Block middle>
-                      <Button color="primary" style={styles.createButton}>
+                      <Button 
+                      color="primary" 
+                      style={styles.createButton} 
+                      onPress={handleLogin}
+                      >
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Log In
                         </Text>
@@ -85,7 +127,7 @@ class Login extends React.Component {
         </ImageBackground>
       </Block>
     );
-  }
+  
 }
 
 const styles = StyleSheet.create({
