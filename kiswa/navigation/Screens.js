@@ -23,6 +23,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 //drivers
 import Drivers from "../screens/Asmaa/Drivers";
 import AdminHome from "../screens/Asmaa/AdminHome";
+import DriverHome from "../screens/Asmaa/DriverHome";
 
 const { width } = Dimensions.get("screen");
 
@@ -219,6 +220,8 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Drivers" component={Drivers} />
       <Stack.Screen name="AdminHome" component={AdminHome} />
+      <Stack.Screen name="DriverHome" component={DriverHome} />
+
 
 
 
