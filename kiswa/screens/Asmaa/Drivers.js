@@ -8,11 +8,16 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
+import React, { useState } from 'react'
+import {   View, Alert, TextInput, FlatList, TouchableOpacity , Table} from 'react-native'
+import { DataTable } from 'react-native-paper';
+
 //argon
 import { Images, argonTheme, articles } from "../../constants/";
 
-import { Card } from "../../components"
-import React from "react";
+import { Button, Card, Header } from "../../components"
+
+import {Icon,AntDesign} from "react-native-vector-icons"
 
 const { width } = Dimensions.get("screen");
 
@@ -38,69 +43,209 @@ const categories = [
 ];
 
 const Drivers = ({navigation}) => {
+  const data = [
+    {
+      id: 1,
+      icon: 'https://bootdey.com/img/Content/avatar/avatar1.png',
+      description: 'Rajo ',
+    },
+    {
+      id: 2,
+      icon: 'https://bootdey.com/img/Content/avatar/avatar2.png',
+      description: 'User 2',
+    },
+    {
+      id: 3,
+      icon: 'https://bootdey.com/img/Content/avatar/avatar3.png',
+      description: 'User 3',
+    },
+    {
+      id: 4,
+      icon: 'https://bootdey.com/img/Content/avatar/avatar4.png',
+      description: 'User 4',
+    },
+    {
+      id: 5,
+      icon: 'https://bootdey.com/img/Content/avatar/avatar5.png',
+      description: 'User 5',
+    },
+    {
+      id: 6,
+      icon: 'https://bootdey.com/img/Content/avatar/avatar6.png',
+      description: 'User 6',
+    },
+    {
+      id: 7,
+      icon: 'https://bootdey.com/img/Content/avatar/avatar1.png',
+      description: 'User 7',
+    },
+    {
+      id: 8,
+      icon: 'https://bootdey.com/img/Content/avatar/avatar2.png',
+      description: 'User 8',
+    },
+    {
+      id: 9,
+      icon: 'https://bootdey.com/img/Content/avatar/avatar3.png',
+      description: 'User 9',
+    },
+  ]
+
+   const [results, setResults] = useState(data)
+  const [query, setQuery] = useState()
+
+  const showAlert = () => {
+    Alert.alert('Alert', 'Button pressed ')
+  }
 
     return (
-      <Block flex center>
-            <Text>Drivers</Text>
+      <Block flex >
+            <View style={styles.container}> 
+      
+    {/* <Block right>
+            <Button color="success"  style={styles.button}>PRIMARY</Button>
+          </Block> */}
+
+
+ <DataTable>
+  <Block style={styles.head}>
+    <View style={{flexDirection:"row"}}> 
+      <AntDesign name="user" size={40}/>
+          <Text style={styles.title}>Drivers</Text>
+          </View>
+         
+           <View style={styles.inputContainer}>
+         
+          <TextInput
+            style={styles.inputs}
+            placeholder="Search..."
+            underlineColorAndroid="transparent"
+            //onChangeText={q => setQuery({ q })}
+          />
+        </View>
+        </Block>
+        <DataTable.Header >
+          <DataTable.Title style={{fontSize:20}}>Name</DataTable.Title>
+          <DataTable.Title>Email</DataTable.Title>
+          <DataTable.Title numeric>Age</DataTable.Title>
+        </DataTable.Header>
+
+        <DataTable.Row>
+          <DataTable.Cell>John</DataTable.Cell>
+          <DataTable.Cell>john@kindacode.com</DataTable.Cell>
+          <DataTable.Cell numeric>33</DataTable.Cell>
+        </DataTable.Row>
+
+        <DataTable.Row>
+          <DataTable.Cell>Bob</DataTable.Cell>
+          <DataTable.Cell>test@test.com</DataTable.Cell>
+          <DataTable.Cell numeric>105</DataTable.Cell>
+        </DataTable.Row>
+
+        <DataTable.Row>
+          <DataTable.Cell>Mei</DataTable.Cell>
+          <DataTable.Cell>mei@kindacode.com</DataTable.Cell>
+          <DataTable.Cell numeric>23</DataTable.Cell>
+        </DataTable.Row>
+
+      </DataTable>
+     
+      {/* <FlatList
+        style={styles.notificationList}
+        data={results}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity onPress={showAlert} style={styles.notificationBox}>
+              <Image style={styles.image} source={{ uri: item.icon }} />
+              <Text style={styles.name}>{item.description}</Text>
+            </TouchableOpacity>
+          )
+        }}
+      /> */}
+    </View>
       </Block>
     );
   
 }
 
 const styles = StyleSheet.create({
-  title: {
-    paddingBottom: theme.SIZES.BASE,
-    paddingHorizontal: theme.SIZES.BASE * 2,
-    marginTop: 22,
-    color: argonTheme.COLORS.HEADER,
+  container: {
+    flex: 1,
+    backgroundColor: '#EBEBEB',
+    paddingTop: 50,
+    paddingHorizontal: 30,
   },
-  group: {
-    paddingTop: theme.SIZES.BASE,
+  head:{
+    flexDirection:"row",
+    borderWidth:2,
+    padding:5,
+    justifyContent:"space-between"
   },
-  albumThumb: {
-    borderRadius: 4,
-    marginVertical: 4,
-    alignSelf: "center",
-    width: thumbMeasure,
-    height: thumbMeasure,
+  title:{
+    fontSize:30,
+    marginLeft:20,
+    textAlign:"left"
+
+
   },
-  category: {
-    backgroundColor: theme.COLORS.WHITE,
-    marginVertical: theme.SIZES.BASE / 2,
-    borderWidth: 0,
+  formContent: {
+    flexDirection: 'row',
+    marginTop: 30,
   },
-  categoryTitle: {
-    height: "100%",
-    paddingHorizontal: theme.SIZES.BASE,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
+  inputContainer: {
+    borderBottomColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    borderBottomWidth: 1,
+    height: 45,
+    alignItems: 'right',
+    width:'50%',
+
+    margin: 5,
   },
-  imageBlock: {
-    overflow: "hidden",
-    borderRadius: 4,
+  icon: {
+    width: 30,
+    height: 30,
   },
-  productItem: {
-    width: cardWidth - theme.SIZES.BASE * 2,
-    marginHorizontal: theme.SIZES.BASE,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 7 },
-    shadowRadius: 10,
-    shadowOpacity: 0.2,
+  iconBtnSearch: {
+    alignSelf: 'center',
   },
-  productImage: {
-    width: cardWidth - theme.SIZES.BASE,
-    height: cardWidth - theme.SIZES.BASE,
-    borderRadius: 3,
+  inputs: {
+    height: 45,
+    marginLeft: 16,
+    borderBottomColor: '#FFFFFF',
+    //flex: 1,
   },
-  productPrice: {
-    paddingTop: theme.SIZES.BASE,
-    paddingBottom: theme.SIZES.BASE / 2,
+  inputIcon: {
+    marginLeft: 15,
+    justifyContent: 'center',
   },
-  productDescription: {
-    paddingTop: theme.SIZES.BASE,
-    // paddingBottom: theme.SIZES.BASE * 2,
+  notificationList: {
+    marginTop: 20,
+    padding: 10,
   },
-});
+  notificationBox: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginTop: 5,
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
+    borderRadius: 10,
+  },
+  image: {
+    width: 45,
+    height: 45,
+    borderRadius: 20,
+    marginLeft: 20,
+  },
+  name: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000000',
+    marginLeft: 10,
+    alignSelf: 'center',
+  },
+})
 
 export default Drivers;
