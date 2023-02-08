@@ -4,7 +4,7 @@ import {
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -125,7 +125,7 @@ class Register extends React.Component {
                     <Block row width={width * 0.75}>
                       <Checkbox
                         checkboxStyle={{
-                          borderWidth: 3
+                          borderWidth: 3,
                         }}
                         color={argonTheme.COLORS.PRIMARY}
                         label="I agree with the"
@@ -135,7 +135,7 @@ class Register extends React.Component {
                         color="transparent"
                         textStyle={{
                           color: argonTheme.COLORS.PRIMARY,
-                          fontSize: 14
+                          fontSize: 14,
                         }}
                       >
                         Privacy Policy
@@ -168,17 +168,17 @@ const styles = StyleSheet.create({
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
-      height: 4
+      height: 4,
     },
     shadowRadius: 8,
     shadowOpacity: 0.1,
     elevation: 1,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   socialConnect: {
     backgroundColor: argonTheme.COLORS.WHITE,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: "#8898AA"
+    borderColor: "#8898AA",
   },
   socialButtons: {
     width: 120,
@@ -187,29 +187,29 @@ const styles = StyleSheet.create({
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
-      height: 4
+      height: 4,
     },
     shadowRadius: 8,
     shadowOpacity: 0.1,
-    elevation: 1
+    elevation: 1,
   },
   socialTextButtons: {
     color: argonTheme.COLORS.PRIMARY,
     fontWeight: "800",
-    fontSize: 14
+    fontSize: 14,
   },
   inputIcons: {
-    marginRight: 12
+    marginRight: 12,
   },
   passwordCheck: {
     paddingLeft: 15,
     paddingTop: 13,
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   createButton: {
     width: width * 0.5,
-    marginTop: 25
-  }
+    marginTop: 25,
+  },
 });
 
 export default Register;

@@ -20,6 +20,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "../screens/Login";
+import RegisterFamily from "../screens/Meimouna/RegisterFamily";
 
 const { width } = Dimensions.get("screen");
 
@@ -214,7 +215,8 @@ export default function OnboardingStack(props) {
       />
       <Stack.Screen name="App" component={AppStack} />
       <Stack.Screen name="Login" component={Login} />
-
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
     </Stack.Navigator>
   );
 }

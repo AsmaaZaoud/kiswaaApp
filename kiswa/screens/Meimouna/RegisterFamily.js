@@ -6,46 +6,152 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   Image,
+  View,
+  TextInput,
+  Pressable,
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
-import { Button, Icon, Input } from "../components";
-import { Images, argonTheme } from "../constants";
+import { Button, Icon, Input } from "../../components";
+import { Images, argonTheme } from "../../constants";
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../config";
 
-import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
-import { db } from "../config";
+import {
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+  getDocs,
+  getDoc,
+  query,
+  where,
+  deleteDoc,
+  updateDoc,
+  deleteField,
+} from "firebase/firestore";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withDelay,
+} from "react-native-reanimated";
+
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
+import { useNavigation } from "@react-navigation/native";
+// import validator from "validator";
+
+import { auth } from "../../config";
+import { db } from "../../config";
+
+// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const { width, height } = Dimensions.get("screen");
 
-const Login = ({ navigation }) => {
-  const [email, setEmail] = useState();
+export default function RegisterFamily() {
+  const navigation = useNavigation();
+  const imagePosition = useSharedValue(0);
+  const male = ["male1.jpeg", "male2.jpeg", "male3.jpeg"];
+  const female = ["female1.jpeg", "female2.jpeg", "female3.jpeg"];
+
+  const [url, setUrl] = useState("");
+
+  const [emailErro, setEmailError] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [nameErro, setNameError] = useState("");
+  const [name, setName] = useState("");
+
+  const [passErro, setPassError] = useState("");
   const [password, setPassword] = useState();
-  const [signedIn, setSignedIn] = useState(false);
 
-  //let user = auth?.currentUser?.email;
-  //console.log('user logged in: ', user)
+  const [numberErro, setNumberError] = useState("");
+  const [number, setNumber] = useState("");
 
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
+  const handleRegister = () => {
+    createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
-        console.log("Logged in");
-        //  console.log('handle login user: ', user)
-        setSignedIn(true);
-
-        navigation.replace("App");
+        console.log("registend done");
+        // navigation.navigate("Home_Navg");
+        add();
+      })
+      .catch((error) => console.log(error.message));
+    //add();
+  };
+  const add = async () => {
+    const docRef = doc(db, "Customer", email);
+    await setDoc(docRef, {
+      name: name,
+      email: email,
+      dob: new Date(),
+      gender: "",
+      image:
+        "https://as2.ftcdn.net/v2/jpg/02/45/28/17/1000_F_245281721_2uYVgLSFnaH9AlZ1WWpkZavIcEEGBU84.jpg",
+      location: "",
+      phone: number,
+    })
+      .then(() => {
+        console.log("data submitted");
       })
       .catch((error) => {
         console.log(error.message);
-        alert(error.message);
-
-        setSignedIn(false);
       });
+  };
+
+  const register = async () => {
+    if (validator.isEmail(email)) {
+      setEmailError("");
+    } else {
+      setEmailError("The email is not vaildate");
+    }
+
+    if (
+      validator.isStrongPassword(pass, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    ) {
+      setPassError("");
+    } else {
+      setPassError(
+        "Enter A Password A Strong Password Must Be 8 Chars Use A Mix Of Lowercase,Uppercase,Numbers and Symbols"
+      );
+    }
+
+    if (name.length != 0) {
+      setNameError("");
+    } else {
+      setNameError("Enter Your Name");
+    }
+
+    if (number.length === 8) {
+      setNumberError("");
+    } else {
+      setNumberError("Enter Valid Number");
+    }
+
+    if (
+      validator.isEmail(email) &&
+      validator.isStrongPassword(pass, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      }) &&
+      name.length != 0 &&
+      number.length === 8
+    ) {
+      console.log("okay");
+      handleRegister();
+    }
   };
 
   return (
@@ -107,30 +213,10 @@ const Login = ({ navigation }) => {
                     <Button
                       color="primary"
                       style={styles.createButton}
-                      onPress={handleLogin}
+                      // onPress={navigation.navigate("RegisterFamily")}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Log In
-                      </Text>
-                    </Button>
-                    <Text>Or</Text>
-                    <Button
-                      color="primary"
-                      style={styles.createButton}
-                      onPress={() => navigation.navigate("RegisterFamily")}
-                    >
-                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Sign Up
-                      </Text>
-                    </Button>
-                    <Text>Or</Text>
-                    <Button
-                      color="primary"
-                      style={styles.createButton}
-                      onPress={() => navigation.navigate("Register")}
-                    >
-                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Sign Uppp
+                        Register
                       </Text>
                     </Button>
                   </Block>
@@ -142,7 +228,7 @@ const Login = ({ navigation }) => {
       </ImageBackground>
     </Block>
   );
-};
+}
 
 const styles = StyleSheet.create({
   registerContainer: {
@@ -196,5 +282,3 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
 });
-
-export default Login;
