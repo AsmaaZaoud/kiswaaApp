@@ -25,6 +25,9 @@ import Drivers from "../screens/Asmaa/Drivers";
 import AdminHome from "../screens/Asmaa/AdminHome";
 import DriverHome from "../screens/Asmaa/DriverHome";
 
+//invent
+import InventoryClerks from "../screens/Asmaa/InventoryClerks";
+
 const { width } = Dimensions.get("screen");
 
 const Stack = createStackNavigator();
@@ -221,6 +224,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="Drivers" component={Drivers} />
       <Stack.Screen name="AdminHome" component={AdminHome} />
       <Stack.Screen name="DriverHome" component={DriverHome} />
+      <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
 
 
 
