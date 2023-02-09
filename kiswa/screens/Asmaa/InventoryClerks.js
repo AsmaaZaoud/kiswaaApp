@@ -17,78 +17,49 @@ import { Images, argonTheme, articles } from "../../constants/";
 
 import { Button, Card, Header } from "../../components"
 
-import {Icon,AntDesign} from "react-native-vector-icons"
+import {Icon,AntDesign, FontAwesome} from "react-native-vector-icons"
 
 const { width } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
-const categories = [
-  {
-    title: "Music Album",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?fit=crop&w=840&q=80",
-    price: "$125",
-  },
-  {
-    title: "Events",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1543747579-795b9c2c3ada?fit=crop&w=840&q=80",
-    price: "$35",
-  },
-];
+
 
 const InventoryClerks = ({navigation}) => {
   const data = [
-    {
-      id: 1,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar1.png',
-      description: 'Rajo ',
-    },
+   
     {
       id: 2,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar2.png',
-      description: 'User 2',
+      image: 'https://bootdey.com/img/Content/avatar/avatar2.png',
+      name: 'Komar',
     },
     {
       id: 3,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-      description: 'User 3',
+      image: 'https://bootdey.com/img/Content/avatar/avatar3.png',
+      name: 'Sanji',
     },
     {
       id: 4,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar4.png',
-      description: 'User 4',
+      image: 'https://bootdey.com/img/Content/avatar/avatar4.png',
+      name: 'Anas',
     },
     {
       id: 5,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar5.png',
-      description: 'User 5',
+      image: 'https://bootdey.com/img/Content/avatar/avatar5.png',
+      name: 'Amina',
     },
     {
       id: 6,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar6.png',
-      description: 'User 6',
+      image: 'https://bootdey.com/img/Content/avatar/avatar6.png',
+      name: 'Anood',
     },
     {
       id: 7,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar1.png',
-      description: 'User 7',
+      image: 'https://bootdey.com/img/Content/avatar/avatar1.png',
+      name: 'Arham',
     },
-    {
-      id: 8,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar2.png',
-      description: 'User 8',
-    },
-    {
-      id: 9,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-      description: 'User 9',
-    },
+    
+    
   ]
 
    const [results, setResults] = useState(data)
@@ -110,8 +81,8 @@ const InventoryClerks = ({navigation}) => {
  <DataTable>
   <Block style={styles.head}>
     <View style={{flexDirection:"row"}}> 
-      <AntDesign name="user" size={40}/>
-          <Text style={styles.title}>Inventory Clerks</Text>
+      <FontAwesome name="user" size={40}/>
+          <Text style={styles.title}>Clerks</Text>
           </View>
          
            <View style={styles.inputContainer}>
@@ -124,29 +95,36 @@ const InventoryClerks = ({navigation}) => {
           />
         </View>
         </Block>
-        <DataTable.Header >
-          <DataTable.Title style={{fontSize:20}}>Name</DataTable.Title>
-          <DataTable.Title>Email</DataTable.Title>
-          <DataTable.Title numeric>Age</DataTable.Title>
+
+        <Block style={styles.head}>
+      <View style={{flexDirection:"row", justifyContent:"space-between"}}> 
+          <Button color="success"  style={{width:"31%"}}>Add </Button>    
+           <Button color="info" style={{width:"31%"}}>Assign </Button>    
+            <Button color="warning" style={{width:"31%"}}>Delete </Button>    
+      </View>
+        </Block>
+
+       
+        <DataTable.Header style={{borderBottomWidth:1, borderBottomColor:"black"}}>
+          <DataTable.Title style={{fontSize:20}}>Id</DataTable.Title>
+          <DataTable.Title>Name</DataTable.Title>
+          <DataTable.Title numeric>Image</DataTable.Title>
+                 <DataTable.Title numeric>Age</DataTable.Title>
+
         </DataTable.Header>
+ {data.map((x)=>
+   <DataTable.Row key={x.id}>
+              <DataTable.Cell ><Image source={{ uri: x.image }} style={{width:50,height:50, borderRadius:25}}/></DataTable.Cell>
 
-        <DataTable.Row>
-          <DataTable.Cell>John</DataTable.Cell>
-          <DataTable.Cell>john@kindacode.com</DataTable.Cell>
+          <DataTable.Cell>{x.id}</DataTable.Cell>
+          <DataTable.Cell>{x.name}</DataTable.Cell>
           <DataTable.Cell numeric>33</DataTable.Cell>
-        </DataTable.Row>
-
-        <DataTable.Row>
-          <DataTable.Cell>Bob</DataTable.Cell>
-          <DataTable.Cell>test@test.com</DataTable.Cell>
-          <DataTable.Cell numeric>105</DataTable.Cell>
-        </DataTable.Row>
-
-        <DataTable.Row>
-          <DataTable.Cell>Mei</DataTable.Cell>
-          <DataTable.Cell>mei@kindacode.com</DataTable.Cell>
-          <DataTable.Cell numeric>23</DataTable.Cell>
-        </DataTable.Row>
+     
+       </DataTable.Row>
+          
+        )}
+     
+        
 
       </DataTable>
      
@@ -178,7 +156,7 @@ const styles = StyleSheet.create({
   },
   head:{
     flexDirection:"row",
-    borderWidth:2,
+    //borderWidth:2,
     padding:5,
     justifyContent:"space-between"
   },

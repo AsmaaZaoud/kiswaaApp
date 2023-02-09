@@ -17,7 +17,8 @@ import { Images, argonTheme, articles } from "../../constants/";
 
 import { Button, Card, Header } from "../../components"
 
-import {Icon,AntDesign} from "react-native-vector-icons"
+import {Icon,AntDesign,FontAwesome} from "react-native-vector-icons"
+import ArButton from "../../components/Button";
 
 const { width } = Dimensions.get("screen");
 
@@ -91,7 +92,7 @@ const Drivers = ({navigation}) => {
     },
   ]
 
-   const [results, setResults] = useState(data)
+  const [results, setResults] = useState(data)
   const [query, setQuery] = useState()
 
   const showAlert = () => {
@@ -110,7 +111,7 @@ const Drivers = ({navigation}) => {
  <DataTable>
   <Block style={styles.head}>
     <View style={{flexDirection:"row"}}> 
-      <AntDesign name="user" size={40}/>
+      <FontAwesome name="user" size={40}/>
           <Text style={styles.title}>Drivers</Text>
           </View>
          
@@ -124,6 +125,15 @@ const Drivers = ({navigation}) => {
           />
         </View>
         </Block>
+
+    <Block style={styles.head}>
+      <View style={{flexDirection:"row", justifyContent:"space-between"}}> 
+          <Button color="success"  style={{width:"30%"}}>Add </Button>    
+           <Button color="info" style={{width:"30%"}}>Assign </Button>    
+            <Button color="warning" style={{width:"30%"}}>Delete </Button>    
+      </View>
+        </Block>
+
         <DataTable.Header >
           <DataTable.Title style={{fontSize:20}}>Name</DataTable.Title>
           <DataTable.Title>Email</DataTable.Title>
@@ -178,7 +188,7 @@ const styles = StyleSheet.create({
   },
   head:{
     flexDirection:"row",
-    borderWidth:2,
+   // borderWidth:1,
     padding:5,
     justifyContent:"space-between"
   },
