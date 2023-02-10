@@ -5,7 +5,8 @@ import {
   Dimensions,
   StatusBar,
   KeyboardAvoidingView,
-  Image
+  Image,
+  Alert
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -20,27 +21,28 @@ import { auth } from "../config";
 
 import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
 import { db } from "../config";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width, height } = Dimensions.get("screen");
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-    const [signedIn, setSignedIn] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
 
- //let user = auth?.currentUser?.email;
+  //let user = auth?.currentUser?.email;
   //console.log('user logged in: ', user)
 
-   const handleLogin = () => {
+  const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         console.log("Logged in");
-      //  console.log('handle login user: ', user)
+        //  console.log('handle login user: ', user)
         setSignedIn(true);
-        
+
         navigation.replace("App");
-        
+
       })
       .catch((error) => {
         console.log(error.message);
@@ -49,85 +51,154 @@ const Login = ({navigation}) => {
         setSignedIn(false);
       });
   };
-  
-    return (
-      <Block flex middle>
-        <StatusBar hidden />
-        <ImageBackground
-          source={Images.RegisterBackground}
-          style={{ width, height, zIndex: 1 }}
-        >
-          <Block safe flex middle>
-            <Block style={styles.registerContainer}>
-             
-              <Block flex>
-                <Block flex={0.17} middle>
-                  <Image source={Images.Logo} />
-                </Block>
-                <Block flex center>
-                  <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior="padding"
-                    enabled
-                  >
-                 
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Email"
-                         value={email}
-                        onChangeText={setEmail}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="ic_mail_24px"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
+
+
+  //select, unselect image
+  const [selectDonor, setSelectDonor] = useState(false);
+  const [selectReceiver, setSelectReceiver] = useState(false);
+  const handleSelectDonor = () => {
+    Alert.alert('border color donor')
+    if (selectReceiver === true) {
+      setSelectReceiver(false)
+      setSelectDonor(true)
+    }
+    else {
+      setSelectDonor(true)
+    }
+
+  };
+  const handleSelectReceiver = () => {
+    Alert.alert('border color receiver')
+    if (selectDonor === true) {
+      setSelectDonor(false)
+      setSelectReceiver(true)
+    }
+    else {
+      setSelectReceiver(true)
+    }
+  };
+  //select, unselect image
+
+  //disable, enable register button
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const disable = () => {
+    Alert.alert('working')
+    if (selectDonor || selectReceiver === true) {
+      setIsDisabled(false)
+    }
+    else {
+      setIsDisabled(true);
+    }
+  }
+  //disable, enable register button
+
+
+  return (
+    <Block flex middle>
+      <StatusBar hidden />
+      <ImageBackground
+        source={Images.RegisterBackground}
+        style={{ width, height, zIndex: 1 }}
+      >
+        <Block safe flex middle>
+          <Block style={styles.registerContainer}>
+
+            <Block flex>
+              <Block flex={0.17} middle>
+                <Image source={Images.Logo} />
+              </Block>
+              <Block flex center>
+                <KeyboardAvoidingView
+                  style={{ flex: 1 }}
+                  behavior="padding"
+                  enabled
+                >
+
+
+                  <Block style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>What would you like to register as?</Text>
+
+                    <Block style={{ flexDirection: 'row', }}>
+
+                      <Block>
+                        <TouchableOpacity
+                          style={{ borderWidth: 1, margin: 10, borderColor: selectDonor === false ? "black" : "red" }}
+                          onPress={handleSelectDonor}
+                        //value={selected}
+                        >
+                          <Image
+                            style={{ width: 150, height: 150 }}
+                            source={require('../Images/donate.png')} />
+                        </TouchableOpacity>
+                        <Text style={{ alignSelf: 'center', fontSize: 20 }}>DONOR</Text>
+                      </Block>
+
+                      <Block>
+                        <TouchableOpacity
+                          style={{ borderWidth: 1, margin: 10, borderColor: selectReceiver === false ? "black" : "red" }}
+                          onPress={handleSelectReceiver}
+                        //value={selected}
+                        >
+                          <Image
+                            style={{ width: 150, height: 150 }}
+                            source={require('../Images/receive.png')} />
+                        </TouchableOpacity>
+                        <Text style={{ alignSelf: 'center', fontSize: 20 }}>RECEIVER</Text>
+                      </Block>
                     </Block>
-                    <Block width={width * 0.8}>
-                      <Input
-                        password
-                        borderless
-                        placeholder="Password"
-                         value={password}
-                        onChangeText={setPassword}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="padlock-unlocked"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                     
-                    </Block>
-                   
-                    <Block middle>
-                      <Button 
-                      color="primary" 
-                      style={styles.createButton} 
+                  </Block>
+
+
+
+                  {/* register button */}
+                  <Block middle>
+                    <Button
+                      color="primary"
+                      //style={styles.createButton}
+                      style={isDisabled === true ? styles.createButton : styles.disabledButton}
+                      //disabled={isDisabled}
+                      onPress={() => disable()}
+                    //onPress={handleLogin}
+                    >
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        Register
+                      </Text>
+                    </Button>
+                  </Block>
+                  {/* register button */}
+
+
+
+                  {/* log in button */}
+                  <Text style={{ alignSelf: 'center' }}>Already have an account ? Log In instead</Text>
+                  <Block middle>
+                    <Button
+                      color="primary"
+                      style={styles.createButton}
                       onPress={handleLogin}
-                      >
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Log In
-                        </Text>
-                      </Button>
-                    </Block>
-                  </KeyboardAvoidingView>
-                </Block>
+                    >
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        Log In
+                      </Text>
+                    </Button>
+                  </Block>
+                  {/* log in button */}
+
+                </KeyboardAvoidingView>
               </Block>
             </Block>
           </Block>
-        </ImageBackground>
-      </Block>
-    );
-  
+        </Block>
+      </ImageBackground>
+    </Block>
+  );
+
 }
 
 const styles = StyleSheet.create({
@@ -179,7 +250,13 @@ const styles = StyleSheet.create({
   },
   createButton: {
     width: width * 0.5,
-    marginTop: 25
+    marginTop: 25,
+  },
+  disabledButton: {
+    width: width * 0.5,
+    marginTop: 25,
+    backgroundColor: 'grey',
+    color: 'black'
   }
 });
 
