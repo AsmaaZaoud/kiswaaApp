@@ -75,11 +75,16 @@ export default function RegisterFamily({ navigation }) {
   //   };
   //   getPermissions();
   // }, []);
-  let status;
+  // let status;
+  const [stat, setStat] = useState("");
   const getLocation = () => {
     const getPermissions = async () => {
-      status = await Location.requestForegroundPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      setStat(status);
+      console.log("stat... ", stat);
+      console.log(status);
       if (status !== "granted") {
+        // console.log(status);
         console.log("Please grant location permissions");
         return;
       }
@@ -87,7 +92,7 @@ export default function RegisterFamily({ navigation }) {
       let currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
       console.log("Location:");
-      console.log(currentLocation);
+      console.log("lll... ", currentLocation);
       setLocation(currentLocation);
     };
     getPermissions();
@@ -336,7 +341,7 @@ export default function RegisterFamily({ navigation }) {
                     </Block> */}
                     <Block width={width * 0.35} style={{ marginBottom: 15 }}>
                       <Button
-                        color={status !== "granted" ? "default" : "primary"}
+                        color={stat !== "granted" ? "default" : "primary"}
                         style={styles.createButton}
                         onPress={getLocation}
                       >
