@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -49,6 +49,7 @@ import { db } from "../../config";
 
 // import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Dropdown } from "react-native-element-dropdown";
+import * as Location from "expo-location";
 const { width, height } = Dimensions.get("screen");
 
 export default function RegisterFamily({ navigation }) {
@@ -59,6 +60,38 @@ export default function RegisterFamily({ navigation }) {
 
   // const [url, setUrl] = useState("");
 
+  // useEffect(() => {
+  //   const getPermissions = async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       console.log("Please grant location permissions");
+  //       return;
+  //     }
+
+  //     let currentLocation = await Location.getCurrentPositionAsync({});
+  //     setLocation(currentLocation);
+  //     console.log("Location:");
+  //     console.log(currentLocation);
+  //   };
+  //   getPermissions();
+  // }, []);
+  let status;
+  const getLocation = () => {
+    const getPermissions = async () => {
+      status = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Please grant location permissions");
+        return;
+      }
+
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation);
+      console.log("Location:");
+      console.log(currentLocation);
+      setLocation(currentLocation);
+    };
+    getPermissions();
+  };
   const zones = [
     { label: " All Zones", value: "0" },
     { label: "Doha", value: "1" },
@@ -284,12 +317,12 @@ export default function RegisterFamily({ navigation }) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Block width={width * 0.4} style={{ marginBottom: 15 }}>
+                    {/* <Block width={width * 0.4} style={{ marginBottom: 15 }}>
                       <Input
                         borderless
                         placeholder="Location"
                         value={location}
-                        onChangeText={setLocation}
+                        onPress={getLocation}
                         iconContent={
                           <Icon
                             size={16}
@@ -300,6 +333,17 @@ export default function RegisterFamily({ navigation }) {
                           />
                         }
                       />
+                    </Block> */}
+                    <Block width={width * 0.35} style={{ marginBottom: 15 }}>
+                      <Button
+                        color={status !== "granted" ? "default" : "primary"}
+                        style={styles.createButton}
+                        onPress={getLocation}
+                      >
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Location
+                        </Text>
+                      </Button>
                     </Block>
                     <Block width={width * 0.35} style={{ marginBottom: 15 }}>
                       <Dropdown
@@ -307,7 +351,7 @@ export default function RegisterFamily({ navigation }) {
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
                         data={zones}
-                        maxHeight={200}
+                        maxHeight={160}
                         labelField="label"
                         valueField="value"
                         placeholder={zone}
@@ -408,8 +452,8 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   createButton: {
-    width: width * 0.5,
-    marginTop: 25,
+    width: width * 0.4,
+    // marginTop: 25,
   },
   dropdown: {
     padding: 7,
@@ -436,5 +480,12 @@ const styles = StyleSheet.create({
     // shadowRadius: 1.41,
 
     // elevation: 2,
+  },
+  placeholderStyle: {
+    fontSize: 14,
+    color: argonTheme.COLORS.HEADER,
+  },
+  selectedTextStyle: {
+    fontSize: 12,
   },
 });
