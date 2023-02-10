@@ -204,6 +204,7 @@ function HomeStack(props) {
   );
 }
 
+
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator
@@ -221,8 +222,27 @@ export default function OnboardingStack(props) {
       />
       <Stack.Screen name="App" component={AppStack} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Drivers" component={Drivers} />
-      <Stack.Screen name="AdminHome" component={AdminHome} />
+      <Stack.Screen name="Drivers" component={Drivers} options={{
+          title: 'AdminHome',
+          headerStyle: {
+            backgroundColor: 'darkblue',
+          },
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
+      <Stack.Screen name="AdminHome" component={AdminHome} 
+      option={{
+          title: 'AdminHome',
+          headerStyle: {
+            backgroundColor: 'darkblue',
+          },
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
       <Stack.Screen name="DriverHome" component={DriverHome} />
       <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
 

@@ -4,6 +4,8 @@ import { Block, theme } from 'galio-framework';
 
 import { Card } from '../../components';
 import articles from '../../constants/articles';
+
+
 const { width } = Dimensions.get('screen');
 
 const AdminHome = ({navigation}) => {
