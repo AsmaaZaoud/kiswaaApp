@@ -14,7 +14,6 @@ import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../../components";
 import { Images, argonTheme } from "../../constants";
-
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -49,16 +48,36 @@ import { auth } from "../../config";
 import { db } from "../../config";
 
 // import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import { Dropdown } from "react-native-element-dropdown";
 const { width, height } = Dimensions.get("screen");
 
-export default function RegisterFamily() {
-  const navigation = useNavigation();
-  const imagePosition = useSharedValue(0);
-  const male = ["male1.jpeg", "male2.jpeg", "male3.jpeg"];
-  const female = ["female1.jpeg", "female2.jpeg", "female3.jpeg"];
+export default function RegisterFamily({ navigation }) {
+  // const navigation = useNavigation();
+  // const imagePosition = useSharedValue(0);
+  // const male = ["male1.jpeg", "male2.jpeg", "male3.jpeg"];
+  // const female = ["female1.jpeg", "female2.jpeg", "female3.jpeg"];
 
-  const [url, setUrl] = useState("");
+  // const [url, setUrl] = useState("");
+
+  const zones = [
+    { label: " All Zones", value: "0" },
+    { label: "Doha", value: "1" },
+    { label: "Al Rayyan", value: "2" },
+    { label: "Rumeilah", value: "3" },
+    { label: "Wadi Al Sail", value: "4" },
+    { label: "Al Daayen", value: "5" },
+    { label: "Umm Salal", value: "6" },
+    { label: "Al Wakra", value: "7" },
+    { label: "Al Khor", value: "8" },
+    { label: "Al Shamal", value: "9" },
+    { label: "Al Shahaniya", value: "10" },
+  ];
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [location, setLocation] = useState("");
+  const [zone, setZone] = useState(zones[0].label);
 
   const [emailErro, setEmailError] = useState("");
   const [email, setEmail] = useState("");
@@ -76,23 +95,21 @@ export default function RegisterFamily() {
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         console.log("registend done");
-        // navigation.navigate("Home_Navg");
+        navigation.navigate("Login");
         add();
       })
       .catch((error) => console.log(error.message));
     //add();
   };
   const add = async () => {
-    const docRef = doc(db, "Customer", email);
+    const docRef = doc(db, "families", email);
     await setDoc(docRef, {
-      name: name,
+      lastName: lastName,
+      lastName: lastName,
+      phone: phone,
+      location: location,
       email: email,
-      dob: new Date(),
-      gender: "",
-      image:
-        "https://as2.ftcdn.net/v2/jpg/02/45/28/17/1000_F_245281721_2uYVgLSFnaH9AlZ1WWpkZavIcEEGBU84.jpg",
-      location: "",
-      phone: number,
+      zone: zone,
     })
       .then(() => {
         console.log("data submitted");
@@ -102,7 +119,7 @@ export default function RegisterFamily() {
       });
   };
 
-  const register = async () => {
+  const validation = async () => {
     if (validator.isEmail(email)) {
       setEmailError("");
     } else {
@@ -176,6 +193,58 @@ export default function RegisterFamily() {
                   <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                     <Input
                       borderless
+                      placeholder="firsr Name"
+                      value={firstName}
+                      onChangeText={setFirstName}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="ic_mail_24px"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                  </Block>
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
+                      placeholder="Last Name"
+                      value={lastName}
+                      onChangeText={setLastName}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="ic_mail_24px"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                  </Block>
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
+                      placeholder="Phone Number"
+                      value={phone}
+                      onChangeText={setPhone}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="ic_mail_24px"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                  </Block>
+
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
                       placeholder="Email"
                       value={email}
                       onChangeText={setEmail}
@@ -190,7 +259,7 @@ export default function RegisterFamily() {
                       }
                     />
                   </Block>
-                  <Block width={width * 0.8}>
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                     <Input
                       password
                       borderless
@@ -208,15 +277,76 @@ export default function RegisterFamily() {
                       }
                     />
                   </Block>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Block width={width * 0.4} style={{ marginBottom: 15 }}>
+                      <Input
+                        borderless
+                        placeholder="Location"
+                        value={location}
+                        onChangeText={setLocation}
+                        iconContent={
+                          <Icon
+                            size={16}
+                            color={argonTheme.COLORS.ICON}
+                            name="ic_mail_24px"
+                            family="ArgonExtra"
+                            style={styles.inputIcons}
+                          />
+                        }
+                      />
+                    </Block>
+                    <Block width={width * 0.35} style={{ marginBottom: 15 }}>
+                      <Dropdown
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        data={zones}
+                        maxHeight={200}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={zone}
+                        value={zone}
+                        onChange={(item) => {
+                          setZone(item.label);
+                          //setValue(item.value);
+                        }}
+                      ></Dropdown>
+                    </Block>
+                  </View>
 
+                  <Block row width={width * 0.75}>
+                    <Checkbox
+                      checkboxStyle={{
+                        borderWidth: 3,
+                      }}
+                      color={argonTheme.COLORS.PRIMARY}
+                      label="I agree with the"
+                    />
+                    <Button
+                      style={{ width: 110 }}
+                      color="transparent"
+                      textStyle={{
+                        color: argonTheme.COLORS.PRIMARY,
+                        fontSize: 14,
+                      }}
+                    >
+                      Privacy Policy
+                    </Button>
+                  </Block>
                   <Block middle>
                     <Button
                       color="primary"
                       style={styles.createButton}
-                      // onPress={navigation.navigate("RegisterFamily")}
+                      onPress={handleRegister}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Register
+                        CREATE ACCOUNT
                       </Text>
                     </Button>
                   </Block>
@@ -280,5 +410,31 @@ const styles = StyleSheet.create({
   createButton: {
     width: width * 0.5,
     marginTop: 25,
+  },
+  dropdown: {
+    padding: 7,
+    borderRadius: 4,
+    borderColor: argonTheme.COLORS.INPUT_ERROR,
+    height: 44,
+    backgroundColor: "#FFFFFF",
+    shadowColor: argonTheme.COLORS.BLACK,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    shadowOpacity: 0.05,
+    elevation: 2,
+    // margin: 16,
+    // height: 50,
+    // backgroundColor: "white",
+    // borderRadius: 12,
+    // padding: 12,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 1.41,
+
+    // elevation: 2,
   },
 });

@@ -24,11 +24,11 @@ class Register extends React.Component {
         >
           <Block safe flex middle>
             <Block style={styles.registerContainer}>
-              <Block flex={0.25} middle style={styles.socialConnect}>
+              <Block flex={0.17} middle style={styles.socialConnect}>
                 <Text color="#8898AA" size={12}>
-                  Sign up with
+                  Sign up
                 </Text>
-                <Block row style={{ marginTop: theme.SIZES.BASE }}>
+                {/* <Block row style={{ marginTop: theme.SIZES.BASE }}>
                   <Button style={{ ...styles.socialButtons, marginRight: 30 }}>
                     <Block row>
                       <Icon
@@ -60,7 +60,7 @@ class Register extends React.Component {
                   <Text color="#8898AA" size={12}>
                     Or sign up the classic way
                   </Text>
-                </Block>
+                </Block> */}
                 <Block flex center>
                   <KeyboardAvoidingView
                     style={{ flex: 1 }}
@@ -176,6 +176,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   socialConnect: {
+    marginTop: 50,
     backgroundColor: argonTheme.COLORS.WHITE,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: "#8898AA",
