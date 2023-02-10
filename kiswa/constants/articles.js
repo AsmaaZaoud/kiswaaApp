@@ -24,7 +24,7 @@ export default [
     title: 'Inventory workers',
     image: 'https://res.cloudinary.com/hnpb47ejt/image/upload/v1523401137/fqcwhgizfa3pvkpxcu8a.jpg',
     cta: 'View article' ,
-    page:"Drivers",
+    page:"InventoryClerks",
 
   },
   {
