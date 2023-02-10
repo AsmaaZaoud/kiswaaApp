@@ -65,6 +65,8 @@ const InventoryClerks = ({navigation}) => {
    const [results, setResults] = useState(data)
   const [query, setQuery] = useState()
 
+
+  
   const showAlert = () => {
     Alert.alert('Alert', 'Button pressed ')
   }
@@ -98,7 +100,7 @@ const InventoryClerks = ({navigation}) => {
 
         <Block style={styles.head}>
       <View style={{flexDirection:"row", justifyContent:"space-between"}}> 
-          <Button color="success"  style={{width:"31%"}}>Add </Button>    
+          <Button color="success"  style={{width:"31%"}} onPress={()=>navigation.navigate("AddClerk")}>Add </Button>    
            <Button color="info" style={{width:"31%"}}>Assign </Button>    
             <Button color="warning" style={{width:"31%"}}>Delete </Button>    
       </View>
