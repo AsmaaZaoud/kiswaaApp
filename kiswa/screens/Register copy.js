@@ -1,55 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView,
-  Image
+  KeyboardAvoidingView
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../config";
-
-import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
-import { db } from "../config";
-
 const { width, height } = Dimensions.get("screen");
 
-const Login = ({navigation}) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-    const [signedIn, setSignedIn] = useState(false);
-
-
- //let user = auth?.currentUser?.email;
-  //console.log('user logged in: ', user)
-
-   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("Logged in");
-      //  console.log('handle login user: ', user)
-        setSignedIn(true);
-        
-        navigation.replace("App");
-        
-      })
-      .catch((error) => {
-        console.log(error.message);
-        alert(error.message);
-
-        setSignedIn(false);
-      });
-  };
-  
+class Register extends React.Component {
+  render() {
     return (
       <Block flex middle>
         <StatusBar hidden />
@@ -59,10 +24,42 @@ const Login = ({navigation}) => {
         >
           <Block safe flex middle>
             <Block style={styles.registerContainer}>
-             
+              <Block flex={0.25} middle style={styles.socialConnect}>
+                <Text color="#8898AA" size={12}>
+                  Sign up with
+                </Text>
+                <Block row style={{ marginTop: theme.SIZES.BASE }}>
+                  <Button style={{ ...styles.socialButtons, marginRight: 30 }}>
+                    <Block row>
+                      <Icon
+                        name="logo-github"
+                        family="Ionicon"
+                        size={14}
+                        color={"black"}
+                        style={{ marginTop: 2, marginRight: 5 }}
+                      />
+                      <Text style={styles.socialTextButtons}>GITHUB</Text>
+                    </Block>
+                  </Button>
+                  <Button style={styles.socialButtons}>
+                    <Block row>
+                      <Icon
+                        name="logo-google"
+                        family="Ionicon"
+                        size={14}
+                        color={"black"}
+                        style={{ marginTop: 2, marginRight: 5 }}
+                      />
+                      <Text style={styles.socialTextButtons}>GOOGLE</Text>
+                    </Block>
+                  </Button>
+                </Block>
+              </Block>
               <Block flex>
                 <Block flex={0.17} middle>
-                  <Image source={Images.Logo} />
+                  <Text color="#8898AA" size={12}>
+                    Or sign up the classic way
+                  </Text>
                 </Block>
                 <Block flex center>
                   <KeyboardAvoidingView
@@ -70,13 +67,25 @@ const Login = ({navigation}) => {
                     behavior="padding"
                     enabled
                   >
-                 
+                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                      <Input
+                        borderless
+                        placeholder="Name"
+                        iconContent={
+                          <Icon
+                            size={16}
+                            color={argonTheme.COLORS.ICON}
+                            name="hat-3"
+                            family="ArgonExtra"
+                            style={styles.inputIcons}
+                          />
+                        }
+                      />
+                    </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
                         borderless
                         placeholder="Email"
-                         value={email}
-                        onChangeText={setEmail}
                         iconContent={
                           <Icon
                             size={16}
@@ -93,8 +102,6 @@ const Login = ({navigation}) => {
                         password
                         borderless
                         placeholder="Password"
-                         value={password}
-                        onChangeText={setPassword}
                         iconContent={
                           <Icon
                             size={16}
@@ -105,17 +112,39 @@ const Login = ({navigation}) => {
                           />
                         }
                       />
-                     
+                      <Block row style={styles.passwordCheck}>
+                        <Text size={12} color={argonTheme.COLORS.MUTED}>
+                          password strength:
+                        </Text>
+                        <Text bold size={12} color={argonTheme.COLORS.SUCCESS}>
+                          {" "}
+                          strong
+                        </Text>
+                      </Block>
                     </Block>
-                   
-                    <Block middle>
-                      <Button 
-                      color="primary" 
-                      style={styles.createButton} 
-                      onPress={handleLogin}
+                    <Block row width={width * 0.75}>
+                      <Checkbox
+                        checkboxStyle={{
+                          borderWidth: 3
+                        }}
+                        color={argonTheme.COLORS.PRIMARY}
+                        label="I agree with the"
+                      />
+                      <Button
+                        style={{ width: 100 }}
+                        color="transparent"
+                        textStyle={{
+                          color: argonTheme.COLORS.PRIMARY,
+                          fontSize: 14
+                        }}
                       >
+                        Privacy Policy
+                      </Button>
+                    </Block>
+                    <Block middle>
+                      <Button color="primary" style={styles.createButton}>
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Log In 
+                          CREATE ACCOUNT
                         </Text>
                       </Button>
                     </Block>
@@ -127,7 +156,7 @@ const Login = ({navigation}) => {
         </ImageBackground>
       </Block>
     );
-  
+  }
 }
 
 const styles = StyleSheet.create({
@@ -183,4 +212,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Login;
+export default Register;

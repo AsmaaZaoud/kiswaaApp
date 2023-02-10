@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   ImageBackground,
   Dimensions,
   StatusBar,
   KeyboardAvoidingView,
-  Image
+  Image,
+  Alert
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -20,114 +21,169 @@ import { auth } from "../config";
 
 import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
 import { db } from "../config";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width, height } = Dimensions.get("screen");
 
-const Login = ({navigation}) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-    const [signedIn, setSignedIn] = useState(false);
+const LoginRegister = ({ navigation }) => {
 
 
- //let user = auth?.currentUser?.email;
-  //console.log('user logged in: ', user)
+  //select, unselect image
+  const [selectDonor, setSelectDonor] = useState(false);
+  const [selectReceiver, setSelectReceiver] = useState(false);
+  const handleSelectDonor = () => {
+    if (selectReceiver === true) {
+      setSelectReceiver(false)
+      setSelectDonor(true)
+    }
+    else {
+      setSelectDonor(true)
+    }
 
-   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("Logged in");
-      //  console.log('handle login user: ', user)
-        setSignedIn(true);
-        
-        navigation.replace("App");
-        
-      })
-      .catch((error) => {
-        console.log(error.message);
-        alert(error.message);
-
-        setSignedIn(false);
-      });
   };
-  
-    return (
-      <Block flex middle>
-        <StatusBar hidden />
-        <ImageBackground
-          source={Images.RegisterBackground}
-          style={{ width, height, zIndex: 1 }}
-        >
-          <Block safe flex middle>
-            <Block style={styles.registerContainer}>
-             
-              <Block flex>
-                <Block flex={0.17} middle>
-                  <Image source={Images.Logo} />
-                </Block>
-                <Block flex center>
-                  <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior="padding"
-                    enabled
-                  >
-                 
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Email"
-                         value={email}
-                        onChangeText={setEmail}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="ic_mail_24px"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
+  const handleSelectReceiver = () => {
+    if (selectDonor === true) {
+      setSelectDonor(false)
+      setSelectReceiver(true)
+    }
+    else {
+      setSelectReceiver(true)
+    }
+  };
+  //select, unselect image
+
+
+
+  //disable, enable register button
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const checkDisable = () => {
+    console.log(isDisabled)
+
+    if(selectDonor || selectReceiver === true){
+      navigation.navigate("Register")
+    }
+  }
+  //disable, enable register button
+
+
+  return (
+    <Block flex middle>
+      <StatusBar hidden />
+      <ImageBackground
+        source={Images.RegisterBackground}
+        style={{ width, height, zIndex: 1 }}
+      >
+        <Block safe flex middle>
+          <Block style={styles.registerContainer}>
+
+            <Block flex>
+              <Block flex={0.17} middle>
+                <Image source={Images.Logo} />
+              </Block>
+              <Block flex center>
+                <KeyboardAvoidingView
+                  style={{ flex: 1 }}
+                  behavior="padding"
+                  enabled
+                >
+
+
+                  <Block style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>What would you like to register as?</Text>
+
+                    <Block style={{ flexDirection: 'row', }}>
+
+                      <Block>
+                        <TouchableOpacity
+                          style={{ borderWidth: 1, margin: 10, borderColor: selectDonor === false ? "black" : "red" }}
+                          onPress={handleSelectDonor}
+                        >
+                          <Image
+                            style={{ width: 150, height: 150 }}
+                            source={require('../Images/donate.png')} />
+                        </TouchableOpacity>
+                        <Text style={{ alignSelf: 'center', fontSize: 20 }}>DONOR</Text>
+                      </Block>
+
+                      <Block>
+                        <TouchableOpacity
+                          style={{ borderWidth: 1, margin: 10, borderColor: selectReceiver === false ? "black" : "red" }}
+                          onPress={handleSelectReceiver}
+                        >
+                          <Image
+                            style={{ width: 150, height: 150 }}
+                            source={require('../Images/receive.png')} />
+                        </TouchableOpacity>
+                        <Text style={{ alignSelf: 'center', fontSize: 20 }}>RECEIVER</Text>
+                      </Block>
                     </Block>
-                    <Block width={width * 0.8}>
-                      <Input
-                        password
-                        borderless
-                        placeholder="Password"
-                         value={password}
-                        onChangeText={setPassword}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="padlock-unlocked"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                     
-                    </Block>
-                   
-                    <Block middle>
-                      <Button 
-                      color="primary" 
-                      style={styles.createButton} 
-                      onPress={handleLogin}
+
+                    {/* register button */}
+                    <Block middle style={{marginTop: 20}}>
+                      <Button
+                        color="primary"
+                        style={selectDonor || selectReceiver === true ? styles.createButton : styles.disabledButton}
+                        disabled={selectDonor || selectReceiver === true ? false : true}
+                        onPress={checkDisable}
                       >
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Log In 
+                          Register
                         </Text>
                       </Button>
                     </Block>
-                  </KeyboardAvoidingView>
-                </Block>
+                    {/* register button */}
+                  </Block>
+
+
+                  <Block middle>
+
+                    {/* log in button */}
+                    <Text style={{ alignSelf: 'center' }}>Already have an account ? Log In instead</Text>
+                    <Block middle>
+                      <Button
+                        color="primary"
+                        style={styles.createButton}
+                        onPress={() => navigation.navigate("Login")}
+                      >
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Log In
+                        </Text>
+                      </Button>
+                    </Block>
+                    {/* log in button */}
+
+                  </Block>
+
+
+                  {/* skip button */}
+                  <Block middle>
+                    <Button
+                      color="primary"
+                      style={styles.createButton}
+                    >
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        Skip
+                      </Text>
+                    </Button>
+                  </Block>
+                  {/* skip button */}
+
+
+                </KeyboardAvoidingView>
               </Block>
             </Block>
           </Block>
-        </ImageBackground>
-      </Block>
-    );
-  
+        </Block>
+      </ImageBackground>
+    </Block>
+  );
+
 }
 
 const styles = StyleSheet.create({
@@ -179,8 +235,14 @@ const styles = StyleSheet.create({
   },
   createButton: {
     width: width * 0.5,
-    marginTop: 25
+    marginTop: 25,
+  },
+  disabledButton: {
+    width: width * 0.5,
+    marginTop: 25,
+    backgroundColor: 'grey',
+    color: 'black'
   }
 });
 
-export default Login;
+export default LoginRegister;
