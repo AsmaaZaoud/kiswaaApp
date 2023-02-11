@@ -74,7 +74,7 @@ const AddDriver = ({navigation}) => {
                     behavior="padding"
                     enabled
                   >
-      <Block  width={width * 0.8} style={{ marginBottom: 5,flexDirection:width>500?"row":""}}>
+      <Block  width={width * 0.8} style={{marginTop:15, marginBottom: 5,flexDirection:width>500?"row":""}}>
                    
           <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
                     <Text style={styles.text}>First Name</Text>
