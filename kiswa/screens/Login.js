@@ -113,7 +113,6 @@ const Login = ({ navigation }) => {
                         Log In
                       </Text>
                     </Button>
-                    <Text>Or</Text>
                     <Button
                       color="primary"
                       style={styles.createButton}
@@ -121,16 +120,6 @@ const Login = ({ navigation }) => {
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                         Sign Up
-                      </Text>
-                    </Button>
-                    <Text>Or</Text>
-                    <Button
-                      color="primary"
-                      style={styles.createButton}
-                      onPress={() => navigation.navigate("Register")}
-                    >
-                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Sign Uppp
                       </Text>
                     </Button>
                   </Block>

@@ -42,7 +42,7 @@ import Animated, {
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import { useNavigation } from "@react-navigation/native";
-// import validator from "validator";
+import validator from "validator";
 
 import { auth } from "../../config";
 import { db } from "../../config";
@@ -53,50 +53,6 @@ import * as Location from "expo-location";
 const { width, height } = Dimensions.get("screen");
 
 export default function RegisterFamily({ navigation }) {
-  // const navigation = useNavigation();
-  // const imagePosition = useSharedValue(0);
-  // const male = ["male1.jpeg", "male2.jpeg", "male3.jpeg"];
-  // const female = ["female1.jpeg", "female2.jpeg", "female3.jpeg"];
-
-  // const [url, setUrl] = useState("");
-
-  // useEffect(() => {
-  //   const getPermissions = async () => {
-  //     let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== "granted") {
-  //       console.log("Please grant location permissions");
-  //       return;
-  //     }
-
-  //     let currentLocation = await Location.getCurrentPositionAsync({});
-  //     setLocation(currentLocation);
-  //     console.log("Location:");
-  //     console.log(currentLocation);
-  //   };
-  //   getPermissions();
-  // }, []);
-  // let status;
-  const [stat, setStat] = useState("");
-  const getLocation = () => {
-    const getPermissions = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      setStat(status);
-      console.log("stat... ", stat);
-      console.log(status);
-      if (status !== "granted") {
-        // console.log(status);
-        console.log("Please grant location permissions");
-        return;
-      }
-
-      let currentLocation = await Location.getCurrentPositionAsync({});
-      setLocation(currentLocation);
-      console.log("Location:");
-      console.log("lll... ", currentLocation);
-      setLocation(currentLocation);
-    };
-    getPermissions();
-  };
   const zones = [
     { label: " All Zones", value: "0" },
     { label: "Doha", value: "1" },
@@ -112,37 +68,48 @@ export default function RegisterFamily({ navigation }) {
   ];
 
   const [firstName, setFirstName] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+
   const [lastName, setLastName] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+
+  const [phoneError, setPhoneError] = useState("");
   const [phone, setPhone] = useState("");
+
   const [location, setLocation] = useState("");
+  const [locationError, setLocationError] = useState("");
+
+  const [ZoneError, setZoneError] = useState("");
   const [zone, setZone] = useState(zones[0].label);
 
   const [emailErro, setEmailError] = useState("");
   const [email, setEmail] = useState("");
 
-  const [nameErro, setNameError] = useState("");
-  const [name, setName] = useState("");
+  const [passError, setPassError] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [passErro, setPassError] = useState("");
-  const [password, setPassword] = useState();
+  const [registerError, setRegisteerError] = useState("");
 
-  const [numberErro, setNumberError] = useState("");
-  const [number, setNumber] = useState("");
+  const [stat, setStat] = useState("denid");
 
   const handleRegister = () => {
+    console.log("in regstr...");
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         console.log("registend done");
         navigation.navigate("Login");
         add();
       })
-      .catch((error) => console.log(error.message));
-    //add();
+      .catch((error) => {
+        console.log(error.message);
+        setRegisteerError("Email is already in use");
+      });
   };
+
   const add = async () => {
     const docRef = doc(db, "families", email);
     await setDoc(docRef, {
-      lastName: lastName,
+      firstName: firstName,
       lastName: lastName,
       phone: phone,
       location: location,
@@ -161,52 +128,72 @@ export default function RegisterFamily({ navigation }) {
     if (validator.isEmail(email)) {
       setEmailError("");
     } else {
-      setEmailError("The email is not vaildate");
+      setEmailError("Email is not vaildate");
     }
 
-    if (
-      validator.isStrongPassword(pass, {
-        minLength: 8,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      })
-    ) {
+    if (password.length >= 6) {
       setPassError("");
     } else {
-      setPassError(
-        "Enter A Password A Strong Password Must Be 8 Chars Use A Mix Of Lowercase,Uppercase,Numbers and Symbols"
-      );
+      setPassError("Password Must Be 6 Chars");
     }
 
-    if (name.length != 0) {
-      setNameError("");
+    if (firstName.length != 0) {
+      setFirstNameError("");
     } else {
-      setNameError("Enter Your Name");
+      setFirstNameError("Enter Your first Name");
+    }
+    if (lastName.length != 0) {
+      setLastNameError("");
+    } else {
+      setLastNameError("Enter Your last Name");
     }
 
-    if (number.length === 8) {
-      setNumberError("");
+    if (phone.length === 8) {
+      setPhoneError("");
     } else {
-      setNumberError("Enter Valid Number");
+      setPhoneError("Number is not valid");
+    }
+    if (zone !== " All Zones") {
+      setZoneError("");
+    } else {
+      setZoneError("Select Zone");
+    }
+    if (stat === "granted") {
+      setLocationError("");
+    } else {
+      setLocationError("Allow Location");
     }
 
     if (
       validator.isEmail(email) &&
-      validator.isStrongPassword(pass, {
-        minLength: 8,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      }) &&
-      name.length != 0 &&
-      number.length === 8
+      password.length >= 6 &&
+      firstName.length != 0 &&
+      lastName.length != 0 &&
+      phone.length === 8 &&
+      zone !== "All Zones" &&
+      stat == "granted"
     ) {
+      console.log(stat);
       console.log("okay");
       handleRegister();
     }
+  };
+
+  const getLocation = () => {
+    const getPermissions = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      setStat(status);
+      console.log("stat... ", stat);
+      console.log(status);
+      if (status !== "granted") {
+        console.log("Please grant location permissions");
+        return;
+      }
+
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation);
+    };
+    getPermissions();
   };
 
   return (
@@ -219,7 +206,7 @@ export default function RegisterFamily({ navigation }) {
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <Block flex>
-              <Block flex={0.17} middle>
+              <Block flex={0.12} middle>
                 <Image source={Images.Logo} />
               </Block>
               <Block flex center>
@@ -228,7 +215,7 @@ export default function RegisterFamily({ navigation }) {
                   behavior="padding"
                   enabled
                 >
-                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
                     <Input
                       borderless
                       placeholder="firsr Name"
@@ -244,8 +231,17 @@ export default function RegisterFamily({ navigation }) {
                         />
                       }
                     />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {firstNameError}
+                    </Text>
                   </Block>
-                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
                     <Input
                       borderless
                       placeholder="Last Name"
@@ -261,8 +257,17 @@ export default function RegisterFamily({ navigation }) {
                         />
                       }
                     />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {lastNameError}
+                    </Text>
                   </Block>
-                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
                     <Input
                       borderless
                       placeholder="Phone Number"
@@ -278,9 +283,18 @@ export default function RegisterFamily({ navigation }) {
                         />
                       }
                     />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {phoneError}
+                    </Text>
                   </Block>
 
-                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
                     <Input
                       borderless
                       placeholder="Email"
@@ -296,8 +310,17 @@ export default function RegisterFamily({ navigation }) {
                         />
                       }
                     />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {emailErro}
+                    </Text>
                   </Block>
-                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
                     <Input
                       password
                       borderless
@@ -314,6 +337,15 @@ export default function RegisterFamily({ navigation }) {
                         />
                       }
                     />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {passError}
+                    </Text>
                   </Block>
                   <View
                     style={{
@@ -322,24 +354,7 @@ export default function RegisterFamily({ navigation }) {
                       justifyContent: "space-between",
                     }}
                   >
-                    {/* <Block width={width * 0.4} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Location"
-                        value={location}
-                        onPress={getLocation}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="ic_mail_24px"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                    </Block> */}
-                    <Block width={width * 0.35} style={{ marginBottom: 15 }}>
+                    <Block width={width * 0.35} style={{ marginBottom: 10 }}>
                       <Button
                         color={stat !== "granted" ? "default" : "primary"}
                         style={styles.createButton}
@@ -349,8 +364,17 @@ export default function RegisterFamily({ navigation }) {
                           Location
                         </Text>
                       </Button>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "red",
+                          fontSize: 12,
+                        }}
+                      >
+                        {locationError}
+                      </Text>
                     </Block>
-                    <Block width={width * 0.35} style={{ marginBottom: 15 }}>
+                    <Block width={width * 0.35} style={{ marginBottom: 0 }}>
                       <Dropdown
                         style={styles.dropdown}
                         placeholderStyle={styles.placeholderStyle}
@@ -363,41 +387,39 @@ export default function RegisterFamily({ navigation }) {
                         value={zone}
                         onChange={(item) => {
                           setZone(item.label);
-                          //setValue(item.value);
                         }}
                       ></Dropdown>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "red",
+                          fontSize: 12,
+                        }}
+                      >
+                        {ZoneError}
+                      </Text>
                     </Block>
                   </View>
 
-                  <Block row width={width * 0.75}>
-                    <Checkbox
-                      checkboxStyle={{
-                        borderWidth: 3,
-                      }}
-                      color={argonTheme.COLORS.PRIMARY}
-                      label="I agree with the"
-                    />
-                    <Button
-                      style={{ width: 110 }}
-                      color="transparent"
-                      textStyle={{
-                        color: argonTheme.COLORS.PRIMARY,
-                        fontSize: 14,
-                      }}
-                    >
-                      Privacy Policy
-                    </Button>
-                  </Block>
                   <Block middle>
                     <Button
                       color="primary"
                       style={styles.createButton}
-                      onPress={handleRegister}
+                      onPress={validation}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                         CREATE ACCOUNT
                       </Text>
                     </Button>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {registerError}
+                    </Text>
                   </Block>
                 </KeyboardAvoidingView>
               </Block>
@@ -461,6 +483,7 @@ const styles = StyleSheet.create({
     // marginTop: 25,
   },
   dropdown: {
+    marginBottom: 10,
     padding: 7,
     borderRadius: 4,
     borderColor: argonTheme.COLORS.INPUT_ERROR,
