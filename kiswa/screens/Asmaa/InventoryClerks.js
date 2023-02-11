@@ -69,15 +69,10 @@ const InventoryClerks = ({navigation}) => {
     readAllWhere();
   }, []);
    const [results, setResults] = useState(data)
-  // const [query, setQuery] = useState()
 
   const [workers, setWorkers] = useState([]);
   const [allWorkers, setAllWorkers] = useState([]);
  
-  
-  const showAlert = () => {
-    Alert.alert('Alert', 'Button pressed ')
-  }
 
    const readAllWhere = async () => {
     let temp = [];

@@ -24,6 +24,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Drivers from "../screens/Asmaa/Drivers";
 import AdminHome from "../screens/Asmaa/AdminHome";
 import DriverHome from "../screens/Asmaa/DriverHome";
+import AddDriver from "../screens/Asmaa/AddDriver";
 
 //invent
 import InventoryClerks from "../screens/Asmaa/InventoryClerks";
@@ -248,6 +249,8 @@ export default function OnboardingStack(props) {
 
       <Stack.Screen name="AddClerk" component={AddClerk} 
       options={{title: 'AddClerk'}}/>
+      <Stack.Screen name="AddDriver" component={AddDriver} 
+      options={{title: 'AddDriver'}}/>
 
 
 

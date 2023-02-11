@@ -25,7 +25,7 @@ import { db } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 
-const AddClerk = ({navigation}) => {
+const AddDriver = ({navigation}) => {
   const [Fname, setFname] = useState();
   const [Lname, setLname] = useState();
   const [phone, setPhone] = useState();
@@ -37,12 +37,12 @@ const AddClerk = ({navigation}) => {
 //   console.log('user logged in: ', user)
 
  const add = async () => {
-    const docRef = doc(db, "inventoryWorkers", email)
+    const docRef = doc(db, "drivers", email)
     await setDoc(docRef, { fname: Fname,
       email: email,
       lname: Lname,
       phone: phone,
-      })
+      zone:"" })
     console.log("Document written with ID: ", docRef.id);
     navigation.goBack()
   };
@@ -231,4 +231,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddClerk;
+export default AddDriver;

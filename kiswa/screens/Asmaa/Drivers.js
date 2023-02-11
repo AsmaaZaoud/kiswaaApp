@@ -8,10 +8,15 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {   View, Alert, TextInput, FlatList, TouchableOpacity , Table} from 'react-native'
 import { DataTable } from 'react-native-paper';
 
+//FireBase
+import { auth } from "../../config";
+
+import { doc, query, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
+import { db } from "../../config";
 //argon
 import { Images, argonTheme, articles } from "../../constants/";
 
@@ -92,12 +97,27 @@ const Drivers = ({navigation}) => {
     },
   ]
 
-  const [results, setResults] = useState(data)
-  const [query, setQuery] = useState()
+  useEffect(() => {
+    readAllWhere();
+  }, []);
 
-  const showAlert = () => {
-    Alert.alert('Alert', 'Button pressed ')
-  }
+  const [drivers, setDrivers] = useState([]);
+  const [allDrivers, setAllDrivers] = useState([]);
+ 
+
+   const readAllWhere = async () => {
+    let temp = [];
+    const q = query(collection(db, "drivers"));
+    const docs = await getDocs(q);
+    // console.log(docs)
+    docs.forEach((doc) => {
+      temp.push(doc.data());
+      console.log(doc.id, " => ", doc.data());
+    });
+    setDrivers(temp);
+    setAllDrivers(temp)
+    console.log(drivers);
+  };
 
     return (
       <Block flex >
@@ -128,35 +148,30 @@ const Drivers = ({navigation}) => {
 
     <Block style={styles.head}>
       <View style={{flexDirection:"row", justifyContent:"space-between"}}> 
-          <Button color="success"  style={{width:"30%"}}>Add </Button>    
+          <Button color="success"  style={{width:"30%"}} onPress={()=>navigation.navigate("AddDriver")}>Add </Button>    
            <Button color="info" style={{width:"30%"}}>Assign </Button>    
             <Button color="warning" style={{width:"30%"}}>Delete </Button>    
       </View>
         </Block>
 
-        <DataTable.Header >
-          <DataTable.Title style={{fontSize:20}}>Name</DataTable.Title>
-          <DataTable.Title>Email</DataTable.Title>
-          <DataTable.Title numeric>Age</DataTable.Title>
+        
+          <DataTable.Header style={{borderBottomWidth:1, borderBottomColor:"black"}}>
+          <DataTable.Title>Name</DataTable.Title>
+          <DataTable.Title >Email</DataTable.Title>
+          <DataTable.Title numeric>Phone</DataTable.Title>
+
         </DataTable.Header>
+ {drivers && drivers.map((x)=>
+   <DataTable.Row key={x.email}>
+             
+          <DataTable.Cell>{x.fname}</DataTable.Cell>
+          <DataTable.Cell>{x.email}</DataTable.Cell>
+          <DataTable.Cell numeric>{x.phone}</DataTable.Cell>
 
-        <DataTable.Row>
-          <DataTable.Cell>John</DataTable.Cell>
-          <DataTable.Cell>john@kindacode.com</DataTable.Cell>
-          <DataTable.Cell numeric>33</DataTable.Cell>
-        </DataTable.Row>
-
-        <DataTable.Row>
-          <DataTable.Cell>Bob</DataTable.Cell>
-          <DataTable.Cell>test@test.com</DataTable.Cell>
-          <DataTable.Cell numeric>105</DataTable.Cell>
-        </DataTable.Row>
-
-        <DataTable.Row>
-          <DataTable.Cell>Mei</DataTable.Cell>
-          <DataTable.Cell>mei@kindacode.com</DataTable.Cell>
-          <DataTable.Cell numeric>23</DataTable.Cell>
-        </DataTable.Row>
+     
+       </DataTable.Row>
+          
+        )}
 
       </DataTable>
      
