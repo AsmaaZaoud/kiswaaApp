@@ -25,6 +25,7 @@ import { db } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 
+
 const AddDriver = ({navigation}) => {
   const [Fname, setFname] = useState();
   const [Lname, setLname] = useState();
@@ -67,15 +68,15 @@ const AddDriver = ({navigation}) => {
               </Block>
                
    {/*------- Form ---------*/}
-                <Block flex center>
+                <Block flex  center >
                   <KeyboardAvoidingView
                     style={{ flex: 1 }}
                     behavior="padding"
                     enabled
                   >
-      <Block row width={width * 0.8} style={{ marginBottom: 5}}>
+      <Block  width={width * 0.8} style={{ marginBottom: 5,flexDirection:width>500?"row":""}}>
                    
-          <View style={{width:"50%", marginRight:5}}>
+          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
                     <Text style={styles.text}>First Name</Text>
                      < TextInput
                       style={styles.smallInput}
@@ -85,7 +86,7 @@ const AddDriver = ({navigation}) => {
                       />
           </View>
 
-          <View style={{width:"50%", marginLeft:15}}>
+          <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
                     <Text style={styles.text}>Last Name</Text>
                      < TextInput
                       style={styles.smallInput}
@@ -96,9 +97,9 @@ const AddDriver = ({navigation}) => {
           </View>
       </Block>
                     
-      <Block row width={width * 0.8} style={{ marginBottom: 15}}>
+      <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
                    
-          <View style={{width:"50%", marginRight:5}}>
+          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
                     <Text style={styles.text}>Email</Text>
                      < TextInput
                       style={styles.smallInput}
@@ -108,7 +109,7 @@ const AddDriver = ({navigation}) => {
                       />
           </View>
 
-         <View style={{width:"50%", marginLeft:15}}>
+         <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
                     <Text style={styles.text}>Phone</Text>
                      < TextInput
                       style={styles.smallInput}
