@@ -75,7 +75,7 @@ const Login = ({navigation}) => {
                       <Input
                         borderless
                         placeholder="Email"
-                         value={email}
+                        value={email}
                         onChangeText={setEmail}
                         iconContent={
                           <Icon

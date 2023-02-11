@@ -166,6 +166,7 @@ const LoginRegister = ({ navigation }) => {
                     <Button
                       color="primary"
                       style={styles.createButton}
+                      onPress={() => navigation.navigate("Home")}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                         Skip

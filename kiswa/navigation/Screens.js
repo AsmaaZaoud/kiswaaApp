@@ -219,6 +219,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="LoginRegister" component={LoginRegister} />
       <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="Home" component={Home} />
 
     </Stack.Navigator>
   );
