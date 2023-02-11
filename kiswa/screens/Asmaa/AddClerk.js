@@ -18,39 +18,35 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-// import { auth } from "../../config";
+import { auth } from "../../config";
 
-// import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
-// import { db } from "../../config";
+import { doc, setDoc, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
+import { db } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 
 const AddClerk = ({navigation}) => {
+  const [Fname, setFname] = useState();
+  const [Lname, setLname] = useState();
+  const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-    const [signedIn, setSignedIn] = useState(false);
+
 
 
 //  let user = auth?.currentUser?.email;
 //   console.log('user logged in: ', user)
 
-   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("Logged in");
-        console.log('handle login user: ', user)
-        setSignedIn(true);
-        
-        navigation.replace("App");
-        
-      })
-      .catch((error) => {
-        console.log(error.message);
-        alert(error.message);
-
-        setSignedIn(false);
-      });
+ const add = async () => {
+    const docRef = doc(db, "inventoryWorkers", email)
+    await setDoc(docRef, { fname: Fname,
+      email: email,
+      lname: Lname,
+      phone: phone,
+      zone:"" })
+    console.log("Document written with ID: ", docRef.id);
+    navigation.goBack()
   };
+   
   
     return (
       <Block flex middle>
@@ -84,8 +80,8 @@ const AddClerk = ({navigation}) => {
                      < TextInput
                       style={styles.smallInput}
                       placeholder="First Name"
-                      value={email}
-                      onChangeText={setEmail}
+                      value={Fname}
+                      onChangeText={setFname}
                       />
           </View>
 
@@ -94,8 +90,8 @@ const AddClerk = ({navigation}) => {
                      < TextInput
                       style={styles.smallInput}
                       placeholder="Last Name"
-                      value={email}
-                      onChangeText={setEmail}
+                      value={Lname}
+                      onChangeText={setLname}
                       />
           </View>
       </Block>
@@ -117,8 +113,8 @@ const AddClerk = ({navigation}) => {
                      < TextInput
                       style={styles.smallInput}
                       placeholder="66005500"
-                      value={email}
-                      onChangeText={setEmail}
+                      value={phone}
+                      onChangeText={setPhone}
                       />
           </View>
       </Block>
@@ -128,7 +124,7 @@ const AddClerk = ({navigation}) => {
                       <Button 
                       color="success" 
                       style={styles.createButton} 
-                      //onPress={handleLogin}
+                      onPress={add}
                       >
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Add
