@@ -5,7 +5,9 @@ import {
   Dimensions,
   StatusBar,
   KeyboardAvoidingView,
-  Image
+  Image,
+  TextInput,
+  View
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -53,10 +55,10 @@ const AddClerk = ({navigation}) => {
     return (
       <Block flex middle>
         <StatusBar hidden />
-        <ImageBackground
+        {/* <ImageBackground
           source={Images.RegisterBackground}
           style={{ width, height, zIndex: 1 }}
-        >
+        > */}
           <Block safe flex middle>
             <Block style={styles.registerContainer}>
              
@@ -70,52 +72,70 @@ const AddClerk = ({navigation}) => {
                     behavior="padding"
                     enabled
                   >
+
+                
                  
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Email"
-                         value={email}
-                        onChangeText={setEmail}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="ic_mail_24px"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                    </Block>
-                    <Block width={width * 0.8}>
-                      <Input
-                        password
-                        borderless
-                        placeholder="Password"
-                         value={password}
-                        onChangeText={setPassword}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="padlock-unlocked"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                     
-                    </Block>
+                    <Block row width={width * 0.8} style={{ marginBottom: 5}}>
                    
-                    <Block middle>
+                   <View style={{width:"50%", marginRight:5}}>
+                    <Text style={styles.text}>First Name</Text>
+                     < TextInput
+                      style={styles.smallInput}
+                      placeholder="First Name"
+                      value={email}
+                      onChangeText={setEmail}
+                      />
+                      </View>
+
+                       <View style={{width:"50%", marginLeft:15}}>
+                    <Text style={styles.text}>Last Name</Text>
+                     < TextInput
+                      style={styles.smallInput}
+                      placeholder="Last Name"
+                      value={email}
+                      onChangeText={setEmail}
+                      />
+                      </View>
+                   
+                     
+                      
+                    </Block>
+                    
+                   <Block row width={width * 0.8} style={{ marginBottom: 15}}>
+                   
+                   <View style={{width:"50%", marginRight:5}}>
+                    <Text style={styles.text}>Email</Text>
+                     < TextInput
+                      style={styles.smallInput}
+                      placeholder="abc@example"
+                      value={email}
+                      onChangeText={setEmail}
+                      />
+                      </View>
+
+
+                  <View style={{width:"50%", marginLeft:15}}>
+                    <Text style={styles.text}>Phone</Text>
+                     < TextInput
+                      style={styles.smallInput}
+                      placeholder="66005500"
+                      value={email}
+                      onChangeText={setEmail}
+                      />
+                  </View>
+                   
+                     
+                      
+                      
+                    </Block>
+                    <Block right width={width*0.8}>
                       <Button 
                       color="primary" 
                       style={styles.createButton} 
                       onPress={handleLogin}
                       >
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Log In
+                          Add
                         </Text>
                       </Button>
                     </Block>
@@ -124,13 +144,32 @@ const AddClerk = ({navigation}) => {
               </Block>
             </Block>
           </Block>
-        </ImageBackground>
+        {/* </ImageBackground> */}
       </Block>
     );
   
 }
 
 const styles = StyleSheet.create({
+  smallInput:{
+    width:"100%",
+     backgroundColor:"white",
+      borderRadius:10,
+      padding:15,
+      fontSize:20,
+      borderWidth:1
+  },
+  bigInput:{
+    width:"100%",
+    height:"200%",
+
+     backgroundColor:"white", 
+     borderRadius:10,
+      padding:5
+    },
+    text:{
+      fontSize:20
+    },
   registerContainer: {
     width: width * 0.9,
     height: height * 0.875,
@@ -178,9 +217,11 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   createButton: {
-    width: width * 0.5,
+    width: width * 0.3,
     marginTop: 25
-  }
+  },
+ 
+    
 });
 
 export default AddClerk;
