@@ -162,11 +162,14 @@ const LoginRegister = ({ navigation }) => {
 
 
                   {/* skip button */}
+                  {/* skip button will be disabled in the beginning. user has to choose either donor or receiver */}
+                  {/* once the user selects one of them, the skip button will be enabled */}
+                  {/* depending on the option, the user will get taken to a different home page with different screens and functions */}
                   <Block middle>
                     <Button
                       color="primary"
                       style={styles.createButton}
-                      onPress={() => navigation.navigate("Home")}
+                      onPress={() => navigation.replace("App")}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                         Skip
