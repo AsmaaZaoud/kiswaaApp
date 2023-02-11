@@ -54,10 +54,10 @@ const AddClerk = ({navigation}) => {
   
     return (
       <Block flex middle>
-        <StatusBar hidden />
-        
-          <Block safe flex middle>
-
+        {/* <StatusBar hidden /> */}
+       
+          <Block safe flex style={{marginTop:50}}>
+             <Text style={{fontSize:30}}>Add</Text>
             <Block style={styles.registerContainer}>
               <Block flex>
         
@@ -77,13 +77,9 @@ const AddClerk = ({navigation}) => {
                     behavior="padding"
                     enabled
                   >
-
-       
-                
-                 
-                    <Block row width={width * 0.8} style={{ marginBottom: 5}}>
+      <Block row width={width * 0.8} style={{ marginBottom: 5}}>
                    
-                   <View style={{width:"50%", marginRight:5}}>
+          <View style={{width:"50%", marginRight:5}}>
                     <Text style={styles.text}>First Name</Text>
                      < TextInput
                       style={styles.smallInput}
@@ -91,9 +87,9 @@ const AddClerk = ({navigation}) => {
                       value={email}
                       onChangeText={setEmail}
                       />
-                      </View>
+          </View>
 
-                       <View style={{width:"50%", marginLeft:15}}>
+          <View style={{width:"50%", marginLeft:15}}>
                     <Text style={styles.text}>Last Name</Text>
                      < TextInput
                       style={styles.smallInput}
@@ -101,15 +97,12 @@ const AddClerk = ({navigation}) => {
                       value={email}
                       onChangeText={setEmail}
                       />
-                      </View>
-                   
-                     
-                      
-                    </Block>
+          </View>
+      </Block>
                     
-                   <Block row width={width * 0.8} style={{ marginBottom: 15}}>
+      <Block row width={width * 0.8} style={{ marginBottom: 15}}>
                    
-                   <View style={{width:"50%", marginRight:5}}>
+          <View style={{width:"50%", marginRight:5}}>
                     <Text style={styles.text}>Email</Text>
                      < TextInput
                       style={styles.smallInput}
@@ -117,10 +110,9 @@ const AddClerk = ({navigation}) => {
                       value={email}
                       onChangeText={setEmail}
                       />
-                      </View>
+          </View>
 
-
-                  <View style={{width:"50%", marginLeft:15}}>
+         <View style={{width:"50%", marginLeft:15}}>
                     <Text style={styles.text}>Phone</Text>
                      < TextInput
                       style={styles.smallInput}
@@ -128,13 +120,11 @@ const AddClerk = ({navigation}) => {
                       value={email}
                       onChangeText={setEmail}
                       />
-                  </View>
-                   
-                     
-                      
-                      
-                    </Block>
-                    <Block right width={width*0.8} style={{flexDirection:"row"}} >
+          </View>
+      </Block>
+      
+      {/*--------- Buttons ----------*/}
+      <Block right width={width*0.8} style={{flexDirection:"row"}} >
                       <Button 
                       color="success" 
                       style={styles.createButton} 
@@ -146,7 +136,7 @@ const AddClerk = ({navigation}) => {
                       </Button>
                        <Button 
                       style={styles.cancelButton} 
-                      //onPress={handleLogin}
+                      onPress={()=>navigation.goBack()}
                       >
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Cancel
