@@ -55,17 +55,22 @@ const AddClerk = ({navigation}) => {
     return (
       <Block flex middle>
         <StatusBar hidden />
-        {/* <ImageBackground
-          source={Images.RegisterBackground}
-          style={{ width, height, zIndex: 1 }}
-        > */}
+        
           <Block safe flex middle>
+
             <Block style={styles.registerContainer}>
-             
               <Block flex>
-                <Block flex={0.17} middle>
-                  <Image source={Images.Logo} />
-                </Block>
+        
+              
+              <Block center width={width*0.4} style={styles.box}>
+                   <Image
+                   style={styles.profileImage}
+                     source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }}
+                   />
+                     <Text style={styles.name}>John Doe</Text>
+              </Block>
+               
+   {/*------- Form ---------*/}
                 <Block flex center>
                   <KeyboardAvoidingView
                     style={{ flex: 1 }}
@@ -73,6 +78,7 @@ const AddClerk = ({navigation}) => {
                     enabled
                   >
 
+       
                 
                  
                     <Block row width={width * 0.8} style={{ marginBottom: 5}}>
@@ -128,23 +134,32 @@ const AddClerk = ({navigation}) => {
                       
                       
                     </Block>
-                    <Block right width={width*0.8}>
+                    <Block right width={width*0.8} style={{flexDirection:"row"}} >
                       <Button 
-                      color="primary" 
+                      color="success" 
                       style={styles.createButton} 
-                      onPress={handleLogin}
+                      //onPress={handleLogin}
                       >
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Add
                         </Text>
                       </Button>
+                       <Button 
+                      style={styles.cancelButton} 
+                      //onPress={handleLogin}
+                      >
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Cancel
+                        </Text>
+                      </Button>
                     </Block>
                   </KeyboardAvoidingView>
                 </Block>
+
+
               </Block>
             </Block>
           </Block>
-        {/* </ImageBackground> */}
       </Block>
     );
   
@@ -159,14 +174,7 @@ const styles = StyleSheet.create({
       fontSize:20,
       borderWidth:1
   },
-  bigInput:{
-    width:"100%",
-    height:"200%",
-
-     backgroundColor:"white", 
-     borderRadius:10,
-      padding:5
-    },
+ 
     text:{
       fontSize:20
     },
@@ -185,29 +193,7 @@ const styles = StyleSheet.create({
     elevation: 1,
     overflow: "hidden"
   },
-  socialConnect: {
-    backgroundColor: argonTheme.COLORS.WHITE,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: "#8898AA"
-  },
-  socialButtons: {
-    width: 120,
-    height: 40,
-    backgroundColor: "#fff",
-    shadowColor: argonTheme.COLORS.BLACK,
-    shadowOffset: {
-      width: 0,
-      height: 4
-    },
-    shadowRadius: 8,
-    shadowOpacity: 0.1,
-    elevation: 1
-  },
-  socialTextButtons: {
-    color: argonTheme.COLORS.PRIMARY,
-    fontWeight: "800",
-    fontSize: 14
-  },
+  
   inputIcons: {
     marginRight: 12
   },
@@ -217,11 +203,46 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   createButton: {
-    width: width * 0.3,
-    marginTop: 25
+    width: width * 0.2,
+    marginTop: 25,
+
+  },
+   cancelButton: {
+    width: width * 0.2,
+    marginTop: 25,
+  backgroundColor: theme.COLORS.MUTED    
   },
  
-    
+    imageContainer:{
+      width:"100%",
+      height:"20%",
+      borderWidth:2
+    },
+    box: {
+    marginTop: 10,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
+    shadowOffset: {
+      height: 1,
+      width: -2,
+    },
+    elevation: 2,
+    paddingTop: 10,
+    paddingBottom:0
+  },
+  profileImage: {
+    width: width*0.3,
+    height: width*0.3,
+    marginBottom: 0,
+  },
+  name: {
+    fontSize: 35,
+    marginBottom: 0,
+    fontWeight: 'bold',
+    color: '#1E90FF',
+  },
 });
 
 export default AddClerk;
