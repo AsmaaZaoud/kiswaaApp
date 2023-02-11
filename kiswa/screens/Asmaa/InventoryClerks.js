@@ -8,10 +8,14 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {   View, Alert, TextInput, FlatList, TouchableOpacity , Table} from 'react-native'
 import { DataTable } from 'react-native-paper';
 
+import { auth } from "../../config";
+
+import { doc, query, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
+import { db } from "../../config";
 //argon
 import { Images, argonTheme, articles } from "../../constants/";
 
@@ -61,15 +65,33 @@ const InventoryClerks = ({navigation}) => {
     
     
   ]
-
+ useEffect(() => {
+    readAllWhere();
+  }, []);
    const [results, setResults] = useState(data)
-  const [query, setQuery] = useState()
+  // const [query, setQuery] = useState()
 
-
+  const [workers, setWorkers] = useState([]);
+  const [allWorkers, setAllWorkers] = useState([]);
+ 
   
   const showAlert = () => {
     Alert.alert('Alert', 'Button pressed ')
   }
+
+   const readAllWhere = async () => {
+    let temp = [];
+    const q = query(collection(db, "inventoryWorkers"));
+    const docs = await getDocs(q);
+    // console.log(docs)
+    docs.forEach((doc) => {
+      temp.push(doc.data());
+      console.log(doc.id, " => ", doc.data());
+    });
+    setWorkers(temp);
+    setAllWorkers(temp)
+    console.log(workers);
+  };
 
     return (
       <Block flex >
@@ -114,13 +136,15 @@ const InventoryClerks = ({navigation}) => {
                  <DataTable.Title numeric>Age</DataTable.Title>
 
         </DataTable.Header>
- {data.map((x)=>
-   <DataTable.Row key={x.id}>
-              <DataTable.Cell ><Image source={{ uri: x.image }} style={{width:50,height:50, borderRadius:25}}/></DataTable.Cell>
+ {workers && workers.map((x)=>
+   <DataTable.Row key={x.email}>
+              {/* <DataTable.Cell > */}
+                {/* <Image source={{ uri: x.image }} style={{width:50,height:50, borderRadius:25}}/></DataTable.Cell> */}
 
-          <DataTable.Cell>{x.id}</DataTable.Cell>
-          <DataTable.Cell>{x.name}</DataTable.Cell>
-          <DataTable.Cell numeric>33</DataTable.Cell>
+          <DataTable.Cell>{x.email}</DataTable.Cell>
+          <DataTable.Cell>{x.fname}</DataTable.Cell>
+          <DataTable.Cell>{x.phone}</DataTable.Cell>
+
      
        </DataTable.Row>
           
