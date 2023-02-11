@@ -4,17 +4,51 @@ import {
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Image
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 
+import { useState, useEffect } from "react";
+
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../config";
+
+import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import { db } from "../config";
+
 const { width, height } = Dimensions.get("screen");
 
-class Register extends React.Component {
-  render() {
+const Register = ({ navigation }) => {
+
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [name, setName] = useState();
+  const [signedIn, setSignedIn] = useState(false);
+  const [flag, setflag] = useState(0);
+
+  let user = auth?.currentUser?.email;
+  console.log('user logged in: ', user)
+
+  const handleRegister = () => {
+    setflag(0);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => 
+      console.log("registered"),
+      navigation.navigate("Login")
+      )
+      .catch((error) => console.log(error.message));
+  };
+
+
+  // render() {
     return (
       <Block flex middle>
         <StatusBar hidden />
@@ -24,11 +58,11 @@ class Register extends React.Component {
         >
           <Block safe flex middle>
             <Block style={styles.registerContainer}>
-              <Block flex={0.25} middle style={styles.socialConnect}>
-                <Text color="#8898AA" size={12}>
+              {/* <Block flex={0.25} middle style={styles.socialConnect}> */}
+              {/* <Text color="#8898AA" size={12}>
                   Sign up with
-                </Text>
-                <Block row style={{ marginTop: theme.SIZES.BASE }}>
+                </Text> */}
+              {/* <Block row style={{ marginTop: theme.SIZES.BASE }}>
                   <Button style={{ ...styles.socialButtons, marginRight: 30 }}>
                     <Block row>
                       <Icon
@@ -53,13 +87,20 @@ class Register extends React.Component {
                       <Text style={styles.socialTextButtons}>GOOGLE</Text>
                     </Block>
                   </Button>
-                </Block>
-              </Block>
-              <Block flex>
-                <Block flex={0.17} middle>
-                  <Text color="#8898AA" size={12}>
-                    Or sign up the classic way
+                </Block> */}
+              {/* </Block> */}
+
+              <Block style={{alignSelf: 'center'}}>
+                  <Image
+                    style={{ width: 150, height: 150 }}
+                    source={require('../Images/donate.png')} />
+                  </Block>
+                  <Text size={20} style={{alignSelf: 'center', padding: 20}}>
+                    SIGN UP AS A DONOR
                   </Text>
+
+              <Block flex>
+                <Block middle >
                 </Block>
                 <Block flex center>
                   <KeyboardAvoidingView
@@ -71,6 +112,8 @@ class Register extends React.Component {
                       <Input
                         borderless
                         placeholder="Name"
+                        value={name}
+                        onChangeText={setName}
                         iconContent={
                           <Icon
                             size={16}
@@ -86,6 +129,8 @@ class Register extends React.Component {
                       <Input
                         borderless
                         placeholder="Email"
+                        value={email}
+                        onChangeText={setEmail}
                         iconContent={
                           <Icon
                             size={16}
@@ -97,11 +142,14 @@ class Register extends React.Component {
                         }
                       />
                     </Block>
+
                     <Block width={width * 0.8}>
                       <Input
                         password
                         borderless
                         placeholder="Password"
+                        value={password}
+                        onChangeText={setPassword}
                         iconContent={
                           <Icon
                             size={16}
@@ -113,13 +161,13 @@ class Register extends React.Component {
                         }
                       />
                       <Block row style={styles.passwordCheck}>
-                        <Text size={12} color={argonTheme.COLORS.MUTED}>
+                        {/* <Text size={12} color={argonTheme.COLORS.MUTED}>
                           password strength:
                         </Text>
                         <Text bold size={12} color={argonTheme.COLORS.SUCCESS}>
                           {" "}
                           strong
-                        </Text>
+                        </Text> */}
                       </Block>
                     </Block>
                     <Block row width={width * 0.75}>
@@ -142,7 +190,7 @@ class Register extends React.Component {
                       </Button>
                     </Block>
                     <Block middle>
-                      <Button color="primary" style={styles.createButton}>
+                      <Button color="primary" style={styles.createButton} onPress={handleRegister}>
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           CREATE ACCOUNT
                         </Text>
@@ -156,7 +204,7 @@ class Register extends React.Component {
         </ImageBackground>
       </Block>
     );
-  }
+  // }
 }
 
 const styles = StyleSheet.create({
