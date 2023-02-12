@@ -62,7 +62,7 @@ const Login = ({navigation}) => {
              
               <Block flex>
                 <Block flex={0.17} middle>
-                  <Image source={Images.Logo} />
+                  {/* <Image source={Images.Logo} /> */}
                 </Block>
                 <Block flex center>
                   <KeyboardAvoidingView

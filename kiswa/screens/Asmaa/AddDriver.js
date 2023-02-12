@@ -80,7 +80,7 @@ const AddDriver = ({navigation}) => {
                     <Text style={styles.text}>First Name</Text>
                      < TextInput
                       style={styles.smallInput}
-                      placeholder="First Name"
+                      placeholder="Joe"
                       value={Fname}
                       onChangeText={setFname}
                       />
@@ -90,7 +90,7 @@ const AddDriver = ({navigation}) => {
                     <Text style={styles.text}>Last Name</Text>
                      < TextInput
                       style={styles.smallInput}
-                      placeholder="Last Name"
+                      placeholder="Grek"
                       value={Lname}
                       onChangeText={setLname}
                       />
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
       borderRadius:10,
       padding:15,
       fontSize:20,
-      borderWidth:1
+      borderWidth:0.3
   },
  
     text:{

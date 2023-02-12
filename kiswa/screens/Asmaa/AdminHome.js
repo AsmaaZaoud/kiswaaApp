@@ -40,7 +40,7 @@ const AdminHome = ({navigation}) => {
         
       <Block flex center style={styles.home}>
 
-        <HeaderRNE backgroundColor={theme.COLORS.DRIBBBLE}
+        <HeaderRNE backgroundColor={theme.COLORS.BLUE}
       leftComponent={{
         icon: 'menu',
         color: '#fff',
