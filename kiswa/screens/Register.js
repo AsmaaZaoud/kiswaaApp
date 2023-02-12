@@ -52,6 +52,8 @@ const Register = ({ navigation }) => {
 
   const [registerError, setRegisteerError] = useState("");
 
+  const [stat, setStat] = useState("denid");
+
   let user = auth?.currentUser?.email;
   console.log('user logged in: ', user)
 
@@ -63,8 +65,8 @@ const Register = ({ navigation }) => {
         navigation.navigate("Login")
       )
       .catch((error) => {
-      console.log(error.message)
-      setRegisteerError("Email is already in use");
+        console.log(error.message)
+        setRegisteerError("Email is already in use");
       }
       );
   };
@@ -115,11 +117,13 @@ const Register = ({ navigation }) => {
       console.log(status);
       if (status !== "granted") {
         console.log("Please grant location permissions");
+        //console.log('location', location)
         return;
       }
 
       let currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
+      //console.log('location', location)
     };
     getPermissions();
   };
@@ -217,7 +221,7 @@ const Register = ({ navigation }) => {
                         />
                       }
                     />
-                                        <Text
+                    <Text
                       style={{
                         textAlign: "center",
                         color: "red",
@@ -228,25 +232,26 @@ const Register = ({ navigation }) => {
                     </Text>
                   </Block>
                   <Block width={width * 0.35} style={{ marginBottom: 10 }}>
-                      <Button
-                        color={stat !== "granted" ? "default" : "primary"}
-                        style={styles.createButton}
-                        onPress={getLocation}
-                      >
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Location
-                        </Text>
-                      </Button>
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          color: "red",
-                          fontSize: 12,
-                        }}
-                      >
-                        {locationError}
+                    <Button
+                      color={stat !== "granted" ? "default" : "primary"}
+                      style={styles.createButton}
+                      onPress={getLocation}
+                    >
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        Location
                       </Text>
-                    </Block>
+                    </Button>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {locationError}
+                    </Text>
+
+                  </Block>
                   <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                     <Input
                       borderless
@@ -263,7 +268,7 @@ const Register = ({ navigation }) => {
                         />
                       }
                     />
-                                        <Text
+                    <Text
                       style={{
                         textAlign: "center",
                         color: "red",
@@ -289,7 +294,7 @@ const Register = ({ navigation }) => {
                         />
                       }
                     />
-                                        <Text
+                    <Text
                       style={{
                         textAlign: "center",
                         color: "red",
@@ -317,7 +322,7 @@ const Register = ({ navigation }) => {
                         />
                       }
                     />
-                                        <Text
+                    <Text
                       style={{
                         textAlign: "center",
                         color: "red",
