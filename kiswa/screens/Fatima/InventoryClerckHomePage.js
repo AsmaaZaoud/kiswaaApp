@@ -32,7 +32,16 @@ const cardWidth = width - theme.SIZES.BASE * 2;
 
 // //////// DB ///////////
 import { db } from "../../config";
-import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  getDocs,
+  setDocs,
+  addDoc,
+  onSnapshot,
+} from "firebase/firestore";
 import { Button } from "@rneui/base";
 import { Touchable } from "react-native";
 import Theme from "../../constants/Theme";
@@ -40,65 +49,80 @@ import Theme from "../../constants/Theme";
 const reformat = (doc) => {
   return { id: doc.id, ...doc.data() };
 };
-// const [items, setItems] = useState([]);
-const findAll = async () => {
-  // const data = await db.collection(this.collection).get()
-  const data = await getDocs(collection(db, "inventory"));
-  // console.log(reformat);
-  return data.docs.map(reformat);
-};
-// useEffect(() => {
-//   const getItems = async () => {
-//     let temp = await findAll();
-//     setItems(temp);
-//   };
-//   getItems();
-// }, []);
 
 const InventoryClerkHomePage = () => {
   // const
-  const [selectedItem, setSelectedItem] = useState([]);
+  const [ID, setID] = useState(1);
+  const [selectedItem, setSelectedItem] = useState();
   const [items, setItems] = useState([]);
   const [type, setType] = useState("");
   const [size, setSize] = useState("");
   const [quality, setQuality] = useState("");
   const [color, setColor] = useState("");
+  const [gender, setGender] = useState("");
   // ////////////////////////////////////////// //
   // DB
+  // const docRef = doc(db, "inventory", selectedItem);
   // Read All
   const findAll = async () => {
     const data = await getDocs(collection(db, "inventory"));
     // console.log(reformat);
     return data.docs.map(reformat);
   };
+
   useEffect(() => {
     const getItems = async () => {
       let temp = await findAll();
       setItems(temp);
+      // console.log(temp);
     };
     getItems();
+    console.log(items);
   }, []);
-
-  // Update
-  const update = async () => {
-    // const { id, ...rest } = itemID;
-    console.log(selectedItem);
-    await setDoc(docRef, (db, "inventory"), selectedItem[id], {
-      merge: true,
-    }).update({
-      // id: itemID,
+  // add item
+  const set = async () => {
+    // const docRef = doc(db, "inventory");
+    await addDoc(collection(db, "inventory"), {
+      // id: id,
+      // id: id,
       type: type,
       size: size,
       quality: quality,
       color: color,
-    });
-    setModalVisible(!modalVisible);
+      gender: gender,
+      available: true,
+    })
+      .then(() => {
+        console.log("data submitted");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    setType("");
+    setSize("");
+    setQuality("");
+    setColor("");
+    setGender("");
   };
 
-  const set = async () => {
-    const docRef = doc(db, "users", name);
-
-    await setDoc(docRef, { name: name, email: email })
+  // Update -- edit
+  const update = async () => {
+    // const { id, ...rest } = itemID;
+    // const docRef = doc(db, "inventory");
+    await setDocs(
+      collection(db, "inventory"),
+      selectedItem.id,
+      {
+        type: type,
+        size: size,
+        quality: quality,
+        color: color,
+        available: "available",
+      },
+      {
+        merge: true,
+      }
+    )
       .then(() => {
         console.log("data submitted");
       })
@@ -143,17 +167,56 @@ const InventoryClerkHomePage = () => {
     { label: "T-Shirt", value: "T-Shirt" },
     { label: "Waistcoat", value: "Waistcoat" },
   ];
+  const SizeData = [
+    { label: "XS", value: "XS" },
+    { label: "S", value: "S" },
+    { label: "M", value: "M" },
+    { label: "L", value: "L" },
+    { label: "XL", value: "XL" },
+    { label: "XXL", value: "XXL" },
+    { label: "3XL", value: "3XL" },
+    { label: "4XL", value: "4XL" },
+    { label: "5XL", value: "5XL" },
+  ];
+  const ColorData = [
+    { label: "Black", value: "Black" },
+    { label: "White", value: "White" },
+    { label: "Colorful", value: "White" },
+    // { label: "", value: "" },
+    // { label: "", value: "" },
+    // { label: "", value: "" },
+    // { label: "", value: "" },
+    // { label: "", value: "" },
+    // { label: "", value: "" },
+  ];
+  const GenderData = [
+    { label: "Female", value: "Female" },
+    { label: "Male", value: "Male" },
+  ];
+  const QualityData = [
+    { label: "New", value: "New" },
+    { label: "Good", value: "Good" },
+    { label: "Bad", value: "Bad" },
+  ];
   // edit modal
-  const [modalVisible, setModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [addModalVisible, setAddModalVisible] = useState(false);
 
   // console.log(items);
+  // listener
+  // useEffect(() => {
+  //   //get all resturants from db
+  //   onSnapshot(collection(db, "inventory"), (snap) =>
+  //     set(snap.docs.map("inventory"))
+  //   );
+  // }, [items]);
   return (
     <SafeAreaView>
-      <Card>
+      <Card style={{ overflow: "visible", justifyContent: "space-evenly" }}>
         <Button
           shadowless
           color={Theme.COLORS.SUCCESS}
-          // onPress={() => navigation.navigate('CustomerOrders')}
+          onPress={() => setAddModalVisible(!addModalVisible)}
           style={{ alignSelf: "right", marginLeft: "1%", marginBottom: "2%" }}
         >
           Add Item
@@ -165,9 +228,10 @@ const InventoryClerkHomePage = () => {
             <DataTable.Title>Type</DataTable.Title>
             <DataTable.Title>Size</DataTable.Title>
             <DataTable.Title>Color</DataTable.Title>
+            <DataTable.Title>Gender</DataTable.Title>
             <DataTable.Title>Quality</DataTable.Title>
             <DataTable.Title>Availability</DataTable.Title>
-            <DataTable.Title>Edit</DataTable.Title>
+            <DataTable.Title></DataTable.Title>
           </DataTable.Header>
           {items.map((i) => (
             <DataTable.Row style={{ height: "1%" }}>
@@ -175,19 +239,20 @@ const InventoryClerkHomePage = () => {
               <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
               <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
               <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>
+              <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
               <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
               {/* hide not availabe items */}
               {/* {i.available == true ? <DataTable.Cell>Available</DataTable.Cell> : null} */}
               <DataTable.Cell>
                 {i.available == true ? "Available" : "Not-Available"}
               </DataTable.Cell>
-              <DataTable.Cell>
+              <DataTable.Cell numeric>
                 {" "}
                 <Button
                   shadowless
                   color={Theme.COLORS.ERROR}
                   onPress={() => {
-                    setModalVisible(!modalVisible),
+                    setModalVisible(!editModalVisible),
                       setSelectedItem({
                         id: i.id,
                         // type: i.type,
@@ -210,8 +275,134 @@ const InventoryClerkHomePage = () => {
           ))}
         </DataTable>
       </Card>
-      {/* Modal */}
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+      {/* Add Data Modal */}
+      <Modal animationType="slide" transparent={true} visible={addModalVisible}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            {/* <Text>Type</Text> */}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={ClothTypeData}
+              labelField="label"
+              valueField="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={type}
+              placeholder={"Type"}
+              onChange={(item) => {
+                setType(item.value);
+              }}
+            />
+            {/* <Text>Size</Text> */}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={SizeData}
+              labelField="label"
+              valueField="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={size}
+              placeholder={"Size"}
+              onChange={(item) => {
+                setSize(item.value);
+              }}
+            />
+            {/* <Text>Color</Text> */}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={ColorData}
+              labelField="label"
+              valueField="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={color}
+              placeholder={"Color"}
+              onChange={(item) => {
+                setColor(item.value);
+              }}
+            />
+            {/* <Text>Gender</Text> */}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={GenderData}
+              labelField="label"
+              valueField="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={gender}
+              placeholder={"Gender"}
+              onChange={(item) => {
+                setGender(item.value);
+              }}
+            />
+            {/* <Text>Quality</Text> */}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={QualityData}
+              labelField="label"
+              valueField="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={quality}
+              placeholder={"Quality"}
+              // placeholder={selectedItem.type}
+              // selectedItem={type? type:null}
+              onChange={(item) => {
+                setQuality(item.value);
+                // items.map((i) =>
+                //   i.id == selectedItem[id] ? (i.type = type) : null
+                // );
+                // ,setSelectedItem("type"[type]);
+              }}
+            />
+            <Pressable
+              color={Theme.COLORS.PRIMARY}
+              style={[styles.button]}
+              onPress={() => {
+                // update(selectedItem.id),
+                // console.log(selectedItem.id);
+                setAddModalVisible(!addModalVisible), set();
+                // items.map((i) =>
+                //   selectedItem[id] == i.id ? update(selectedItem[id]) : null
+                // );
+              }}
+            >
+              <Text style={{ color: "white", alignSelf: "center" }}>Done</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      {/* Update Data Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={editModalVisible}
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text>Type</Text>
@@ -227,34 +418,22 @@ const InventoryClerkHomePage = () => {
               // placeholder={selectedItem.type}
               selectedItem={type}
               onChange={(item) => {
-                setType(item.value),
-                  items.map((i) =>
-                    i.id == selectedItem ? (i.type = type) : null
-                  );
+                setType(item.value);
+                // items.map((i) =>
+                //   i.id == selectedItem[id] ? setType()(i.type = type) : null
+                // );
                 // ,setSelectedItem("type"[type]);
               }}
             />
-
-            {/* <Picker
-              selectedItem={selectedItem.type}
-              onValueChange={(item) => setType(item)}
-              numberOfLines={1}
-            >
-              <Picker.Item label="T-Shirt" value="T-Shirt" />
-              <Picker.Item label="Pants" value="Pants" />
-              <Picker.Item label="Blouse" value="Blouse" />
-              <Picker.Item label="C#" value="C#" />
-              <Picker.Item label="Java Script" value="Java Sript" />
-            </Picker> */}
-            {/* <Text>{selectedItem.id}</Text> */}
             <Pressable
               color={Theme.COLORS.PRIMARY}
               style={[styles.button]}
               onPress={() => {
                 // update(selectedItem.id),
-                setModalVisible(!modalVisible);
+                // console.log(selectedItem.id);
+                setEditModalVisible(!editMdalVisible);
                 items.map((i) =>
-                  selectedItem.id == i.id ? update(selectedItem.id) : null
+                  selectedItem[id] == i.id ? update(selectedItem[id]) : null
                 );
               }}
             >
@@ -322,11 +501,12 @@ const styles = StyleSheet.create({
     marginTop: 170,
   },
   modalView: {
-    margin: 20,
-    width: 350,
+    // flexDirection: "row",
+    // margin: 20,
+    width: "90%",
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: "5%",
     alignSelf: "center",
     // alignItems: "center",
     shadowColor: "#000",
@@ -338,21 +518,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  input: {
-    height: 40,
-    margin: 5,
-    width: "100%",
-    borderWidth: 1,
-    padding: 10,
-    borderColor: "grey",
-    color: "#666666",
-  },
-  modalInput: {
-    color: "#663366",
-    alignSelf: "left",
-    fontSize: 18,
-    margin: 5,
-  },
   button: {
     borderRadius: 2,
     width: 100,
@@ -361,6 +526,39 @@ const styles = StyleSheet.create({
     backgroundColor: "#5E72E4",
 
     alignSelf: "center",
+  },
+  dropdown: {
+    margin: "2%",
+    height: "10%",
+    backgroundColor: "white",
+    borderRadius: 12,
+    padding: "1.2%",
+    // width: "20%",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+    // justifyContent: "center",
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    // justifyContent: "center",
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    // backgroundColor: "#F5F5F5",
+    // height: "90%",
+    // justifyContent: "center",
+  },
+  inputSearchStyle: {
+    height: "4%",
+    fontSize: 16,
   },
   //   productImage: {
   //     width: cardWidth - theme.SIZES.BASE,
