@@ -34,6 +34,10 @@ const Register = ({ navigation }) => {
   const [signedIn, setSignedIn] = useState(false);
   const [flag, setflag] = useState(0);
 
+  const [location, setLocation] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [phone, setPhone] = useState()
+
   let user = auth?.currentUser?.email;
   console.log('user logged in: ', user)
 
@@ -120,6 +124,40 @@ const Register = ({ navigation }) => {
                             color={argonTheme.COLORS.ICON}
                             name="hat-3"
                             family="ArgonExtra"
+                            style={styles.inputIcons}
+                          />
+                        }
+                      />
+                    </Block>
+                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                      <Input
+                        borderless
+                        placeholder="Location"
+                        value={location}
+                        onChangeText={setLocation}
+                        iconContent={
+                          <Icon
+                            size={16}
+                            color={argonTheme.COLORS.ICON}
+                            name="location-pin"
+                            family="Entypo"
+                            style={styles.inputIcons}
+                          />
+                        }
+                      />
+                    </Block>
+                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                      <Input
+                        borderless
+                        placeholder="Phone Number"
+                        value={phone}
+                        onChangeText={setPhone}
+                        iconContent={
+                          <Icon
+                            size={16}
+                            color={argonTheme.COLORS.ICON}
+                            name="phone"
+                            family="AntDesign"
                             style={styles.inputIcons}
                           />
                         }
