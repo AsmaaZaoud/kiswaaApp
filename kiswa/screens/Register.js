@@ -29,14 +29,22 @@ const Register = ({ navigation }) => {
 
 
   const [email, setEmail] = useState();
+  const [emailError, setEmailError] = useState("");
+
   const [password, setPassword] = useState();
+  const [passError, setPassError] = useState("");
+
   const [name, setName] = useState();
+  const [nameError, setNameError] = useState();
+
   const [signedIn, setSignedIn] = useState(false);
   const [flag, setflag] = useState(0);
 
   const [location, setLocation] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
-  const [phone, setPhone] = useState()
+  const [locationError, setLocationError] = useState("");
+
+  const [phone, setPhone] = useState();
+  const [phoneError, setPhoneError] = useState("");
 
   let user = auth?.currentUser?.email;
   console.log('user logged in: ', user)
@@ -50,6 +58,10 @@ const Register = ({ navigation }) => {
       )
       .catch((error) => console.log(error.message));
   };
+
+  const validation = async () => {
+
+  }
 
 
   // render() {
@@ -228,7 +240,7 @@ const Register = ({ navigation }) => {
                       </Button>
                     </Block>
                     <Block middle>
-                      <Button color="primary" style={styles.createButton} onPress={handleRegister}>
+                      <Button color="primary" style={styles.createButton} onPress={validation}>
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           CREATE ACCOUNT
                         </Text>
