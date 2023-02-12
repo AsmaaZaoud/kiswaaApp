@@ -24,11 +24,26 @@ import { db } from "../../config";
 const { width, height } = Dimensions.get("screen");
 
 const Login = ({navigation}) => {
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+
   const [password, setPassword] = useState();
-    const [signedIn, setSignedIn] = useState(false);
+  const [passErro, setPassError] = useState("");
 
+  const [signedIn, setSignedIn] = useState(false);
 
+const valid = (x,type) =>{
+  if (type == "mail") {
+    if (x != "" &&  x.includes("@") && x.includes(".com")) {
+      setEmailError(true)
+    }
+    else{
+
+      setEmailError(false)
+    }
+  }
+
+}
  let user = auth?.currentUser?.email;
   console.log('user logged in: ', user)
 
@@ -73,10 +88,12 @@ const Login = ({navigation}) => {
                  
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
-                        borderless
+                       //borderless
+                       onBlur={() => valid(email,"mail")}
                         placeholder="Email"
                          value={email}
                         onChangeText={setEmail}
+                        style={{borderWidth: emailError ?0:2, borderColor: emailError ?"grey": "red" }}
                         iconContent={
                           <Icon
                             size={16}
