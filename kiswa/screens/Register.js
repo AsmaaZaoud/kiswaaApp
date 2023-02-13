@@ -60,14 +60,23 @@ const Register = ({ navigation }) => {
   };
 
 
-  const validation = async () => {
-    if (password.length >= 6) {
-      setPasswordError("");
-    } else {
+  const validation = () => {
+    if(password != undefined){
+      if (password.length >= 6) {
+        setPasswordError("");
+      } else {
+        setPasswordError("Password Must Be 6 Chars");
+      }
+    }
+    else {
       setPasswordError("Password Must Be 6 Chars");
     }
 
-    if (name.length != 0) {
+
+    console.log("name", name)
+    //console.log("name value", name.value)
+
+    if (name != undefined) {
       setNameError("");
     } else {
       setNameError("Enter Your first Name");
@@ -85,14 +94,14 @@ const Register = ({ navigation }) => {
     // }
 
     if (
-      //validator.isEmail(email) &&
-      password.length >= 6 &&
-      name.length != 0 &&
+      //validator.isEmail(email) && 
+      password != 'undefined' &&
+      name != undefined &&
       phone.length === 8
       //&&
       //stat == "granted"
     ) {
-      console.log(stat);
+      //console.log(stat);
       console.log("okay");
       handleRegister();
     }
