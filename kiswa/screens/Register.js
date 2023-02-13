@@ -29,10 +29,22 @@ const Register = ({ navigation }) => {
 
 
   const [email, setEmail] = useState();
+  const [emailError, setEmailError] = useState()
+
   const [password, setPassword] = useState();
+  const [passwordError, setPasswordError] = useState()
+
   const [name, setName] = useState();
+  const [nameError, setNameError] = useState()
+
   const [signedIn, setSignedIn] = useState(false);
   const [flag, setflag] = useState(0);
+
+  const [location, setLocation] = useState("");
+  const [locationError, setLocationError] = useState("");
+
+  const [phoneError, setPhoneError] = useState("");
+  const [phone, setPhone] = useState("");
 
   let user = auth?.currentUser?.email;
   console.log('user logged in: ', user)
@@ -92,10 +104,10 @@ const Register = ({ navigation }) => {
 
               <Block style={{alignSelf: 'center'}}>
                   <Image
-                    style={{ width: 150, height: 150 }}
+                    style={{ width: 50, height: 50 }}
                     source={require('../Images/donate.png')} />
                   </Block>
-                  <Text size={20} style={{alignSelf: 'center', padding: 20}}>
+                  <Text size={12} style={{alignSelf: 'center', padding: 20}}>
                     SIGN UP AS A DONOR
                   </Text>
 
@@ -128,6 +140,24 @@ const Register = ({ navigation }) => {
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
                         borderless
+                        placeholder="Phone Number"
+                        value={phone}
+                        onChangeText={setPhone}
+                        iconContent={
+                          <Icon
+                            size={16}
+                            color={argonTheme.COLORS.ICON}
+                            name="phone"
+                            family="AntDesign"
+                            style={styles.inputIcons}
+                          />
+                        }
+                      />
+                    </Block>
+                    
+                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                      <Input
+                        borderless
                         placeholder="Email"
                         value={email}
                         onChangeText={setEmail}
@@ -142,6 +172,7 @@ const Register = ({ navigation }) => {
                         }
                       />
                     </Block>
+
 
                     <Block width={width * 0.8}>
                       <Input
