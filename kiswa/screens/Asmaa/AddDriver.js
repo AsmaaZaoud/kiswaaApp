@@ -11,8 +11,12 @@ import {
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
-import { Button, Icon, Input } from "../../components";
+import { Button, Icon, Input, Select } from "../../components";
 import { Images, argonTheme } from "../../constants";
+
+import { Dropdown } from "react-native-element-dropdown";
+
+import validator from "validator";
 
 import {
   createUserWithEmailAndPassword,
@@ -33,15 +37,40 @@ const AddDriver = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [qId, setQId] = useState("");
   const [dob, setDob] = useState("");
+  const [zone, setZone] = useState("");
 
 
+ const [FnameError, setFnameError] = useState();
+  const [LnameError, setLnameError] = useState();
+  const [phoneError, setPhoneError] = useState();
+  const [emailError, setEmailError] = useState();
+  const [qIdError, setQIdError] = useState();
+  const [dobError, setDobError] = useState();
+  const [msg, setMsg] = useState(false);
+  const [flag, setFlag] = useState(true);
 
+const [ZoneError, setZoneError] = useState();
+
+const zones = [
+    { label: " All Zones", value: "0" },
+    { label: "Doha", value: "1" },
+    { label: "Al Rayyan", value: "2" },
+    { label: "Rumeilah", value: "3" },
+    { label: "Wadi Al Sail", value: "4" },
+    { label: "Al Daayen", value: "5" },
+    { label: "Umm Salal", value: "6" },
+    { label: "Al Wakra", value: "7" },
+    { label: "Al Khor", value: "8" },
+    { label: "Al Shamal", value: "9" },
+    { label: "Al Shahaniya", value: "10" },
+  ];
 
 
 //  let user = auth?.currentUser?.email;
 //   console.log('user logged in: ', user)
 
  const add = async () => {
+  alert("add")
     const docRef = doc(db, "drivers", email)
     await setDoc(docRef, { fname: Fname,
       email: email,
@@ -55,13 +84,47 @@ const AddDriver = ({navigation}) => {
   };
    
 
-  const validCreate = () =>
-    Fname !== "" &&
-    (Lname !== "") &
-      (validator.isEmail(email) !== false) &
-      (dob !== "") &
-      (qId.length === 8) &
-      (phone.length === 8);
+  const validOne = (x) =>{
+    setFlag(false)
+    switch(x){
+      
+      case 1:
+              Fname == "" ? setFnameError(true) : setFnameError(false)
+              break
+      case 2:
+              Lname == "" ? setLnameError(true) : setLnameError(false)
+              break
+      case 3:
+              qId.length != 11? setQIdError(true) :setQIdError(false)
+              break
+      case 4:
+              phone.length != 8? setPhoneError(true) :setPhoneError(false)
+              break
+      case 5:
+              validator.isEmail(email) == false? setEmailError(true):setEmailError(false)
+              break
+      case 6:
+              dob == "" ? setDobError(true) : setDobError(false)
+              break
+
+    }
+                  
+  }
+
+  const validCreate = () =>{
+      
+        !FnameError &&
+          !LnameError &&
+            !emailError &&
+              !phoneError && 
+                !qIdError &&
+                  !flag &&
+                  !dobError ? add(): setMsg(true)
+
+      
+                  
+
+  }
     return (
       <Block flex middle>
         {/* <StatusBar hidden /> */}
@@ -92,20 +155,26 @@ const AddDriver = ({navigation}) => {
           <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
                     <Text style={styles.text}>First Name</Text>
                      < TextInput
-                      style={styles.smallInput}
+                     autoCorrect = {false}
+
+                      style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
                       placeholder="Joe"
                       value={Fname}
                       onChangeText={setFname}
+                      onBlur = {()=>validOne(1)}
                       />
           </View>
 
           <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
                     <Text style={styles.text}>Last Name</Text>
                      < TextInput
-                      style={styles.smallInput}
+                     autoCorrect = {false}
+
+                       style={[styles.smallInput, {borderColor: LnameError?"red":"black"}]}
                       placeholder="Grek"
                       value={Lname}
                       onChangeText={setLname}
+                        onBlur = {()=>validOne(2)}
                       />
           </View>
       </Block>
@@ -115,20 +184,28 @@ const AddDriver = ({navigation}) => {
           <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
                     <Text style={styles.text}>Qatar ID</Text>
                      < TextInput
-                      style={styles.smallInput}
+                     autoCorrect = {false}
+                      keyboardType="numeric"
+                      style={[styles.smallInput, {borderColor: qIdError?"red":"black"}]}
                       placeholder="30101200033"
                       value={qId}
                       onChangeText={setQId}
+                      onBlur = {()=>validOne(3)}
+
                       />
           </View>
 
          <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
                     <Text style={styles.text}>Phone</Text>
                      < TextInput
-                      style={styles.smallInput}
+                     autoCorrect = {false}
+
+                       style={[styles.smallInput, {borderColor: phoneError?"red":"black"}]}
                       placeholder="66005500"
-                      value={dob}
+                      value={phone}
                       onChangeText={setPhone}
+                      onBlur = {()=>validOne(4)}
+
                       />
           </View>
 
@@ -141,21 +218,29 @@ const AddDriver = ({navigation}) => {
           <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
                     <Text style={styles.text}>Email</Text>
                      < TextInput
-                      style={styles.smallInput}
+                     autoCorrect = {false}
+
+                       style={[styles.smallInput, {borderColor: emailError?"red":"black"}]}
                       placeholder="abc@example"
                       value={email}
                       onChangeText={setEmail}
+                      onBlur = {()=>validOne(5)}
+
                       />
           </View>
 
          <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
                     <Text style={styles.text}>Date Of Birth</Text>
                      < TextInput
+                     autoCorrect = {false}
+
                      type="date"
-                      style={styles.smallInput}
+                       style={[styles.smallInput, {borderColor: dobError?"red":"black"}]}
                       placeholder="2-2-1992"
                       value={dob}
                       onChangeText={setDob}
+                      onBlur = {()=>validOne(6)}
+
                       />
           </View>
 
@@ -163,11 +248,42 @@ const AddDriver = ({navigation}) => {
       </Block>
       
       {/*--------- Buttons ----------*/}
+
+          <View>
+            {msg ?
+              <Text style={{color:"red"}}>Please Fill al feilds!</Text>
+              :null}
+        </View>
       <Block right width={width*0.8} style={{flexDirection:"row"}} >
+        <Block width={width * 0.35} style={{ marginBottom: 0 }}>
+                      <Dropdown
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        data={zones}
+                        maxHeight={160}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={zone}
+                        value={zone}
+                        onChange={(item) => {
+                          setZone(item.label);
+                        }}
+                      ></Dropdown>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "red",
+                          fontSize: 12,
+                        }}
+                      >
+                        {ZoneError}
+                      </Text>
+                    </Block>
                       <Button 
                       color="success" 
                       style={styles.createButton} 
-                      onPress={add}
+                      onPress={validCreate}
                       >
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Add
