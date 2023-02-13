@@ -52,29 +52,68 @@ const Register = ({ navigation }) => {
   const handleRegister = () => {
     setflag(0);
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => 
-      console.log("registered"),
-      navigation.navigate("Login")
+      .then(() =>
+        console.log("registered"),
+        navigation.navigate("Login")
       )
       .catch((error) => console.log(error.message));
   };
 
 
+  const validation = async () => {
+    if (password.length >= 6) {
+      setPasswordError("");
+    } else {
+      setPasswordError("Password Must Be 6 Chars");
+    }
+
+    if (name.length != 0) {
+      setNameError("");
+    } else {
+      setNameError("Enter Your first Name");
+    }
+
+    if (phone.length === 8) {
+      setPhoneError("");
+    } else {
+      setPhoneError("Number is not valid");
+    }
+    // if (stat === "granted") {
+    //   setLocationError("");
+    // } else {
+    //   setLocationError("Allow Location");
+    // }
+
+    if (
+      //validator.isEmail(email) &&
+      password.length >= 6 &&
+      name.length != 0 &&
+      phone.length === 8
+      //&&
+      //stat == "granted"
+    ) {
+      console.log(stat);
+      console.log("okay");
+      handleRegister();
+    }
+  };
+
+
   // render() {
-    return (
-      <Block flex middle>
-        <StatusBar hidden />
-        <ImageBackground
-          source={Images.RegisterBackground}
-          style={{ width, height, zIndex: 1 }}
-        >
-          <Block safe flex middle>
-            <Block style={styles.registerContainer}>
-              {/* <Block flex={0.25} middle style={styles.socialConnect}> */}
-              {/* <Text color="#8898AA" size={12}>
+  return (
+    <Block flex middle>
+      <StatusBar hidden />
+      <ImageBackground
+        source={Images.RegisterBackground}
+        style={{ width, height, zIndex: 1 }}
+      >
+        <Block safe flex middle>
+          <Block style={styles.registerContainer}>
+            {/* <Block flex={0.25} middle style={styles.socialConnect}> */}
+            {/* <Text color="#8898AA" size={12}>
                   Sign up with
                 </Text> */}
-              {/* <Block row style={{ marginTop: theme.SIZES.BASE }}>
+            {/* <Block row style={{ marginTop: theme.SIZES.BASE }}>
                   <Button style={{ ...styles.socialButtons, marginRight: 30 }}>
                     <Block row>
                       <Icon
@@ -100,141 +139,177 @@ const Register = ({ navigation }) => {
                     </Block>
                   </Button>
                 </Block> */}
-              {/* </Block> */}
+            {/* </Block> */}
 
-              <Block style={{alignSelf: 'center'}}>
-                  <Image
-                    style={{ width: 50, height: 50 }}
-                    source={require('../Images/donate.png')} />
+            <Block style={{ alignSelf: 'center' }}>
+              <Image
+                style={{ width: 50, height: 50 }}
+                source={require('../Images/donate.png')} />
+            </Block>
+            <Text size={12} style={{ alignSelf: 'center', padding: 20 }}>
+              SIGN UP AS A DONOR
+            </Text>
+
+            <Block flex>
+              <Block middle >
+              </Block>
+              <Block flex center>
+                <KeyboardAvoidingView
+                  style={{ flex: 1 }}
+                  behavior="padding"
+                  enabled
+                >
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
+                      placeholder="Name"
+                      value={name}
+                      onChangeText={setName}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="hat-3"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {nameError}
+                    </Text>
                   </Block>
-                  <Text size={12} style={{alignSelf: 'center', padding: 20}}>
-                    SIGN UP AS A DONOR
-                  </Text>
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
+                      placeholder="Phone Number"
+                      value={phone}
+                      onChangeText={setPhone}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="phone"
+                          family="AntDesign"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {phoneError}
+                    </Text>
+                  </Block>
 
-              <Block flex>
-                <Block middle >
-                </Block>
-                <Block flex center>
-                  <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior="padding"
-                    enabled
-                  >
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Name"
-                        value={name}
-                        onChangeText={setName}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="hat-3"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                    </Block>
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Phone Number"
-                        value={phone}
-                        onChangeText={setPhone}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="phone"
-                            family="AntDesign"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                    </Block>
-                    
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Email"
-                        value={email}
-                        onChangeText={setEmail}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="ic_mail_24px"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                    </Block>
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
+                      placeholder="Email"
+                      value={email}
+                      onChangeText={setEmail}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="ic_mail_24px"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {emailError}
+                    </Text>
+                  </Block>
 
 
-                    <Block width={width * 0.8}>
-                      <Input
-                        password
-                        borderless
-                        placeholder="Password"
-                        value={password}
-                        onChangeText={setPassword}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="padlock-unlocked"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                      <Block row style={styles.passwordCheck}>
-                        {/* <Text size={12} color={argonTheme.COLORS.MUTED}>
+                  <Block width={width * 0.8}>
+                    <Input
+                      password
+                      borderless
+                      placeholder="Password"
+                      value={password}
+                      onChangeText={setPassword}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="padlock-unlocked"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {passwordError}
+                    </Text>
+                    {/* <Block row style={styles.passwordCheck}> */}
+                    {/* <Text size={12} color={argonTheme.COLORS.MUTED}>
                           password strength:
                         </Text>
                         <Text bold size={12} color={argonTheme.COLORS.SUCCESS}>
                           {" "}
                           strong
                         </Text> */}
-                      </Block>
-                    </Block>
-                    <Block row width={width * 0.75}>
-                      <Checkbox
-                        checkboxStyle={{
-                          borderWidth: 3
-                        }}
-                        color={argonTheme.COLORS.PRIMARY}
-                        label="I agree with the"
-                      />
-                      <Button
-                        style={{ width: 100 }}
-                        color="transparent"
-                        textStyle={{
-                          color: argonTheme.COLORS.PRIMARY,
-                          fontSize: 14
-                        }}
-                      >
-                        Privacy Policy
-                      </Button>
-                    </Block>
-                    <Block middle>
-                      <Button color="primary" style={styles.createButton} onPress={handleRegister}>
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          CREATE ACCOUNT
-                        </Text>
-                      </Button>
-                    </Block>
-                  </KeyboardAvoidingView>
-                </Block>
+                    {/* </Block> */}
+                  </Block>
+                  <Block row width={width * 0.75}>
+                    <Checkbox
+                      checkboxStyle={{
+                        borderWidth: 3
+                      }}
+                      color={argonTheme.COLORS.PRIMARY}
+                      label="I agree with the"
+                    />
+                    <Button
+                      style={{ width: 100 }}
+                      color="transparent"
+                      textStyle={{
+                        color: argonTheme.COLORS.PRIMARY,
+                        fontSize: 14
+                      }}
+                    >
+                      Privacy Policy
+                    </Button>
+                  </Block>
+                  <Block middle>
+                    <Button color="primary" style={styles.createButton} onPress={validation}>
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        CREATE ACCOUNT
+                      </Text>
+                    </Button>
+                  </Block>
+                </KeyboardAvoidingView>
               </Block>
             </Block>
           </Block>
-        </ImageBackground>
-      </Block>
-    );
+        </Block>
+      </ImageBackground>
+    </Block>
+  );
   // }
 }
 
