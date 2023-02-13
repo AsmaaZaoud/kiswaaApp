@@ -25,6 +25,8 @@ import { db } from "../config";
 
 const { width, height } = Dimensions.get("screen");
 
+import validator from "validator";
+
 const Register = ({ navigation }) => {
 
 
@@ -46,6 +48,8 @@ const Register = ({ navigation }) => {
   const [phoneError, setPhoneError] = useState("");
   const [phone, setPhone] = useState("");
 
+  const [stat, setStat] = useState("denid");
+
   let user = auth?.currentUser?.email;
   console.log('user logged in: ', user)
 
@@ -61,15 +65,28 @@ const Register = ({ navigation }) => {
 
 
   const validation = () => {
+
+    if(email != undefined){
+      if (validator.isEmail(email)) {
+        setEmailError("");
+      } else {
+        setEmailError("Email is not vaild");
+      }
+    }
+    else {
+      setEmailError("Email is not vaild");
+    }
+
+
     if(password != undefined){
       if (password.length >= 6) {
         setPasswordError("");
       } else {
-        setPasswordError("Password Must Be 6 Chars");
+        setPasswordError("Password must be at least 6 characters");
       }
     }
     else {
-      setPasswordError("Password Must Be 6 Chars");
+      setPasswordError("Password must be at least 6 characters");
     }
 
 
@@ -85,26 +102,42 @@ const Register = ({ navigation }) => {
     if (phone.length === 8) {
       setPhoneError("");
     } else {
-      setPhoneError("Number is not valid");
+      setPhoneError("Phone number should be valid and 8 digits");
     }
-    // if (stat === "granted") {
-    //   setLocationError("");
-    // } else {
-    //   setLocationError("Allow Location");
-    // }
+    if (stat === "granted") {
+      setLocationError("");
+    } else {
+      setLocationError("Allow Location");
+    }
 
     if (
-      //validator.isEmail(email) && 
-      password != 'undefined' &&
+      validator.isEmail(email) && 
+      password != undefined &&
       name != undefined &&
-      phone.length === 8
-      //&&
-      //stat == "granted"
+      phone.length === 8 &&
+      stat == "granted"
     ) {
-      //console.log(stat);
+      console.log(stat);
       console.log("okay");
       handleRegister();
     }
+  };
+
+  const getLocation = () => {
+    const getPermissions = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      setStat(status);
+      console.log("stat... ", stat);
+      console.log(status);
+      if (status !== "granted") {
+        console.log("Please grant location permissions");
+        return;
+      }
+
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation);
+    };
+    getPermissions();
   };
 
 
@@ -220,6 +253,29 @@ const Register = ({ navigation }) => {
                       {phoneError}
                     </Text>
                   </Block>
+
+
+                  <Block width={width * 0.35} style={{ marginBottom: 10 }}>
+                      <Button
+                        color={stat !== "granted" ? "default" : "primary"}
+                        style={styles.createButton}
+                        onPress={getLocation}
+                      >
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Location
+                        </Text>
+                      </Button>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "red",
+                          fontSize: 12,
+                        }}
+                      >
+                        {locationError}
+                      </Text>
+                    </Block>
+
 
                   <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                     <Input
