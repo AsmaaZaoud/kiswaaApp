@@ -26,6 +26,8 @@ import { db } from "../config";
 const { width, height } = Dimensions.get("screen");
 
 import validator from "validator";
+import * as Location from "expo-location";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Register = ({ navigation }) => {
 
@@ -48,7 +50,7 @@ const Register = ({ navigation }) => {
   const [phoneError, setPhoneError] = useState("");
   const [phone, setPhone] = useState("");
 
-  const [stat, setStat] = useState("denid");
+  const [stat, setStat] = useState("denied");
 
   let user = auth?.currentUser?.email;
   console.log('user logged in: ', user)
@@ -58,7 +60,7 @@ const Register = ({ navigation }) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(() =>
         console.log("registered"),
-        navigation.navigate("Login")
+        navigation.replace("App")
       )
       .catch((error) => console.log(error.message));
   };
@@ -143,12 +145,15 @@ const Register = ({ navigation }) => {
 
   // render() {
   return (
+    
     <Block flex middle>
+      
       <StatusBar hidden />
       <ImageBackground
         source={Images.RegisterBackground}
         style={{ width, height, zIndex: 1 }}
       >
+        
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             {/* <Block flex={0.25} middle style={styles.socialConnect}> */}
@@ -183,14 +188,14 @@ const Register = ({ navigation }) => {
                 </Block> */}
             {/* </Block> */}
 
-            <Block style={{ alignSelf: 'center' }}>
+            {/* <Block style={{ alignSelf: 'center' }}>
               <Image
                 style={{ width: 50, height: 50 }}
                 source={require('../Images/donate.png')} />
             </Block>
             <Text size={12} style={{ alignSelf: 'center', padding: 20 }}>
               SIGN UP AS A DONOR
-            </Text>
+            </Text> */}
 
             <Block flex>
               <Block middle >
@@ -371,8 +376,11 @@ const Register = ({ navigation }) => {
               </Block>
             </Block>
           </Block>
+   
         </Block>
+        
       </ImageBackground>
+      
     </Block>
   );
   // }
