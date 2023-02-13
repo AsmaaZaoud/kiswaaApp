@@ -27,10 +27,14 @@ const { width, height } = Dimensions.get("screen");
 
 
 const AddDriver = ({navigation}) => {
-  const [Fname, setFname] = useState();
-  const [Lname, setLname] = useState();
-  const [phone, setPhone] = useState();
-  const [email, setEmail] = useState();
+  const [Fname, setFname] = useState("");
+  const [Lname, setLname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [qId, setQId] = useState("");
+  const [dob, setDob] = useState("");
+
+
 
 
 
@@ -43,12 +47,21 @@ const AddDriver = ({navigation}) => {
       email: email,
       lname: Lname,
       phone: phone,
+      qId: qId,
+      dob:dob,
       zone:"" })
     console.log("Document written with ID: ", docRef.id);
     navigation.goBack()
   };
    
-  
+
+  const validCreate = () =>
+    Fname !== "" &&
+    (Lname !== "") &
+      (validator.isEmail(email) !== false) &
+      (dob !== "") &
+      (qId.length === 8) &
+      (phone.length === 8);
     return (
       <Block flex middle>
         {/* <StatusBar hidden /> */}
@@ -100,6 +113,32 @@ const AddDriver = ({navigation}) => {
       <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
                    
           <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
+                    <Text style={styles.text}>Qatar ID</Text>
+                     < TextInput
+                      style={styles.smallInput}
+                      placeholder="30101200033"
+                      value={qId}
+                      onChangeText={setQId}
+                      />
+          </View>
+
+         <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
+                    <Text style={styles.text}>Phone</Text>
+                     < TextInput
+                      style={styles.smallInput}
+                      placeholder="66005500"
+                      value={dob}
+                      onChangeText={setPhone}
+                      />
+          </View>
+
+          
+      </Block>
+      
+      
+       <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
+                   
+          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
                     <Text style={styles.text}>Email</Text>
                      < TextInput
                       style={styles.smallInput}
@@ -110,14 +149,17 @@ const AddDriver = ({navigation}) => {
           </View>
 
          <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
-                    <Text style={styles.text}>Phone</Text>
+                    <Text style={styles.text}>Date Of Birth</Text>
                      < TextInput
+                     type="date"
                       style={styles.smallInput}
-                      placeholder="66005500"
-                      value={phone}
-                      onChangeText={setPhone}
+                      placeholder="2-2-1992"
+                      value={dob}
+                      onChangeText={setDob}
                       />
           </View>
+
+          
       </Block>
       
       {/*--------- Buttons ----------*/}
