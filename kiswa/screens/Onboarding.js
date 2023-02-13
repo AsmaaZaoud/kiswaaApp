@@ -21,43 +21,48 @@ class Onboarding extends React.Component {
       <Block flex style={styles.container}>
         <StatusBar hidden />
         <Block flex center>
-        <ImageBackground
+          <ImageBackground
             source={Images.Onboarding}
             style={{ height, width, zIndex: 1 }}
           />
         </Block>
         <Block center>
-          <Image source={Images.LogoOnboarding} style={styles.logo} />
+          <Image source={Images.LogoOnboarding}/>
         </Block>
+
+        <Block style={styles.subTitle}>
+          <Text color="white" size={16}>
+            Kiswa is a free application on which you can either donate your clothes as a donor or receive clothes as a receiver. We collect clothes in any state or condition.
+          </Text>
+        </Block>
+
+
         <Block flex space="between" style={styles.padded}>
-            <Block flex space="around" style={{ zIndex: 2 }}>
-              <Block style={styles.title}>
-                <Block>
+
+          <Block flex space="around" style={{ zIndex: 2 }}>
+            {/* <Block style={styles.title}> */}
+            {/* <Block>
                   <Text color="white" size={60}>
                     Design
                   </Text>
-                </Block>
-                <Block>
+                </Block> */}
+            {/* <Block>
                   <Text color="white" size={60}>
                     System
                   </Text>
-                </Block>
-                <Block style={styles.subTitle}>
-                  <Text color="white" size={16}>
-                    Fully coded React Native components.
-                  </Text>
-                </Block>
-              </Block>
-              <Block center>
-                <Button
-                  style={styles.button}
-                  color={argonTheme.COLORS.SECONDARY}
-                  onPress={() => navigation.navigate("LoginRegister")}
-                  textStyle={{ color: argonTheme.COLORS.BLACK }}
-                >
-                  Get Started
-                </Button>
-              </Block>
+                </Block> */}
+
+            {/* </Block> */}
+            <Block center>
+              <Button
+                style={styles.button}
+                color={argonTheme.COLORS.SECONDARY}
+                onPress={() => navigation.navigate("LoginRegister")}
+                textStyle={{ color: argonTheme.COLORS.BLACK }}
+              >
+                Get Started
+              </Button>
+            </Block>
           </Block>
         </Block>
       </Block>
@@ -89,10 +94,10 @@ const styles = StyleSheet.create({
     marginTop: '-50%'
   },
   title: {
-    marginTop:'-5%'
+    marginTop: '-5%'
   },
   subTitle: {
-    marginTop: 20
+    marginBottom: 300
   }
 });
 
