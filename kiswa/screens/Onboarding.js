@@ -13,61 +13,31 @@ const { height, width } = Dimensions.get("screen");
 import argonTheme from "../constants/Theme";
 import Images from "../constants/Images";
 
-class Onboarding extends React.Component {
-  render() {
-    const { navigation } = this.props;
+const Onboarding = ({ navigation }) => {
 
-    return (
-      <Block flex style={styles.container}>
-        <StatusBar hidden />
-        <Block flex center>
-        <ImageBackground
-            source={Images.Onboarding}
-            style={{ height, width, zIndex: 1 }}
-          />
-        </Block>
-        <Block center>
-          <Image source={Images.LogoOnboarding} style={styles.logo} />
-        </Block>
-        <Block flex space="between" style={styles.padded}>
-            <Block flex space="around" style={{ zIndex: 2 }}>
-              <Block style={styles.title}>
-                <Block>
-                  <Text color="white" size={60}>
-                    Design
-                  </Text>
-                </Block>
-                <Block>
-                  <Text color="white" size={60}>
-                    System
-                  </Text>
-                </Block>
-                <Block style={styles.subTitle}>
-                  <Text color="white" size={16}>
-                    Fully coded React Native components.
-                  </Text>
-                </Block>
-              </Block>
-              <Block center>
-                <Button
-                  style={styles.button}
-                  color={argonTheme.COLORS.SECONDARY}
-                  onPress={() => navigation.navigate("LoginRegister")}
-                  textStyle={{ color: argonTheme.COLORS.BLACK }}
-                >
-                  Get Started
-                </Button>
-              </Block>
-          </Block>
-        </Block>
+  return (
+    <Block flex style={styles.container}>
+      <Block center>
+        <Image source={require('../Images/kiswalogo.png')} style={styles.logo} />
       </Block>
-    );
-  }
+      <Block center style={{width: '90%'}}>
+        <Text style={{color: 'white', fontSize: 15, textAlign: 'center'}}>
+          Kiswa is a free platform on which you can either choose to become a donor and donate clothes
+          or a receiver and receive clothes. 
+        </Text>
+        <Text style={{color: 'white', fontSize: 15, textAlign: 'center'}}>
+          We accept clothes of all quality types. The good quality ones go to people who requested them 
+          and the worn out ones go to recycling organizations.
+        </Text>
+      </Block>
+    </Block>
+  );
+
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.COLORS.BLACK
+    backgroundColor: '#8c01fe'
   },
   padded: {
     paddingHorizontal: theme.SIZES.BASE * 2,
@@ -82,14 +52,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0
   },
   logo: {
-    width: 200,
-    height: 60,
+    width: 300,
+    height: 200,
     zIndex: 2,
     position: 'relative',
-    marginTop: '-50%'
+    marginTop: '5%'
   },
   title: {
-    marginTop:'-5%'
+    marginTop: '-5%'
   },
   subTitle: {
     marginTop: 20
