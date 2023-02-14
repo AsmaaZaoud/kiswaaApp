@@ -14,15 +14,12 @@ import {
   View,
   TouchableOpacity,
   Modal,
+  StatusBar,
 } from "react-native";
 import { DataTable } from "react-native-paper";
 
 import { Card, Divider } from "@rneui/themed";
-//argon
 
-import { Images, argonTheme } from "../../constants";
-// picker
-import { Picker } from "@react-native-picker/picker";
 // Dropdown
 import { Dropdown } from "react-native-element-dropdown";
 const { width } = Dimensions.get("screen");
@@ -42,18 +39,14 @@ import {
   addDoc,
   onSnapshot,
 } from "firebase/firestore";
-import { Button } from "@rneui/base";
+import { Button, Header } from "@rneui/base";
 import { Touchable } from "react-native";
 import Theme from "../../constants/Theme";
 
-const reformat = (doc) => {
-  return { id: doc.id, ...doc.data() };
-};
-
 const InventoryClerkHomePage = () => {
   // const
-  const [ID, setID] = useState(1);
-  const [selectedItem, setSelectedItem] = useState();
+  const [IDs, setIDs] = useState([]);
+  const [selectedItem, setSelectedItem] = useState([]);
   const [items, setItems] = useState([]);
   const [type, setType] = useState("");
   const [size, setSize] = useState("");
@@ -62,29 +55,25 @@ const InventoryClerkHomePage = () => {
   const [gender, setGender] = useState("");
   // ////////////////////////////////////////// //
   // DB
-  // const docRef = doc(db, "inventory", selectedItem);
-  // Read All
-  const findAll = async () => {
-    const data = await getDocs(collection(db, "inventory"));
-    // console.log(reformat);
-    return data.docs.map(reformat);
+  const reformat = (doc) => {
+    for (let i = 1; i <= items.length; i++) {
+      IDs.includes(i) ? null : IDs.push(i);
+    }
+    return { id: doc.id, ...doc.data() };
   };
 
   useEffect(() => {
-    const getItems = async () => {
-      let temp = await findAll();
-      setItems(temp);
-      // console.log(temp);
+    const listenAll = () => {
+      onSnapshot(collection(db, "inventory"), (snap) =>
+        setItems(snap.docs.map(reformat))
+      );
     };
-    getItems();
-    console.log(items);
+    listenAll();
+    console.log(IDs);
   }, []);
-  // add item
+
   const set = async () => {
-    // const docRef = doc(db, "inventory");
     await addDoc(collection(db, "inventory"), {
-      // id: id,
-      // id: id,
       type: type,
       size: size,
       quality: quality,
@@ -103,28 +92,28 @@ const InventoryClerkHomePage = () => {
     setQuality("");
     setColor("");
     setGender("");
+    setAddModalVisible(!addModalVisible);
   };
 
   // Update -- edit
-  const update = async () => {
-    // const { id, ...rest } = itemID;
-    // const docRef = doc(db, "inventory");
-    await setDocs(
-      collection(db, "inventory"),
-      selectedItem.id,
+  const update = async (item) => {
+    const { id, ...rest } = item;
+    await setDoc(
+      doc(db, "inventory", id),
       {
         type: type,
         size: size,
         quality: quality,
         color: color,
-        available: "available",
+        gender: gender,
+        available: true,
       },
-      {
-        merge: true,
-      }
+      { merge: true }
     )
       .then(() => {
-        console.log("data submitted");
+        console.log("data updated");
+        setEditModalVisible(!editModalVisible);
+        setSelectedItem(null);
       })
       .catch((error) => {
         console.log(error.message);
@@ -155,6 +144,7 @@ const InventoryClerkHomePage = () => {
     { label: "Sarong", value: "Sarong" },
     { label: "Shawl", value: "Shawl" },
     { label: "Shirt", value: "Shirt" },
+    { label: "Shoes", value: "Shoes" },
     { label: "Shorts", value: "Shorts" },
     { label: "Skirt", value: "Skirt" },
     { label: "Sock", value: "Sock" },
@@ -179,15 +169,26 @@ const InventoryClerkHomePage = () => {
     { label: "5XL", value: "5XL" },
   ];
   const ColorData = [
+    { label: "Beige", value: "Beige" },
     { label: "Black", value: "Black" },
+    { label: "Blue", value: "Blue" },
+    { label: "Brown", value: "Brown" },
+    { label: "Burgundy", value: "Burgundy" },
+    { label: "Checks", value: "Checks" },
+    { label: "Gold", value: "Gold" },
+    { label: "Green", value: "Green" },
+    { label: "Grey", value: "Grey" },
+    { label: "Khaki", value: "Khaki" },
+    { label: "Multicolor", value: "Multicolor" },
+    { label: "Navy", value: "Navy" },
+    { label: "Orange", value: "Orange" },
+    { label: "Pink", value: "Pink" },
+    { label: "Prints", value: "Prints" },
+    { label: "Purple", value: "Purple" },
+    { label: "Red", value: "Red" },
+    { label: "Stripes", value: "Stripes" },
     { label: "White", value: "White" },
-    { label: "Colorful", value: "White" },
-    // { label: "", value: "" },
-    // { label: "", value: "" },
-    // { label: "", value: "" },
-    // { label: "", value: "" },
-    // { label: "", value: "" },
-    // { label: "", value: "" },
+    { label: "Yellow", value: "Yellow" },
   ];
   const GenderData = [
     { label: "Female", value: "Female" },
@@ -201,18 +202,50 @@ const InventoryClerkHomePage = () => {
   // edit modal
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
+  // validations
+  const [error, setError] = useState({ satus: false, key: null, msg: "" });
+  const submit = () => {
+    type == null || type == ""
+      ? setError({ satus: true, key: "type", msg: "Chose type!" })
+      : size == null || size == ""
+      ? setError({ satus: true, key: "size", msg: "Chose size!" })
+      : color == null || color == ""
+      ? setError({
+          satus: true,
+          key: "color",
+          msg: "Chose color!",
+        })
+      : gender == null || gender == ""
+      ? setError({
+          satus: true,
+          key: "gender",
+          msg: "Chose gender!",
+        })
+      : quality == null || quality == ""
+      ? setError({
+          satus: true,
+          key: "quality",
+          msg: "Chose quality!",
+        })
+      : (set(), setError({ satus: false, key: null, msg: "" }));
+  };
 
-  // console.log(items);
-  // listener
-  // useEffect(() => {
-  //   //get all resturants from db
-  //   onSnapshot(collection(db, "inventory"), (snap) =>
-  //     set(snap.docs.map("inventory"))
-  //   );
-  // }, [items]);
   return (
-    <SafeAreaView>
-      <Card style={{ overflow: "visible", justifyContent: "space-evenly" }}>
+    <SafeAreaView
+      style={{
+        // flex: 1,
+        overflow: "scroll",
+      }}
+    >
+      <Header
+        search
+        options
+        title="Title"
+        optionLeft="Option 1"
+        optionRight="Option 2"
+        // navigation={this.props.navigation}
+      />
+      <Card>
         <Button
           shadowless
           color={Theme.COLORS.SUCCESS}
@@ -221,8 +254,9 @@ const InventoryClerkHomePage = () => {
         >
           Add Item
         </Button>
+
         <Card.Divider />
-        <DataTable style={{ marginBottom: 120 }}>
+        <DataTable>
           <DataTable.Header>
             <DataTable.Title>ID</DataTable.Title>
             <DataTable.Title>Type</DataTable.Title>
@@ -233,53 +267,48 @@ const InventoryClerkHomePage = () => {
             <DataTable.Title>Availability</DataTable.Title>
             <DataTable.Title></DataTable.Title>
           </DataTable.Header>
-          {items.map((i) => (
-            <DataTable.Row style={{ height: "1%" }}>
-              <DataTable.Cell id={i.id}>{i.id}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
-              {/* hide not availabe items */}
-              {/* {i.available == true ? <DataTable.Cell>Available</DataTable.Cell> : null} */}
-              <DataTable.Cell>
-                {i.available == true ? "Available" : "Not-Available"}
-              </DataTable.Cell>
-              <DataTable.Cell numeric>
-                {" "}
-                <Button
-                  shadowless
-                  color={Theme.COLORS.ERROR}
-                  onPress={() => {
-                    setModalVisible(!editModalVisible),
-                      setSelectedItem({
-                        id: i.id,
-                        // type: i.type,
-                        // size: i.size,
-                        // color: i.color,
-                        // quality: i.quality,
-                      });
-                    // console.log([i.id, i.type, i.size, i.color, i.quality]);
-                  }}
-                  style={{
-                    alignSelf: "center",
-                    // margin: "1%",
-                    marginTop: "9%",
-                  }}
-                >
-                  Edit
-                </Button>
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
+          <ScrollView>
+            {items.map((i, x) => (
+              <DataTable.Row style={{ height: "1%" }}>
+                <DataTable.Cell id={i.id}>{IDs[x]}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
+                {/* hide not availabe items */}
+                {/* {i.available == true ? <DataTable.Cell>Available</DataTable.Cell> : null} */}
+                <DataTable.Cell>
+                  {i.available == true ? "Available" : "Not-Available"}
+                </DataTable.Cell>
+                <DataTable.Cell numeric>
+                  {" "}
+                  <Button
+                    shadowless
+                    color={Theme.COLORS.ERROR}
+                    onPress={() => {
+                      setEditModalVisible(!editModalVisible),
+                        console.log(i),
+                        setSelectedItem(i);
+                      console.log(selectedItem);
+                    }}
+                    style={{
+                      alignSelf: "center",
+                      marginTop: "9%",
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </DataTable.Cell>
+              </DataTable.Row>
+            ))}
+          </ScrollView>
         </DataTable>
       </Card>
       {/* Add Data Modal */}
       <Modal animationType="slide" transparent={true} visible={addModalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {/* <Text>Type</Text> */}
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -288,6 +317,7 @@ const InventoryClerkHomePage = () => {
               data={ClothTypeData}
               labelField="label"
               valueField="value"
+              id="value"
               maxHeight={200}
               search
               searchPlaceholder="Search..."
@@ -298,7 +328,10 @@ const InventoryClerkHomePage = () => {
                 setType(item.value);
               }}
             />
-            {/* <Text>Size</Text> */}
+
+            {error.key == "type" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -308,6 +341,7 @@ const InventoryClerkHomePage = () => {
               labelField="label"
               valueField="value"
               maxHeight={200}
+              id="value"
               search
               searchPlaceholder="Search..."
               animated={false}
@@ -317,7 +351,9 @@ const InventoryClerkHomePage = () => {
                 setSize(item.value);
               }}
             />
-            {/* <Text>Color</Text> */}
+            {error.key == "size" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -326,6 +362,7 @@ const InventoryClerkHomePage = () => {
               data={ColorData}
               labelField="label"
               valueField="value"
+              id="value"
               maxHeight={200}
               search
               searchPlaceholder="Search..."
@@ -336,7 +373,9 @@ const InventoryClerkHomePage = () => {
                 setColor(item.value);
               }}
             />
-            {/* <Text>Gender</Text> */}
+            {error.key == "color" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -345,6 +384,7 @@ const InventoryClerkHomePage = () => {
               data={GenderData}
               labelField="label"
               valueField="value"
+              id="value"
               maxHeight={200}
               search
               searchPlaceholder="Search..."
@@ -355,7 +395,9 @@ const InventoryClerkHomePage = () => {
                 setGender(item.value);
               }}
             />
-            {/* <Text>Quality</Text> */}
+            {error.key == "gender" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -364,32 +406,25 @@ const InventoryClerkHomePage = () => {
               data={QualityData}
               labelField="label"
               valueField="value"
+              id="value"
               maxHeight={200}
               search
               searchPlaceholder="Search..."
               animated={false}
               value={quality}
               placeholder={"Quality"}
-              // placeholder={selectedItem.type}
-              // selectedItem={type? type:null}
               onChange={(item) => {
                 setQuality(item.value);
-                // items.map((i) =>
-                //   i.id == selectedItem[id] ? (i.type = type) : null
-                // );
-                // ,setSelectedItem("type"[type]);
               }}
             />
+            {error.key == "quality" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
             <Pressable
               color={Theme.COLORS.PRIMARY}
               style={[styles.button]}
               onPress={() => {
-                // update(selectedItem.id),
-                // console.log(selectedItem.id);
-                setAddModalVisible(!addModalVisible), set();
-                // items.map((i) =>
-                //   selectedItem[id] == i.id ? update(selectedItem[id]) : null
-                // );
+                submit();
               }}
             >
               <Text style={{ color: "white", alignSelf: "center" }}>Done</Text>
@@ -405,36 +440,125 @@ const InventoryClerkHomePage = () => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text>Type</Text>
             <Dropdown
-              style={{ alignSelf: "left", width: "100%" }}
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
               data={ClothTypeData}
               labelField="label"
               valueField="value"
+              id="value"
               maxHeight={200}
               search
-              // selectedTextStyle={{ fontSize: 30 }}
               searchPlaceholder="Search..."
-              // placeholder={selectedItem.type}
-              selectedItem={type}
+              animated={false}
+              value={type}
+              placeholder={selectedItem.type}
               onChange={(item) => {
                 setType(item.value);
-                // items.map((i) =>
-                //   i.id == selectedItem[id] ? setType()(i.type = type) : null
-                // );
-                // ,setSelectedItem("type"[type]);
               }}
             />
+            {error.key == "type" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={SizeData}
+              labelField="label"
+              valueField="value"
+              maxHeight={200}
+              id="value"
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={size}
+              placeholder={selectedItem.size}
+              onChange={(item) => {
+                setSize(item.value);
+              }}
+            />
+            {error.key == "size" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={ColorData}
+              labelField="label"
+              valueField="value"
+              id="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={color}
+              placeholder={selectedItem.color}
+              onChange={(item) => {
+                setColor(item.value);
+              }}
+            />
+            {error.key == "color" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={GenderData}
+              labelField="label"
+              valueField="value"
+              id="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={selectedItem.gender}
+              placeholder={selectedItem.gender}
+              onChange={(item) => {
+                setGender(item.value);
+              }}
+            />
+            {error.key == "gender" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={QualityData}
+              labelField="label"
+              valueField="value"
+              id="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={quality}
+              placeholder={selectedItem.quality}
+              onChange={(item) => {
+                setQuality(item.value);
+              }}
+            />
+            {error.key == "quality" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
             <Pressable
               color={Theme.COLORS.PRIMARY}
               style={[styles.button]}
               onPress={() => {
                 // update(selectedItem.id),
-                // console.log(selectedItem.id);
-                setEditModalVisible(!editMdalVisible);
-                items.map((i) =>
-                  selectedItem[id] == i.id ? update(selectedItem[id]) : null
-                );
+                // console.log(selectedItem.type);
+                // setEditModalVisible(!editModalVisible);
+                update(selectedItem);
+                // setSelectedItem();
               }}
             >
               <Text style={{ color: "white", alignSelf: "center" }}>Done</Text>
@@ -448,38 +572,6 @@ const InventoryClerkHomePage = () => {
 export default InventoryClerkHomePage;
 
 const styles = StyleSheet.create({
-  //   title: {
-  //     paddingBottom: theme.SIZES.BASE,
-  //     paddingHorizontal: theme.SIZES.BASE * 2,
-  //     marginTop: 22,
-  //     color: argonTheme.COLORS.HEADER,
-  //   },
-  //   group: {
-  //     paddingTop: theme.SIZES.BASE,
-  //   },
-  //   albumThumb: {
-  //     borderRadius: 4,
-  //     marginVertical: 4,
-  //     alignSelf: "center",
-  //     width: thumbMeasure,
-  //     height: thumbMeasure,
-  //   },
-  //   category: {
-  //     backgroundColor: theme.COLORS.WHITE,
-  //     marginVertical: theme.SIZES.BASE / 2,
-  //     borderWidth: 0,
-  //   },
-  //   categoryTitle: {
-  //     height: "100%",
-  //     paddingHorizontal: theme.SIZES.BASE,
-  //     backgroundColor: "rgba(0, 0, 0, 0.5)",
-  //     justifyContent: "center",
-  //     alignItems: "center",
-  //   },
-  //   imageBlock: {
-  //     overflow: "hidden",
-  //     borderRadius: 4,
-  //   },
   productItem: {
     width: cardWidth - theme.SIZES.BASE * 2,
     marginHorizontal: theme.SIZES.BASE,
@@ -495,20 +587,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   centeredView: {
-    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 170,
   },
   modalView: {
-    // flexDirection: "row",
-    // margin: 20,
     width: "90%",
     backgroundColor: "white",
     borderRadius: 20,
     padding: "5%",
     alignSelf: "center",
-    // alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -522,7 +610,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     width: 100,
     padding: 10,
-    // elevation: 2,
     backgroundColor: "#5E72E4",
 
     alignSelf: "center",
@@ -533,8 +620,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 12,
     padding: "1.2%",
-    // width: "20%",
-
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -542,37 +627,22 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-
     elevation: 2,
-    // justifyContent: "center",
   },
   placeholderStyle: {
     fontSize: 16,
-    // justifyContent: "center",
   },
   selectedTextStyle: {
     fontSize: 16,
-    // backgroundColor: "#F5F5F5",
-    // height: "90%",
-    // justifyContent: "center",
   },
   inputSearchStyle: {
-    height: "4%",
+    // height: "30%",
     fontSize: 16,
   },
-  //   productImage: {
-  //     width: cardWidth - theme.SIZES.BASE,
-  //     height: cardWidth - theme.SIZES.BASE,
-  //     borderRadius: 3,
-  //   },
-  //   productPrice: {
-  //     paddingTop: theme.SIZES.BASE,
-  //     paddingBottom: theme.SIZES.BASE / 2,
-  //   },
-  //   productDescription: {
-  //     paddingTop: theme.SIZES.BASE,
-  //     // paddingBottom: theme.SIZES.BASE * 2,
-  //   },
+  errorMessage: {
+    color: "red",
+    paddingLeft: "3%",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
-
-// export default InventoryClerkHomePage;

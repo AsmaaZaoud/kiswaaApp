@@ -123,13 +123,9 @@ function InventoryStack(props) {
         component={InventoryClerkHomePage}
         options={{
           header: ({ navigation, scene }) => (
-            <Header
-              title="Home Page"
-              navigation={navigation}
-              scene={scene}
-            />
+            <Header title="Home Page" navigation={navigation} scene={scene} />
           ),
-        //   cardStyle: { backgroundColor: "#F8F9FE" },
+          //   cardStyle: { backgroundColor: "#F8F9FE" },
         }}
       />
     </Stack.Navigator>
@@ -244,6 +240,10 @@ export default function OnboardingStack(props) {
         }}
       />
       <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen
+        name="InventoryClerkHomePage"
+        component={InventoryClerkHomePage}
+      />
       <Stack.Screen name="Login" component={Login} />
     </Stack.Navigator>
   );
@@ -299,7 +299,7 @@ function AppStack(props) {
         name="InventoryClerkHomePage"
         component={InventoryStack}
         options={{
-          headerShown: false,
+          headerShown: true,
         }}
       />
       <Drawer.Screen
