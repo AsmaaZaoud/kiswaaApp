@@ -67,11 +67,8 @@ export default function RegisterFamily({ navigation }) {
     { label: "Al Shahaniya", value: "10" },
   ];
 
-  const [firstName, setFirstName] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
-
-  const [lastName, setLastName] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userNameError, setUserNameError] = useState("");
 
   const [phoneError, setPhoneError] = useState("");
   const [phone, setPhone] = useState("");
@@ -109,8 +106,7 @@ export default function RegisterFamily({ navigation }) {
   const add = async () => {
     const docRef = doc(db, "families", email);
     await setDoc(docRef, {
-      firstName: firstName,
-      lastName: lastName,
+      userName: userName,
       phone: phone,
       location: location,
       email: email,
@@ -124,35 +120,43 @@ export default function RegisterFamily({ navigation }) {
       });
   };
 
-  const validation = async () => {
+  const [valid, setValid] = useState(false);
+  const emailValidate = async () => {
     if (validator.isEmail(email)) {
       setEmailError("");
     } else {
       setEmailError("Email is not vaildate");
     }
-
-    if (password.length >= 6) {
+  };
+  const passValidate = async () => {
+    if (password.length >= 5) {
       setPassError("");
     } else {
       setPassError("Password Must Be 6 Chars");
     }
-
-    if (firstName.length != 0) {
-      setFirstNameError("");
+  };
+  const userNameValidate = async () => {
+    if (userName.length != 0) {
+      setUserNameError("");
     } else {
-      setFirstNameError("Enter Your first Name");
+      setUserNameError("Enter Your user Name");
     }
-    if (lastName.length != 0) {
-      setLastNameError("");
-    } else {
-      setLastNameError("Enter Your last Name");
-    }
-
-    if (phone.length === 8) {
+  };
+  const phoneValidate = async () => {
+    if (phone.length >= 7) {
+      console.log(phone);
       setPhoneError("");
     } else {
+      console.log(phone);
       setPhoneError("Number is not valid");
     }
+  };
+
+  const validation = async () => {
+    userNameValidate();
+    phoneValidate();
+    emailValidate();
+    passValidate();
     if (zone !== " All Zones") {
       setZoneError("");
     } else {
@@ -163,19 +167,20 @@ export default function RegisterFamily({ navigation }) {
     } else {
       setLocationError("Allow Location");
     }
-
+    console.log(valid);
     if (
       validator.isEmail(email) &&
-      password.length >= 6 &&
-      firstName.length != 0 &&
-      lastName.length != 0 &&
-      phone.length === 8 &&
-      zone !== "All Zones" &&
+      password.length >= 5 &&
+      userName.length != 0 &&
+      phone.length >= 7 &&
+      zone !== " All Zones" &&
       stat == "granted"
     ) {
       console.log(stat);
-      console.log("okay");
+      console.log("validated");
       handleRegister();
+    } else {
+      console.log("not validated");
     }
   };
 
@@ -218,9 +223,12 @@ export default function RegisterFamily({ navigation }) {
                   <Block width={width * 0.8} style={{ marginBottom: 10 }}>
                     <Input
                       borderless
-                      placeholder="firsr Name"
-                      value={firstName}
-                      onChangeText={setFirstName}
+                      placeholder="User Name"
+                      value={userName}
+                      onChangeText={(name) => {
+                        setUserName(name);
+                        userNameValidate();
+                      }}
                       iconContent={
                         <Icon
                           size={16}
@@ -238,41 +246,19 @@ export default function RegisterFamily({ navigation }) {
                         fontSize: 12,
                       }}
                     >
-                      {firstNameError}
+                      {userNameError}
                     </Text>
                   </Block>
                   <Block width={width * 0.8} style={{ marginBottom: 10 }}>
                     <Input
-                      borderless
-                      placeholder="Last Name"
-                      value={lastName}
-                      onChangeText={setLastName}
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={argonTheme.COLORS.ICON}
-                          name="ic_mail_24px"
-                          family="ArgonExtra"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "red",
-                        fontSize: 12,
-                      }}
-                    >
-                      {lastNameError}
-                    </Text>
-                  </Block>
-                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
-                    <Input
+                      phone-pad
                       borderless
                       placeholder="Phone Number"
                       value={phone}
-                      onChangeText={setPhone}
+                      onChangeText={(pho) => {
+                        setPhone(pho);
+                        phoneValidate();
+                      }}
                       iconContent={
                         <Icon
                           size={16}
@@ -299,7 +285,10 @@ export default function RegisterFamily({ navigation }) {
                       borderless
                       placeholder="Email"
                       value={email}
-                      onChangeText={setEmail}
+                      onChangeText={(em) => {
+                        setEmail(em);
+                        emailValidate();
+                      }}
                       iconContent={
                         <Icon
                           size={16}
@@ -326,7 +315,10 @@ export default function RegisterFamily({ navigation }) {
                       borderless
                       placeholder="Password"
                       value={password}
-                      onChangeText={setPassword}
+                      onChangeText={(pass) => {
+                        setPassword(pass);
+                        passValidate();
+                      }}
                       iconContent={
                         <Icon
                           size={16}
@@ -358,7 +350,9 @@ export default function RegisterFamily({ navigation }) {
                       <Button
                         color={stat !== "granted" ? "default" : "primary"}
                         style={styles.createButton}
-                        onPress={getLocation}
+                        onPress={() => {
+                          getLocation();
+                        }}
                       >
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Location
