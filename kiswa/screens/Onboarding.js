@@ -29,11 +29,26 @@ const Onboarding = ({ navigation }) => {
           We accept clothes of all quality types. The good quality ones go to people who requested them 
           and the worn out ones go to recycling organizations.
         </Text>
+        <Block>
+        <Block>
+          <Image
+          style={{width: 150, height: 150, tintColor: 'white'}}
+          source={{uri: 'https://cdn-icons-png.flaticon.com/512/812/812319.png'}}
+          ></Image>
+        </Block>
+        <Block>
+          <Image
+          style={{width: 150, height: 150, tintColor: 'white'}}
+          source={{uri: 'https://cdn-icons-png.flaticon.com/512/2904/2904889.png'}}
+          ></Image>
+        </Block>
+        </Block>
       </Block>
     </Block>
   );
 
 }
+//https://cdn-icons-png.flaticon.com/512/2904/2904889.png
 
 const styles = StyleSheet.create({
   container: {
