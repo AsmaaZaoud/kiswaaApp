@@ -13,7 +13,8 @@ import { Images, argonTheme } from "../constants";
 
 const { width, height } = Dimensions.get("screen");
 
-const Register = ({ navigation }) => {
+class Register extends React.Component {
+  render() {
     return (
       <Block flex middle>
         <StatusBar hidden />
@@ -146,14 +147,6 @@ const Register = ({ navigation }) => {
                           CREATE ACCOUNT
                         </Text>
                       </Button>
-
-                      <Button
-                        color="primary" style={styles.createButton}
-                        onPress={() => navigation.navigate("Home")}>
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          GO BACK
-                        </Text>
-                      </Button>
                     </Block>
                   </KeyboardAvoidingView>
                 </Block>
@@ -164,7 +157,7 @@ const Register = ({ navigation }) => {
       </Block>
     );
   }
-
+}
 
 const styles = StyleSheet.create({
   registerContainer: {

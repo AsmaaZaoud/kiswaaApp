@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
-import { Block, theme } from 'galio-framework';
+import { Block, theme, Text, Button } from 'galio-framework';
 
 import { Card } from '../components';
 import articles from '../constants/articles';
 const { width } = Dimensions.get('screen');
+
 
 class Home extends React.Component {
   renderArticles = () => {
@@ -26,9 +27,15 @@ class Home extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props;
     return (
       <Block flex center style={styles.home}>
         {this.renderArticles()}
+        <Button 
+        style={{width: '100%'}}
+        onPress={() => navigation.navigate("Onboarding")}>
+          GO BACK
+        </Button>
       </Block>
     );
   }
