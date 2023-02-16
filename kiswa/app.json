@@ -2,6 +2,7 @@
   "expo": {
     "name": "Argon FREE React Native",
     "slug": "argon-free-react-native",
+    "plugins": ["expo-image-picker"],
     "privacy": "public",
     "platforms": [
       "ios",

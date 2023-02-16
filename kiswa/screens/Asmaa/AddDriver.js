@@ -8,6 +8,7 @@ import {
   Image,
   TextInput,
   View,
+  Pressable,
   
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
@@ -17,6 +18,7 @@ import { Images, argonTheme } from "../../constants";
 
 import { Dropdown } from "react-native-element-dropdown";
 
+import * as ImagePicker from 'expo-image-picker';
 
 import validator from "validator";
 
@@ -27,7 +29,7 @@ import {
 import { auth } from "../../config";
 
 import { doc, setDoc, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
-import { db } from "../../config";
+import { db, storage } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -44,6 +46,9 @@ const AddDriver = ({navigation}) => {
   const [dob, setDob] = useState(new Date);
   const [zone, setZone] = useState("");
 
+    const [image, setImage] = useState();
+  const [url, setUrl] = useState();
+  const [fileName, setFileName] = useState();
  const [datePicker, setDatePicker] = useState(false);
   function showDatePicker() {
     setDatePicker(true);
@@ -62,6 +67,26 @@ const AddDriver = ({navigation}) => {
   const [flag, setFlag] = useState(true);
 
 const [ZoneError, setZoneError] = useState();
+
+
+
+
+
+  // const pickImage = async () => {
+  //   // No permissions request is necessary for launching the image library
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     //allowsEditing: true,
+  //     //aspect: [4, 3],
+  //     //quality: 1,
+  //   });
+
+  //   console.log(result);
+
+  //   if (!result.canceled) {
+  //     setImage(result.assets[0].uri);
+  //   }
+  // };
 
 const zones = [
     { label: " All Zones", value: "0" },
@@ -149,10 +174,18 @@ const zones = [
         
               
               <Block center width={width*0.4} style={styles.box}>
-                   <Image
+                <Pressable 
+               // onPressIn={() => pickImage()}
+                > 
+                  <Image
                    style={styles.profileImage}
-                     source={{ uri: 'https://static.vecteezy.com/system/resources/previews/000/376/489/original/add-user-vector-icon.jpg' }}
-                   />
+                     source={{ uri: image? image : 'https://static.vecteezy.com/system/resources/previews/000/376/489/original/add-user-vector-icon.jpg' }}
+                  
+
+                  />
+
+                  </Pressable>
+                  
                      <Text style={styles.name}>Add photo</Text>
               </Block>
                
