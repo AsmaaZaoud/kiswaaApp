@@ -7,7 +7,8 @@ import {
   KeyboardAvoidingView,
   Image,
   TextInput,
-  View
+  View,
+  
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -15,8 +16,6 @@ import { Button, Icon, Input, Select } from "../../components";
 import { Images, argonTheme } from "../../constants";
 
 import { Dropdown } from "react-native-element-dropdown";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import DatePicker from 'react-native-datepicker'
 
 
 import validator from "validator";
@@ -34,6 +33,9 @@ const { width, height } = Dimensions.get("screen");
 
 
 const AddDriver = ({navigation}) => {
+
+    const [chosenDate, setChosenDate] = useState(new Date());
+
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
   const [phone, setPhone] = useState("");
@@ -253,31 +255,8 @@ const zones = [
                       onBlur = {()=>validOne(6)}
 
                       /> */}
-                      <DatePicker
-        style={{width: 200}}
-        date={dob}
-        mode="date"
-        placeholder="select date"
-        format="YYYY-MM-DD"
-        //minDate="2016-05-01"
-        maxDate="2016-06-01"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
-        showIcon={false}
-        customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 4,
-            marginLeft: 0
-          },
-          dateInput: {
-            marginLeft: 36
-          }
-          // ... You can check the source to find the other keys.
-        }}
-        onDateChange={(date) => {setDob({date: date})}}
-      />
+
+       
 
               
                
@@ -294,16 +273,19 @@ const zones = [
               :null}
         </View>
       <Block right width={width*0.8} style={{flexDirection:"row"}} >
-        <Block width={width * 0.35} style={{ marginBottom: 0 }}>
+        <Block width={width * 0.4} style={{ marginBottom: 0 }}>
+                              {/* <Text style={styles.text}>Zone</Text> */}
+
                       <Dropdown
-                        style={styles.dropdown}
+                     
+                        style={[styles.smallInput, {padding:11}]}
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
                         data={zones}
                         maxHeight={160}
                         labelField="label"
                         valueField="value"
-                        placeholder={zone}
+                        placeholder={zone? zone : "Select zone"}
                         value={zone}
                         onChange={(item) => {
                           setZone(item.label);
@@ -393,8 +375,8 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   createButton: {
-    width: width * 0.2,
-    marginTop: 25,
+    width: width * 0.20,
+    marginTop: 10,
 
   },
    cancelButton: {
@@ -441,6 +423,18 @@ const styles = StyleSheet.create({
     display: "flex",
     color: "pink",
   },
+  dropdown: {
+    //marginBottom: 10,
+    padding: 7,
+    borderRadius: 4,
+    borderColor: argonTheme.COLORS.INPUT_ERROR,
+    height: 44,
+    backgroundColor: "#FFFFFF",
+    shadowColor: argonTheme.COLORS.BLACK,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    shadowOpacity: 0.05,
+    elevation: 2,}
 });
 
 export default AddDriver;

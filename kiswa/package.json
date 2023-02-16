@@ -14,7 +14,6 @@
     "url": "git+https://github.com/creativetimofficial/argon-react-native.git"
   },
   "dependencies": {
-    "@mui/x-date-pickers": "^5.0.18",
     "@react-native-community/datetimepicker": "^6.7.5",
     "@react-native-masked-view/masked-view": "0.2.6",
     "@react-navigation/bottom-tabs": "^6.3.1",
