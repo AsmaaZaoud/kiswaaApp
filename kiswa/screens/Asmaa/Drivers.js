@@ -116,7 +116,7 @@ const Drivers = ({navigation}) => {
     });
     setDrivers(temp);
     setAllDrivers(temp)
-    console.log(drivers);
+    //console.log(drivers);
   };
 
     return (

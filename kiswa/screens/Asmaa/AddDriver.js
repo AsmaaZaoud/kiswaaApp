@@ -15,6 +15,7 @@ import { Button, Icon, Input, Select } from "../../components";
 import { Images, argonTheme } from "../../constants";
 
 import { Dropdown } from "react-native-element-dropdown";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import validator from "validator";
 
@@ -36,10 +37,17 @@ const AddDriver = ({navigation}) => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [qId, setQId] = useState("");
-  const [dob, setDob] = useState("");
+  const [dob, setDob] = useState(new Date);
   const [zone, setZone] = useState("");
 
-
+ const [datePicker, setDatePicker] = useState(false);
+  function showDatePicker() {
+    setDatePicker(true);
+  }
+  function onDateSelected(event, value) {
+    setDob(value);
+    setDatePicker(false);
+  }
  const [FnameError, setFnameError] = useState();
   const [LnameError, setLnameError] = useState();
   const [phoneError, setPhoneError] = useState();
@@ -232,7 +240,7 @@ const zones = [
 
          <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
                     <Text style={styles.text}>Date Of Birth</Text>
-                     < TextInput
+                     {/* < TextInput
                      autoCorrect = {false}
 
                      type="date"
@@ -242,7 +250,28 @@ const zones = [
                       onChangeText={setDob}
                       onBlur = {()=>validOne(6)}
 
-                      />
+                      /> */}
+
+               {datePicker && (
+                  <DateTimePicker
+                    value={dob}
+                    mode={"date"}
+                    display={Platform.OS === "ios" ? "default" : "default"}
+                    is24Hour={true}
+                    onChange={onDateSelected}
+                    style={styles.datePicker}
+                  />
+                )}
+
+                {!datePicker && (
+                  <TextInput
+                    style={styles.input}
+                    onPressIn={showDatePicker}
+                    value={dob}
+                    placeholder={dob.toDateString()}
+                  ></TextInput>
+                )}
+               
           </View>
 
           
@@ -320,7 +349,13 @@ const styles = StyleSheet.create({
       fontSize:20,
       borderWidth:0.3
   },
- 
+ input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+  },
     text:{
       fontSize:20
     },
@@ -388,6 +423,14 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     fontWeight: 'bold',
     color: '#1E90FF',
+  },
+   datePicker: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    width: 320,
+    height: 260,
+    display: "flex",
+    color: "pink",
   },
 });
 
