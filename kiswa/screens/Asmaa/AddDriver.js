@@ -89,6 +89,7 @@ const zones = [
     switch(x){
       
       case 1:
+            setFname
               Fname == "" ? setFnameError(true) : setFnameError(false)
               break
       case 2:
@@ -161,7 +162,7 @@ const zones = [
                       placeholder="Joe"
                       value={Fname}
                       onChangeText={setFname}
-                      onBlur = {()=>validOne(1)}
+                      onEndEditing =  {()=>validOne(1)}
                       />
           </View>
 
@@ -224,7 +225,7 @@ const zones = [
                       placeholder="abc@example"
                       value={email}
                       onChangeText={setEmail}
-                      onBlur = {()=>validOne(5)}
+                      onEndEditing = {()=>validOne(5)}
 
                       />
           </View>
