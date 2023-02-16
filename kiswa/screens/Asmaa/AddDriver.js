@@ -16,6 +16,8 @@ import { Images, argonTheme } from "../../constants";
 
 import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import DatePicker from 'react-native-datepicker'
+
 
 import validator from "validator";
 
@@ -251,26 +253,33 @@ const zones = [
                       onBlur = {()=>validOne(6)}
 
                       /> */}
+                      <DatePicker
+        style={{width: 200}}
+        date={dob}
+        mode="date"
+        placeholder="select date"
+        format="YYYY-MM-DD"
+        //minDate="2016-05-01"
+        maxDate="2016-06-01"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        showIcon={false}
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left: 0,
+            top: 4,
+            marginLeft: 0
+          },
+          dateInput: {
+            marginLeft: 36
+          }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={(date) => {setDob({date: date})}}
+      />
 
-               {datePicker && (
-                  <DateTimePicker
-                    value={dob}
-                    mode={"date"}
-                    display={Platform.OS === "ios" ? "default" : "default"}
-                    is24Hour={true}
-                    onChange={onDateSelected}
-                    style={styles.datePicker}
-                  />
-                )}
-
-                {!datePicker && (
-                  <TextInput
-                    style={styles.input}
-                    onPressIn={showDatePicker}
-                    value={dob}
-                    placeholder={dob.toDateString()}
-                  ></TextInput>
-                )}
+              
                
           </View>
 
