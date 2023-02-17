@@ -18,7 +18,7 @@ import { Button, Icon, Input, Select } from "../../components";
 import { Images, argonTheme } from "../../constants";
 
 import { Dropdown } from "react-native-element-dropdown";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from 'expo-image-picker';
 import DatePicker from 'react-native-date-picker'
 
@@ -72,21 +72,7 @@ const [ZoneError, setZoneError] = useState();
 
 
 
-  // const pickImage = async () => {
-  //   // No permissions request is necessary for launching the image library
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     //allowsEditing: true,
-  //     //aspect: [4, 3],
-  //     //quality: 1,
-  //   });
-
-  //   console.log(result);
-
-  //   if (!result.canceled) {
-  //     setImage(result.assets[0].uri);
-  //   }
-  // };
+  
 
 const zones = [
     { label: " All Zones", value: "0" },
@@ -102,9 +88,6 @@ const zones = [
     { label: "Al Shahaniya", value: "10" },
   ];
 
-
-//  let user = auth?.currentUser?.email;
-//   console.log('user logged in: ', user)
 
  const add = async () => {
   alert("add")
@@ -162,6 +145,15 @@ const zones = [
       
                   
 
+  }
+
+
+  function onDateSelected(event, value) {
+    alert(date)
+   // setDate(value.toDateString());
+    setDob(value)
+    //alert(date.toDateString())
+    setOpen(false);
   }
     return (
       <Block flex middle>
@@ -275,38 +267,44 @@ const zones = [
                       />
           </View>
 
-         <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
-                    <Text style={styles.text}>Date Of Birth</Text>
-                     {/* < TextInput
+         {/* <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
+           <TouchableOpacity onPress= {( ) => setOpen(true)} >
+             <Text style={styles.text}>Date Of Birth</Text>
+             </TouchableOpacity>
+
+              < TextInput
                      autoCorrect = {false}
 
-                     type="date"
-                       style={[styles.smallInput, {borderColor: dobError?"red":"black"}]}
-                      placeholder="2-2-1992"
+                       style={[styles.smallInput, {borderColor: emailError?"red":"black"}]}
+                      placeholder="abc@example"
                       value={dob}
-                      onChangeText={setDob}
-                      onBlur = {()=>validOne(6)}
+                      //onChangeText={setEmail}
+                      //onEndEditing = {()=>validOne(5)}
 
-                      /> */}
+                      />
+            {open &&
+            <View>
+            <DateTimePicker
+                    value={date}
+                    mode={"date"}
+                    display={Platform.OS === "ios" ? "spinner" : "default"}
+                    //is24Hour={true}
+                    onChange={(value) => setDate(value)}
+                    //onConfirm={onDateSelected}
+                    style={styles.datePicker}
+                    confirmText = {"con"}
+                    //onCancel={() => {setOpen(false) }}
+                  /> 
+                    <Pressable onPress={onDateSelected}><Text>Confirm</Text></Pressable>
+            </View>
+            }            
 
-                       <Button style={{width:100,height:100, borderWidth:1}} title="Open" onPress={() => setOpen(true)} />
-      <DatePicker
-        modal
-        open={true}
-        date={date}
-        onConfirm={(date) => {
-          setOpen(false)
-          setDate(date)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-      />
+
        
 
               
                
-          </View>
+          </View> */}
 
           
       </Block>
@@ -462,6 +460,7 @@ const styles = StyleSheet.create({
     color: '#1E90FF',
   },
    datePicker: {
+    borderWidth:2,
     justifyContent: "center",
     alignItems: "flex-start",
     width: 320,

@@ -112,7 +112,7 @@ const Drivers = ({navigation}) => {
     // console.log(docs)
     docs.forEach((doc) => {
       temp.push(doc.data());
-      console.log(doc.id, " => ", doc.data());
+      //console.log(doc.id, " => ", doc.data());
     });
     setDrivers(temp);
     setAllDrivers(temp)
