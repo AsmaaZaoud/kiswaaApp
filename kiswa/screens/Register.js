@@ -39,7 +39,7 @@ const Register = ({ navigation }) => {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     return passwordRegex.test(password);
   };
-  
+
 
   const handleRegister = () => {
     if (!name) {
@@ -52,6 +52,7 @@ const Register = ({ navigation }) => {
 
     if (!phone) {
       setPhoneError('Please enter a valid phone number that is 8 digits long')
+      return;
     }
     else {
       setPhoneError('');
@@ -82,7 +83,7 @@ const Register = ({ navigation }) => {
     }
 
     if (!validatePassword(password)) {
-      setError('Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character');
+      setPassError('Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character');
       return;
     }
     else {
@@ -110,59 +111,65 @@ const Register = ({ navigation }) => {
 
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
-            <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.goBack()}>Go Back</Text>
-            <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: 25, marginTop: 20 }}>Register as Donor</Text>
-            <View style={styles.container}>
+            <ImageBackground
+              source={{uri: 'https://img.freepik.com/free-photo/violet-watercolor-texture-background_1083-172.jpg'}}
+              resizeMode="cover"
+              style={{flex: 1, justifyContent: 'center',}}
+            >
+              <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.goBack()}>Go Back</Text>
+              <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: 25, marginTop: 20 }}>Register as Donor</Text>
+              <View style={styles.container}>
 
-              <Text style={styles.error}>{nameError}</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Name"
-                value={name}
-                onChangeText={setName}
-                autoCapitalize='words'
-              />
-              <Text style={styles.error}>{phoneError}</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Phone Number"
-                value={'+974 ' + phone}
-                onChangeText={setPhone}
-                keyboardType="numeric"
-                maxLength={8}
-              />
-              <Text style={styles.error}>{emailError}</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-              <Text style={styles.error}>{passError}</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-              />
-              <Text style={styles.error}>{confirmError}</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                secureTextEntry
-              />
+                <Text style={styles.error}>{nameError}</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Nickname"
+                  value={name}
+                  onChangeText={setName}
+                  autoCapitalize='words'
+                />
+                <Text style={styles.error}>{phoneError}</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Phone Number"
+                  value={phone}
+                  onChangeText={setPhone}
+                  keyboardType="numeric"
+                  maxLength={8}
+                />
+                <Text style={styles.error}>{emailError}</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+                <Text style={styles.error}>{passError}</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                />
+                <Text style={styles.error}>{confirmError}</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  secureTextEntry
+                />
 
-              <Button
-                // style={{width: '100%'}}
-                onPress={handleRegister}>
-                Register
-              </Button>
-            </View>
+                <Button
+                  // style={{width: '100%'}}
+                  onPress={handleRegister}>
+                  Register
+                </Button>
+              </View>
+            </ImageBackground>
           </Block>
         </Block>
       </ImageBackground>
@@ -201,14 +208,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    //backgroundColor: '#F5FCFF',
   },
   input: {
     width: '80%',
     height: 40,
-    margin: 20,
+    margin: 15,
     borderWidth: 1,
     padding: 10,
+    borderRadius: 10
   },
   error: {
     color: 'red',
