@@ -21,38 +21,81 @@ const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const [emailError, setEmailError] = useState('');
+  const [passError, setPassError] = useState('');
+  const [confirmError, setConfirmError] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
 
   const validateEmail = (email) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailRegex.test(email);
   };
 
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    return passwordRegex.test(password);
+  };
+  
 
   const handleRegister = () => {
-    if (!email) {
-      setError('Please enter an email address');
+    if (!name) {
+      setNameError('Please enter your nickname');
       return;
+    }
+    else {
+      setNameError('');
+    }
+
+    if (!phone) {
+      setPhoneError('Please enter a valid phone number that is 8 digits long')
+    }
+    else {
+      setPhoneError('');
+    }
+
+    if (!email) {
+      setEmailError('Please enter an email address');
+      return;
+    }
+    else {
+      setEmailError('');
     }
 
     if (!validateEmail(email)) {
-      setError('Please enter a valid email address');
+      setEmailError('Please enter a valid email address');
       return;
+    }
+    else {
+      setEmailError('');
     }
 
     if (!password) {
-      setError('Please enter a password');
+      setPassError('Please enter a password');
       return;
+    }
+    else {
+      setPassError('');
+    }
+
+    if (!validatePassword(password)) {
+      setError('Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character');
+      return;
+    }
+    else {
+      setPassError('');
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setConfirmError('Passwords do not match');
       return;
     }
-
-    // Your registration logic goes here
-
-    setError('');
+    else {
+      setConfirmError('');
+    }
   }
 
 
@@ -67,10 +110,28 @@ const Register = ({ navigation }) => {
 
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
-          <Text style={{padding: 20, color: 'blue'}} onPress={() => navigation.goBack()}>Go Back</Text>
+            <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.goBack()}>Go Back</Text>
+            <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: 25, marginTop: 20 }}>Register as Donor</Text>
             <View style={styles.container}>
-              <Text>Sign Up</Text>
-              <Text style={styles.error}>{error}</Text>
+
+              <Text style={styles.error}>{nameError}</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Name"
+                value={name}
+                onChangeText={setName}
+                autoCapitalize='words'
+              />
+              <Text style={styles.error}>{phoneError}</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Phone Number"
+                value={'+974 ' + phone}
+                onChangeText={setPhone}
+                keyboardType="numeric"
+                maxLength={8}
+              />
+              <Text style={styles.error}>{emailError}</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -79,6 +140,7 @@ const Register = ({ navigation }) => {
                 keyboardType="email-address"
                 autoCapitalize="none"
               />
+              <Text style={styles.error}>{passError}</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Password"
@@ -86,6 +148,7 @@ const Register = ({ navigation }) => {
                 onChangeText={setPassword}
                 secureTextEntry
               />
+              <Text style={styles.error}>{confirmError}</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Confirm Password"
@@ -139,13 +202,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    borderWidth: 1,
-    borderColor: 'red'
   },
   input: {
     width: '80%',
     height: 40,
-    margin: 12,
+    margin: 20,
     borderWidth: 1,
     padding: 10,
   },
