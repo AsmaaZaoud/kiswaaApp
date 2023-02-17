@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
   Pressable,
+  TouchableOpacity,
   
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
@@ -19,6 +20,7 @@ import { Images, argonTheme } from "../../constants";
 import { Dropdown } from "react-native-element-dropdown";
 
 import * as ImagePicker from 'expo-image-picker';
+import DatePicker from 'react-native-date-picker'
 
 import validator from "validator";
 
@@ -46,17 +48,15 @@ const AddDriver = ({navigation}) => {
   const [dob, setDob] = useState(new Date);
   const [zone, setZone] = useState("");
 
-    const [image, setImage] = useState();
+  const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
+
+
+  const [image, setImage] = useState();
   const [url, setUrl] = useState();
   const [fileName, setFileName] = useState();
- const [datePicker, setDatePicker] = useState(false);
-  function showDatePicker() {
-    setDatePicker(true);
-  }
-  function onDateSelected(event, value) {
-    setDob(value);
-    setDatePicker(false);
-  }
+  const [datePicker, setDatePicker] = useState(false);
+ 
  const [FnameError, setFnameError] = useState();
   const [LnameError, setLnameError] = useState();
   const [phoneError, setPhoneError] = useState();
@@ -289,6 +289,19 @@ const zones = [
 
                       /> */}
 
+                       <Button style={{width:100,height:100, borderWidth:1}} title="Open" onPress={() => setOpen(true)} />
+      <DatePicker
+        modal
+        open={true}
+        date={date}
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
        
 
               
