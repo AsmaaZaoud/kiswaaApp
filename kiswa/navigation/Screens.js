@@ -25,6 +25,7 @@ import Drivers from "../screens/Asmaa/Drivers";
 import AdminHome from "../screens/Asmaa/AdminHome";
 import DriverHome from "../screens/Asmaa/DriverHome";
 import AddDriver from "../screens/Asmaa/AddDriver";
+import AdminHomeCopy from "../screens/Asmaa/AdminHomeCopy";
 
 //invent
 import InventoryClerks from "../screens/Asmaa/InventoryClerks";
@@ -252,6 +253,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="AddDriver" component={AddDriver} 
       options={{title: 'AddDriver'}}/>
 
+      <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
 
 
     </Stack.Navigator>
