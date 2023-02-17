@@ -18,7 +18,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 const { width,height } = Dimensions.get('screen');
 
-const  AdminHomeCopy = ({navigation}) => {
+const  AdminHome = ({navigation}) => {
 
     useEffect(() => {
     readAllWhere();
@@ -263,4 +263,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AdminHomeCopy
+export default AdminHome

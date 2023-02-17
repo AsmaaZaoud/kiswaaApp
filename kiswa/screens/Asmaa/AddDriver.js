@@ -10,7 +10,7 @@ import {
   View,
   Pressable,
   TouchableOpacity,
-  
+  Platform
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -48,7 +48,7 @@ const AddDriver = ({navigation}) => {
   const [dob, setDob] = useState(new Date);
   const [zone, setZone] = useState("");
 
-  const [date, setDate] = useState(new Date())
+  // const [date, setDate] = useState(new Date())
   const [open, setOpen] = useState(false)
 
 
@@ -71,7 +71,22 @@ const [ZoneError, setZoneError] = useState();
 
 
 
+const [isPickerShow, setIsPickerShow] = useState(false);
+const [date, setDate] = useState(new Date(Date.now()));
 
+  const showPicker = () => {
+    setIsPickerShow(true);
+  };
+  const hidePicker = () => {
+    setIsPickerShow(false);
+  };
+
+  const onChange = (event, value) => {
+    setDate(value);
+    if (Platform.OS === 'android') {
+      setIsPickerShow(false);
+    }
+  };
   
 
 const zones = [
@@ -223,7 +238,7 @@ const zones = [
                     <Text style={styles.text}>Qatar ID</Text>
                      < TextInput
                      autoCorrect = {false}
-                      keyboardType="numeric"
+                      keyboardType="number-pad"
                       style={[styles.smallInput, {borderColor: qIdError?"red":"black"}]}
                       placeholder="30101200033"
                       value={qId}
@@ -237,7 +252,7 @@ const zones = [
                     <Text style={styles.text}>Phone</Text>
                      < TextInput
                      autoCorrect = {false}
-
+                      keyboardType="number-pad"
                        style={[styles.smallInput, {borderColor: phoneError?"red":"black"}]}
                       placeholder="66005500"
                       value={phone}
@@ -267,46 +282,41 @@ const zones = [
                       />
           </View>
 
-         {/* <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
-           <TouchableOpacity onPress= {( ) => setOpen(true)} >
-             <Text style={styles.text}>Date Of Birth</Text>
-             </TouchableOpacity>
 
-              < TextInput
-                     autoCorrect = {false}
 
-                       style={[styles.smallInput, {borderColor: emailError?"red":"black"}]}
-                      placeholder="abc@example"
-                      value={dob}
-                      //onChangeText={setEmail}
-                      //onEndEditing = {()=>validOne(5)}
+        <View style={styles.con}>
+              {/* Display the selected date */}
+                <Text style={styles.text}>Date of Birth</Text>
+                <Pressable style={styles.pickedDateContainer} onPress={showPicker}>
+                  <Text style={styles.pickedDate}>{date.toDateString()}</Text>
 
-                      />
-            {open &&
-            <View>
-            <DateTimePicker
+                </Pressable>
+
+           
+
+             {/* The date picker */}
+              {isPickerShow && (
+                  <DateTimePicker
                     value={date}
-                    mode={"date"}
-                    display={Platform.OS === "ios" ? "spinner" : "default"}
-                    //is24Hour={true}
-                    onChange={(value) => setDate(value)}
-                    //onConfirm={onDateSelected}
+                    mode={'date'}
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                    is24Hour={true}
+                    onChange={onChange}
                     style={styles.datePicker}
-                    confirmText = {"con"}
-                    //onCancel={() => {setOpen(false) }}
-                  /> 
-                    <Pressable onPress={onDateSelected}><Text>Confirm</Text></Pressable>
-            </View>
-            }            
+                  />
+                )}
+                 {isPickerShow && (
+                <View style={{ flexDirection:"row",justifyContent:"space-between", width:"70%",padding:5}}>  
+                  <Pressable>
+                    <Text>Cancel</Text>
+                  </Pressable>
+                   <Pressable onPress={hidePicker}>
+                    <Text>Confirm</Text>
+                  </Pressable>
+                </View>
+                 )}
+          </View>
 
-
-       
-
-              
-               
-          </View> */}
-
-          
       </Block>
       
       {/*--------- Buttons ----------*/}
@@ -316,12 +326,11 @@ const zones = [
               <Text style={{color:"red"}}>Please Fill al feilds!</Text>
               :null}
         </View>
-      <Block right width={width*0.8} style={{flexDirection:"row"}} >
-        <Block width={width * 0.4} style={{ marginBottom: 0 }}>
-                              {/* <Text style={styles.text}>Zone</Text> */}
+      <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:0}} >
+        <Block width={width * 0.4} style={{ marginTop: 10 }}>
+                              <Text style={styles.text}>Zone</Text>
 
                       <Dropdown
-                     
                         style={[styles.smallInput, {padding:11}]}
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
@@ -420,12 +429,12 @@ const styles = StyleSheet.create({
   },
   createButton: {
     width: width * 0.20,
-    marginTop: 10,
+    marginBottom: 20,
 
   },
    cancelButton: {
     width: width * 0.2,
-    marginTop: 25,
+    marginBottom: 20,
   backgroundColor: theme.COLORS.MUTED    
   },
  
@@ -459,15 +468,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#1E90FF',
   },
-   datePicker: {
-    borderWidth:2,
-    justifyContent: "center",
-    alignItems: "flex-start",
-    width: 320,
-    height: 260,
-    display: "flex",
-    color: "pink",
-  },
+ 
   dropdown: {
     //marginBottom: 10,
     padding: 7,
@@ -479,7 +480,39 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 2,
     shadowOpacity: 0.05,
-    elevation: 2,}
+    elevation: 2,
+  },
+
+    con: {
+      // borderWidth:1,
+      //height:"30%",
+      width:"70%",
+      borderRadius:10,
+      paddingHorizontal:13,
+      fontSize:20,
+  },
+  pickedDateContainer: {
+    width:"76%",
+    padding: 17,
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+    borderWidth:0.3
+  },
+  pickedDate: {
+    fontSize: 18,
+    color: 'black',
+  },
+  btnContainer: {
+    padding: 30,
+  },
+  // This only works on iOS
+  datePicker: {
+    width: 320,
+    height: 260,
+   display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
 });
 
 export default AddDriver;
