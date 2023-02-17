@@ -120,6 +120,7 @@ class Header extends React.Component {
         }}
       />
       </TouchableOpacity>
+      <Text style={{marginRight: '5%'}}>Log In/ Sign Up</Text>
       <Input
         right
         color="black"

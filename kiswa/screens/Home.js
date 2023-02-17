@@ -3,8 +3,6 @@ import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
 import { Block, theme, Text, Button } from 'galio-framework';
 
-// import { Card } from '../components';
-// import articles from '../constants/articles';
 const { width } = Dimensions.get('screen');
 
 class Home extends React.Component {
@@ -14,14 +12,7 @@ class Home extends React.Component {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
         <Block flex>
-          {/* <Card item={articles[0]} horizontal  /> */}
-          {/* <Block flex row>
-            <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Card item={articles[2]} />
-          </Block> */}
           <Card title='HELLO WORLD'></Card>
-          {/* <Card item={articles[0]} horizontal /> */}
-          {/* <Card item={articles[4]} full /> */}
         </Block>
       </ScrollView>
     )
