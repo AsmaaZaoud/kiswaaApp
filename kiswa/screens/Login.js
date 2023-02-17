@@ -38,7 +38,20 @@ const Login = ({ navigation }) => {
         //  console.log('handle login user: ', user)
         setSignedIn(true);
 
-        navigation.replace("App");
+        let type = email.slice(-10, -4);
+        if (type == "family") {
+          navigation.navigate("FamilyHome", email);
+          // getNanny2()
+          //   .then(() => {
+          //     console.log("get it");
+          //     navigation.navigate("NannyHome", { id: id });
+          //   })
+          //   .catch((error) => {
+          //     console.log(error.message);
+          //   });
+        } else {
+          navigation.replace("App");
+        }
       })
       .catch((error) => {
         console.log(error.message);

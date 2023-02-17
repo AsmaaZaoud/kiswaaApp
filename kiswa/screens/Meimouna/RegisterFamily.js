@@ -32,21 +32,11 @@ import {
   updateDoc,
   deleteField,
 } from "firebase/firestore";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  withDelay,
-} from "react-native-reanimated";
-
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
-import { useNavigation } from "@react-navigation/native";
-import validator from "validator";
-
-import { auth } from "../../config";
 import { db } from "../../config";
 
+import { auth } from "../../config";
+
+import validator from "validator";
 // import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Dropdown } from "react-native-element-dropdown";
 import * as Location from "expo-location";

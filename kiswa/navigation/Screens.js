@@ -21,6 +21,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "../screens/Login";
 import RegisterFamily from "../screens/Meimouna/RegisterFamily";
+import FamilyHome from "../screens/Meimouna/FamilyHome";
+import FamilyRequest from "../screens/Meimouna/FamilyRequest";
 
 const { width } = Dimensions.get("screen");
 
@@ -217,6 +219,8 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
+      <Stack.Screen name="FamilyHome" component={FamilyHome} />
+      <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
     </Stack.Navigator>
   );
 }
