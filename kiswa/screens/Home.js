@@ -11,8 +11,16 @@ class Home extends React.Component {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
+                  <Button 
+        style={{width: '50%', alignSelf: 'center'}}
+        // onPress={() => navigation.navigate("Onboarding")}
+        >
+          DONATE
+        </Button>
         <Block flex>
-          <Card title='HELLO WORLD'></Card>
+          <Card title='HELLO WORLD'>
+            <Text>What</Text>
+          </Card>
         </Block>
       </ScrollView>
     )
