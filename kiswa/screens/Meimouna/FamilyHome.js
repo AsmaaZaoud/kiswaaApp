@@ -20,7 +20,8 @@ import {
 import { db } from "../../config";
 const FamilyHome = ({ route, navigation }) => {
   const id = route.params;
-  //   console.log(id);
+
+  // console.log(id);
   const [userName, setUserName] = useState("");
   useEffect(() => {
     getFamily();
@@ -28,7 +29,7 @@ const FamilyHome = ({ route, navigation }) => {
 
   const getFamily = async () => {
     console.log(id);
-    const docRef = doc(db, "families", id);
+    const docRef = doc(db, "families", id.toLowerCase());
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -43,12 +44,6 @@ const FamilyHome = ({ route, navigation }) => {
   };
   return (
     <View style={{ backgroundColor: "white" }}>
-      {/* <Text>FamilyHome</Text> */}
-      {/* <Block style={{ marginBottom: theme.SIZES.BASE }}>
-        <Header title="Title" />
-        <Text>FamilyHome</Text>
-      </Block> */}
-
       <NavBar
         title="Home"
         style={{ height: 80, borderWidth: 1, marginTop: 20, marginBottom: 20 }}
