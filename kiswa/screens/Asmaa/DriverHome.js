@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView, Text, View } from 'react-native';
 import { Block, theme } from 'galio-framework';
+import {Icon,AntDesign,FontAwesome,MaterialCommunityIcons} from "react-native-vector-icons"
 
 import { Ionicons} from "react-native-vector-icons"
 const { width } = Dimensions.get('screen');
@@ -8,18 +9,18 @@ const { width } = Dimensions.get('screen');
 const DriverHome = ({navigation}) => {
     const arr = [
         {
-            id:"6001",
+            id:"0012red3",
             userName: "Asmaa",
             zone: "Gharafa"
         },
         {
-            id:"6002",
+            id:"0033948",
             userName: "Sara",
             zone: "Alkhor"
 
         },
         {
-            id:"6004",
+            id:"003754",
             userName: "Ahmad",
             zone: "Wakra"
 
@@ -30,11 +31,18 @@ const DriverHome = ({navigation}) => {
     return (
         
       <Block flex  style={styles.home}>
-        <Text style={styles.title}>All orders</Text>
+          <View style={styles.topl}>
+            <Text>Logo</Text>
+           
+              <MaterialCommunityIcons name="logout" size={40} />
+           
+            
+
+        </View>
         <Block style={styles.top}>
-            <Text>Pickup</Text>
-            <Text>|</Text>
-            <Text>Deliver</Text>
+            <Text style={{color:"green", fontSize:19, fontWeight:"bold"}}>Pickup</Text>
+            <Text style={{ fontSize:19}}>|</Text>
+            <Text style={{fontSize:19}}>Deliver</Text>
 
         </Block>
          <ScrollView>
@@ -42,16 +50,25 @@ const DriverHome = ({navigation}) => {
         {
         arr.map((x)=>
             <View key={x.id} style={styles.pricingOption}>
-          <Text style={styles.pricingOptionTitle}>{x.id}</Text>
+              <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+          <Text style={styles.pricingOptionTitle}>order </Text>
+
+          <Text style={styles.pricingOptionTitle}>#{x.id}</Text>
+
+          </View>
           <Text style={styles.pricingOptionPrice}>User: {x.userName}</Text>
           <Text style={styles.pricingOptionDescription}>
             Location: {x.zone}
           </Text>
-          <View style={styles.pricingOptionFeatures}>
-            <Text style={styles.pricingOptionFeature}>1 user</Text>
+          <View style={{flexDirection:"row", justifyContent:"space-between", margin:5}}>
+          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
            <Ionicons name="time-outline" size={20} />
-            <Text style={styles.pricingOptionFeature}>10GB storage</Text>
-            <Text style={styles.pricingOptionFeature}>Basic support</Text>
+            <Text style={styles.pricingOptionFeature}>12:00</Text>
+          </View>
+          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
+           <Ionicons name="md-today-sharp" size={20} />
+            <Text style={styles.pricingOptionFeature}>17-Feb-2023</Text>
+          </View>
           </View>
           <View style={styles.pricingOptionButtonContainer}>
             <Text style={styles.pricingOptionButton}>Pick up</Text>
@@ -69,7 +86,13 @@ const DriverHome = ({navigation}) => {
 }
 const styles = StyleSheet.create({
  
- 
+  topl:{
+    width:width*.8,
+    //borderWidth:1,
+    //padding:10,
+    flexDirection:'row',
+    justifyContent:"space-between"
+  },
    home: {
     //width: width, 
     margin:50   
@@ -92,8 +115,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   pricingOptionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 18,
+    //fontWeight: 'bold',
     marginBottom: 10,
   },
   pricingOptionPrice: {
@@ -114,7 +137,7 @@ const styles = StyleSheet.create({
     color: '#999',
   },
   pricingOptionButtonContainer: {
-    backgroundColor: '#0011FF',
+    backgroundColor: 'green',
     borderRadius: 5,
   },
   pricingOptionButton: {
