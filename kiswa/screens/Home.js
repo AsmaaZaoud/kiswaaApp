@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Image } from 'react-native';
 import { Card } from 'react-native-elements';
 import { Block, theme, Text, Button } from 'galio-framework';
 
@@ -11,16 +11,52 @@ class Home extends React.Component {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
-                  <Button 
-        style={{width: '50%', alignSelf: 'center'}}
+        <Button
+          style={{ width: '50%', alignSelf: 'center' }}
         // onPress={() => navigation.navigate("Onboarding")}
         >
-          DONATE
+          DONATE NOW
         </Button>
         <Block flex>
-          <Card title='HELLO WORLD'>
-            <Text>What</Text>
-          </Card>
+            <Block flex row style={styles.request}>
+            
+            <Image
+              style={{width: 70, height: 70, alignSelf: 'center'}}
+              source={{
+                uri: 'https://cdn-icons-png.flaticon.com/128/3531/3531766.png',
+              }}
+            />
+            
+            <Text style={{alignSelf: 'center'}}>Help this user get 3 M shirts</Text>
+            
+            
+            </Block>
+
+            <Block flex row style={styles.request}>
+            
+            <Image
+              style={{width: 70, height: 70, alignSelf: 'center'}}
+              source={{
+                uri: 'https://cdn-icons-png.flaticon.com/128/664/664466.png',
+              }}
+            />
+            
+            <Text style={{alignSelf: 'center'}}>Help this user get 2 L pants</Text>
+            
+            </Block>
+
+            <Block flex row style={styles.request}>
+            
+            <Image
+              style={{width: 70, height: 70, alignSelf: 'center'}}
+              source={{
+                uri: 'https://cdn-icons-png.flaticon.com/128/2347/2347446.png',
+              }}
+            />
+            
+            <Text style={{alignSelf: 'center'}}>Help this user get 3 XL t-shirts</Text>
+            
+            </Block>
         </Block>
       </ScrollView>
     )
@@ -31,9 +67,9 @@ class Home extends React.Component {
     return (
       <Block flex center style={styles.home}>
         {this.renderArticles()}
-        <Button 
-        style={{width: '100%'}}
-        onPress={() => navigation.navigate("Onboarding")}>
+        <Button
+          style={{ width: '100%' }}
+          onPress={() => navigation.navigate("Onboarding")}>
           GO BACK
         </Button>
       </Block>
@@ -43,12 +79,19 @@ class Home extends React.Component {
 
 const styles = StyleSheet.create({
   home: {
-    width: width,    
+    width: width,
+    backgroundColor: '#FFF4D0'
   },
   articles: {
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: theme.SIZES.BASE,
   },
+  request: {
+    backgroundColor: '#DCD0FF',
+    borderRadius: 20,
+    height: 100,
+    marginVertical: 10
+  }
 });
 
 export default Home;
