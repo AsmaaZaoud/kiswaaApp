@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, Text, View } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Text, View, Pressable } from 'react-native';
 import { Block, theme } from 'galio-framework';
-import {Icon,AntDesign,FontAwesome,MaterialCommunityIcons} from "react-native-vector-icons"
+import {Feather,AntDesign,Ionicons,MaterialCommunityIcons} from "react-native-vector-icons"
 
-import { Ionicons} from "react-native-vector-icons"
 const { width } = Dimensions.get('screen');
 
 const DriverHome = ({navigation}) => {
@@ -51,27 +50,49 @@ const DriverHome = ({navigation}) => {
         arr.map((x)=>
             <View key={x.id} style={styles.pricingOption}>
               <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-          <Text style={styles.pricingOptionTitle}>order </Text>
+          <Text style={styles.pricingOptionTitle}>Order No</Text>
 
           <Text style={styles.pricingOptionTitle}>#{x.id}</Text>
 
           </View>
-          <Text style={styles.pricingOptionPrice}>User: {x.userName}</Text>
-          <Text style={styles.pricingOptionDescription}>
-            Location: {x.zone}
-          </Text>
-          <View style={{flexDirection:"row", justifyContent:"space-between", margin:5}}>
-          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
-           <Ionicons name="time-outline" size={20} />
-            <Text style={styles.pricingOptionFeature}>12:00</Text>
+          <View style={styles.userCard}>
+               <Feather name="user" size={50} />
+               <View style={{marginLeft:10}}>
+                  <Text style={{fontSize:15, fontWeight:"bold"}}>Name </Text>
+                  <Text style={{fontSize:15,fontWeight:"bold"}}>Phone </Text>
+                  <Text style={{fontSize:15,fontWeight:"bold"}}>Email </Text>
+               </View>
           </View>
+         
+          <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
           <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
-           <Ionicons name="md-today-sharp" size={20} />
+           <Ionicons name="md-today-sharp" size={30} />
             <Text style={styles.pricingOptionFeature}>17-Feb-2023</Text>
           </View>
+          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
+           <Ionicons name="time-outline" size={30} />
+            <Text style={styles.pricingOptionFeature}>12:00 PM</Text>
           </View>
-          <View style={styles.pricingOptionButtonContainer}>
-            <Text style={styles.pricingOptionButton}>Pick up</Text>
+          </View>
+
+          <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
+          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
+           <Ionicons name="location-outline" size={30} />
+            <Text style={styles.pricingOptionFeature}>Alkhor</Text>
+          </View>
+          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
+           <Ionicons name="map-outline" size={30} />
+            <Text style={styles.pricingOptionFeature}>Open Map</Text>
+          </View>
+          </View>
+
+          <View style={{justifyContent:"center", alignItems:"center"}}>
+          <Pressable style={styles.pickupButtonContainer}>
+            <Text style={styles.pickupButton}>Pick up</Text>
+          </Pressable>
+           <Pressable style={styles.cancelButtonContainer}>
+            <Text style={styles.cancelButton}>Pick up</Text>
+          </Pressable>
           </View>
         </View>
         )}
@@ -92,6 +113,22 @@ const styles = StyleSheet.create({
     //padding:10,
     flexDirection:'row',
     justifyContent:"space-between"
+  },
+  userCard:{
+    borderWidth:1, 
+    borderColor:"lightgrey",
+    margin:5, 
+    borderRadius:10, 
+    flexDirection:"row", 
+    padding:10,
+    shadowColor: "#666",
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 1.49,
+    elevation: 2,
   },
    home: {
     //width: width, 
@@ -115,7 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   pricingOptionTitle: {
-    fontSize: 18,
+    fontSize: 17,
     //fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -133,20 +170,36 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   pricingOptionFeature: {
-    fontSize: 14,
-    color: '#999',
+    fontSize: 15,
+    //color: '#999',
+    marginTop:5,
+    marginLeft:5
   },
-  pricingOptionButtonContainer: {
+  pickupButtonContainer: {
     backgroundColor: 'green',
     borderRadius: 5,
+    width:width*0.4,
+    margin:10
   },
-  pricingOptionButton: {
+  pickupButton: {
     textAlign:"center",
     fontSize: 14,
     color: '#fff',
     padding: 10,
   },
+ cancelButtonContainer: {
+    backgroundColor: 'lightgrey',
+    borderRadius: 5,
+    width:width*0.4,
+    color:"black"
+  },
 
+   cancelButton: {
+    textAlign:"center",
+    fontSize: 14,
+    color: 'black',
+    padding: 10,
+  },
   
 
 });
