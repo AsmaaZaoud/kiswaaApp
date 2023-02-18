@@ -56,12 +56,13 @@ const AddDriver = ({navigation}) => {
       }
   };
 
+  const max = new Date()
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [qId, setQId] = useState("");
-  const [dob, setDob] = useState(new Date);
+  const [dob, setDob] = useState(new Date());
   const [zone, setZone] = useState("");
 
   // const [date, setDate] = useState(new Date())
@@ -82,7 +83,7 @@ const AddDriver = ({navigation}) => {
   const [msg, setMsg] = useState(false);
   const [flag, setFlag] = useState(true);
 
-const [ZoneError, setZoneError] = useState();
+const [ZoneError, setZoneError] = useState(true);
 
 
 
@@ -140,24 +141,31 @@ const zones = [
     switch(x){
       
       case 1:
-            setFname
               Fname == "" ? setFnameError(true) : setFnameError(false)
+              //setFname(value)
               break
       case 2:
+
               Lname == "" ? setLnameError(true) : setLnameError(false)
+              // setLname(value)
               break
       case 3:
               qId.length != 11? setQIdError(true) :setQIdError(false)
+              // setQId(value)
               break
       case 4:
               phone.length != 8? setPhoneError(true) :setPhoneError(false)
+              // setPhone(value)
               break
       case 5:
               validator.isEmail(email) == false? setEmailError(true):setEmailError(false)
+              
               break
       case 6:
               dob == "" ? setDobError(true) : setDobError(false)
               break
+      case 7:
+        alert(zone)
 
     }
                   
@@ -170,6 +178,7 @@ const zones = [
             !emailError &&
               !phoneError && 
                 !qIdError &&
+                  zone &&
                   !flag &&
                   !dobError ? add(): setMsg(true)
 
@@ -178,14 +187,30 @@ const zones = [
 
   }
 
-
-  function onDateSelected(event, value) {
-    alert(date)
-   // setDate(value.toDateString());
-    setDob(value)
-    //alert(date.toDateString())
-    setOpen(false);
+const cheack = (value, type)=>{
+  if (type == "phone"){
+    if (value.length == 8 ){
+        setPhoneError(false) 
+        //setPhone(value)
+      }setPhone(value)
   }
+  else if (type == "id"){
+    if (value.length ==11 ){
+        setQIdError(false) 
+        //setPhone(value)
+      }setQId(value)
+  }
+
+  else if (type == "email"){
+    validator.isEmail(value) == true ? setEmailError(false) :setEmailError(true)
+       
+      setEmail(value)
+  }
+   
+   
+  
+}
+  
     return (
       <Block flex middle>
         
@@ -201,17 +226,20 @@ const zones = [
                 <Pressable 
                onPress={pickImage}
                 > 
-                  <Image
+            <Image
                    style={styles.profileImage}
                      source={{ uri: image? image : 'https://static.vecteezy.com/system/resources/previews/000/376/489/original/add-user-vector-icon.jpg' }}
-                  
-
                   />
+                  {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add photo</Text>}
 
                   </Pressable>
-                  
-                     <Text style={styles.name}>Add photo</Text>
+                     
               </Block>
+               <View>
+            {msg ?
+              <Text style={{color:"red",textAlign:"center", marginTop:15, fontSize:18}}>Please Fill al feilds!</Text>
+              :null}
+        </View>
                
    {/*------- Form ---------*/}
                 <Block flex  center >
@@ -225,13 +253,12 @@ const zones = [
           <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
                     <Text style={styles.text}>First Name</Text>
                      < TextInput
-                     autoCorrect = {false}
-
+                      autoCorrect = {false}
                       style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
                       placeholder="Joe"
                       value={Fname}
                       onChangeText={setFname}
-                      onEndEditing =  {()=>validOne(1)}
+                      onBlur =  {()=>validOne(1)}
                       />
           </View>
 
@@ -240,11 +267,11 @@ const zones = [
                      < TextInput
                      autoCorrect = {false}
 
-                       style={[styles.smallInput, {borderColor: LnameError?"red":"black"}]}
+                      style={[styles.smallInput, {borderColor: LnameError?"red":"black"}]}
                       placeholder="Grek"
                       value={Lname}
                       onChangeText={setLname}
-                        onBlur = {()=>validOne(2)}
+                      onBlur = {()=>validOne(2)}
                       />
           </View>
       </Block>
@@ -256,11 +283,13 @@ const zones = [
                      < TextInput
                      autoCorrect = {false}
                       keyboardType="number-pad"
+                      inputMode="numeric"
                       style={[styles.smallInput, {borderColor: qIdError?"red":"black"}]}
                       placeholder="30101200033"
                       value={qId}
-                      onChangeText={setQId}
+                      onChangeText={(value) => cheack(value,"id")}
                       onBlur = {()=>validOne(3)}
+                      maxLength={11}
 
                       />
           </View>
@@ -273,8 +302,9 @@ const zones = [
                        style={[styles.smallInput, {borderColor: phoneError?"red":"black"}]}
                       placeholder="66005500"
                       value={phone}
-                      onChangeText={setPhone}
+                      onChangeText={(value) => cheack(value,"phone")}
                       onBlur = {()=>validOne(4)}
+                      maxLength={8}
 
                       />
           </View>
@@ -288,13 +318,12 @@ const zones = [
           <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
                     <Text style={styles.text}>Email</Text>
                      < TextInput
-                     autoCorrect = {false}
-
-                       style={[styles.smallInput, {borderColor: emailError?"red":"black"}]}
+                      autoCorrect = {false}
+                      style={[styles.smallInput, {borderColor: emailError?"red":"black"}]}
                       placeholder="abc@example"
                       value={email}
-                      onChangeText={setEmail}
-                      onEndEditing = {()=>validOne(5)}
+                      onChangeText={(value) => cheack(value,"email")}
+                      onBlur = {()=>validOne(5)}
 
                       />
           </View>
@@ -320,15 +349,16 @@ const zones = [
                     is24Hour={true}
                     onChange={onChange}
                     style={styles.datePicker}
+                    maximumDate={max}
                   />
                 )}
                  {isPickerShow && (
                 <View style={{ flexDirection:"row",justifyContent:"space-between", width:"70%",padding:5}}>  
-                  <Pressable>
-                    <Text>Cancel</Text>
+                  <Pressable onPress={hidePicker}>
+                    <Text style={{fontSize:18}}>Cancel</Text>
                   </Pressable>
                    <Pressable onPress={hidePicker}>
-                    <Text>Confirm</Text>
+                    <Text style={{fontSize:18}}>Confirm</Text>
                   </Pressable>
                 </View>
                  )}
@@ -338,11 +368,7 @@ const zones = [
       
       {/*--------- Buttons ----------*/}
 
-          <View>
-            {msg ?
-              <Text style={{color:"red"}}>Please Fill al feilds!</Text>
-              :null}
-        </View>
+          
       <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:0}} >
         <Block width={width * 0.4} style={{ marginTop: 10 }}>
                               <Text style={styles.text}>Zone</Text>
@@ -353,12 +379,14 @@ const zones = [
                         selectedTextStyle={styles.selectedTextStyle}
                         data={zones}
                         maxHeight={160}
+                        
                         labelField="label"
                         valueField="value"
                         placeholder={zone? zone : "Select zone"}
                         value={zone}
                         onChange={(item) => {
                           setZone(item.label);
+                          setZoneError(false)
                         }}
                       ></Dropdown>
                       <Text
@@ -371,7 +399,7 @@ const zones = [
                         {ZoneError}
                       </Text>
                     </Block>
-                      <Button 
+                <Button 
                       color="success" 
                       style={styles.createButton} 
                       onPress={validCreate}
@@ -379,15 +407,15 @@ const zones = [
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Add
                         </Text>
-                      </Button>
-                       <Button 
+                  </Button>
+                <Button 
                       style={styles.cancelButton} 
                       onPress={()=>navigation.goBack()}
                       >
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Cancel
                         </Text>
-                      </Button>
+                  </Button>
                     </Block>
                   </KeyboardAvoidingView>
                 </Block>
