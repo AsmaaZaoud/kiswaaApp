@@ -100,7 +100,7 @@ const  AdminHome = ({navigation}) => {
                 </View>
             
 
-                        <Button color="success"  style={{width:"20%"}} onPress={()=>navigation.navigate("AddDriver")}>Add </Button>    
+                        <Button color="success"  style={{width:"20%"}} onPress={()=>navigation.navigate("AddClerk")}>Add </Button>    
 
             </Block>
 
