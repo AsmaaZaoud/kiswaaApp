@@ -30,6 +30,8 @@ import {
 import { auth } from "../../config";
 
 import { doc, setDoc, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
+import { getStorage, ref, uploadBytes,uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 import { db, storage } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
@@ -37,8 +39,9 @@ const { width, height } = Dimensions.get("screen");
 
 const AddDriver = ({navigation}) => {
 
-    const [chosenDate, setChosenDate] = useState(new Date());
-    const [image, setImage] = useState(null);
+  const [chosenDate, setChosenDate] = useState(new Date());
+  const [image, setImage] = useState(null);
+  const [fileName, setFileName] = useState();
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -49,14 +52,29 @@ const AddDriver = ({navigation}) => {
           quality: 1,
         });
 
-      console.log(result);
 
       if (!result.cancelled) {
         setImage(result.uri);
+        //setFileName(result.uri.substring(result.uri.toString().lastIndexOf("/") +1));
+        let c = result.uri.substring(result.uri.toString().lastIndexOf("/") +1)
+        setFileName(c)
       }
   };
 
-  const max = new Date()
+
+
+    const storage = getStorage();
+    const storageRef = ref(storage, 'some-child');
+  
+    const uploadImage = async () => {
+        console.log("got in upload");
+        const imgRef = ref(storage, fileName);
+        const img = await fetch(image);
+        const bytes = await img.blob();
+        await uploadBytesResumable(imgRef, bytes);
+    };
+
+    const max = new Date()
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
   const [phone, setPhone] = useState("");
@@ -71,7 +89,7 @@ const AddDriver = ({navigation}) => {
 
   // const [image, setImage] = useState();
   const [url, setUrl] = useState();
-  const [fileName, setFileName] = useState();
+  //const [fileName, setFileName] = useState();
   const [datePicker, setDatePicker] = useState(false);
  
  const [FnameError, setFnameError] = useState();
@@ -123,6 +141,7 @@ const zones = [
 
  const add = async () => {
   alert("add")
+  uploadImage();
     const docRef = doc(db, "drivers", email)
     await setDoc(docRef, { fname: Fname,
       email: email,
@@ -130,7 +149,9 @@ const zones = [
       phone: phone,
       qId: qId,
       dob:dob,
-      zone:"" })
+      zone:zone ,
+      image:fileName
+    })
     console.log("Document written with ID: ", docRef.id);
     navigation.goBack()
   };
