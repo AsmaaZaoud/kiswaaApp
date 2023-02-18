@@ -20,7 +20,6 @@ import { Images, argonTheme } from "../../constants";
 import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from 'expo-image-picker';
-import DatePicker from 'react-native-date-picker'
 
 import validator from "validator";
 
@@ -39,6 +38,23 @@ const { width, height } = Dimensions.get("screen");
 const AddDriver = ({navigation}) => {
 
     const [chosenDate, setChosenDate] = useState(new Date());
+    const [image, setImage] = useState(null);
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+
+      console.log(result);
+
+      if (!result.cancelled) {
+        setImage(result.uri);
+      }
+  };
 
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
@@ -52,7 +68,7 @@ const AddDriver = ({navigation}) => {
   const [open, setOpen] = useState(false)
 
 
-  const [image, setImage] = useState();
+  // const [image, setImage] = useState();
   const [url, setUrl] = useState();
   const [fileName, setFileName] = useState();
   const [datePicker, setDatePicker] = useState(false);
@@ -172,17 +188,18 @@ const zones = [
   }
     return (
       <Block flex middle>
-        {/* <StatusBar hidden /> */}
-       
+        
           <Block safe flex style={{marginTop:50}}>
              <Text style={{fontSize:30}}>Add</Text>
+
+
             <Block style={styles.registerContainer}>
               <Block flex>
         
               
               <Block center width={width*0.4} style={styles.box}>
                 <Pressable 
-               // onPressIn={() => pickImage()}
+               onPress={pickImage}
                 > 
                   <Image
                    style={styles.profileImage}
