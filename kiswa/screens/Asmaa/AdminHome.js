@@ -8,6 +8,7 @@ import { Block, theme } from "galio-framework";
 import { auth } from "../../config";
 import { doc, query, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
 import { db } from "../../config";
+import { signOut } from "firebase/auth";
 
 //argon
 import { Images, argonTheme, articles } from "../../constants/";
@@ -22,7 +23,7 @@ const  AdminHome = ({navigation}) => {
 
     useEffect(() => {
     readAllWhere();
-  }, []);
+  }, [drivers]);
     const navbar = [
        { name:"Dashboard", color:"#b1d8f0", icon: require('../../assets/imgs/Dashboard.png') }, 
        {name: "Drivers",color:"#e0fadc", icon:require('../../assets/imgs/Drivers.png')}, 
@@ -38,6 +39,13 @@ const  AdminHome = ({navigation}) => {
         setPage(name)
 
     }
+  const onSignOut = () => {
+    signOut(auth)
+      .then(() => navigation.navigate("Login"))
+      .catch((error) => console.log("Error logging out: ", error));
+  };
+    
+
 
     const [drivers, setDrivers] = useState([]);
     const [allDrivers, setAllDrivers] = useState([]);
@@ -71,7 +79,10 @@ const  AdminHome = ({navigation}) => {
     <View >
         <View style={styles.top}>
             <Text>Logo</Text>
-            <MaterialCommunityIcons name="logout" size={40} />
+            <Pressable onPress={onSignOut}>
+              <MaterialCommunityIcons name="logout" size={40} />
+            </Pressable>
+            
 
         </View>
     <View style={{flexDirection:"row"}}>

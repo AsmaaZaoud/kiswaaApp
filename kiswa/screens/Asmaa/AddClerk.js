@@ -197,6 +197,7 @@ const zones = [
               !phoneError && 
                 !qIdError &&
                   !flag &&
+                  image &&
                   !dobError ? add(): setMsg(true)
 
       
@@ -254,7 +255,7 @@ const cheack = (value, type)=>{
               </Block>
                <View>
             {msg ?
-              <Text style={{color:"red",textAlign:"center", marginTop:15, fontSize:18}}>Please Fill al feilds!</Text>
+              <Text style={{color:"red",textAlign:"center", marginTop:15, fontSize:18}}>Please Fill al feilds and select image!</Text>
               :null}
         </View>
                
