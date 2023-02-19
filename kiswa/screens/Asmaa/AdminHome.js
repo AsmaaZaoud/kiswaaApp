@@ -89,7 +89,7 @@ const  AdminHome = ({navigation}) => {
         <View style={styles.nav}>
               {navbar.map((x)=>
                     <Pressable key={x.name} style={[styles.n, {backgroundColor:x.color == color? color:"white"}]} onPress={()=>slect(x.color,x.name)}>
-                       <Image source={x.icon} style={{width:40,height:40}}/>
+                       <Image source={x.icon} style={{width:width*0.04,height:40}}/>
                         <View style={{marginLeft:15}}>
                              <Text style={styles.name}>{x.name}</Text>
                         </View>
