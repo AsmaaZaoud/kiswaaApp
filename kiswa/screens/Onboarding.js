@@ -36,7 +36,6 @@ const Onboarding = ({ navigation }) => {
       </Block>
 
 
-    
       <Block style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flex:1 }}>
         <Block>
           <TouchableOpacity onPress={() => navigation.replace("App")}>
@@ -48,7 +47,7 @@ const Onboarding = ({ navigation }) => {
           <Text style={{color: 'white', textAlign: 'center'}}>DONOR</Text>
         </Block>
         <Block>
-        <TouchableOpacity onPress={() => navigation.replace("App")}>
+        <TouchableOpacity>
           <Image
             style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20  }}
             source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2904/2904889.png' }}
