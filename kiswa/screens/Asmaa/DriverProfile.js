@@ -1,282 +1,591 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  Dimensions,
-  ScrollView,
-  Image,
   ImageBackground,
-  Platform,
+  Dimensions,
+  StatusBar,
+  KeyboardAvoidingView,
+  Image,
+  TextInput,
   View,
-  FlatList,
-  TouchableOpacity
+  Pressable,
+  TouchableOpacity,
+  Platform,
+  ScrollView
 } from "react-native";
-import { Block, Text, theme } from "galio-framework";
-import { Avatar } from "@rneui/themed";
-import { MaterialCommunityIcons, Ionicons, MaterialIcons } from "react-native-vector-icons";
-import { Button } from "../../components";
+import { Block, Checkbox, Text, theme } from "galio-framework";
+
+import { Button, Icon, Input, Select } from "../../components";
 import { Images, argonTheme } from "../../constants";
-import { HeaderHeight } from "../../constants/utils";
+
+import { Dropdown } from "react-native-element-dropdown";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import * as ImagePicker from 'expo-image-picker';
+
+import validator from "validator";
+
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../config";
+
+import { doc, setDoc, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
+import { getStorage, ref, uploadBytes,uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
+import { db, storage } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 
-const thumbMeasure = (width - 48 - 32) / 3;
 
-const  DriveProfile = ({navigation}) => {
+const DriverProfile = ({navigation}) => {
 
-   const [data, setData] = useState({});
-  const icons = [
-    {
-      id: 1,
-      icon: "heart-sharp",
-      title: "Favorite",
-      color: "#deaaf7",
-      page: "Favorite",
-    },
-    {
-      id: 2,
-      icon: "notifications",
-      title: "Notifications",
-      color: "#b442e9",
-      page: "AllNotifications",
-    },
-    {
-      id: 3,
-      icon: "chatbubbles",
-      title: "Chats",
-      color: "#e6b8fc",
-      page: "Chat",
-    },
-    {
-      id: 4,
-      icon: "log-out",
-      title: "Log Out",
-      color: "#9c27e0",
-      page: "StartScreen",
-    },
+  const [chosenDate, setChosenDate] = useState(new Date());
+  const [image, setImage] = useState(null);
+  const [fileName, setFileName] = useState();
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+          
+        });
+       
+
+
+      if (!result.cancelled) {
+        setImage(result.uri);
+         setMsg(false)
+        //setFileName(result.uri.substring(result.uri.toString().lastIndexOf("/") +1));
+        let c = result.uri.substring(result.uri.toString().lastIndexOf("/") +1)
+        setFileName(c)
+      }
+  };
+
+
+
+    const storage = getStorage();
+    const storageRef = ref(storage, 'some-child');
+  
+    const uploadImage = async () => {
+        console.log("got in upload");
+        const imgRef = ref(storage, fileName);
+        const img = await fetch(image);
+        const bytes = await img.blob();
+        await uploadBytesResumable(imgRef, bytes);
+    };
+
+    const max = new Date()
+  const [Fname, setFname] = useState("");
+  const [Lname, setLname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [qId, setQId] = useState("");
+  const [dob, setDob] = useState(new Date());
+  const [zone, setZone] = useState("");
+
+  // const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
+
+
+  // const [image, setImage] = useState();
+  const [url, setUrl] = useState();
+  //const [fileName, setFileName] = useState();
+  const [datePicker, setDatePicker] = useState(false);
+ 
+ const [FnameError, setFnameError] = useState();
+  const [LnameError, setLnameError] = useState();
+  const [phoneError, setPhoneError] = useState();
+  const [emailError, setEmailError] = useState();
+  const [qIdError, setQIdError] = useState();
+  const [dobError, setDobError] = useState();
+  const [msg, setMsg] = useState(false);
+  const [flag, setFlag] = useState(true);
+
+const [ZoneError, setZoneError] = useState(true);
+
+
+
+
+const [isPickerShow, setIsPickerShow] = useState(false);
+const [date, setDate] = useState(new Date(Date.now()));
+
+  const showPicker = () => {
+    setIsPickerShow(true);
+  };
+  const hidePicker = () => {
+    setIsPickerShow(false);
+  };
+
+  const onChange = (event, value) => {
+    setDate(value);
+    if (Platform.OS === 'android') {
+      setIsPickerShow(false);
+    }
+  };
+  
+
+const zones = [
+    { label: " All Zones", value: "0" },
+    { label: "Doha", value: "1" },
+    { label: "Al Rayyan", value: "2" },
+    { label: "Rumeilah", value: "3" },
+    { label: "Wadi Al Sail", value: "4" },
+    { label: "Al Daayen", value: "5" },
+    { label: "Umm Salal", value: "6" },
+    { label: "Al Wakra", value: "7" },
+    { label: "Al Khor", value: "8" },
+    { label: "Al Shamal", value: "9" },
+    { label: "Al Shahaniya", value: "10" },
   ];
-    return (
-      <Block flex style={styles.profile}>
-        <View style={styles.topl}>
-            <Text>Logo</Text>
-              <MaterialCommunityIcons name="logout" size={40} />
-        </View>
-        <Block flex>
-          <ImageBackground
-            source={Images.ProfileBackground}
-            style={styles.profileContainer}
-            imageStyle={styles.profileBackground}
-          >
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              style={{ width, marginTop: '25%' }}
-            >
-              <Block flex style={styles.profileCard}>
-                <Block middle style={styles.avatarContainer}>
-                  <Image
-                    source={{ uri: Images.ProfilePicture }}
-                    style={styles.avatar}
-                  />
-                </Block>
+
+
+ const add = async () => {
+  alert("add")
+  uploadImage();
+    const docRef = doc(db, "drivers", email)
+    await setDoc(docRef, { fname: Fname,
+      email: email,
+      lname: Lname,
+      phone: phone,
+      qId: qId,
+      dob:dob,
+      zone:zone ,
+      image:fileName
+    })
+    console.log("Document written with ID: ", docRef.id);
+    navigation.goBack()
+  };
+   
+
+  const validOne = (x) =>{
+    setFlag(false)
+    switch(x){
+      
+      case 1:
+              Fname == "" ? setFnameError(true) : setFnameError(false)
+              //setFname(value)
+              break
+      case 2:
+
+              Lname == "" ? setLnameError(true) : setLnameError(false)
+              // setLname(value)
+              break
+      case 3:
+              qId.length != 11? setQIdError(true) :setQIdError(false)
+              // setQId(value)
+              break
+      case 4:
+              phone.length != 8? setPhoneError(true) :setPhoneError(false)
+              // setPhone(value)
+              break
+      case 5:
+              validator.isEmail(email) == false? setEmailError(true):setEmailError(false)
               
-                <Block flex>
-                  <Block middle style={styles.nameInfo}>
-                    <Text bold size={28} color="#32325D">
-                      Jessica Jones, 27
-                    </Text>
-                    <Text size={16} color="#32325D" style={{ marginTop: 10 }}>
-                      San Francisco, USA
-                    </Text>
-                  </Block>
-                  <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
-                    <Block style={styles.divider} />
-                  </Block>
+              break
+      case 6:
+              dob == "" ? setDobError(true) : setDobError(false)
+              break
+      case 7:
+        //alert(zone)
 
-                    <View style={styles.body}>
-          {/* <Text style={styles.username}>{data.name}</Text> */}
-
-        <FlatList
-          style={styles.container}
-          enableEmptySections={true}
-          data={icons}
-          keyExtractor={(item) => {
-            return item.id;
-          }}
-          renderItem={({ item }) => {
-            return (
-              // <View style={{backgroundColor:'green',marginTop:'13%'}}>
-              <TouchableOpacity>
-                <View style={styles.box}>
-                  <Ionicons
-                    style={styles.icon}
-                    name={item.icon}
-                    size={40}
-                    color={item.color}
-                  />
-                  <Text style={styles.title}>{item.title}</Text>
-                  <Image
-                    style={styles.btn}
-                    source={{
-                      uri: "https://img.icons8.com/customer/office/40",
-                    }}
-                  />
-                  <MaterialIcons
-                    style={styles.icon}
-                    name="keyboard-arrow-right"
-                    size={30}
-                    color="grey"
-                    //onPress={() => navigation.navigate(item.page)}
-                  />
-                </View>
-              </TouchableOpacity>
-              // </View>
-            );
-          }}
-        />
-      </View>
-                 
+    }
                   
-                 
-                </Block>
-              </Block>
-            </ScrollView>
-          </ImageBackground>
-        </Block>
+  }
+
+  const validCreate = () =>{
+      
+        !FnameError &&
+          !LnameError &&
+            !emailError &&
+              !phoneError && 
+                !qIdError &&
+                  zone &&
+                  image &&
+                  !flag &&
+                  !dobError ? add(): setMsg(true)
+
+      
+                  
+
+  }
+
+const cheack = (value, type)=>{
+  if (type == "phone"){
+    if (value.length == 8 ){
+        setPhoneError(false) 
+        //setPhone(value)
+      }setPhone(value)
+  }
+  else if (type == "id"){
+    if (value.length ==11 ){
+        setQIdError(false) 
+        //setPhone(value)
+      }setQId(value)
+  }
+
+  else if (type == "email"){
+    validator.isEmail(value) == true ? setEmailError(false) :setEmailError(true)
+       
+      setEmail(value)
+  }
+   
+   
+  
+}
+  
+    return (
+      <Block flex middle style={{marginTop:50, backgroundColor:"white", flex:1}}>
         
-            
-          
-          
-            
-                
+          <Block safe flex style={{marginTop:50, backgroundColor:"white", flex:1}}>
+             <Text style={{fontSize:30}}>Edit</Text>
+
+
+            <Block style={styles.registerContainer}>
+              <Block flex>
+        
               
+              <Block center width={width*0.4} style={styles.box}>
+                <Pressable 
+               onPress={pickImage}
+                > 
+            <Image
+                   style={styles.profileImage}
+                     source={{ uri: image? image : "https://www.murrayglass.com/wp-content/uploads/2020/10/avatar-scaled.jpeg" }}
+                  />
+                  {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add photo</Text>}
+
+                  </Pressable>
+                     
+              </Block>
+               <View>
+            {msg ?
+              <Text style={{color:"red",textAlign:"center", marginTop:15, fontSize:18}}>Please Fill al feilds and select image!</Text>
+              :null}
+        </View>
+               
+   {/*------- Form ---------*/}
+                <Block flex  center >
+                  <ScrollView>
+                  <KeyboardAvoidingView
+                    style={{ flex: 1 }}
+                    behavior="padding"
+                    enabled
+                  >
+      <Block  width={width * 0.8} style={{marginTop:15, marginBottom: 5,flexDirection:width>500?"row":""}}>
+                   
+          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
+                    <Text style={styles.text}>First Name</Text>
+                     < TextInput
+                      autoCorrect = {false}
+                      style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
+                      placeholder="Joe"
+                      value={Fname}
+                      onChangeText={setFname}
+                      onBlur =  {()=>validOne(1)}
+                      />
+          </View>
+
+          <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
+                    <Text style={styles.text}>Last Name</Text>
+                     < TextInput
+                     autoCorrect = {false}
+
+                      style={[styles.smallInput, {borderColor: LnameError?"red":"black"}]}
+                      placeholder="Grek"
+                      value={Lname}
+                      onChangeText={setLname}
+                      onBlur = {()=>validOne(2)}
+                      />
+          </View>
       </Block>
-                 
-    )};
+                    
+      <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
+                   
+          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
+                    <Text style={styles.text}>Qatar ID</Text>
+                     < TextInput
+                     autoCorrect = {false}
+                      keyboardType="number-pad"
+                      inputMode="numeric"
+                      style={[styles.smallInput, {borderColor: qIdError?"red":"black"}]}
+                      placeholder="30101200033"
+                      value={qId}
+                      onChangeText={(value) => cheack(value,"id")}
+                      onBlur = {()=>validOne(3)}
+                      maxLength={11}
+
+                      />
+          </View>
+
+         <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
+                    <Text style={styles.text}>Phone</Text>
+                     < TextInput
+                     autoCorrect = {false}
+                      keyboardType="number-pad"
+                       style={[styles.smallInput, {borderColor: phoneError?"red":"black"}]}
+                      placeholder="66005500"
+                      value={phone}
+                      onChangeText={(value) => cheack(value,"phone")}
+                      onBlur = {()=>validOne(4)}
+                      maxLength={8}
+
+                      />
+          </View>
+
+          
+      </Block>
+      
+      
+       <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
+                   
+          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
+                    <Text style={styles.text}>Email</Text>
+                     < TextInput
+                      autoCorrect = {false}
+                      style={[styles.smallInput, {borderColor: emailError?"red":"black"}]}
+                      placeholder="abc@example"
+                      value={email}
+                      onChangeText={(value) => cheack(value,"email")}
+                      onBlur = {()=>validOne(5)}
+
+                      />
+          </View>
 
 
+
+        <View style={styles.con}>
+              {/* Display the selected date */}
+                <Text style={styles.text}>Date of Birth</Text>
+                <Pressable style={styles.pickedDateContainer} onPress={showPicker}>
+                  <Text style={styles.pickedDate}>{date.toDateString()}</Text>
+
+                </Pressable>
+
+           
+
+             {/* The date picker */}
+              {isPickerShow && (
+                  <DateTimePicker
+                    value={date}
+                    mode={'date'}
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                    is24Hour={true}
+                    onChange={onChange}
+                    style={styles.datePicker}
+                    maximumDate={max}
+                  />
+                )}
+                 {isPickerShow && (
+                <View style={{ flexDirection:"row",justifyContent:"space-between", width:"70%",padding:5}}>  
+                  <Pressable onPress={hidePicker}>
+                    <Text style={{fontSize:18}}>Cancel</Text>
+                  </Pressable>
+                   <Pressable onPress={hidePicker}>
+                    <Text style={{fontSize:18}}>Confirm</Text>
+                  </Pressable>
+                </View>
+                 )}
+          </View>
+
+      </Block>
+      
+      {/*--------- Buttons ----------*/}
+
+          
+      <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:0}} >
+        <Block width={width * 0.4} style={{ marginTop: 10 }}>
+                              <Text style={styles.text}>Zone</Text>
+
+                      <Dropdown
+                        style={[styles.smallInput, {padding:11}]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        data={zones}
+                        maxHeight={160}
+                        
+                        labelField="label"
+                        valueField="value"
+                        placeholder={zone? zone : "Select zone"}
+                        value={zone}
+                        onChange={(item) => {
+                          setZone(item.label);
+                          setZoneError(false)
+                        }}
+                      ></Dropdown>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "red",
+                          fontSize: 12,
+                        }}
+                      >
+                        {ZoneError}
+                      </Text>
+                    </Block>
+                <Button 
+                      color="success" 
+                      style={styles.createButton} 
+                      onPress={validCreate}
+                      >
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Add
+                        </Text>
+                  </Button>
+                <Button 
+                      style={styles.cancelButton} 
+                      onPress={()=>navigation.goBack()}
+                      >
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Cancel
+                        </Text>
+                  </Button>
+                    </Block>
+                  </KeyboardAvoidingView>
+              </ScrollView>
+                </Block>
+
+
+              </Block>
+            </Block>
+          </Block>
+      </Block>
+    );
+  
+}
 
 const styles = StyleSheet.create({
-  topl:{
-    width:width*.8,
-    margin:30,
-    //borderWidth:1,
-    //padding:10,
-    flexDirection:'row',
-    justifyContent:"space-between"
+  smallInput:{
+    width:"100%",
+     backgroundColor:"white",
+      borderRadius:10,
+      padding:15,
+      fontSize:20,
+      borderWidth:0.3
   },
-  profile: {
-    marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
-    // marginBottom: -HeaderHeight * 2,
-    flex: 1
-  },
-  profileContainer: {
-    width: width,
-    height: height,
-    padding: 0,
-    zIndex: 1
-  },
-  profileBackground: {
-    width: width,
-    height: height / 2
-  },
-  profileCard: {
-    // position: "relative",
-    padding: theme.SIZES.BASE,
-    marginHorizontal: theme.SIZES.BASE,
-    marginTop: 65,
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
-    backgroundColor: theme.COLORS.WHITE,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 8,
-    shadowOpacity: 0.2,
-    zIndex: 2
-  },
-  info: {
-    paddingHorizontal: 40
-  },
-  avatarContainer: {
-    position: "relative",
-    marginTop: -80
-  },
-  avatar: {
-    width: 124,
-    height: 124,
-    borderRadius: 62,
-    borderWidth: 0
-  },
-  nameInfo: {
-    marginTop: 35
-  },
-  divider: {
-    width: "90%",
+ input: {
+    height: 40,
+    margin: 12,
     borderWidth: 1,
-    borderColor: "#E9ECEF"
+    padding: 10,
+    borderRadius: 8,
   },
-  thumb: {
-    borderRadius: 4,
-    marginVertical: 4,
-    alignSelf: "center",
-    width: thumbMeasure,
-    height: thumbMeasure
-  },
-   body: {
-    zIndex:1,
-    elevation: 1,
-    //position: "absolute",
-    backgroundColor: "white",
-    //marginTop: ,
-    borderColor: "lightpink",
-   // borderRadius: 50,
-    //borderWidth: 3,
-   // height: "80%",
-    paddingTop: '2%',
-    
-  },
-  box: {
-    padding: 5,
-    marginBottom: 2,
-    width: "95%",
-    alignSelf: "center",
-    backgroundColor: "#FFFFFF",
-    flexDirection: "row",
-    shadowColor: "black",
-    shadowOffset: {
-      height: 1,
-      width: -2,
+    text:{
+      fontSize:20
     },
+  registerContainer: {
+    width: width * 0.9,
+    height: height * 0.875,
+    //backgroundColor: "#F4F5F7",
+    borderRadius: 4,
+    shadowColor: argonTheme.COLORS.BLACK,
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.1,
     elevation: 1,
+    overflow: "hidden"
   },
-  username: {
-    color: "grey",
-    fontSize: 22,
-    alignSelf: "center",
-    //marginLeft: 10,
+  
+  inputIcons: {
+    marginRight: 12
   },
-   badge:{
-    width:38,
-    height:38, 
-    borderRadius:20, 
-    justifyContent:"center",
-     backgroundColor:"#FF6347", 
-     padding:10
+  passwordCheck: {
+    paddingLeft: 15,
+    paddingTop: 13,
+    paddingBottom: 30
   },
-  icon: {
-    width: 40,
-    height: 40,
+  createButton: {
+    width: width * 0.20,
+    marginBottom: 20,
+
   },
-  title: {
-    fontSize: 16,
-    //color: "#EE82EE",
-    marginLeft: 16,
-    marginTop:5
+   cancelButton: {
+    width: width * 0.2,
+    marginBottom: 20,
+  backgroundColor: theme.COLORS.MUTED    
   },
-  btn: {
-    marginLeft: "auto",
-    width: 40,
-    height: 40,
+ 
+    imageContainer:{
+      width:"100%",
+      height:"20%",
+      //borderWidth:2
+    },
+    box: {
+    marginTop: 10,
+    //backgroundColor: 'white',
+    // alignItems: 'center',
+    // shadowColor: 'black',
+    // shadowOpacity: 0.3,
+    // shadowOffset: {
+    //   height: 1,
+    //   width: -2,
+    // },
+    // elevation: 2,
+    // paddingTop: 10,
+    // paddingBottom:0
+  },
+  profileImage: {
+    width: width*0.4,
+    height: width*0.4,
+    marginBottom: 0,
+  },
+  name: {
+    fontSize: 35,
+    marginBottom: 0,
+    fontWeight: 'bold',
+    color: '#1E90FF',
+  },
+ 
+  dropdown: {
+    //marginBottom: 10,
+    padding: 7,
+    borderRadius: 4,
+    borderColor: argonTheme.COLORS.INPUT_ERROR,
+    height: 44,
+    backgroundColor: "#FFFFFF",
+    shadowColor: argonTheme.COLORS.BLACK,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    shadowOpacity: 0.05,
+    elevation: 2,
   },
 
+    con: {
+      // borderWidth:1,
+      //height:"30%",
+      width:"70%",
+      borderRadius:10,
+      paddingHorizontal:13,
+      fontSize:20,
+  },
+  pickedDateContainer: {
+    width:"76%",
+    padding: 17,
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+    borderWidth:0.3
+  },
+  pickedDate: {
+    fontSize: 18,
+    color: 'black',
+  },
+  btnContainer: {
+    padding: 30,
+  },
+  // This only works on iOS
+  datePicker: {
+    width: 320,
+    height: 260,
+   display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
 });
 
-export default DriveProfile;
+export default DriverProfile;

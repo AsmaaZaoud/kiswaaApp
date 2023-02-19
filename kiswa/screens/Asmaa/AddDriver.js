@@ -55,6 +55,7 @@ const AddDriver = ({navigation}) => {
 
       if (!result.cancelled) {
         setImage(result.uri);
+        setMsg(false)
         //setFileName(result.uri.substring(result.uri.toString().lastIndexOf("/") +1));
         let c = result.uri.substring(result.uri.toString().lastIndexOf("/") +1)
         setFileName(c)
