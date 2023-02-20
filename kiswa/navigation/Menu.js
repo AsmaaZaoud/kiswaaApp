@@ -19,7 +19,7 @@ function CustomDrawerContent({
     "Account",
     "Elements",
     "Articles",
-    "InventoryClerkHomePage",
+    // "InventoryClerkHomePage",
   ];
   return (
     <Block

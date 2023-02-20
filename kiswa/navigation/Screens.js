@@ -298,9 +298,9 @@ function AppStack(props) {
       <Drawer.Screen
         name="InventoryClerkHomePage"
         component={InventoryStack}
-        options={{
-          headerShown: true,
-        }}
+        // options={{
+        //   headerShown: true,
+        // }}
       />
       <Drawer.Screen
         name="Account"

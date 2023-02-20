@@ -15,6 +15,7 @@ import {
   TouchableOpacity,
   Modal,
   StatusBar,
+  Image,
 } from "react-native";
 import { DataTable } from "react-native-paper";
 
@@ -27,6 +28,8 @@ const { width } = Dimensions.get("screen");
 // const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
+// Icons
+import Icon from "react-native-vector-icons/FontAwesome";
 // //////// DB ///////////
 import { db } from "../../config";
 import {
@@ -42,7 +45,16 @@ import {
 import { Button, Header } from "@rneui/base";
 import { Touchable } from "react-native";
 import Theme from "../../constants/Theme";
-
+import {
+  ClothTypeData as ClothTypeData,
+  SizeData as SizeData,
+  ColorData as ColorData,
+  GenderData as GenderData,
+  QualityData as QualityData,
+  AgeCategory as AgeCategory,
+} from "../../components/Fatima/Data";
+import Test from "../../components/Fatima/Test";
+import AddItemModal from "../../components/Fatima/AddItemModal";
 const InventoryClerkHomePage = () => {
   // const
   const [IDs, setIDs] = useState([]);
@@ -53,6 +65,10 @@ const InventoryClerkHomePage = () => {
   const [quality, setQuality] = useState("");
   const [color, setColor] = useState("");
   const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  //
+  const [addModalVisible, setAddModalVisible] = useState(false);
+  const [testVisible, setTestVisible] = useState(false);
   // ////////////////////////////////////////// //
   // DB
   const reformat = (doc) => {
@@ -80,6 +96,7 @@ const InventoryClerkHomePage = () => {
       color: color,
       gender: gender,
       available: true,
+      age: age,
     })
       .then(() => {
         console.log("data submitted");
@@ -92,6 +109,7 @@ const InventoryClerkHomePage = () => {
     setQuality("");
     setColor("");
     setGender("");
+    setAge("");
     setAddModalVisible(!addModalVisible);
   };
 
@@ -120,88 +138,9 @@ const InventoryClerkHomePage = () => {
       });
   };
 
-  // Cloth Type Flat List
-  const ClothTypeData = [
-    { label: "Blouse", value: "Blouse" },
-    { label: "Bodysuit", value: "Bodysuit" },
-    { label: "Caftan", value: "Caftan" },
-    { label: "Cardigan", value: "Cardigan" },
-    { label: "Cloak", value: "Cloak" },
-    { label: "Coat", value: "Coat" },
-    { label: "Dress", value: "Dress" },
-    { label: "Dungarees", value: "Dungarees" },
-    { label: "Jacket", value: "Jacket" },
-    { label: "Jeans", value: "Jeans" },
-    { label: "Jumper", value: "Jumper" },
-    { label: "Jumpsuit", value: "Jumpsuit" },
-    { label: "Leggings", value: "Leggings" },
-    { label: "Legwarmers", value: "Legwarmers" },
-    { label: "Leotard", value: "Leotard" },
-    { label: "Pants / Trousers", value: "Pants / Trousers" },
-    { label: "Playsuit", value: "Playsuit" },
-    { label: "Poncho", value: "Poncho" },
-    { label: "Pajamas", value: "Pajamas" },
-    { label: "Sarong", value: "Sarong" },
-    { label: "Shawl", value: "Shawl" },
-    { label: "Shirt", value: "Shirt" },
-    { label: "Shoes", value: "Shoes" },
-    { label: "Shorts", value: "Shorts" },
-    { label: "Skirt", value: "Skirt" },
-    { label: "Sock", value: "Sock" },
-    { label: "Sweater", value: "Sweater" },
-    { label: "Swimsuit", value: "Swimsuit" },
-    { label: "Tie", value: "Tie" },
-    { label: "Tights", value: "Tights" },
-    { label: "Tops", value: "Tops" },
-    { label: "Tracksuit", value: "Tracksuit" },
-    { label: "T-Shirt", value: "T-Shirt" },
-    { label: "Waistcoat", value: "Waistcoat" },
-  ];
-  const SizeData = [
-    { label: "XS", value: "XS" },
-    { label: "S", value: "S" },
-    { label: "M", value: "M" },
-    { label: "L", value: "L" },
-    { label: "XL", value: "XL" },
-    { label: "XXL", value: "XXL" },
-    { label: "3XL", value: "3XL" },
-    { label: "4XL", value: "4XL" },
-    { label: "5XL", value: "5XL" },
-  ];
-  const ColorData = [
-    { label: "Beige", value: "Beige" },
-    { label: "Black", value: "Black" },
-    { label: "Blue", value: "Blue" },
-    { label: "Brown", value: "Brown" },
-    { label: "Burgundy", value: "Burgundy" },
-    { label: "Checks", value: "Checks" },
-    { label: "Gold", value: "Gold" },
-    { label: "Green", value: "Green" },
-    { label: "Grey", value: "Grey" },
-    { label: "Khaki", value: "Khaki" },
-    { label: "Multicolor", value: "Multicolor" },
-    { label: "Navy", value: "Navy" },
-    { label: "Orange", value: "Orange" },
-    { label: "Pink", value: "Pink" },
-    { label: "Prints", value: "Prints" },
-    { label: "Purple", value: "Purple" },
-    { label: "Red", value: "Red" },
-    { label: "Stripes", value: "Stripes" },
-    { label: "White", value: "White" },
-    { label: "Yellow", value: "Yellow" },
-  ];
-  const GenderData = [
-    { label: "Female", value: "Female" },
-    { label: "Male", value: "Male" },
-  ];
-  const QualityData = [
-    { label: "New", value: "New" },
-    { label: "Good", value: "Good" },
-    { label: "Bad", value: "Bad" },
-  ];
   // edit modal
   const [editModalVisible, setEditModalVisible] = useState(false);
-  const [addModalVisible, setAddModalVisible] = useState(false);
+
   // validations
   const [error, setError] = useState({ satus: false, key: null, msg: "" });
   const submit = () => {
@@ -213,19 +152,25 @@ const InventoryClerkHomePage = () => {
       ? setError({
           satus: true,
           key: "color",
-          msg: "Chose color!",
+          msg: "Choose Color!",
         })
       : gender == null || gender == ""
       ? setError({
           satus: true,
           key: "gender",
-          msg: "Chose gender!",
+          msg: "Choose Gender!",
+        })
+      : age == null || age == ""
+      ? setError({
+          satus: true,
+          key: "age",
+          msg: "Choose Age Category!",
         })
       : quality == null || quality == ""
       ? setError({
           satus: true,
           key: "quality",
-          msg: "Chose quality!",
+          msg: "Choose Quality!",
         })
       : (set(), setError({ satus: false, key: null, msg: "" }));
   };
@@ -237,15 +182,37 @@ const InventoryClerkHomePage = () => {
         overflow: "scroll",
       }}
     >
-      <Header
-        search
-        options
-        title="Title"
-        optionLeft="Option 1"
-        optionRight="Option 2"
-        // navigation={this.props.navigation}
-      />
+      <View
+        style={{
+          backgroundColor: "#525F7F",
+          height: "10%",
+          padding: "5%",
+          flexDirection: "row",
+        }}
+      >
+        <Block style={{ width: "5%" }}></Block>
+        <Image source={require("../../components/Fatima/image 1.png")} />
+        <Block style={{ justifyContent: "center", marginLeft: "30%" }}>
+          <Text style={{ color: "white", fontSize: "20%" }}>
+            Inventory Clerk
+          </Text>
+        </Block>
+        <Block style={{ alignSelf: "right", marginLeft: "30%", width: "5%" }}>
+          <Icon name="sign-out" size={30} color="white" />
+        </Block>
+        <Block style={{ justifyContent: "right", width: "5%" }}>
+          <Icon name="user" size={30} color="white" />
+        </Block>
+      </View>
       <Card>
+        {/* <Button
+          shadowless
+          color={Theme.COLORS.SUCCESS}
+          onPress={() => setTestVisible(!testVisible)}
+          style={{ alignSelf: "right", marginLeft: "1%", marginBottom: "2%" }}
+        >
+          Add Item
+        </Button> */}
         <Button
           shadowless
           color={Theme.COLORS.SUCCESS}
@@ -254,7 +221,9 @@ const InventoryClerkHomePage = () => {
         >
           Add Item
         </Button>
-
+        {/* <View>
+          <Test show={testVisible} />
+        </View> */}
         <Card.Divider />
         <DataTable>
           <DataTable.Header>
@@ -263,11 +232,12 @@ const InventoryClerkHomePage = () => {
             <DataTable.Title>Size</DataTable.Title>
             <DataTable.Title>Color</DataTable.Title>
             <DataTable.Title>Gender</DataTable.Title>
+            <DataTable.Title>Age</DataTable.Title>
             <DataTable.Title>Quality</DataTable.Title>
             <DataTable.Title>Availability</DataTable.Title>
             <DataTable.Title></DataTable.Title>
           </DataTable.Header>
-          <ScrollView>
+          <ScrollView vertical="true">
             {items.map((i, x) => (
               <DataTable.Row style={{ height: "1%" }}>
                 <DataTable.Cell id={i.id}>{IDs[x]}</DataTable.Cell>
@@ -275,6 +245,7 @@ const InventoryClerkHomePage = () => {
                 <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
                 <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>
                 <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.age}</DataTable.Cell>
                 <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
                 {/* hide not availabe items */}
                 {/* {i.available == true ? <DataTable.Cell>Available</DataTable.Cell> : null} */}
@@ -328,7 +299,7 @@ const InventoryClerkHomePage = () => {
                 setType(item.value);
               }}
             />
-
+            {/* {console.log(ClothTypeData)} */}
             {error.key == "type" && error.satus && (
               <Text style={styles.errorMessage}>{error.msg}</Text>
             )}
@@ -396,6 +367,28 @@ const InventoryClerkHomePage = () => {
               }}
             />
             {error.key == "gender" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={AgeCategory}
+              labelField="label"
+              valueField="value"
+              id="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={age}
+              placeholder={"Age Category"}
+              onChange={(item) => {
+                setAge(item.value);
+              }}
+            />
+            {error.key == "age" && error.satus && (
               <Text style={styles.errorMessage}>{error.msg}</Text>
             )}
             <Dropdown
