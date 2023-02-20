@@ -10,8 +10,7 @@ import {
   View,
   Pressable,
   TouchableOpacity,
-  Platform,
-  ScrollView
+  Platform
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -31,17 +30,17 @@ import {
 import { auth } from "../../config";
 
 import { doc, setDoc, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
+import { db, storage } from "../../config";
 import { getStorage, ref, uploadBytes,uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-import { db, storage } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 
 
 const AddClerk = ({navigation}) => {
 
-  const [chosenDate, setChosenDate] = useState(new Date());
-  const [image, setImage] = useState(null);
+    const [chosenDate, setChosenDate] = useState(new Date());
+    const [image, setImage] = useState(null);
   const [fileName, setFileName] = useState();
 
     const pickImage = async () => {
@@ -56,7 +55,6 @@ const AddClerk = ({navigation}) => {
 
       if (!result.cancelled) {
         setImage(result.uri);
-        setMsg(false)
         //setFileName(result.uri.substring(result.uri.toString().lastIndexOf("/") +1));
         let c = result.uri.substring(result.uri.toString().lastIndexOf("/") +1)
         setFileName(c)
@@ -76,7 +74,7 @@ const AddClerk = ({navigation}) => {
         await uploadBytesResumable(imgRef, bytes);
     };
 
-    const max = new Date()
+  const max = new Date()
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
   const [phone, setPhone] = useState("");
@@ -91,7 +89,7 @@ const AddClerk = ({navigation}) => {
 
   // const [image, setImage] = useState();
   const [url, setUrl] = useState();
-  //const [fileName, setFileName] = useState();
+  // const [fileName, setFileName] = useState();
   const [datePicker, setDatePicker] = useState(false);
  
  const [FnameError, setFnameError] = useState();
@@ -143,7 +141,6 @@ const zones = [
 
  const add = async () => {
   alert("add")
-  uploadImage();
     const docRef = doc(db, "inventoryWorkers", email)
     await setDoc(docRef, { fname: Fname,
       email: email,
@@ -199,9 +196,8 @@ const zones = [
             !emailError &&
               !phoneError && 
                 !qIdError &&
-                  zone &&
-                  image &&
                   !flag &&
+                  image &&
                   !dobError ? add(): setMsg(true)
 
       
@@ -237,7 +233,7 @@ const cheack = (value, type)=>{
       <Block flex middle>
         
           <Block safe flex style={{marginTop:50}}>
-             <Text style={{fontSize:30}}>Add</Text>
+             <Text style={{fontSize:30}}>Add Worker</Text>
 
 
             <Block style={styles.registerContainer}>
@@ -252,7 +248,7 @@ const cheack = (value, type)=>{
                    style={styles.profileImage}
                      source={{ uri: image? image : 'https://static.vecteezy.com/system/resources/previews/000/376/489/original/add-user-vector-icon.jpg' }}
                   />
-                  {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add </Text>}
+                  {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add photo</Text>}
 
                   </Pressable>
                      
@@ -265,7 +261,6 @@ const cheack = (value, type)=>{
                
    {/*------- Form ---------*/}
                 <Block flex  center >
-                  <ScrollView>
                   <KeyboardAvoidingView
                     style={{ flex: 1 }}
                     behavior="padding"
@@ -353,8 +348,7 @@ const cheack = (value, type)=>{
 
 
 
-        {/* <View style={styles.con}> */}
-           <View style={{width: width >500 ?"50%":"100%", marginLeft: width >500 ?16:0}}>
+        <View style={styles.con}>
               {/* Display the selected date */}
                 <Text style={styles.text}>Date of Birth</Text>
                 <Pressable style={styles.pickedDateContainer} onPress={showPicker}>
@@ -393,7 +387,7 @@ const cheack = (value, type)=>{
       {/*--------- Buttons ----------*/}
 
           
-      <Block right width={width*0.84} style={{flexDirection:"row",flexWrap:"wrap",borderWidth:0}} >
+      <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:0}} >
         
                 <Button 
                       color="success" 
@@ -414,7 +408,6 @@ const cheack = (value, type)=>{
                   </Button>
                     </Block>
                   </KeyboardAvoidingView>
-                </ScrollView>
                 </Block>
 
 
@@ -470,12 +463,12 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   createButton: {
-    width: width * 0.18,
+    width: width * 0.20,
     marginBottom: 20,
 
   },
    cancelButton: {
-    width: width * 0.18,
+    width: width * 0.2,
     marginBottom: 20,
   backgroundColor: theme.COLORS.MUTED    
   },
@@ -509,7 +502,6 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     fontWeight: 'bold',
     color: '#1E90FF',
-    textAlign:"center"
   },
  
   dropdown: {
@@ -535,7 +527,7 @@ const styles = StyleSheet.create({
       fontSize:20,
   },
   pickedDateContainer: {
-    width:"100%",
+    width:"76%",
     padding: 17,
     backgroundColor: '#FFF',
     borderRadius: 10,

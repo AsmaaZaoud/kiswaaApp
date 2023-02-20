@@ -71,7 +71,8 @@ const  AdminHome = ({navigation}) => {
   // const [color, setColor] = useState(colors[0].label);
   const [size, setSize] = useState("S");
 
-  console.log(ageGroup, type, quantity, color, size);
+  // console.log(ageGroup, type, quantity, color, size);
+  console.log(index)
   return (
     <View style={{backgroundColor:"#8C02FE"}}>
         <View style={styles.top}>

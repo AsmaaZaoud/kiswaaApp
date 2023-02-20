@@ -113,7 +113,7 @@ const Clerks = ({navigation}) => {
 
    const readAllWhere = async () => {
     let temp = [];
-    const q = query(collection(db, "drivers"));
+    const q = query(collection(db, "inventoryWorkers"));
     const docs = await getDocs(q);
     // console.log(docs)
     docs.forEach((doc) => {
@@ -133,9 +133,9 @@ const Clerks = ({navigation}) => {
                   <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
                       <View style={{flexDirection:"row"}}> 
                         <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
-                    <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>Driverss</Text>
+                    <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>Workers</Text>
                       </View>
-                    <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}>
+                    <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddClerk")}>
                       
                       <Text style={{fontSize:deviceType=="mobile" ?18: 26, color:"#FFF"}}>Add</Text> 
                       

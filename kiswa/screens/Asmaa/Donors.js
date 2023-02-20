@@ -30,76 +30,11 @@ const { width , height} = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
-const categories = [
-  {
-    title: "Music Album",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?fit=crop&w=840&q=80",
-    price: "$125",
-  },
-  {
-    title: "Events",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1543747579-795b9c2c3ada?fit=crop&w=840&q=80",
-    price: "$35",
-  },
-];
+
 
 const Donors = ({navigation}) => {
 
   const [deviceType, setDeviceType] =useState("")
-
-  const data = [
-    {
-      id: 1,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar1.png',
-      description: 'Rajo ',
-    },
-    {
-      id: 2,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar2.png',
-      description: 'User 2',
-    },
-    {
-      id: 3,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-      description: 'User 3',
-    },
-    {
-      id: 4,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar4.png',
-      description: 'User 4',
-    },
-    {
-      id: 5,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar5.png',
-      description: 'User 5',
-    },
-    {
-      id: 6,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar6.png',
-      description: 'User 6',
-    },
-    {
-      id: 7,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar1.png',
-      description: 'User 7',
-    },
-    {
-      id: 8,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar2.png',
-      description: 'User 8',
-    },
-    {
-      id: 9,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-      description: 'User 9',
-    },
-  ]
 
   useEffect(() => {
     readAllWhere();
@@ -113,7 +48,7 @@ const Donors = ({navigation}) => {
 
    const readAllWhere = async () => {
     let temp = [];
-    const q = query(collection(db, "drivers"));
+    const q = query(collection(db, "donors"));
     const docs = await getDocs(q);
     // console.log(docs)
     docs.forEach((doc) => {
@@ -122,7 +57,7 @@ const Donors = ({navigation}) => {
     });
     setDrivers(temp);
     setAllDrivers(temp)
-    //console.log(drivers);
+    // console.log(drivers);
   };
 
     return (
@@ -133,13 +68,9 @@ const Donors = ({navigation}) => {
                   <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
                       <View style={{flexDirection:"row"}}> 
                         <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
-                    <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>Driverss</Text>
+                    <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>Donors</Text>
                       </View>
-                    <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}>
-                      
-                      <Text style={{fontSize:deviceType=="mobile" ?18: 26, color:"#FFF"}}>Add</Text> 
-                      
-                      </Button>    
+                     
                   </Block>
 
         
@@ -158,7 +89,7 @@ const Donors = ({navigation}) => {
         
         >
                   
-                <DataTable.Cell textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.fname}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.name}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.email}</DataTable.Cell>
                 <DataTable.Cell numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.phone}</DataTable.Cell>
 
