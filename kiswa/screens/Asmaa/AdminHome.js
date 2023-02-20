@@ -1,8 +1,9 @@
-import { StyleSheet, View, Text, Dimensions, Image, Pressable , TextInput} from 'react-native'
+import { StyleSheet, View, Dimensions, Image, Pressable , TextInput} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { DataTable } from 'react-native-paper';
-import { Block, theme } from "galio-framework";
+import {  theme } from "galio-framework";
 
+import { Tab, TabView } from "@rneui/themed";
 
 //FireBase
 import { auth } from "../../config";
@@ -13,18 +14,24 @@ import { signOut } from "firebase/auth";
 //argon
 import { Images, argonTheme, articles } from "../../constants/";
 import {  Card, Header } from "../../components"
-import {Icon,AntDesign,FontAwesome,MaterialCommunityIcons} from "react-native-vector-icons"
+import {AntDesign,FontAwesome,MaterialCommunityIcons} from "react-native-vector-icons"
 import ArButton from "../../components/Button";
 import { Dropdown } from 'react-native-element-dropdown';
-import { Button } from 'galio-framework';
 
+import { Button, Block, Checkbox, Text, NavBar, Icon } from "galio-framework";
 
 const { width,height } = Dimensions.get('screen');
 
+
 const  AdminHome = ({navigation}) => {
+  const [deviceType, setDeviceType] =useState("")
+
+  
 
     useEffect(() => {
     readAllWhere();
+     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
+    //  alert(deviceType)
   }, [drivers]);
     const navbar = [
        { name:"Dashboard", color:"#e1ddf0", icon: require('../../assets/imgs/Dashboard.png') }, 
@@ -34,7 +41,7 @@ const  AdminHome = ({navigation}) => {
         {name: "Families",color:"#e1ddf0", icon:require('../../assets/imgs/Families.png')},
         {name:"Clerk",color:"#e1ddf0", icon:require('../../assets/imgs/Clerk.png')}
     ]
-    const [color, setColor ] = useState("#b1d8f0")
+    const [color, setColor ] = useState("#e1ddf0")
     const [page, setPage ] = useState("Dashboard")
     const slect = (col,name) =>{
         setColor(col)
@@ -47,6 +54,8 @@ const  AdminHome = ({navigation}) => {
       .catch((error) => console.log("Error logging out: ", error));
   };
     
+   const [index, setIndex] = React.useState(0);
+  const groups = { 0: "Men", 1: "Women", 2: "Boys", 3: "Girls" };
 
 
     const [drivers, setDrivers] = useState([]);
@@ -77,39 +86,125 @@ const  AdminHome = ({navigation}) => {
     { label: "Al Shamal", value: "9" },
     { label: "Al Shahaniya", value: "10" },
   ];
+
+  const data = [
+    { key: "T-shirt" },
+    { key: "Sweater" },
+    { key: "Jacket" },
+    { key: "Coat" },
+    { key: "Jeans" },
+    { key: "socks" },
+    { key: "shorts" },
+    { key: "Tracksuit" },
+    { key: "Vest" },
+    { key: "Pajamas" },
+    { key: "shoes" },
+    { key: "suit" },
+  ];
+
+    const WType = [
+    { key: "T-shirt" },
+    { key: "Sweater" },
+    { key: "Jacket" },
+    { key: "Coat" },
+    { key: "Jeans" },
+    { key: "socks" },
+    { key: "shorts" },
+    { key: "Tracksuit" },
+    { key: "Vest" },
+    { key: "Pajamas" },
+    { key: "shoes" },
+    { key: "dress" },
+    { key: "heels" },
+    { key: "scarf" },
+    { key: "blouse" },
+    { key: "suit" },
+  ];
+
+
+  const colors = [
+    { label: "Black", value: "1" },
+    { label: "White", value: "2" },
+    { label: "Red", value: "3" },
+    { label: "Green", value: "4" },
+    { label: "Yellow", value: "5" },
+    { label: "Blue", value: "6" },
+    { label: "Pink", value: "7" },
+    { label: "Gray", value: "8" },
+    { label: "Brown", value: "9" },
+    { label: "Orange", value: "10" },
+    { label: "Purple", value: "11" },
+  ];
+
+  const [ageGroup, setAgeGroup] = useState("");
+  const [type, setType] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  // const [color, setColor] = useState(colors[0].label);
+  const [size, setSize] = useState("S");
+
+  console.log(ageGroup, type, quantity, color, size);
   return (
-    <View >
+    <View style={{backgroundColor:"white"}}>
         <View style={styles.top}>
             <Text>Logo</Text>
             <Pressable onPress={onSignOut}>
-              <MaterialCommunityIcons name="logout" size={40} />
+              <MaterialCommunityIcons name="logout" size={ deviceType=="mobile" ?30: 45} />
             </Pressable>
             
 
         </View>
-    <View style={{flexDirection:"row"}}>
-        <View style={styles.nav}>
-              {navbar.map((x)=>
-                    <Pressable key={x.name} style={[styles.n, {backgroundColor:x.name == page? color:"white"}]} onPress={()=>slect(x.color,x.name)}>
-                       <Image source={x.icon} style={{width:width*0.04,height:width*0.04}}/>
-                        <View style={{marginLeft:"5%"}}>
-                             <Text style={styles.name}>{x.name}</Text>
-                        </View>
-                    </Pressable>
-              )}
-        </View>
+        <NavBar
+        //title="Reques Clothes"
+        style={{ height: 0, borderWidth: 0, marginTop: 0, marginBottom: 0 }}
+      />
+      
 
+      <Block style={{backgroundColor:"white", flexDirection:"colum"}}>
+        <Tab
+          value={index}
+          onChange={setIndex}
+          indicatorStyle={{
+            backgroundColor: "#8411CE",
+            height: 3,
+            
+          }}
+        >
+          <Tab.Item title="Men" titleStyle={{ fontSize: 12, color:"red" }}>
+            <FontAwesome  name="home" size={ deviceType=="mobile" ?30: 45} color="#8411CE"/>
+            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Home</Text>
+          </Tab.Item>
+          <Tab.Item title="Women" titleStyle={{ fontSize: 12 }}>
+              <FontAwesome  name="car" size={ deviceType=="mobile" ?30: 45}/>
+            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Drivers</Text>
+          </Tab.Item>
+          <Tab.Item title="Boys" titleStyle={{ fontSize: 12 }}>
+             <FontAwesome  name="user" size={ deviceType=="mobile" ?30: 45}/>
+            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Families</Text>
+          </Tab.Item>
+          <Tab.Item title="Girls" titleStyle={{ fontSize: 12 }}>
+              <FontAwesome  name="gift" size={ deviceType=="mobile" ?30: 45}/>
+            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Donors</Text>
+          </Tab.Item>
+            <Tab.Item title="Girls" titleStyle={{ fontSize: 12 }}>
+              <FontAwesome  name="users" size={ deviceType=="mobile" ?30: 45}/>
+            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Clerk</Text>
+          </Tab.Item>
+           <Tab.Item title="Girls" titleStyle={{ fontSize: 12 }}>
+              <FontAwesome  name="database" size={ deviceType=="mobile" ?30: 45}/>
+            <Text style={{ fontSize: deviceType=="mobile" ?11: 18 }}>Inventory</Text>
+          </Tab.Item>
+        </Tab>
+        {/* </Block> */}
 
-        <View style={{backgroundColor:color, width:width*0.75}}>
-            {/* <Text style={{fontSize:30, padding:10}}>{page}</Text> */}
-
-
-
-        <DataTable>
+        <TabView value={index} onChange={setIndex} animationType="spring">
+          <TabView.Item style={styles.comp}>
+            <View>
+              <Text></Text>
+      <DataTable>
             <Block style={styles.head}>
                 <View style={{flexDirection:"row"}}> 
-                    <FontAwesome name="user" size={40}/> 
-                    <Text style={styles.title}>Drivers</Text>
+                    <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
+                    <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>Driverss</Text>
                 </View>
             
 
@@ -157,9 +252,111 @@ const  AdminHome = ({navigation}) => {
                 )}
 
         </DataTable>
-       
-        </View>
-    </View>
+            </View>
+          </TabView.Item>
+            <TabView.Item style={styles.comp}>
+            <View>
+              <Text></Text>
+              <View style={styles.board}>
+                {WType.map((x, i) => (
+                  <Pressable
+                    key={i}
+                    style={[styles.circle]}
+                    onPress={() => {
+                      setModalVisible(true);
+                      setType(x.key);
+                      setAgeGroup(groups[index]);
+                    }}
+                  >
+                    <Text style={styles.ct}>{x.key}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          </TabView.Item>
+           <TabView.Item style={styles.comp}>
+            <View>
+              <Text></Text>
+              <View style={styles.board}>
+                {data.map((x, i) => (
+                  <Pressable
+                    key={i}
+                    style={[styles.circle]}
+                    onPress={() => {
+                      setModalVisible(true);
+                      setType(x.key);
+                      setAgeGroup(groups[index]);
+                    }}
+                  >
+                    <Text style={styles.ct}>{x.key}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          </TabView.Item>
+          <TabView.Item style={styles.comp}>
+            <View style={{ alignItems: "center" }}>
+              <Text></Text>
+              <View style={styles.board}>
+                {data.map((x, i) => (
+                  <Pressable
+                    key={i}
+                    style={[styles.circle]}
+                    onPress={() => {
+                      setModalVisible(true);
+                      setType(x.key);
+                      setAgeGroup(groups[index]);
+                    }}
+                  >
+                    <Text style={styles.ct}>{x.key}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          </TabView.Item>
+          <TabView.Item style={styles.comp}>
+            <View style={{ alignItems: "center" }}>
+              <Text></Text>
+              <View style={styles.board}>
+                {data.map((x, i) => (
+                  <Pressable
+                    key={i}
+                    style={[styles.circle]}
+                    onPress={() => {
+                      setModalVisible(true);
+                      setType(x.key);
+                      setAgeGroup(groups[index]);
+                    }}
+                  >
+                    <Text style={styles.ct}>{x.key}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          </TabView.Item>
+          <TabView.Item style={styles.comp}>
+            <View style={{ alignItems: "center" }}>
+              <Text></Text>
+              <View style={styles.board}>
+                {data.map((x, i) => (
+                  <Pressable
+                    key={i}
+                    style={[styles.circle]}
+                    onPress={() => {
+                      setModalVisible(true);
+                      setType(x.key);
+                      setAgeGroup(groups[index]);
+                    }}
+                  >
+                    <Text style={styles.ct}>{x.key}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          </TabView.Item>
+        </TabView>
+        </Block>
+   
     </View>
   )
 }
@@ -167,8 +364,9 @@ const  AdminHome = ({navigation}) => {
 
 const styles = StyleSheet.create({
   top:{
-    borderWidth:1,
-    padding:10,
+    marginTop:"2%",
+    borderBottomWidth:0.5,
+    padding:"3%",
     flexDirection:'row',
     justifyContent:"space-between"
   },
@@ -189,17 +387,20 @@ const styles = StyleSheet.create({
   head:{
     flexDirection:"row",
     padding:"1%",
-    marginTop:"6%",
+    marginTop:"3%",
     width:"90%",
     marginLeft:"3%",
     alignItems:"center",
     // borderWidth:2,
     justifyContent:"space-between"
   },
+  comp :{ width: width,
+              height: height,
+              backgroundColor:"white"},
   title:{
     fontSize:"30%",
     marginLeft:"4%",
-    paddingTop:"1%",
+    //paddingTop:"1%",
     //textAlign:"left"
   },
 
