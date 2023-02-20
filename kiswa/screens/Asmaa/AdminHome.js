@@ -19,6 +19,7 @@ import ArButton from "../../components/Button";
 import { Dropdown } from 'react-native-element-dropdown';
 
 import { Button, Block, Checkbox, Text, NavBar, Icon } from "galio-framework";
+import Drivers from './Drivers';
 
 const { width,height } = Dimensions.get('screen');
 
@@ -258,19 +259,7 @@ const  AdminHome = ({navigation}) => {
             <View>
               <Text></Text>
               <View style={styles.board}>
-                {WType.map((x, i) => (
-                  <Pressable
-                    key={i}
-                    style={[styles.circle]}
-                    onPress={() => {
-                      setModalVisible(true);
-                      setType(x.key);
-                      setAgeGroup(groups[index]);
-                    }}
-                  >
-                    <Text style={styles.ct}>{x.key}</Text>
-                  </Pressable>
-                ))}
+                <Drivers navigation={navigation}/>
               </View>
             </View>
           </TabView.Item>

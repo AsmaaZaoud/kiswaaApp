@@ -10,7 +10,8 @@ import {
   View,
   Pressable,
   TouchableOpacity,
-  Platform
+  Platform,
+  ScrollView
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -253,7 +254,7 @@ const cheack = (value, type)=>{
                    style={styles.profileImage}
                      source={{ uri: image? image : 'https://static.vecteezy.com/system/resources/previews/000/376/489/original/add-user-vector-icon.jpg' }}
                   />
-                  {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add photo</Text>}
+                  {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add </Text>}
 
                   </Pressable>
                      
@@ -266,6 +267,7 @@ const cheack = (value, type)=>{
                
    {/*------- Form ---------*/}
                 <Block flex  center >
+                  <ScrollView>
                   <KeyboardAvoidingView
                     style={{ flex: 1 }}
                     behavior="padding"
@@ -353,7 +355,8 @@ const cheack = (value, type)=>{
 
 
 
-        <View style={styles.con}>
+        {/* <View style={styles.con}> */}
+           <View style={{width: width >500 ?"50%":"100%", marginLeft: width >500 ?16:0}}>
               {/* Display the selected date */}
                 <Text style={styles.text}>Date of Birth</Text>
                 <Pressable style={styles.pickedDateContainer} onPress={showPicker}>
@@ -392,8 +395,8 @@ const cheack = (value, type)=>{
       {/*--------- Buttons ----------*/}
 
           
-      <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:0}} >
-        <Block width={width * 0.4} style={{ marginTop: 10 }}>
+      <Block right width={width*0.84} style={{flexDirection:"row",flexWrap:"wrap",borderWidth:0}} >
+        <Block width={width >500 ?"50%":"100%"} style={{ marginTop: 10 }}>
                               <Text style={styles.text}>Zone</Text>
 
                       <Dropdown
@@ -441,6 +444,7 @@ const cheack = (value, type)=>{
                   </Button>
                     </Block>
                   </KeyboardAvoidingView>
+                </ScrollView>
                 </Block>
 
 
@@ -496,12 +500,12 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   createButton: {
-    width: width * 0.20,
+    width: width * 0.18,
     marginBottom: 20,
 
   },
    cancelButton: {
-    width: width * 0.2,
+    width: width * 0.18,
     marginBottom: 20,
   backgroundColor: theme.COLORS.MUTED    
   },
@@ -535,6 +539,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     fontWeight: 'bold',
     color: '#1E90FF',
+    textAlign:"center"
   },
  
   dropdown: {
@@ -560,7 +565,7 @@ const styles = StyleSheet.create({
       fontSize:20,
   },
   pickedDateContainer: {
-    width:"76%",
+    width:"100%",
     padding: 17,
     backgroundColor: '#FFF',
     borderRadius: 10,

@@ -11,6 +11,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import {   View, Alert, TextInput, FlatList, TouchableOpacity , Table} from 'react-native'
 import { DataTable } from 'react-native-paper';
+import { Button} from "galio-framework";
 
 //FireBase
 import { auth } from "../../config";
@@ -20,12 +21,12 @@ import { db } from "../../config";
 //argon
 import { Images, argonTheme, articles } from "../../constants/";
 
-import { Button, Card, Header } from "../../components"
+import {  Card, Header } from "../../components"
 
 import {Icon,AntDesign,FontAwesome} from "react-native-vector-icons"
 import ArButton from "../../components/Button";
 
-const { width } = Dimensions.get("screen");
+const { width , height} = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
@@ -49,6 +50,9 @@ const categories = [
 ];
 
 const Drivers = ({navigation}) => {
+
+  const [deviceType, setDeviceType] =useState("")
+
   const data = [
     {
       id: 1,
@@ -99,6 +103,8 @@ const Drivers = ({navigation}) => {
 
   useEffect(() => {
     readAllWhere();
+     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
+
   }, []);
 
   const [drivers, setDrivers] = useState([]);
@@ -121,75 +127,51 @@ const Drivers = ({navigation}) => {
 
     return (
       <Block flex >
-            <View style={styles.container}> 
+          <View style={styles.container}> 
       
-    {/* <Block right>
-            <Button color="success"  style={styles.button}>PRIMARY</Button>
-          </Block> */}
-
-
- <DataTable>
-  <Block style={styles.head}>
-    <View style={{flexDirection:"row"}}> 
-      <FontAwesome name="user" size={40}/>
-          <Text style={styles.title}>Drivers</Text>
-          </View>
-         
-           <View style={styles.inputContainer}>
-         
-          <TextInput
-            style={styles.inputs}
-            placeholder="Search..."
-            underlineColorAndroid="transparent"
-            //onChangeText={q => setQuery({ q })}
-          />
-        </View>
-        </Block>
-
-    <Block style={styles.head}>
-      <View style={{flexDirection:"row", justifyContent:"space-between"}}> 
-          <Button color="success"  style={{width:"30%"}} onPress={()=>navigation.navigate("AddDriver")}>Add </Button>    
-           <Button color="info" style={{width:"30%"}}>Assign </Button>    
-            <Button color="warning" style={{width:"30%"}}>Delete </Button>    
-      </View>
-        </Block>
+              <DataTable>
+                  <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
+                      <View style={{flexDirection:"row"}}> 
+                        <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
+                    <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>Driverss</Text>
+                      </View>
+                    <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}>
+                      
+                      <Text style={{fontSize:deviceType=="mobile" ?18: 26, color:"#FFF"}}>Add</Text> 
+                      
+                      </Button>    
+                  </Block>
 
         
-          <DataTable.Header style={{borderBottomWidth:1, borderBottomColor:"black"}}>
-          <DataTable.Title>Name</DataTable.Title>
-          <DataTable.Title >Email</DataTable.Title>
-          <DataTable.Title numeric>Phone</DataTable.Title>
 
-        </DataTable.Header>
- {drivers && drivers.map((x)=>
-   <DataTable.Row key={x.email}>
-             
-          <DataTable.Cell>{x.fname}</DataTable.Cell>
-          <DataTable.Cell>{x.email}</DataTable.Cell>
-          <DataTable.Cell numeric>{x.phone}</DataTable.Cell>
+              
+                <DataTable.Header style={{borderTopWidth:0,borderBottomWidth:2, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white",}}>
+                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03, fontWeight:"bold"}}>Name</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03, fontWeight:"bold"}}>Email</DataTable.Title>
+                <DataTable.Title numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03, fontWeight:"bold"}}>Phone</DataTable.Title>
 
-     
-       </DataTable.Row>
+              </DataTable.Header>
+      {drivers && drivers.map((x)=>
+        <DataTable.Row key={x.email}
+                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
+
+        
+        >
+                  
+                <DataTable.Cell textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.fname}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.email}</DataTable.Cell>
+                <DataTable.Cell numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.phone}</DataTable.Cell>
+
           
-        )}
+            </DataTable.Row>
+                
+              )}
 
-      </DataTable>
+            </DataTable>
      
-      {/* <FlatList
-        style={styles.notificationList}
-        data={results}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity onPress={showAlert} style={styles.notificationBox}>
-              <Image style={styles.image} source={{ uri: item.icon }} />
-              <Text style={styles.name}>{item.description}</Text>
-            </TouchableOpacity>
-          )
-        }}
-      /> */}
-    </View>
-      </Block>
+   
+          </View>
+     </Block>
     );
   
 }
@@ -198,13 +180,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EBEBEB',
-    paddingTop: 50,
-    paddingHorizontal: 30,
+    //paddingTop: 50,
+    paddingHorizontal: "5%",
   },
   head:{
+    // flexDirection:"row",
+    // borderWidth:1,
+    // padding:"1%",
+    // justifyContent:"space-between",
+    // marginBottom:0
+
     flexDirection:"row",
-   // borderWidth:1,
-    padding:5,
+    padding:"1%",
+    marginTop:"3%",
+    width:"90%",
+    marginLeft:"3%",
+    alignItems:"center",
+    // borderWidth:2,
     justifyContent:"space-between"
   },
   title:{
@@ -271,6 +263,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     alignSelf: 'center',
   },
+  rowTitle:{
+    fontSize:width*0.03, 
+    //color:"purple",
+    fontWeight:"bold",
+  },
+  rowData:
+  {color:"black", fontSize:width*0.04}
 })
 
 export default Drivers;
