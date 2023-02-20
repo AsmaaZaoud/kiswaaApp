@@ -31,6 +31,16 @@ import DriveProfile from "../screens/Asmaa/DriverProfile";
 //invent
 import InventoryClerks from "../screens/Asmaa/InventoryClerks";
 import AddClerk from "../screens/Asmaa/AddClerk";
+import Clerks from "../screens/Asmaa/Clerks";
+import Inventory from "../screens/Asmaa/Inventory";
+
+//Donor
+import Donors from "../screens/Asmaa/Donors";
+
+
+//Families
+import Families from "../screens/Asmaa/Families";
+
 const { width } = Dimensions.get("screen");
 
 const Stack = createStackNavigator();
@@ -256,6 +266,13 @@ export default function OnboardingStack(props) {
 
       <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
       <Stack.Screen name="DriveProfile" component={DriveProfile} />
+
+      <Stack.Screen name="Donors" component={Donors} />
+      <Stack.Screen name="Families" component={Families} />
+      <Stack.Screen name="Clerks" component={Clerks} />
+      <Stack.Screen name="Inventory" component={Inventory} />
+
+
 
 
 

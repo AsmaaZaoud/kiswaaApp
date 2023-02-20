@@ -19,7 +19,14 @@ import ArButton from "../../components/Button";
 import { Dropdown } from 'react-native-element-dropdown';
 
 import { Button, Block, Checkbox, Text, NavBar, Icon } from "galio-framework";
+
+//Pages 
 import Drivers from './Drivers';
+import Families from './Families';
+import Clerks from "./Clerks";
+import Inventory from "./Inventory";
+import Donors from "./Donors";
+
 
 const { width,height } = Dimensions.get('screen');
 
@@ -154,12 +161,12 @@ const  AdminHome = ({navigation}) => {
             
 
         </View>
-        <NavBar
+       
+       <NavBar
         //title="Reques Clothes"
         style={{ height: 0, borderWidth: 0, marginTop: 0, marginBottom: 0 }}
       />
       
-
       <Block style={{backgroundColor:"white", flexDirection:"colum"}}>
         <Tab
           value={index}
@@ -198,151 +205,60 @@ const  AdminHome = ({navigation}) => {
         {/* </Block> */}
 
         <TabView value={index} onChange={setIndex} animationType="spring">
+
+  {/*--------- Dashboard -------------*/}
           <TabView.Item style={styles.comp}>
             <View>
-              <Text></Text>
-      <DataTable>
-            <Block style={styles.head}>
-                <View style={{flexDirection:"row"}}> 
-                    <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
-                    <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>Driverss</Text>
-                </View>
-            
+              <Text>hhh</Text>
 
-                        <Button color="primary" style={{width:"30%"}} onPress={()=>navigation.navigate("AddDriver")}>Add </Button>    
-
-            </Block>
-
-                <DataTable.Header style={{borderWidth:1, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white"}}>
-                <DataTable.Title textStyle={styles.rowTitle}>Name</DataTable.Title>
-                <DataTable.Title  textStyle={styles.rowTitle}>Phone</DataTable.Title>
-                <DataTable.Title textStyle={styles.rowTitle}>Zone</DataTable.Title>
-                <DataTable.Title textStyle={styles.rowTitle}>Delete</DataTable.Title>
-
-
-
-                </DataTable.Header>
-                {drivers && drivers.map((x)=>
-                    <DataTable.Row key={x.email} style={{width:"90%", height:"12%", borderWidth:"1%", marginLeft:"3%", backgroundColor:"white"}}>
-                        <DataTable.Cell  textStyle={styles.rowData}>{x.fname}</DataTable.Cell>
-                        <DataTable.Cell textStyle={styles.rowData}>{x.phone}</DataTable.Cell>
-                        <DataTable.Cell textStyle={styles.rowData}>
-                              <Dropdown
-                                style={styles.dropdown}
-                                placeholderStyle={styles.placeholderStyle}
-                                selectedTextStyle={styles.selectedTextStyle}
-                                inputSearchStyle={styles.inputSearchStyle}
-                                data={zones}
-                                labelField="label"
-                                valueField="value"
-                                ///maxHeight={200}
-                                id="value"
-                                search
-                                searchPlaceholder="Search..."
-                                animated={false}
-                                value={zone}
-                                placeholder={"Zone"}
-                                onChange={(item) => {
-                                    setZone(item.value);
-                                }}
-                                />
-                            </DataTable.Cell>
-                        <DataTable.Cell ><Button mode='contained-tonal' dark={false} style={{width:width*0.01, height:height*0.001, margin:"3%", color:"black" }}>Delete </Button> </DataTable.Cell>
-
-                    </DataTable.Row>
-                )}
-
-        </DataTable>
             </View>
           </TabView.Item>
+
+  {/*--------- Drivers -------------*/}
             <TabView.Item style={styles.comp}>
-            <View>
-              <Text></Text>
+           
               <View style={styles.board}>
                 <Drivers navigation={navigation}/>
               </View>
-            </View>
+           
           </TabView.Item>
+
+  {/*--------- Families -------------*/}
            <TabView.Item style={styles.comp}>
-            <View>
-              <Text></Text>
+           
               <View style={styles.board}>
-                {data.map((x, i) => (
-                  <Pressable
-                    key={i}
-                    style={[styles.circle]}
-                    onPress={() => {
-                      setModalVisible(true);
-                      setType(x.key);
-                      setAgeGroup(groups[index]);
-                    }}
-                  >
-                    <Text style={styles.ct}>{x.key}</Text>
-                  </Pressable>
-                ))}
+                <Families navigation={navigation}/>
               </View>
-            </View>
+           
           </TabView.Item>
+
+  {/*--------- Donors -------------*/}
           <TabView.Item style={styles.comp}>
-            <View style={{ alignItems: "center" }}>
-              <Text></Text>
+           
               <View style={styles.board}>
-                {data.map((x, i) => (
-                  <Pressable
-                    key={i}
-                    style={[styles.circle]}
-                    onPress={() => {
-                      setModalVisible(true);
-                      setType(x.key);
-                      setAgeGroup(groups[index]);
-                    }}
-                  >
-                    <Text style={styles.ct}>{x.key}</Text>
-                  </Pressable>
-                ))}
+                <Donors navigation={navigation}/>
               </View>
-            </View>
+           
           </TabView.Item>
-          <TabView.Item style={styles.comp}>
-            <View style={{ alignItems: "center" }}>
-              <Text></Text>
+
+  {/*--------- clerks -------------*/}
+         <TabView.Item style={styles.comp}>
+           
               <View style={styles.board}>
-                {data.map((x, i) => (
-                  <Pressable
-                    key={i}
-                    style={[styles.circle]}
-                    onPress={() => {
-                      setModalVisible(true);
-                      setType(x.key);
-                      setAgeGroup(groups[index]);
-                    }}
-                  >
-                    <Text style={styles.ct}>{x.key}</Text>
-                  </Pressable>
-                ))}
+                <Clerks navigation={navigation}/>
               </View>
-            </View>
+           
           </TabView.Item>
-          <TabView.Item style={styles.comp}>
-            <View style={{ alignItems: "center" }}>
-              <Text></Text>
+
+  {/*--------- Inventory -------------*/}
+         <TabView.Item style={styles.comp}>
+           
               <View style={styles.board}>
-                {data.map((x, i) => (
-                  <Pressable
-                    key={i}
-                    style={[styles.circle]}
-                    onPress={() => {
-                      setModalVisible(true);
-                      setType(x.key);
-                      setAgeGroup(groups[index]);
-                    }}
-                  >
-                    <Text style={styles.ct}>{x.key}</Text>
-                  </Pressable>
-                ))}
+                <Inventory navigation={navigation}/>
               </View>
-            </View>
+           
           </TabView.Item>
+        
         </TabView>
         </Block>
    
