@@ -144,11 +144,11 @@ const  AdminHome = ({navigation}) => {
 
   console.log(ageGroup, type, quantity, color, size);
   return (
-    <View style={{backgroundColor:"white"}}>
+    <View style={{backgroundColor:"#8C02FE"}}>
         <View style={styles.top}>
-            <Text>Logo</Text>
+            <Image source={require('../../assets/imgs/kiswaLogo.png')} style={{width:150, height:50}} width={width*0.27} height={height*0.05} />
             <Pressable onPress={onSignOut}>
-              <MaterialCommunityIcons name="logout" size={ deviceType=="mobile" ?30: 45} />
+              <MaterialCommunityIcons name="logout" size={ deviceType=="mobile" ?30: 45} color="white" style={{margin:5}}/>
             </Pressable>
             
 
@@ -364,8 +364,8 @@ const  AdminHome = ({navigation}) => {
 
 const styles = StyleSheet.create({
   top:{
-    marginTop:"2%",
-    borderBottomWidth:0.5,
+    marginTop:"1%",
+    //borderBottomWidth:0.5,
     padding:"3%",
     flexDirection:'row',
     justifyContent:"space-between"
