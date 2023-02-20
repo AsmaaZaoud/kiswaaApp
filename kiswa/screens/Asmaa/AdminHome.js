@@ -34,13 +34,10 @@ const { width,height } = Dimensions.get('screen');
 const  AdminHome = ({navigation}) => {
   const [deviceType, setDeviceType] =useState("")
 
-  
-
     useEffect(() => {
-    readAllWhere();
      width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
-    //  alert(deviceType)
-  }, [drivers]);
+  }, []);
+
     const navbar = [
        { name:"Dashboard", color:"#e1ddf0", icon: require('../../assets/imgs/Dashboard.png') }, 
        {name: "Drivers",color:"#e1ddf0", icon:require('../../assets/imgs/Drivers.png')}, 
@@ -51,98 +48,22 @@ const  AdminHome = ({navigation}) => {
     ]
     const [color, setColor ] = useState("#e1ddf0")
     const [page, setPage ] = useState("Dashboard")
-    const slect = (col,name) =>{
-        setColor(col)
-        setPage(name)
-
-    }
+    
   const onSignOut = () => {
     signOut(auth)
       .then(() => navigation.navigate("Login"))
       .catch((error) => console.log("Error logging out: ", error));
   };
     
-   const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(0);
   const groups = { 0: "Men", 1: "Women", 2: "Boys", 3: "Girls" };
 
 
-    const [drivers, setDrivers] = useState([]);
-    const [allDrivers, setAllDrivers] = useState([]);
     
-    const readAllWhere = async () => {
-        let temp = [];
-        const q = query(collection(db, "drivers"));
-        const docs = await getDocs(q);
-        docs.forEach((doc) => {
-            temp.push(doc.data());
-        });
-        setDrivers(temp);
-        setAllDrivers(temp)
-  };
     
-   const [zone, setZone] = useState("Assign");
-   const zones = [
-    { label: " All Zones", value: "0" },
-    { label: "Doha", value: "1" },
-    { label: "Al Rayyan", value: "2" },
-    { label: "Rumeilah", value: "3" },
-    { label: "Wadi Al Sail", value: "4" },
-    { label: "Al Daayen", value: "5" },
-    { label: "Umm Salal", value: "6" },
-    { label: "Al Wakra", value: "7" },
-    { label: "Al Khor", value: "8" },
-    { label: "Al Shamal", value: "9" },
-    { label: "Al Shahaniya", value: "10" },
-  ];
+    
+  
 
-  const data = [
-    { key: "T-shirt" },
-    { key: "Sweater" },
-    { key: "Jacket" },
-    { key: "Coat" },
-    { key: "Jeans" },
-    { key: "socks" },
-    { key: "shorts" },
-    { key: "Tracksuit" },
-    { key: "Vest" },
-    { key: "Pajamas" },
-    { key: "shoes" },
-    { key: "suit" },
-  ];
-
-    const WType = [
-    { key: "T-shirt" },
-    { key: "Sweater" },
-    { key: "Jacket" },
-    { key: "Coat" },
-    { key: "Jeans" },
-    { key: "socks" },
-    { key: "shorts" },
-    { key: "Tracksuit" },
-    { key: "Vest" },
-    { key: "Pajamas" },
-    { key: "shoes" },
-    { key: "dress" },
-    { key: "heels" },
-    { key: "scarf" },
-    { key: "blouse" },
-    { key: "suit" },
-  ];
-
-
-  const colors = [
-    { label: "Black", value: "1" },
-    { label: "White", value: "2" },
-    { label: "Red", value: "3" },
-    { label: "Green", value: "4" },
-    { label: "Yellow", value: "5" },
-    { label: "Blue", value: "6" },
-    { label: "Pink", value: "7" },
-    { label: "Gray", value: "8" },
-    { label: "Brown", value: "9" },
-    { label: "Orange", value: "10" },
-    { label: "Purple", value: "11" },
-  ];
 
   const [ageGroup, setAgeGroup] = useState("");
   const [type, setType] = useState("");
@@ -177,27 +98,27 @@ const  AdminHome = ({navigation}) => {
             
           }}
         >
-          <Tab.Item title="Men" titleStyle={{ fontSize: 12, color:"red" }}>
+          <Tab.Item onChange={setIndex} value={0} title="Men" titleStyle={{ fontSize: 12, color:"red" }}>
             <FontAwesome  name="home" size={ deviceType=="mobile" ?30: 45} color="#8411CE"/>
             <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Home</Text>
           </Tab.Item>
-          <Tab.Item title="Women" titleStyle={{ fontSize: 12 }}>
+          <Tab.Item value={1} title="Women" titleStyle={{ fontSize: 12 }}>
               <FontAwesome  name="car" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Drivers</Text>
           </Tab.Item>
-          <Tab.Item title="Boys" titleStyle={{ fontSize: 12 }}>
+          <Tab.Item value={2} title="Boys" titleStyle={{ fontSize: 12 }}>
              <FontAwesome  name="user" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Families</Text>
           </Tab.Item>
-          <Tab.Item title="Girls" titleStyle={{ fontSize: 12 }}>
+          <Tab.Item value={3} title="Girls" titleStyle={{ fontSize: 12 }}>
               <FontAwesome  name="gift" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Donors</Text>
           </Tab.Item>
-            <Tab.Item title="Girls" titleStyle={{ fontSize: 12 }}>
+            <Tab.Item value={4} title="Girls" titleStyle={{ fontSize: 12 }}>
               <FontAwesome  name="users" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Clerk</Text>
           </Tab.Item>
-           <Tab.Item title="Girls" titleStyle={{ fontSize: 12 }}>
+           <Tab.Item value={5} title="Girls" titleStyle={{ fontSize: 12 }}>
               <FontAwesome  name="database" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{ fontSize: deviceType=="mobile" ?11: 18 }}>Inventory</Text>
           </Tab.Item>
@@ -207,7 +128,7 @@ const  AdminHome = ({navigation}) => {
         <TabView value={index} onChange={setIndex} animationType="spring">
 
   {/*--------- Dashboard -------------*/}
-          <TabView.Item style={styles.comp}>
+          <TabView.Item value={0} style={styles.comp}>
             <View>
               <Text>hhh</Text>
 
@@ -251,7 +172,7 @@ const  AdminHome = ({navigation}) => {
           </TabView.Item>
 
   {/*--------- Inventory -------------*/}
-         <TabView.Item style={styles.comp}>
+         <TabView.Item value={5} style={styles.comp}>
            
               <View style={styles.board}>
                 <Inventory navigation={navigation}/>
