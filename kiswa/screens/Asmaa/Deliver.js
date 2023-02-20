@@ -5,22 +5,22 @@ import {Feather,AntDesign,Ionicons,MaterialCommunityIcons} from "react-native-ve
 
 const { width } = Dimensions.get('screen');
 
-const DriverHome = ({navigation}) => {
+const Deliver = ({navigation}) => {
     const arr = [
         {
             id:"0012red3",
-            userName: "Asmaa",
-            zone: "Gharafa"
+            userName: "Ahmad",
+            zone: "doha"
         },
         {
             id:"0033948",
-            userName: "Sara",
+            userName: "naser",
             zone: "Alkhor"
 
         },
         {
             id:"003754",
-            userName: "Ahmad",
+            userName: "sara",
             zone: "Wakra"
 
         }
@@ -39,12 +39,11 @@ const DriverHome = ({navigation}) => {
 
         </View>
         <Block style={styles.top}>
-            <Text style={{color:"green", fontSize:19, fontWeight:"bold"}}>Pickup</Text>
+           <Pressable onPress={()=>navigation.navigate("Pickup")}>
+            <Text style={{fontSize:19}}>Pickup</Text>
+            </Pressable>
             <Text style={{ fontSize:19}}>|</Text>
-            <Pressable onPress={()=>navigation.navigate("Deliver")}>
-               <Text style={{fontSize:19}}>Deliver</Text>
-               </Pressable>
-           
+            <Text style={{color:"green", fontSize:19, fontWeight:"bold"}}>Deliver</Text>
 
         </Block>
          <ScrollView>
@@ -91,10 +90,10 @@ const DriverHome = ({navigation}) => {
 
           <View style={{justifyContent:"center", alignItems:"center"}}>
           <Pressable style={styles.pickupButtonContainer}>
-            <Text style={styles.pickupButton}>Pick up</Text>
+            <Text style={styles.pickupButton}>Dilever</Text>
           </Pressable>
            <Pressable style={styles.cancelButtonContainer}>
-            <Text style={styles.cancelButton}>Pick up</Text>
+            <Text style={styles.cancelButton}>Deliver </Text>
           </Pressable>
           </View>
         </View>
@@ -207,4 +206,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default DriverHome;
+export default Deliver;

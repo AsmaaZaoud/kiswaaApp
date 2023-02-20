@@ -5,7 +5,7 @@ import {Feather,AntDesign,Ionicons,MaterialCommunityIcons} from "react-native-ve
 
 const { width } = Dimensions.get('screen');
 
-const DriverHome = ({navigation}) => {
+const Pickup = ({navigation}) => {
     const arr = [
         {
             id:"0012red3",
@@ -41,10 +41,9 @@ const DriverHome = ({navigation}) => {
         <Block style={styles.top}>
             <Text style={{color:"green", fontSize:19, fontWeight:"bold"}}>Pickup</Text>
             <Text style={{ fontSize:19}}>|</Text>
-            <Pressable onPress={()=>navigation.navigate("Deliver")}>
-               <Text style={{fontSize:19}}>Deliver</Text>
-               </Pressable>
-           
+             <Pressable onPress={()=>navigation.navigate("Deliver")}>
+            <Text style={{fontSize:19}}>Deliver</Text>
+            </Pressable>
 
         </Block>
          <ScrollView>
@@ -207,4 +206,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default DriverHome;
+export default Pickup;
