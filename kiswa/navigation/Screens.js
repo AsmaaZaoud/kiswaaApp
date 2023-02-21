@@ -15,7 +15,7 @@ import Pro from "../screens/Pro";
 import Profile from "../screens/Profile";
 import React from "react";
 import Register from "../screens/Register";
-
+import Login from "../screens/Login"
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
@@ -341,6 +341,51 @@ export default function OnboardingStack(props) {
   
       <Stack.Screen name="Login" component={Login} />
 
+
+
+ <Stack.Screen name="Drivers" component={Drivers} options={{
+          title: 'AdminHome',
+          headerStyle: {
+            backgroundColor: 'darkblue',
+          },
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
+         <Stack.Screen name="DriverHome" component={DriverHome} />
+
+          <Stack.Screen name="AddDriver" component={AddDriver} 
+      options={{title: 'AddDriver'}}/>
+        <Stack.Screen name="Pickup" component={Pickup} />
+      <Stack.Screen name="Deliver" component={Deliver} />
+       <Stack.Screen name="DriveProfile" component={DriveProfile} />
+
+        <Stack.Screen name="AdminHome" component={AdminHome} 
+      option={{
+          title: 'AdminHome',
+          headerStyle: {
+            backgroundColor: 'darkblue',
+          },
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
+     
+      <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
+
+      <Stack.Screen name="AddClerk" component={AddClerk} 
+      options={{title: 'AddClerk'}}/>
+     
+
+      <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
+     
+
+      <Stack.Screen name="Donors" component={Donors} />
+      <Stack.Screen name="Families" component={Families} />
+      <Stack.Screen name="Clerks" component={Clerks} />
+      <Stack.Screen name="Inventory" component={Inventory} />
     </Stack.Navigator>
 
 
