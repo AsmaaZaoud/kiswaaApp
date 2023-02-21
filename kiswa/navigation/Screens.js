@@ -75,7 +75,7 @@ function ElementsStack(props) {
 //         headerShown: false,
 //       }}
 //     >
-      
+
 //     </Stack.Navigator>
 //   );
 // }
@@ -221,6 +221,14 @@ export default function OnboardingStack(props) {
       }}
     >
 
+      <Stack.Screen
+        name="Onboarding"
+        component={Onboarding}
+        option={{
+          headerTransparent: true,
+        }}
+      />
+
       <Stack.Screen name="App" component={AppStack} />
       <Stack.Screen name="Login" component={Login} />
 
@@ -228,13 +236,7 @@ export default function OnboardingStack(props) {
 
       <Stack.Screen name="Register" component={Register} />
 
-        <Stack.Screen
-        name="Onboarding"
-        component={Onboarding}
-        option={{
-          headerTransparent: true,
-        }}
-      />
+
     </Stack.Navigator>
   );
 }
