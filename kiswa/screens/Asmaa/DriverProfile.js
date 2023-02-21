@@ -12,7 +12,8 @@ import {
   TouchableOpacity,
   Platform,
   ScrollView,
-   PixelRatio
+   PixelRatio,
+   Modal, FlatList
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -25,7 +26,10 @@ import * as ImagePicker from 'expo-image-picker';
 
 import validator from "validator";
 
-import {Feather,AntDesign,Ionicons,MaterialCommunityIcons} from "react-native-vector-icons"
+import { Avatar } from "@rneui/themed";
+
+
+import {Feather,AntDesign,Ionicons,MaterialIcons} from "react-native-vector-icons"
 
 
 //Firebase
@@ -91,6 +95,36 @@ useEffect(() => {
         await uploadBytesResumable(imgRef, bytes);
     };
 
+     const icons = [
+    {
+      id: 1,
+      icon: "heart-sharp",
+      title: "Favorite",
+      color: "#ff4f86",
+      page: "Favorite",
+    },
+    {
+      id: 2,
+      icon: "notifications",
+      title: "Notifications",
+      color: "#fe909d",
+      page: "AllNotifications",
+    },
+    {
+      id: 3,
+      icon: "chatbubbles",
+      title: "Chats",
+      color: "#ff6cb3",
+      page: "Chat",
+    },
+    {
+      id: 4,
+      icon: "log-out",
+      title: "Log Out",
+      color: "#fb6b94",
+      page: "StartScreen",
+    },
+  ];
     const max = new Date()
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
@@ -154,6 +188,7 @@ const zones = [
     { label: "Al Shamal", value: "9" },
     { label: "Al Shahaniya", value: "10" },
   ];
+  const [editModalVisible, setEditModalVisible] = useState(false);
 
 
  const add = async () => {
@@ -249,355 +284,199 @@ const cheack = (value, type)=>{
    
   
 }
-
+const [name, setName] = useState("")
+  // const [email, setEmail] = useState("")
+  // const [phone, setPhone] = useState("")
+  const [location, setLocation] = useState("")
  const onSignOut = () => {
     signOut(auth)
       .then(() => navigation.navigate("Login"))
       .catch((error) => console.log("Error logging out: ", error));
   };
+  const data = [{name:"asma", email:"sss"}]
   
-    return (
-      <Block flex middle style={{ backgroundColor:"white", flex:1}}>
-          <View style={{backgroundColor:"#8C02FE", width:width}}>
-          <View style={styles.topl}>
-            <Pressable onPress={()=>navigation.goBack()} style={{flexDirection:"row"}}>
-              <Ionicons name="arrow-back" size={ deviceType=="mobile" ?30: 45} color="white" />
-              <Text style={{fontSize:normalize(18), marginTop:"3%", color:"white"}}>Back</Text>
-            </Pressable>
-            {/* <Image source={require('../../assets/imgs/kiswaLogo.png')} style={{width:150, height:50}} width={width*0.27} height={height*0.05} /> */}
-            <Pressable onPress={onSignOut}>
-              <MaterialCommunityIcons name="logout" size={ deviceType=="mobile" ?30: 45} color="white" />
-            </Pressable>
-        </View>
-        </View>
-          <Block safe flex style={{marginTop:50, backgroundColor:"white", flex:1}}>
-             {/* <Text style={{fontSize:30}}>Edit</Text> */}
-
-
-            <Block style={styles.registerContainer}>
-              <Block flex>
-        
-              
-              <Block center width={width*0.4} style={styles.box}>
-                <Pressable 
-               onPress={pickImage}
-                > 
-            <Image
-                   style={styles.profileImage}
-                     source={{ uri: image? image : "https://1.bp.blogspot.com/-kWt2PZi-rC0/VbXLK5Eg0sI/AAAAAAAAx6M/V40UYN78YVs/s1600/passport2015-201507251917.jpg" }}
-                  />
-                  {/* {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add photo</Text>} */}
-
-                  </Pressable>
-                     
-              </Block>
-               <View>
-            {msg ?
-              <Text style={{color:"red",textAlign:"center", marginTop:15, fontSize:18}}>Please Fill al feilds and select image!</Text>
-              :null}
-        </View>
-               
-   {/*------- Form ---------*/}
-                <Block flex  center >
-                  <ScrollView>
-                  <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior="padding"
-                    enabled
-                  >
-      <Block  width={width * 0.8} style={{marginTop:15, marginBottom: 5,flexDirection:width>500?"row":""}}>
-                   
-          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>First Name</Text>
-                     < TextInput
-                      autoCorrect = {false}
-                      style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
-                      placeholder="Joe"
-                      value={Fname}
-                      onChangeText={setFname}
-                      onBlur =  {()=>validOne(1)}
-                      />
-          </View>
-
-          <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
-                    <Text style={styles.text}>Last Name</Text>
-                     < TextInput
-                     autoCorrect = {false}
-
-                      style={[styles.smallInput, {borderColor: LnameError?"red":"black"}]}
-                      placeholder="Grek"
-                      value={Lname}
-                      onChangeText={setLname}
-                      onBlur = {()=>validOne(2)}
-                      />
-          </View>
-      </Block>
-                    
-      <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
-                   
-          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>Qatar ID</Text>
-                     < TextInput
-                     autoCorrect = {false}
-                      keyboardType="number-pad"
-                      inputMode="numeric"
-                      style={[styles.smallInput, {borderColor: qIdError?"red":"black"}]}
-                      placeholder="30101200033"
-                      value={qId}
-                      onChangeText={(value) => cheack(value,"id")}
-                      onBlur = {()=>validOne(3)}
-                      maxLength={11}
-
-                      />
-          </View>
-
-         <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
-                    <Text style={styles.text}>Phone</Text>
-                     < TextInput
-                     autoCorrect = {false}
-                      keyboardType="number-pad"
-                       style={[styles.smallInput, {borderColor: phoneError?"red":"black"}]}
-                      placeholder="66005500"
-                      value={phone}
-                      onChangeText={(value) => cheack(value,"phone")}
-                      onBlur = {()=>validOne(4)}
-                      maxLength={8}
-
-                      />
-          </View>
+   return (
+    <View style={styles.container}>
+    
+    {data ?  
+    <View>
+      <View style={styles.header}>
+              <ImageBackground source={require("../../assets/imgs/bg.png")}>
 
           
-      </Block>
-      
-      
-       <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
-                   
-          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>Email</Text>
-                     < TextInput
-                      autoCorrect = {false}
-                      style={[styles.smallInput, {borderColor: emailError?"red":"black"}]}
-                      placeholder="abc@example"
-                      value={email}
-                      onChangeText={(value) => cheack(value,"email")}
-                      onBlur = {()=>validOne(5)}
+        <View style={styles.headerContent}>
+           <Pressable onPress={pickImage}>
+             <Image
+            style={styles.avatar}
+            source={{
+              uri: data.image,
+            }}
+          /></Pressable>
+         
 
-                      />
+          <TextInput style={styles.name} value={name} onChangeText={setName} autoFocus={true} placeholder="Name"/>
+         
+        </View>
+        </ImageBackground>
+      </View>
+
+
+      <View style={styles.body}>
+        <View style={styles.item}>
+          <View style={styles.iconContent}>
+            {/* <Image
+              style={styles.icon}
+              source={{
+                uri: "https://img.icons8.com/color/70/000000/cottage.png",
+              }}
+            /> */}
+            <AntDesign style={styles.icon} name="mail" size={30} />
           </View>
-
-
-
-        <View style={styles.con}>
-              {/* Display the selected date */}
-                <Text style={styles.text}>Date of Birth</Text>
-                <Pressable style={styles.pickedDateContainer} onPress={showPicker}>
-                  <Text style={styles.pickedDate}>{date.toDateString()}</Text>
-
-                </Pressable>
-
-           
-
-             {/* The date picker */}
-              {isPickerShow && (
-                  <DateTimePicker
-                    value={date}
-                    mode={'date'}
-                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                    is24Hour={true}
-                    onChange={onChange}
-                    style={styles.datePicker}
-                    maximumDate={max}
-                  />
-                )}
-                 {isPickerShow && (
-                <View style={{ flexDirection:"row",justifyContent:"space-between", width:"70%",padding:5}}>  
-                  <Pressable onPress={hidePicker}>
-                    <Text style={{fontSize:18}}>Cancel</Text>
-                  </Pressable>
-                   <Pressable onPress={hidePicker}>
-                    <Text style={{fontSize:18}}>Confirm</Text>
-                  </Pressable>
-                </View>
-                 )}
+          <View style={styles.infoContent}>
+            <TextInput style={styles.info} editable={false} value={data.email} onChangeText={setEmail} placeholder="Email"/>
           </View>
+        </View>
 
-      </Block>
-      
-      {/*--------- Buttons ----------*/}
+        <View style={styles.item}>
+          <View style={styles.iconContent}>
+            {/* <Image
+              style={styles.icon}
+              source={{
+                uri: "https://img.icons8.com/color/70/000000/administrator-male.png",
+              }}
+            /> */}
+            <Ionicons style={styles.icon} name="location-outline" size={30} />
 
-          
-      <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:0}} >
+          </View>
+          <View style={styles.infoContent}>
+            <TextInput style={styles.info} value={location} onChangeText={setLocation} placeholder="Location"/>
+          </View>
+        </View>
+
+        <View style={styles.item}>
+          <View style={styles.iconContent}>
+            {/* <Image
+              style={styles.icon}
+              source={{
+                uri: "https://img.icons8.com/color/70/000000/filled-like.png",
+              }}
+            /> */}
+            <AntDesign style={styles.icon} name="phone" size={30} />
+
+          </View>
+          <View style={styles.infoContent}>
+            <TextInput style={styles.info} keyboardType="phone-pad"  value={phone} onChangeText={setPhone} placeholder="Phone"/>
+          </View>
+        </View>
+
         
-                <Button 
-                      color="success" 
-                      style={styles.createButton} 
-                      onPress={validCreate}
-                      >
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Add
-                        </Text>
-                  </Button>
-                <Button 
-                      style={styles.cancelButton} 
-                      onPress={()=>navigation.goBack()}
-                      >
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Cancel
-                        </Text>
-                  </Button>
-                    </Block>
-                  </KeyboardAvoidingView>
-              </ScrollView>
-                </Block>
+        <View style={styles.saveView}>
+        <Pressable style={styles.save} ><Text style={{textAlign:"center",fontSize: 22,}}>Save</Text></Pressable>
+        </View>
+      </View>
+      </View>
+:null}
 
-
-              </Block>
-            </Block>
-          </Block>
-      </Block>
-    );
+    </View> 
+  );
   
 }
 
 const styles = StyleSheet.create({
-
-
-   topl:{
-    width:width*.97,
-    padding:"2%",
-    flexDirection:'row',
-    justifyContent:"space-between",
-    backgroundColor:"#8C02FE",
-    marginTop:"3%"
+  header: {
+    backgroundColor: "#fff",
   },
-  smallInput:{
-    width:"100%",
-     backgroundColor:"white",
-      borderRadius:10,
-      padding:15,
-      fontSize:20,
-      borderWidth:0.3
+  headerContent: {
+    paddingTop: 50,
+    alignItems: "center",
+     //borderColor:"red",
+     //borderWidth:2
   },
- input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 8,
-  },
-    text:{
-      fontSize:20
-    },
-  registerContainer: {
-    width: width * 0.9,
-    height: height * 0.875,
-    //backgroundColor: "#F4F5F7",
-    borderRadius: 4,
-    shadowColor: argonTheme.COLORS.BLACK,
-    shadowOffset: {
-      width: 0,
-      height: 4
-    },
-    shadowRadius: 8,
-    shadowOpacity: 0.1,
-    elevation: 1,
-    overflow: "hidden"
-  },
-  
-  inputIcons: {
-    marginRight: 12
-  },
-  passwordCheck: {
-    paddingLeft: 15,
-    paddingTop: 13,
-    paddingBottom: 30
-  },
-  createButton: {
-    width: width * 0.20,
-    marginBottom: 20,
-
-  },
-   cancelButton: {
-    width: width * 0.2,
-    marginBottom: 20,
-  backgroundColor: theme.COLORS.MUTED    
-  },
- 
-    imageContainer:{
-      width:"100%",
-      height:"20%",
-      //borderWidth:2
-    },
-    box: {
-    marginTop: 10,
-    //backgroundColor: 'white',
-    // alignItems: 'center',
-    // shadowColor: 'black',
-    // shadowOpacity: 0.3,
-    // shadowOffset: {
-    //   height: 1,
-    //   width: -2,
-    // },
-    // elevation: 2,
-    // paddingTop: 10,
-    // paddingBottom:0
-  },
-  profileImage: {
-    width: width*0.4,
-    height: width*0.4,
-    marginBottom: 0,
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 8,
+    borderColor: "pink",
+    marginBottom: 10,
   },
   name: {
-    fontSize: 35,
-    marginBottom: 0,
-    fontWeight: 'bold',
-    color: '#1E90FF',
+    width:"100%",height:"10%",
+    textAlign:"center",
+    fontSize: 22,
+    color: "#000000",
+    fontWeight: "600",
   },
- 
-  dropdown: {
-    //marginBottom: 10,
-    padding: 7,
-    borderRadius: 4,
-    borderColor: argonTheme.COLORS.INPUT_ERROR,
-    height: 44,
-    backgroundColor: "#FFFFFF",
-    shadowColor: argonTheme.COLORS.BLACK,
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 2,
-    shadowOpacity: 0.05,
-    elevation: 2,
+  userInfo: {
+    width:"100%",
+    textAlign:"center",
+    fontSize: 16,
+    color: "#778899",
+    fontWeight: "600",
+    borderWidth:2,
+    borderColor:"red"
   },
-
-    con: {
-      // borderWidth:1,
-      //height:"30%",
-      width:"70%",
-      borderRadius:10,
-      paddingHorizontal:13,
-      fontSize:20,
+  body: {
+    backgroundColor: "#fff",
+    height: 400,
+    //alignItems: "flex-start",
+    //justifyContent:"flex-start",
+    //borderColor:"blue",
+    //borderWidth:2,
+    //borderRadius:50
   },
-  pickedDateContainer: {
-    width:"76%",
-    padding: 17,
-    backgroundColor: '#FFF',
-    borderRadius: 10,
-    borderWidth:0.3
+  item: {
+    flexDirection: "row",
   },
-  pickedDate: {
+  infoContent: {
+    flex: 1,
+     //alignItems: "flex-start",
+     paddingLeft:25,
+    //borderColor:"red",
+     //borderWidth:2
+    //  borderBottomWidth:1,
+    // borderColor:"red"
+  },
+  iconContent: {
+    //flex: 1,
+    // alignItems: "flex-end",
+    paddingLeft: 65,
+    borderColor:"red",
+    // borderWidth:2
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    marginTop: 20,
+  },
+  info: {
     fontSize: 18,
-    color: 'black',
+    marginTop: 20,
+    color: "black",
+    borderBottomColor:"grey",
+    borderBottomWidth:1,
+    width:"80%"
+
   },
-  btnContainer: {
-    padding: 30,
+  saveView:{
+    width:"100%",
+    justifyContent:"center",
+    alignItems: "center",
+    //borderColor:"purple",
+    //borderWidth:2,
+    height:"15%",
   },
-  // This only works on iOS
-  datePicker: {
-    width: 320,
-    height: 260,
-   display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
+  save:{
+    width:"40%",
+    height:"80%",
+    
+    borderRadius:20,
+    justifyContent:"center",
+    textAlign:"center",
+    backgroundColor:"white",
+    borderColor:"purple",
+    borderWidth:2,margin:50,
+  }
 });
 
 export default DriverProfile;
