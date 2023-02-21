@@ -19,7 +19,7 @@ const Onboarding = ({ navigation }) => {
   return (
     <Block flex style={styles.container}>
       <Block center>
-        <Image source={require('../../Images/kiswalogo.png')} style={styles.logo} />
+        <Image source={require('../../Images/kiswa-logo.JPG')} style={styles.logo} />
       </Block>
 
 
@@ -62,11 +62,10 @@ const Onboarding = ({ navigation }) => {
   );
 
 }
-//https://cdn-icons-png.flaticon.com/512/2904/2904889.png
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#8c01fe'
+    backgroundColor: '#541178'
   },
   padded: {
     paddingHorizontal: theme.SIZES.BASE * 2,

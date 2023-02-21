@@ -13,7 +13,6 @@ const Home = ({ navigation }) => {
         contentContainerStyle={styles.articles}>
         <Button
           style={{ width: '50%', alignSelf: 'center' }}
-        // onPress={() => navigation.navigate("Onboarding")}
         >
           DONATE NOW
         </Button>
