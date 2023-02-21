@@ -1,29 +1,38 @@
 export default [
   {
-    title: 'Ice cream is made with carrageenan …',
-    image: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
-    cta: 'View article', 
+    title: '',
+    image: 'https://4.bp.blogspot.com/-hmxj7Us9K2o/W9DD1WEy84I/AAAAAAAABlE/01HZslMhBr0hX6dsEzjZw1CRigWWQtQiACLcBGAs/s1600/courier-delivery-driver-van.jpg',
+    cta: 'Drivers', 
+    page:"Drivers",
     horizontal: true
   },
   {
-    title: 'Is makeup one of your daily esse …',
-    image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
-    cta: 'View article'
+    title: '',
+    image: 'https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1800&h=900&url=https:%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F13%2F2020%2F09%2F25%2Fwhere-to-donate-clothes-social.jpg',
+    cta: 'Donors',
+    page:"Drivers",
+
   },
   {
-    title: 'Coffee is more than just a drink: It’s …',
-    image: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80',
-    cta: 'View article' 
+    title: '',
+    image: 'https://www.kaaf.bh/assets/images/normalProjects/medium/7862c13fef7ead5f069fa242d98482d4.jpg',
+    cta: 'Families' ,
+    page:"Drivers",
+
   },
   {
-    title: 'Fashion is a popular style, especially in …',
-    image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1326&q=80',
-    cta: 'View article' 
+    title: '',
+    image: 'https://res.cloudinary.com/hnpb47ejt/image/upload/v1523401137/fqcwhgizfa3pvkpxcu8a.jpg',
+    cta: 'Inventory workers' ,
+    page:"InventoryClerks",
+
   },
   {
-    title: 'Argon is a great free UI packag …',
-    image: 'https://images.unsplash.com/photo-1482686115713-0fbcaced6e28?fit=crop&w=1947&q=80',
-    cta: 'View article', 
+    title: '',
+    image: 'https://www.uneecops.com/wp-content/uploads/2018/08/dashboard-hrone-banner.jpg',
+    cta: '', 
+    page:"Drivers",
+
     horizontal: true
   },
 ];
