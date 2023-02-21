@@ -66,41 +66,19 @@ function ElementsStack(props) {
   );
 }
 
-function Donors(props) {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        mode: "card",
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen
-        name="Onboarding"
-        component={Onboarding}
-        option={{
-          headerTransparent: true,
-        }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title="Home"
-              search
-              options
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#F8F9FE" },
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
+//Syeda****** For later
+// function Donors(props) {
+//   return (
+//     <Stack.Navigator
+//       screenOptions={{
+//         mode: "card",
+//         headerShown: false,
+//       }}
+//     >
+      
+//     </Stack.Navigator>
+//   );
+// }
 
 function ArticlesStack(props) {
   return (
@@ -196,6 +174,7 @@ function HomeStack(props) {
         headerShown: "screen",
       }}
     >
+      {/* /********* Syeda**********/}
       <Stack.Screen
         name="Home"
         component={Home}
@@ -245,7 +224,17 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="App" component={AppStack} />
       <Stack.Screen name="Login" component={Login} />
 
+      {/* /********* Syeda**********/}
 
+      <Stack.Screen name="Register" component={Register} />
+
+        <Stack.Screen
+        name="Onboarding"
+        component={Onboarding}
+        option={{
+          headerTransparent: true,
+        }}
+      />
     </Stack.Navigator>
   );
 }

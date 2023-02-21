@@ -26,6 +26,7 @@
     "expo-app-loading": "~2.0.0",
     "expo-asset": "~8.5.0",
     "expo-font": "~10.1.0",
+    "expo-location": "^15.0.1",
     "expo-modules-core": "~0.9.2",
     "firebase": "^9.17.1",
     "formik": "^2.2.9",

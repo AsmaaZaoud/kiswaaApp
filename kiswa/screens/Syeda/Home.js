@@ -5,8 +5,8 @@ import { Block, theme, Text, Button } from 'galio-framework';
 
 const { width } = Dimensions.get('screen');
 
-class Home extends React.Component {
-  renderArticles = () => {
+const Home = ({ navigation }) => {
+ const  renderArticles = () => {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -62,11 +62,11 @@ class Home extends React.Component {
     )
   }
 
-  render() {
-    const { navigation } = this.props;
+  
+    // const { navigation } = this.props;
     return (
       <Block flex center style={styles.home}>
-        {this.renderArticles()}
+        {renderArticles()}
         <Button
           style={{ width: '100%' }}
           onPress={() => navigation.navigate("Onboarding")}>
@@ -74,7 +74,7 @@ class Home extends React.Component {
         </Button>
       </Block>
     );
-  }
+  
 }
 
 const styles = StyleSheet.create({

@@ -11,15 +11,15 @@ import { Block, Button, Text, theme } from "galio-framework";
 
 const { height, width } = Dimensions.get("screen");
 
-import argonTheme from "../constants/Theme";
-import Images from "../constants/Images";
+import argonTheme from "../../constants/Theme";
+import Images from "../../constants/Images";
 
 const Onboarding = ({ navigation }) => {
 
   return (
     <Block flex style={styles.container}>
       <Block center>
-        <Image source={require('../Images/kiswalogo.png')} style={styles.logo} />
+        <Image source={require('../../Images/kiswalogo.png')} style={styles.logo} />
       </Block>
 
 

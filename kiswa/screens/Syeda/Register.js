@@ -13,17 +13,17 @@ import {
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
-import { Button, Icon, Input } from "../components";
-import { Images, argonTheme } from "../constants";
+import { Button, Icon, Input } from "../../components";
+import { Images, argonTheme } from "../../constants";
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../config";
+import { auth } from "../../config";
 
 import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
-import { db } from "../config";
+import { db } from "../../config";
 
 import * as Location from "expo-location";
 import { Alert } from "react-native";
