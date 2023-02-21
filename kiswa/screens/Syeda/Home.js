@@ -80,7 +80,7 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   home: {
     width: width,
-    backgroundColor: '#FFF4D0'
+    backgroundColor: '#301934'
   },
   articles: {
     width: width - theme.SIZES.BASE * 2,
