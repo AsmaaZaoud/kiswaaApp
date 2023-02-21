@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -11,7 +11,8 @@ import {
   Pressable,
   TouchableOpacity,
   Platform,
-  ScrollView
+  ScrollView,
+   PixelRatio
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -24,21 +25,30 @@ import * as ImagePicker from 'expo-image-picker';
 
 import validator from "validator";
 
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../../config";
+import {Feather,AntDesign,Ionicons,MaterialCommunityIcons} from "react-native-vector-icons"
 
+
+//Firebase
+import { signOut } from "firebase/auth";
+import { auth, db,storage} from "../../config";
 import { doc, setDoc, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
 import { getStorage, ref, uploadBytes,uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-import { db, storage } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
-
+const scale = width / 428;
+export function normalize(size) {
+ 
+  const newSize = size * scale 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const DriverProfile = ({navigation}) => {
+  const [deviceType, setDeviceType] =useState("")
 
   const [chosenDate, setChosenDate] = useState(new Date());
   const [image, setImage] = useState(null);
@@ -65,7 +75,10 @@ const DriverProfile = ({navigation}) => {
       }
   };
 
-
+useEffect(() => {
+     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
+    // setArr(pick);
+  }, []);
 
     const storage = getStorage();
     const storageRef = ref(storage, 'some-child');
@@ -236,12 +249,29 @@ const cheack = (value, type)=>{
    
   
 }
+
+ const onSignOut = () => {
+    signOut(auth)
+      .then(() => navigation.navigate("Login"))
+      .catch((error) => console.log("Error logging out: ", error));
+  };
   
     return (
-      <Block flex middle style={{marginTop:50, backgroundColor:"white", flex:1}}>
-        
+      <Block flex middle style={{ backgroundColor:"white", flex:1}}>
+          <View style={{backgroundColor:"#8C02FE", width:width}}>
+          <View style={styles.topl}>
+            <Pressable onPress={()=>navigation.goBack()} style={{flexDirection:"row"}}>
+              <Ionicons name="arrow-back" size={ deviceType=="mobile" ?30: 45} color="white" />
+              <Text style={{fontSize:normalize(18), marginTop:"3%", color:"white"}}>Back</Text>
+            </Pressable>
+            {/* <Image source={require('../../assets/imgs/kiswaLogo.png')} style={{width:150, height:50}} width={width*0.27} height={height*0.05} /> */}
+            <Pressable onPress={onSignOut}>
+              <MaterialCommunityIcons name="logout" size={ deviceType=="mobile" ?30: 45} color="white" />
+            </Pressable>
+        </View>
+        </View>
           <Block safe flex style={{marginTop:50, backgroundColor:"white", flex:1}}>
-             <Text style={{fontSize:30}}>Edit</Text>
+             {/* <Text style={{fontSize:30}}>Edit</Text> */}
 
 
             <Block style={styles.registerContainer}>
@@ -254,9 +284,9 @@ const cheack = (value, type)=>{
                 > 
             <Image
                    style={styles.profileImage}
-                     source={{ uri: image? image : "https://www.murrayglass.com/wp-content/uploads/2020/10/avatar-scaled.jpeg" }}
+                     source={{ uri: image? image : "https://1.bp.blogspot.com/-kWt2PZi-rC0/VbXLK5Eg0sI/AAAAAAAAx6M/V40UYN78YVs/s1600/passport2015-201507251917.jpg" }}
                   />
-                  {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add photo</Text>}
+                  {/* {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add photo</Text>} */}
 
                   </Pressable>
                      
@@ -397,35 +427,7 @@ const cheack = (value, type)=>{
 
           
       <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:0}} >
-        <Block width={width * 0.4} style={{ marginTop: 10 }}>
-                              <Text style={styles.text}>Zone</Text>
-
-                      <Dropdown
-                        style={[styles.smallInput, {padding:11}]}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        data={zones}
-                        maxHeight={160}
-                        
-                        labelField="label"
-                        valueField="value"
-                        placeholder={zone? zone : "Select zone"}
-                        value={zone}
-                        onChange={(item) => {
-                          setZone(item.label);
-                          setZoneError(false)
-                        }}
-                      ></Dropdown>
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          color: "red",
-                          fontSize: 12,
-                        }}
-                      >
-                        {ZoneError}
-                      </Text>
-                    </Block>
+        
                 <Button 
                       color="success" 
                       style={styles.createButton} 
@@ -458,6 +460,16 @@ const cheack = (value, type)=>{
 }
 
 const styles = StyleSheet.create({
+
+
+   topl:{
+    width:width*.97,
+    padding:"2%",
+    flexDirection:'row',
+    justifyContent:"space-between",
+    backgroundColor:"#8C02FE",
+    marginTop:"3%"
+  },
   smallInput:{
     width:"100%",
      backgroundColor:"white",
