@@ -146,9 +146,9 @@ const Families = ({navigation}) => {
 
               
                 <DataTable.Header style={{borderTopWidth:0,borderBottomWidth:2, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white",}}>
-                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03, fontWeight:"bold"}}>Name</DataTable.Title>
-                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03, fontWeight:"bold"}}>Email</DataTable.Title>
-                <DataTable.Title numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03, fontWeight:"bold"}}>Phone</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Name</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Email</DataTable.Title>
+                <DataTable.Title numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Phone</DataTable.Title>
 
               </DataTable.Header>
       {drivers && drivers.map((x)=>
