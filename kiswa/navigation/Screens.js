@@ -15,6 +15,9 @@ import Pro from "../screens/Pro";
 import Profile from "../screens/Profile";
 import React from "react";
 import Register from "../screens/Register";
+// Fatima
+import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -99,6 +102,30 @@ function ArticlesStack(props) {
             />
           ),
           headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// Fatima
+function InventoryStack(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="InventoryClerkHomePage"
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="InventoryClerkHomePage"
+        component={InventoryClerkHomePage}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Home Page" navigation={navigation} scene={scene} />
+          ),
+          //   cardStyle: { backgroundColor: "#F8F9FE" },
         }}
       />
     </Stack.Navigator>
@@ -213,8 +240,11 @@ export default function OnboardingStack(props) {
         }}
       />
       <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen
+        name="InventoryClerkHomePage"
+        component={InventoryClerkHomePage}
+      />
       <Stack.Screen name="Login" component={Login} />
-
     </Stack.Navigator>
   );
 }
@@ -263,6 +293,14 @@ function AppStack(props) {
         options={{
           headerShown: false,
         }}
+      />
+      {/* Fatima */}
+      <Drawer.Screen
+        name="InventoryClerkHomePage"
+        component={InventoryStack}
+        // options={{
+        //   headerShown: true,
+        // }}
       />
       <Drawer.Screen
         name="Account"

@@ -13,7 +13,14 @@ function CustomDrawerContent({
   state,
   ...rest
 }) {
-  const screens = ["Home", "Profile", "Account", "Elements", "Articles"];
+  const screens = [
+    "Home",
+    "Profile",
+    "Account",
+    "Elements",
+    "Articles",
+    // "InventoryClerkHomePage",
+  ];
   return (
     <Block
       style={styles.container}
