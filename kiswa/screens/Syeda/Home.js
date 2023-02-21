@@ -21,13 +21,13 @@ const Home = ({ navigation }) => {
             <Block flex row style={styles.request}>
             
             <Image
-              style={{width: 70, height: 70, alignSelf: 'center'}}
+              style={{width: 70, height: 70, alignSelf: 'center', margin: 15}}
               source={{
-                uri: 'https://cdn-icons-png.flaticon.com/128/3531/3531766.png',
+                uri: 'https://cdn-icons-png.flaticon.com/128/2503/2503380.png',
               }}
             />
             
-            <Text style={{alignSelf: 'center'}}>Help this user get 3 M shirts</Text>
+            <Text style={{alignSelf: 'center'}}>Help this user get 3 Medium Shirts</Text>
             
             
             </Block>
@@ -35,26 +35,26 @@ const Home = ({ navigation }) => {
             <Block flex row style={styles.request}>
             
             <Image
-              style={{width: 70, height: 70, alignSelf: 'center'}}
+              style={{width: 70, height: 70, alignSelf: 'center', margin: 15}}
               source={{
-                uri: 'https://cdn-icons-png.flaticon.com/128/664/664466.png',
+                uri: 'https://cdn-icons-png.flaticon.com/128/776/776586.png',
               }}
             />
             
-            <Text style={{alignSelf: 'center'}}>Help this user get 2 L pants</Text>
+            <Text style={{alignSelf: 'center'}}>Help this user get 2 Large Pants</Text>
             
             </Block>
 
             <Block flex row style={styles.request}>
             
             <Image
-              style={{width: 70, height: 70, alignSelf: 'center'}}
+              style={{width: 70, height: 70, alignSelf: 'center', margin: 15}}
               source={{
-                uri: 'https://cdn-icons-png.flaticon.com/128/2347/2347446.png',
+                uri: 'https://cdn-icons-png.flaticon.com/128/892/892395.png',
               }}
             />
             
-            <Text style={{alignSelf: 'center'}}>Help this user get 3 XL t-shirts</Text>
+            <Text style={{alignSelf: 'center'}}>Help this user get 3 Xtra-Large T-Shirts</Text>
             
             </Block>
         </Block>
@@ -80,7 +80,7 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   home: {
     width: width,
-    backgroundColor: '#301934'
+    backgroundColor: '#490066'
   },
   articles: {
     width: width - theme.SIZES.BASE * 2,
