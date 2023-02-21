@@ -18,7 +18,20 @@ import {
 } from "firebase/auth";
 import { auth } from "../config";
 
-import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+  getDocs,
+  getDoc,
+  query,
+  where,
+  deleteDoc,
+  updateDoc,
+  deleteField,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "../config";
 
 const { width, height } = Dimensions.get("screen");
@@ -31,27 +44,20 @@ const Login = ({ navigation }) => {
   //let user = auth?.currentUser?.email;
   //console.log('user logged in: ', user)
 
+  const [user, setUser] = useState({});
+
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         console.log("Logged in");
-        //  console.log('handle login user: ', user)
         setSignedIn(true);
-
-        let type = email.slice(-10, -4);
-        if (type == "family") {
-          navigation.navigate("FamilyHome", email);
-          // getNanny2()
-          //   .then(() => {
-          //     console.log("get it");
-          //     navigation.navigate("NannyHome", { id: id });
-          //   })
-          //   .catch((error) => {
-          //     console.log(error.message);
-          //   });
-        } else {
-          navigation.replace("App");
-        }
+        getFamily();
+        // let type = email.slice(-10, -4);
+        // if (type == "family") {
+        //   navigation.navigate("FamilyHome", email);
+        // } else {
+        //   navigation.replace("App");
+        // }
       })
       .catch((error) => {
         console.log(error.message);
@@ -59,6 +65,29 @@ const Login = ({ navigation }) => {
 
         setSignedIn(false);
       });
+  };
+
+  const getFamily = async () => {
+    console.log(email);
+    const docRef = doc(db, "families", email.toLowerCase());
+    const docSnap = await getDoc(docRef);
+    let temp;
+    if (docSnap.exists()) {
+      console.log(temp);
+
+      temp = docSnap.data();
+      setUser(temp);
+      console.log(docSnap.data());
+      console.log(user);
+      console.log(temp);
+    } else {
+      console.log("No such document!");
+    }
+    if (temp !== undefined) {
+      navigation.navigate("FamilyHome", email);
+    } else {
+      navigation.replace("App");
+    }
   };
 
   return (

@@ -43,7 +43,7 @@ import { color, set } from "react-native-reanimated";
 
 const FamilyRequest = ({ route, navigation }) => {
   const id = route.params;
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = useState();
   const groups = { 0: "Men", 1: "Women", 2: "Boys", 3: "Girls" };
 
   // useEffect(() => {
