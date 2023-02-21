@@ -1,4 +1,4 @@
-import { StyleSheet, View, Dimensions, Image, Pressable , TextInput} from 'react-native'
+import { StyleSheet, View, Dimensions,Platform, PixelRatio, Image, Pressable , TextInput} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { DataTable } from 'react-native-paper';
 import {  theme } from "galio-framework";
@@ -29,7 +29,16 @@ import Donors from "./Donors";
 
 
 const { width,height } = Dimensions.get('screen');
-
+ const scale = width / 834;
+export function normalize(size) {
+ 
+  const newSize = size * scale 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const  AdminHome = ({navigation}) => {
   const [deviceType, setDeviceType] =useState("")
@@ -99,29 +108,29 @@ const  AdminHome = ({navigation}) => {
             
           }}
         >
-          <Tab.Item onChange={setIndex} value={0} title="Men" titleStyle={{ fontSize: 12, color:"red" }}>
+          <Tab.Item onChange={setIndex} value={0} title="Men" >
             <FontAwesome  name="home" size={ deviceType=="mobile" ?30: 45} color="#8411CE"/>
-            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Home</Text>
+            <Text style={{fontSize: normalize(19)  }}>Home</Text>
           </Tab.Item>
           <Tab.Item value={1} title="Women" titleStyle={{ fontSize: 12 }}>
               <FontAwesome  name="car" size={ deviceType=="mobile" ?30: 45}/>
-            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Drivers</Text>
+            <Text style={{fontSize: normalize(19)  }}>Drivers</Text>
           </Tab.Item>
-          <Tab.Item value={2} title="Boys" titleStyle={{ fontSize: 12 }}>
+          <Tab.Item value={2} title="Boys">
              <FontAwesome  name="user" size={ deviceType=="mobile" ?30: 45}/>
-            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Families</Text>
+            <Text style={{ fontSize:  normalize (19) }}>Families</Text>
           </Tab.Item>
           <Tab.Item value={3} title="Girls" titleStyle={{ fontSize: 12 }}>
               <FontAwesome  name="gift" size={ deviceType=="mobile" ?30: 45}/>
-            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Donors</Text>
+            <Text style={{fontSize: normalize(19)  }}>Donors</Text>
           </Tab.Item>
             <Tab.Item value={4} title="Girls" titleStyle={{ fontSize: 12 }}>
               <FontAwesome  name="users" size={ deviceType=="mobile" ?30: 45}/>
-            <Text style={{ fontSize: deviceType=="mobile" ?12: 18 }}>Clerk</Text>
+            <Text style={{fontSize: normalize(19)  }}>Clerk</Text>
           </Tab.Item>
            <Tab.Item value={5} title="Girls" titleStyle={{ fontSize: 12 }}>
               <FontAwesome  name="database" size={ deviceType=="mobile" ?30: 45}/>
-            <Text style={{ fontSize: deviceType=="mobile" ?11: 18 }}>Inventory</Text>
+            <Text style={{ fontSize: normalize(19)  }}>Inventory</Text>
           </Tab.Item>
         </Tab>
         {/* </Block> */}
@@ -208,9 +217,7 @@ const styles = StyleSheet.create({
     padding:"5%",
     alignItems:"center"
   },
-  name:{
-    fontSize:"20%",
-  },
+  
   head:{
     flexDirection:"row",
     padding:"1%",
@@ -221,15 +228,12 @@ const styles = StyleSheet.create({
     // borderWidth:2,
     justifyContent:"space-between"
   },
-  comp :{ width: width,
-              height: height,
-              backgroundColor:"white"},
-  title:{
-    fontSize:"30%",
-    marginLeft:"4%",
-    //paddingTop:"1%",
-    //textAlign:"left"
+  comp :{ 
+    width: width,
+    height: height,
+    backgroundColor:"white"
   },
+  
 
   
   //Search --------------------
@@ -268,19 +272,10 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 2,
   },
-  placeholderStyle: {
-    fontSize: "15%",
-  },
-  selectedTextStyle: {
-        fontSize: "15%",
+  
+  
 
-  },
-
-  rowTitle:{
-    fontSize:"20%", color:"purple"
-  },
-  rowData:
-  {color:"black", fontSize:"21%"}
+  
 })
 
 export default AdminHome

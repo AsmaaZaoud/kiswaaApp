@@ -1,12 +1,40 @@
-import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, Text, View, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet,Image, Dimensions,Platform, PixelRatio, ScrollView, Text, View, Pressable } from 'react-native';
 import { Block, theme } from 'galio-framework';
 import {Feather,AntDesign,Ionicons,MaterialCommunityIcons} from "react-native-vector-icons"
-
-const { width } = Dimensions.get('screen');
-
+//Firebase
+import { auth } from "../../config";
+import { doc, query, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
+import { db } from "../../config";
+import { signOut } from "firebase/auth";
+const { width , height} = Dimensions.get('screen');
+ const scale = width / 428;
+export function normalize(size) {
+ 
+  const newSize = size * scale 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 const DriverHome = ({navigation}) => {
-    const arr = [
+
+
+  const [deviceType, setDeviceType] =useState("")
+  const [type ,setType] = useState("pick")
+  const [arr ,setArr] = useState([])
+   useEffect(() => {
+     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
+    setArr(pick);
+  }, []);
+
+  const onSignOut = () => {
+    signOut(auth)
+      .then(() => navigation.navigate("Login"))
+      .catch((error) => console.log("Error logging out: ", error));
+  };
+    const pick = [
         {
             id:"0012red3",
             userName: "Asmaa",
@@ -25,37 +53,72 @@ const DriverHome = ({navigation}) => {
 
         }
 
-]
+  ]
+ const deliv = [
+        {
+            id:"0012red3",
+            userName: "Ahmad",
+            zone: "doha"
+        },
+        {
+            id:"0033948",
+            userName: "naser",
+            zone: "Alkhor"
 
+        },
+        {
+            id:"003754",
+            userName: "sara",
+            zone: "Wakra"
+
+        }
+
+  ]
+
+  const change = (type) => {
+    if (type == "deliv") {
+      setType("deliv")
+      setArr(deliv)
+    }
+    else {
+      setType("pick")
+      setArr(pick)
+
+    }
+  }
     return (
         
-      <Block flex  style={styles.home}>
+      <Block flex  >
+         
+        <View style={{backgroundColor:"#8C02FE", width:width}}>
           <View style={styles.topl}>
-            <Text>Logo</Text>
-           
-              <MaterialCommunityIcons name="logout" size={40} />
-           
-            
-
+            <Image source={require('../../assets/imgs/kiswaLogo.png')} style={{width:150, height:50}} width={width*0.27} height={height*0.05} />
+            <Pressable onPress={onSignOut}>
+              <MaterialCommunityIcons name="logout" size={ deviceType=="mobile" ?30: 45} color="white" />
+            </Pressable>
         </View>
-        <Block style={styles.top}>
-            <Text style={{color:"green", fontSize:19, fontWeight:"bold"}}>Pickup</Text>
-            <Text style={{ fontSize:19}}>|</Text>
-            <Pressable onPress={()=>navigation.navigate("Deliver")}>
-               <Text style={{fontSize:19}}>Deliver</Text>
-               </Pressable>
+        </View>
+        
+        <Block style={styles.nav}>
+            <Pressable onPress={()=>change("pick")}> 
+              <Text style={type == "pick"? styles.selected : styles.unselected}>Pickup</Text>
+            </Pressable>
            
-
+            <Text style={styles.unselected}>|</Text>
+            <Pressable onPress={()=>change("deliv")}>
+               <Text  style={type == "deliv"? styles.selected : styles.unselected}>Deliver</Text>
+               </Pressable>
         </Block>
          <ScrollView>
-      <View >
-        {
+ 
+    <View  style={styles.home}>
+        {  
         arr.map((x)=>
-            <View key={x.id} style={styles.pricingOption}>
+            <View key={x.id} style={styles.card}>
               <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-          <Text style={styles.pricingOptionTitle}>Order No</Text>
+          <Text style={styles.cardTitle}>Order No</Text>
 
-          <Text style={styles.pricingOptionTitle}>#{x.id}</Text>
+          <Text style={styles.cardTitle}>#{x.id}</Text>
 
           </View>
           <View style={styles.userCard}>
@@ -68,40 +131,45 @@ const DriverHome = ({navigation}) => {
           </View>
          
           <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
-          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
+          <View style={[styles.dataView,{flexDirection:"row"}]}>
            <Ionicons name="md-today-sharp" size={30} />
-            <Text style={styles.pricingOptionFeature}>17-Feb-2023</Text>
+            <Text style={styles.dataTitles}>17-Feb-2023</Text>
           </View>
-          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
+          <View style={[styles.dataView,{flexDirection:"row"}]}>
            <Ionicons name="time-outline" size={30} />
-            <Text style={styles.pricingOptionFeature}>12:00 PM</Text>
+            <Text style={styles.dataTitles}>12:00 PM</Text>
           </View>
           </View>
 
           <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
-          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
+          <View style={[styles.dataView,{flexDirection:"row"}]}>
            <Ionicons name="location-outline" size={30} />
-            <Text style={styles.pricingOptionFeature}>Alkhor</Text>
+            <Text style={styles.dataTitles}>Alkhor</Text>
           </View>
-          <View style={[styles.pricingOptionFeatures,{flexDirection:"row"}]}>
+          <View style={[styles.dataView,{flexDirection:"row"}]}>
            <Ionicons name="map-outline" size={30} />
-            <Text style={styles.pricingOptionFeature}>Open Map</Text>
+            <Text style={styles.dataTitles}>Open Map</Text>
           </View>
           </View>
 
           <View style={{justifyContent:"center", alignItems:"center"}}>
           <Pressable style={styles.pickupButtonContainer}>
+           { type == "pick" ?
             <Text style={styles.pickupButton}>Pick up</Text>
+            :
+             <Text style={styles.pickupButton}>Deliver</Text>
+             }
           </Pressable>
-           <Pressable style={styles.cancelButtonContainer}>
-            <Text style={styles.cancelButton}>Pick up</Text>
-          </Pressable>
+           {/* <Pressable style={styles.cancelButtonContainer}>
+            <Text style={styles.cancelButton}>c</Text>
+          </Pressable> */}
           </View>
         </View>
         )}
 
      
       </View>
+      
     </ScrollView>
       </Block>
     );
@@ -111,19 +179,50 @@ const DriverHome = ({navigation}) => {
 const styles = StyleSheet.create({
  
   topl:{
-    width:width*.8,
-    //borderWidth:1,
-    //padding:10,
+    width:width*.97,
+    padding:"2%",
     flexDirection:'row',
+    justifyContent:"space-between",
+    backgroundColor:"#8C02FE",
+    marginTop:"3%"
+  },
+  nav:{
+    marginVertical:"7%",
+    marginHorizontal:"19%",
+    width:width *0.6,
+    flexDirection:"row",
+    alignContent:"center",
     justifyContent:"space-between"
+  },
+  unselected:{
+     fontSize:normalize(19), 
+  },
+  selected:{
+    color: "#8C02FE",
+     fontSize:normalize(19), 
+     fontWeight:"bold"
+  },
+   home: {
+    marginHorizontal:"10%" 
+  },
+   card: {
+    marginVertical:"2%",
+    padding: "7%",
+    borderWidth: 1,
+    borderColor: '#cbc',
+    borderRadius: "10%",
+  },
+  cardTitle: {
+    fontSize: normalize(17),
+    marginBottom: "6%",
   },
   userCard:{
     borderWidth:1, 
     borderColor:"lightgrey",
-    margin:5, 
-    borderRadius:10, 
+    margin:"2%", 
+    borderRadius:"7%", 
     flexDirection:"row", 
-    padding:10,
+    padding:"3%",
     shadowColor: "#666",
     shadowOffset: {
       width: 1,
@@ -133,75 +232,43 @@ const styles = StyleSheet.create({
     shadowRadius: 1.49,
     elevation: 2,
   },
-   home: {
-    //width: width, 
-    margin:50   
-  },
-  title:{
-    fontSize:30
-  },
-  top:{
-    margin:"10%",
-    width:"70%",
-    flexDirection:"row",
-    justifyContent:"space-between"
-  },
+  
+ 
+  dataView: {
+    marginBottom: "6%",
 
-  pricingOption: {
-    marginVertical: 10,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
   },
-  pricingOptionTitle: {
-    fontSize: 17,
-    //fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  pricingOptionPrice: {
-    fontSize: 18,
-    color: '#333',
-    marginBottom: 10,
-  },
-  pricingOptionDescription: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 10,
-  },
-  pricingOptionFeatures: {
-    marginBottom: 10,
-  },
-  pricingOptionFeature: {
-    fontSize: 15,
-    //color: '#999',
-    marginTop:5,
-    marginLeft:5
+  dataTitles: {
+    fontSize: normalize(15) ,
+    // color: '#999',
+    marginTop:"5%",
+    marginLeft:"5%"
   },
   pickupButtonContainer: {
-    backgroundColor: 'green',
-    borderRadius: 5,
+    backgroundColor: '#8C02FE',
+    borderRadius: "7%",
     width:width*0.4,
-    margin:10
+    margin:"6%"
   },
   pickupButton: {
     textAlign:"center",
-    fontSize: 14,
+    fontSize: normalize(15),
     color: '#fff',
-    padding: 10,
+    padding: "7%",
   },
+  
  cancelButtonContainer: {
     backgroundColor: 'lightgrey',
-    borderRadius: 5,
-    width:width*0.4,
-    color:"black"
+    color:"black",
+    textAlign:"center",
+    
   },
 
    cancelButton: {
-    textAlign:"center",
-    fontSize: 14,
     color: 'black',
-    padding: 10,
+    textAlign:"center",
+    fontSize: normalize(15),
+    padding: "7%",
   },
   
 
