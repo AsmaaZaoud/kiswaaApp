@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   StyleSheet,
   ImageBackground,
@@ -7,14 +8,37 @@ import {
   KeyboardAvoidingView,
   TextInput,
   View,
-
+  Platform, 
+  PixelRatio
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 
-const { width, height } = Dimensions.get("screen");
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../config";
+
+import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import { db } from "../config";
+
+import * as Location from "expo-location";
+import { Alert } from "react-native";
+
+const { width, height } = Dimensions.get("screen"); 
+const scale = width / 834;
+
+export function normalize(size) {
+  const newSize = size * scale 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 const Register = ({ navigation }) => {
 
@@ -30,6 +54,54 @@ const Register = ({ navigation }) => {
   const [nameError, setNameError] = useState('');
   const [phoneError, setPhoneError] = useState('');
 
+  const [location, setLocation] = useState("");
+  const [locationError, setLocationError] = useState("");
+
+  const [signedIn, setSignedIn] = useState(false);
+  const [flag, setflag] = useState(0);
+
+  const [stat, setStat] = useState("denied");
+
+  let user = auth.currentUser.email;
+
+  console.log('user logged in: ', user)
+
+  const handleRegister = () => {
+    setflag(0);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() =>
+        console.log("registered"),
+        navigation.replace("App")
+      )
+      .catch((error) => console.log(error.message));
+  };
+
+
+  const getLocation = () => {
+    const getPermissions = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      setStat(status);
+      console.log("stat... ", stat);
+      console.log(status);
+      if (status !== "granted") {
+        console.log("Please grant location permissions");
+        Alert.alert("Please grant location permissions.")
+        return;
+      }
+      else {
+        
+        console.log('permitted')
+        Alert.alert("Your location has been recorded.")
+      }
+
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      console.log(currentLocation)
+      setLocation(currentLocation);
+    };
+    getPermissions();
+  };
+
+
   const validateEmail = (email) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailRegex.test(email);
@@ -41,7 +113,8 @@ const Register = ({ navigation }) => {
   };
 
 
-  const handleRegister = () => {
+
+  const validation = () => {
     if (!name) {
       setNameError('Please enter your nickname');
       return;
@@ -97,7 +170,25 @@ const Register = ({ navigation }) => {
     else {
       setConfirmError('');
     }
-  }
+
+    if (stat !== "granted") {
+      setLocationError("Please Allow Location");
+    } else {
+      setLocationError('');
+    }
+
+    if (
+      name &&
+      phone &&
+      email &&
+      validateEmail &&
+      password &&
+      validatePassword &&
+      stat === 'granted'
+    ) {
+      handleRegister()
+    }
+  };
 
 
 
@@ -112,12 +203,12 @@ const Register = ({ navigation }) => {
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <ImageBackground
-              source={{uri: 'https://img.freepik.com/free-photo/violet-watercolor-texture-background_1083-172.jpg'}}
+              source={{ uri: 'https://img.freepik.com/free-photo/violet-watercolor-texture-background_1083-172.jpg' }}
               resizeMode="cover"
-              style={{flex: 1, justifyContent: 'center',}}
+              style={{ flex: 1, justifyContent: 'center', }}
             >
               <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.goBack()}>Go Back</Text>
-              <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: 25, marginTop: 20 }}>Register as Donor</Text>
+              <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: normalize(50), marginTop: 20 }}>Register as Donor</Text>
               <View style={styles.container}>
 
                 <Text style={styles.error}>{nameError}</Text>
@@ -163,11 +254,41 @@ const Register = ({ navigation }) => {
                   secureTextEntry
                 />
 
-                <Button
-                  // style={{width: '100%'}}
-                  onPress={handleRegister}>
-                  Register
-                </Button>
+
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: "red",
+                    fontSize: normalize(19),
+                  }}
+                >
+                  {locationError}
+                </Text>
+                <Block width={width * 0.35}>
+                  <Button
+                    color={stat !== "granted" ? "default" : "primary"}
+                    style={styles.createButton}
+                    onPress={getLocation}
+                  >
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                      Get Location
+                    </Text>
+                  </Button>
+
+                </Block>
+
+
+                <Block width={width * 0.35}>
+                  <Button
+                    style={styles.createButton}
+                    onPress={validation}
+                  >
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                      Register
+                    </Text>
+                  </Button>
+                </Block>
+
               </View>
             </ImageBackground>
           </Block>
@@ -202,7 +323,8 @@ const styles = StyleSheet.create({
   },
   createButton: {
     width: width * 0.5,
-    marginTop: 25
+    marginTop: 25,
+    alignSelf: 'center'
   },
   container: {
     flex: 1,
