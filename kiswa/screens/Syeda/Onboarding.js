@@ -19,7 +19,7 @@ const Onboarding = ({ navigation }) => {
   return (
     <Block flex style={styles.container}>
       <Block center>
-        <Image source={require('../../Images/kiswalogo.png')} style={styles.logo} />
+        <Image source={require('../../Images/kiswa-logo.jpg')} style={styles.logo} />
       </Block>
 
 
