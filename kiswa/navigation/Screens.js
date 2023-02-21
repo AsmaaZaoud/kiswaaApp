@@ -16,7 +16,7 @@ import Profile from "../screens/Profile";
 import React from "react";
 import Register from "../screens/Register";
 
-
+import Login from "../screens/Login"
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
 
@@ -336,7 +336,16 @@ export default function OnboardingStack(props) {
         name="InventoryClerkHomePage"
         component={InventoryClerkHomePage}
       />
+
+      <Stack.Screen
+        name="AdminHome"
+        component={AdminHome}
+      />
     
+     <Stack.Screen
+        name="DriverHome"
+        component={DriverHome}
+      />
 
   
       <Stack.Screen name="Login" component={Login} />

@@ -36,13 +36,29 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState();
   const [signedIn, setSignedIn] = useState(false);
 
+   const reformat = (doc) => {
+    return { id: doc.id, ...doc.data() };
+  };
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async () => {
-        const user = await getDoc(doc(db, "inventoryWorkers", email));
-        user.exists
-          ? navigation.replace("InventoryClerkHomePage")
-          : navigation.replace("App");
+        const clerk = await getDoc(doc(db, "inventoryWorkers", email));
+       
+        const driver = await getDoc(doc(db, "drivers", email));
+        // const admin = "admin@admin.com"
+        // user = reformat(user)
+        if (email ==  "Admin@admin.com"){
+          navigation.replace("AdminHome")
+        }
+        else if (email === reformat(clerk).id ){
+            navigation.replace("InventoryClerkHomePage")
+        }else if(email === reformat(driver).id ){
+            navigation.replace("DriverHome")
+        }else{
+          navigation.replace("App")
+        }
+          
+        
       })
       .catch((error) => {
         console.log(error.message);
