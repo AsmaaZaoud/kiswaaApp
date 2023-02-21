@@ -9,12 +9,12 @@ import { Block } from "galio-framework";
 import CustomDrawerContent from "./Menu";
 import Elements from "../screens/Elements";
 // screens
-import Home from "../screens/Home";
-import Onboarding from "../screens/Onboarding";
+import Home from "../screens/Syeda/Home";
+import Onboarding from "../screens/Syeda/Onboarding";
 import Pro from "../screens/Pro";
 import Profile from "../screens/Profile";
 import React from "react";
-import Register from "../screens/Register";
+import Register from "../screens/Syeda/Register";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -60,6 +60,42 @@ function ElementsStack(props) {
             />
           ),
           headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function Donors(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        mode: "card",
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen
+        name="Onboarding"
+        component={Onboarding}
+        option={{
+          headerTransparent: true,
+        }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Home"
+              search
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" },
         }}
       />
     </Stack.Navigator>
@@ -205,16 +241,10 @@ export default function OnboardingStack(props) {
         headerShown: false,
       }}
     >
-      <Stack.Screen
-        name="Onboarding"
-        component={Onboarding}
-        option={{
-          headerTransparent: true,
-        }}
-      />
+
       <Stack.Screen name="App" component={AppStack} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
+
 
     </Stack.Navigator>
   );
