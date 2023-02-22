@@ -17,12 +17,13 @@ import {
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
-import { Button, Icon, Input, Select } from "../../components";
+import {  Icon, Input, Select } from "../../components";
 import { Images, argonTheme } from "../../constants";
 
 import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from 'expo-image-picker';
+import { Button } from "react-native-paper";
 
 import validator from "validator";
 
@@ -296,32 +297,34 @@ const cheack = (value, type)=>{
                     behavior="padding"
                     enabled
                   >
-      <Block  width={width * 0.8} style={{marginTop:15, marginBottom: 5,flexDirection:width>500?"row":""}}>
+      <Block row width={width * 0.8} style={{marginTop:"10%", marginBottom: 5, justifyContent:"space-between" }}>
                    
-          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>First Name</Text>
+            <View style={{width:"45%"}}>
+              <Text style={styles.text}>First Name</Text>
                      < TextInput
                       autoCorrect = {false}
-                      style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
+                      style={styles.xsmalInput}
                       placeholder="Joe"
                       value={data.fname}
                       onChangeText={setFname}
                       onBlur =  {()=>validOne(1)}
                       />
-          </View>
-
-          <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
-                    <Text style={styles.text}>Last Name</Text>
+              </View>
+                    
+             <View style={{width:"45%"}}>
+                   <Text style={styles.text}>Last Name</Text>
                      < TextInput
                      autoCorrect = {false}
 
-                      style={[styles.smallInput, {borderColor: LnameError?"red":"black"}]}
+                      style={[styles.xsmalInput, {borderColor: LnameError?"red":"black"}]}
                       placeholder="Grek"
                       value={data.lname}
                       onChangeText={setLname}
                       onBlur = {()=>validOne(2)}
                       />
-          </View>
+                      </View>
+                      
+
       </Block>
                     
       <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
@@ -332,7 +335,7 @@ const cheack = (value, type)=>{
                      autoCorrect = {false}
                       keyboardType="number-pad"
                       inputMode="numeric"
-                      style={[styles.smallInput, {borderColor: qIdError?"red":"black"}]}
+                      style={[styles.smallInput]}
                       placeholder="30101200033"
                       value={data.qId}
                       onChangeText={(value) => cheack(value,"id")}
@@ -418,22 +421,25 @@ const cheack = (value, type)=>{
       {/*--------- Buttons ----------*/}
 
           
-      <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:0}} >
+      <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:1, justifyContent:"space-between"}} >
         
-                <Button 
-                      color="success" 
+                <Button
+                      mode="contained"
                       style={styles.createButton} 
                       onPress={()=>setEditModalVisible(true)}
                       >
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Add
+                        <Text bold size={normalize(15)} color={argonTheme.COLORS.WHITE}>
+                          Save
                         </Text>
                   </Button>
-                <Button 
+                 
+                <Button
+                          mode="contained"
+                          buttonColor="red"
                       style={styles.cancelButton} 
                       onPress={()=>navigation.goBack()}
                       >
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        <Text bold ize={normalize(15)} color={argonTheme.COLORS.WHITE}>
                           Cancel
                         </Text>
                   </Button>
@@ -453,7 +459,7 @@ const cheack = (value, type)=>{
                     <Text style={styles.text}>First Name</Text>
                      < TextInput
                       autoCorrect = {false}
-                      style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
+                      style={[styles.xsmalInput, {borderColor: FnameError?"red":"black"}]}
                       placeholder="Joe"
                       value={Fname}
                       onChangeText={setFname}
@@ -464,7 +470,7 @@ const cheack = (value, type)=>{
                     <Text style={styles.text}>First Name</Text>
                      < TextInput
                       autoCorrect = {false}
-                      style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
+                      style={[styles.xsmalInput, {borderColor: FnameError?"red":"black"}]}
                       placeholder="Joe"
                       value={Fname}
                       onChangeText={setFname}
@@ -523,8 +529,6 @@ const cheack = (value, type)=>{
 }
 
 const styles = StyleSheet.create({
-
-
    topl:{
     width:width*.97,
     padding:"2%",
@@ -533,13 +537,25 @@ const styles = StyleSheet.create({
     backgroundColor:"#8C02FE",
     marginTop:"3%"
   },
+  xsmalInput:{
+      width:"100%",
+     backgroundColor:"white",
+      borderRadius:"10%",
+      padding:"10%",
+      fontSize:normalize(18),
+      //borderWidth:0.3
+      color:"#a59cae",
+      // borderBottomWidth:1
+  },
   smallInput:{
     width:"100%",
      backgroundColor:"white",
       borderRadius:10,
       padding:15,
       fontSize:20,
-      borderWidth:0.3
+      //borderWidth:0.3,
+      color:"#a59cae"
+
   },
  input: {
     height: 40,
@@ -549,7 +565,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
     text:{
-      fontSize:20
+      fontSize:normalize(20),
+      color:"#111"
     },
   registerContainer: {
     width: width * 0.9,
@@ -577,13 +594,13 @@ const styles = StyleSheet.create({
   },
   createButton: {
     width: width * 0.20,
-    marginBottom: 20,
+    marginBottom: "4%",
 
   },
    cancelButton: {
-    width: width * 0.2,
-    marginBottom: 20,
-  backgroundColor: theme.COLORS.MUTED    
+    width: width * 0.20,
+    //marginBottom: "4%",
+    backgroundColor: theme.COLORS.MUTED    
   },
  
     imageContainer:{
@@ -593,17 +610,7 @@ const styles = StyleSheet.create({
     },
     box: {
     marginTop: 10,
-    //backgroundColor: 'white',
-    // alignItems: 'center',
-    // shadowColor: 'black',
-    // shadowOpacity: 0.3,
-    // shadowOffset: {
-    //   height: 1,
-    //   width: -2,
-    // },
-    // elevation: 2,
-    // paddingTop: 10,
-    // paddingBottom:0
+    
   },
   profileImage: {
     width: width*0.4,
@@ -611,13 +618,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     borderRadius:"85%",
     borderWidth:0.3,
-    // shadowColor: 'black',
-    // shadowOpacity: 0.5,
-    // shadowOffset: {
-    //   height: 2,
-    //   width: -2,
-    // },
-    //elevation: 2,
+    
   },
   profileImageEdit:{
     width: width*0.3,
@@ -652,19 +653,21 @@ const styles = StyleSheet.create({
       //height:"30%",
       width:"70%",
       borderRadius:10,
-      paddingHorizontal:13,
+      //paddingHorizontal:13,
       fontSize:20,
+      marginTop:"5%"
   },
   pickedDateContainer: {
-    width:"76%",
-    padding: 17,
+    width: width*0.8,
+    padding: "9%",
     backgroundColor: '#FFF',
-    borderRadius: 10,
-    borderWidth:0.3
+    borderRadius: "12%",
+    //borderWidth:0.3
+    // marginTop:"5%"
   },
   pickedDate: {
-    fontSize: 18,
-    color: 'black',
+    fontSize: normalize(18),
+    color: '#a59cae',
   },
   btnContainer: {
     padding: 30,
