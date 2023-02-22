@@ -21,11 +21,24 @@ import { auth } from "../config";
 import {
   doc,
   setDoc,
+<<<<<<< HEAD
+  addDoc,
+  collection,
+  getDocs,
+  getDoc,
+  query,
+  where,
+  deleteDoc,
+  updateDoc,
+  deleteField,
+  onSnapshot,
+=======
   getDocs,
   getDoc,
   Timestamp,
   onSnapshot,
   collection,
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
 } from "firebase/firestore";
 import { db } from "../config";
 
@@ -36,6 +49,25 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState();
   const [signedIn, setSignedIn] = useState(false);
 
+<<<<<<< HEAD
+  //let user = auth?.currentUser?.email;
+  //console.log('user logged in: ', user)
+
+  const [user, setUser] = useState({});
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("Logged in");
+        setSignedIn(true);
+        getFamily();
+        // let type = email.slice(-10, -4);
+        // if (type == "family") {
+        //   navigation.navigate("FamilyHome", email);
+        // } else {
+        //   navigation.replace("App");
+        // }
+=======
    const reformat = (doc) => {
     return { id: doc.id, ...doc.data() };
   };
@@ -59,6 +91,7 @@ const Login = ({ navigation }) => {
         }
           
         
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
       })
       .catch((error) => {
         console.log(error.message);
@@ -67,6 +100,32 @@ const Login = ({ navigation }) => {
       });
   };
 
+<<<<<<< HEAD
+  const getFamily = async () => {
+    console.log(email);
+    const docRef = doc(db, "families", email.toLowerCase());
+    const docSnap = await getDoc(docRef);
+    let temp;
+    if (docSnap.exists()) {
+      console.log(temp);
+
+      temp = docSnap.data();
+      setUser(temp);
+      console.log(docSnap.data());
+      console.log(user);
+      console.log(temp);
+    } else {
+      console.log("No such document!");
+    }
+    if (temp !== undefined) {
+      navigation.navigate("FamilyHome", email);
+    } else {
+      navigation.replace("App");
+    }
+  };
+
+=======
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
   return (
     <Block flex middle>
       <StatusBar hidden />
@@ -132,6 +191,18 @@ const Login = ({ navigation }) => {
                         Log In
                       </Text>
                     </Button>
+<<<<<<< HEAD
+                    <Button
+                      color="primary"
+                      style={styles.createButton}
+                      onPress={() => navigation.navigate("RegisterFamily")}
+                    >
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        Sign Up
+                      </Text>
+                    </Button>
+=======
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
                   </Block>
                 </KeyboardAvoidingView>
               </Block>

@@ -25,6 +25,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 
+<<<<<<< HEAD
+import Login from "../screens/Login";
+import RegisterFamily from "../screens/Meimouna/RegisterFamily";
+import FamilyHome from "../screens/Meimouna/FamilyHome";
+import FamilyRequest from "../screens/Meimouna/FamilyRequest";
+=======
 //drivers
 import Drivers from "../screens/Asmaa/Drivers";
 import AdminHome from "../screens/Asmaa/AdminHome";
@@ -46,6 +52,7 @@ import Donors from "../screens/Asmaa/Donors";
 
 //Families
 import Families from "../screens/Asmaa/Families";
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
 
 const { width } = Dimensions.get("screen");
 
@@ -349,7 +356,10 @@ export default function OnboardingStack(props) {
 
   
       <Stack.Screen name="Login" component={Login} />
-
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
+      <Stack.Screen name="FamilyHome" component={FamilyHome} />
+      <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
     </Stack.Navigator>
 
 
