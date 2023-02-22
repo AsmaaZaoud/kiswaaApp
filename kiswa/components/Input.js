@@ -25,6 +25,7 @@ class ArInput extends React.Component {
         placeholderTextColor={argonTheme.COLORS.MUTED}
         style={inputStyles}
         color={argonTheme.COLORS.HEADER}
+        
         iconContent={
           <Icon
             size={14}

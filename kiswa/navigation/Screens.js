@@ -15,14 +15,44 @@ import Pro from "../screens/Pro";
 import Profile from "../screens/Profile";
 import React from "react";
 import Register from "../screens/Register";
+
+import Login from "../screens/Login"
+// Fatima
+import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
+
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 
+<<<<<<< HEAD
 import Login from "../screens/Login";
 import RegisterFamily from "../screens/Meimouna/RegisterFamily";
 import FamilyHome from "../screens/Meimouna/FamilyHome";
 import FamilyRequest from "../screens/Meimouna/FamilyRequest";
+=======
+//drivers
+import Drivers from "../screens/Asmaa/Drivers";
+import AdminHome from "../screens/Asmaa/AdminHome";
+import DriverHome from "../screens/Asmaa/DriverHome";
+import AddDriver from "../screens/Asmaa/AddDriver";
+import AdminHomeCopy from "../screens/Asmaa/AdminHomeCopy";
+import DriveProfile from "../screens/Asmaa/DriverProfile";
+import Deliver from "../screens/Asmaa/Deliver";
+import Pickup from "../screens/Asmaa/Pickup";
+//invent
+import InventoryClerks from "../screens/Asmaa/InventoryClerks";
+import AddClerk from "../screens/Asmaa/AddClerk";
+import Clerks from "../screens/Asmaa/Clerks";
+import Inventory from "../screens/Asmaa/Inventory";
+
+//Donor
+import Donors from "../screens/Asmaa/Donors";
+
+
+//Families
+import Families from "../screens/Asmaa/Families";
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
 
 const { width } = Dimensions.get("screen");
 
@@ -108,6 +138,96 @@ function ArticlesStack(props) {
   );
 }
 
+// Fatima
+function InventoryStack(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="InventoryClerkHomePage"
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="InventoryClerkHomePage"
+        component={InventoryClerkHomePage}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Home Page" navigation={navigation} scene={scene} />
+          ),
+          //   cardStyle: { backgroundColor: "#F8F9FE" },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+//Asmaa
+function Driver(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="DriverHome"
+    >
+      <Stack.Screen name="Drivers" component={Drivers} options={{
+          title: 'AdminHome',
+          headerStyle: {
+            backgroundColor: 'darkblue',
+          },
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
+         <Stack.Screen name="DriverHome" component={DriverHome} />
+
+          <Stack.Screen name="AddDriver" component={AddDriver} 
+      options={{title: 'AddDriver'}}/>
+        <Stack.Screen name="Pickup" component={Pickup} />
+      <Stack.Screen name="Deliver" component={Deliver} />
+       <Stack.Screen name="DriveProfile" component={DriveProfile} />
+
+    </Stack.Navigator>
+  );
+}
+
+//Asmaa
+function Admin(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="AdminHome"
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen name="AdminHome" component={AdminHome} 
+      option={{
+          title: 'AdminHome',
+          headerStyle: {
+            backgroundColor: 'darkblue',
+          },
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
+     
+      <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
+
+      <Stack.Screen name="AddClerk" component={AddClerk} 
+      options={{title: 'AddClerk'}}/>
+     
+
+      <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
+     
+
+      <Stack.Screen name="Donors" component={Donors} />
+      <Stack.Screen name="Families" component={Families} />
+      <Stack.Screen name="Clerks" component={Clerks} />
+      <Stack.Screen name="Inventory" component={Inventory} />
+    </Stack.Navigator>
+  );
+}
 function ProfileStack(props) {
   return (
     <Stack.Navigator
@@ -200,6 +320,7 @@ function HomeStack(props) {
   );
 }
 
+
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator
@@ -216,12 +337,36 @@ export default function OnboardingStack(props) {
         }}
       />
       <Stack.Screen name="App" component={AppStack} />
+
+      
+     <Stack.Screen
+        name="InventoryClerkHomePage"
+        component={InventoryClerkHomePage}
+      />
+
+      <Stack.Screen
+        name="AdminHome"
+        component={AdminHome}
+      />
+    
+     <Stack.Screen
+        name="DriverHome"
+        component={DriverHome}
+      />
+
+  
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
       <Stack.Screen name="FamilyHome" component={FamilyHome} />
       <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
     </Stack.Navigator>
+
+
+
+
+
+    
   );
 }
 
@@ -269,6 +414,14 @@ function AppStack(props) {
         options={{
           headerShown: false,
         }}
+      />
+      {/* Fatima */}
+      <Drawer.Screen
+        name="InventoryClerkHomePage"
+        component={InventoryStack}
+        // options={{
+        //   headerShown: true,
+        // }}
       />
       <Drawer.Screen
         name="Account"

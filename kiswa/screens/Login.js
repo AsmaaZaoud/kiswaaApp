@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -21,6 +21,7 @@ import { auth } from "../config";
 import {
   doc,
   setDoc,
+<<<<<<< HEAD
   addDoc,
   collection,
   getDocs,
@@ -31,6 +32,13 @@ import {
   updateDoc,
   deleteField,
   onSnapshot,
+=======
+  getDocs,
+  getDoc,
+  Timestamp,
+  onSnapshot,
+  collection,
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
 } from "firebase/firestore";
 import { db } from "../config";
 
@@ -41,6 +49,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState();
   const [signedIn, setSignedIn] = useState(false);
 
+<<<<<<< HEAD
   //let user = auth?.currentUser?.email;
   //console.log('user logged in: ', user)
 
@@ -58,15 +67,40 @@ const Login = ({ navigation }) => {
         // } else {
         //   navigation.replace("App");
         // }
+=======
+   const reformat = (doc) => {
+    return { id: doc.id, ...doc.data() };
+  };
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(async () => {
+        const clerk = await getDoc(doc(db, "inventoryWorkers", email));
+       
+        const driver = await getDoc(doc(db, "drivers", email));
+        // const admin = "admin@admin.com"
+        // user = reformat(user)
+        if (email ==  "Admin@admin.com"){
+          navigation.replace("AdminHome")
+        }
+        else if (email === reformat(clerk).id ){
+            navigation.replace("InventoryClerkHomePage")
+        }else if(email === reformat(driver).id ){
+            navigation.replace("DriverHome")
+        }else{
+          navigation.replace("App")
+        }
+          
+        
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
       })
       .catch((error) => {
         console.log(error.message);
         alert(error.message);
-
         setSignedIn(false);
       });
   };
 
+<<<<<<< HEAD
   const getFamily = async () => {
     console.log(email);
     const docRef = doc(db, "families", email.toLowerCase());
@@ -90,6 +124,8 @@ const Login = ({ navigation }) => {
     }
   };
 
+=======
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
   return (
     <Block flex middle>
       <StatusBar hidden />
@@ -155,6 +191,7 @@ const Login = ({ navigation }) => {
                         Log In
                       </Text>
                     </Button>
+<<<<<<< HEAD
                     <Button
                       color="primary"
                       style={styles.createButton}
@@ -164,6 +201,8 @@ const Login = ({ navigation }) => {
                         Sign Up
                       </Text>
                     </Button>
+=======
+>>>>>>> e75c0bd5e142b54c85ee7b17c3ce1240f55dfd70
                   </Block>
                 </KeyboardAvoidingView>
               </Block>
