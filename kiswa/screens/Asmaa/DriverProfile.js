@@ -50,6 +50,54 @@ export function normalize(size) {
 }
 
 const DriverProfile = ({navigation}) => {
+
+  // let user = auth?.currentUser?.email;
+  let user = "rajo@driver.com";
+
+  const [data, setData] = useState({});
+
+    const read = async () => {
+        const docRef = doc(db, "drivers", user);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+            setData(docSnap.data());
+            setFname(docSnap.data().fname)
+            setLname(docSnap.data().lname)
+            setPhone(docSnap.data().phone)
+            setEmail(docSnap.data().email)
+            setDob(docSnap.data().dob.toDate())
+            // alert(dob)
+            setQId(docSnap.data().qId)
+        } else {
+          console.log("No such document!");
+        }
+      };
+
+  const update = async()=>{
+    console.log(Fname,Lname,phone,location)
+    const docRef = doc(db, "drivers", user);
+    await setDoc(docRef, { fname:Fname, lname:Lname,phone:phone, dob:dob}, { merge: true })
+      .then(() => {
+        console.log("data updated");
+        navigation.goBack()
+        
+        //read();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }
+
+  useEffect(() => {
+     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
+     read()
+    //  setFname("jo")
+    //  setLname("Gr")
+    //  setPhone("12345678")
+
+    // setArr(pick);
+  }, []);
   const [deviceType, setDeviceType] =useState("")
 
   const [chosenDate, setChosenDate] = useState(new Date());
@@ -77,10 +125,7 @@ const DriverProfile = ({navigation}) => {
       }
   };
 
-useEffect(() => {
-     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
-    // setArr(pick);
-  }, []);
+
 
     const storage = getStorage();
     const storageRef = ref(storage, 'some-child');
@@ -99,7 +144,7 @@ useEffect(() => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [qId, setQId] = useState("");
-  const [dob, setDob] = useState(new Date());
+  const [dob, setDob] = useState();
   const [zone, setZone] = useState("");
 
   // const [date, setDate] = useState(new Date())
@@ -133,16 +178,20 @@ const [date, setDate] = useState(new Date(Date.now()));
   };
   const hidePicker = () => {
     setIsPickerShow(false);
+
   };
 
   const onChange = (event, value) => {
-    setDate(value);
+   setDate(value)
+   setDob(value)
+
+    // setDob(value);
     if (Platform.OS === 'android') {
       setIsPickerShow(false);
     }
   };
   
-    const data = {fname:"Joe", lname:"Grek", phone:"66996699", qId:"30100000203", email:"joe@gmail.com"}
+    // const data = {fname:"Joe", lname:"Grek", phone:"66996699", qId:"30100000203", email:"joe@gmail.com"}
   const [editModalVisible, setEditModalVisible] = useState(false);
 
 
@@ -245,6 +294,8 @@ const cheack = (value, type)=>{
       .then(() => navigation.navigate("Login"))
       .catch((error) => console.log("Error logging out: ", error));
   };
+
+  const [editFlag, setEditFlag] = useState(false)
   
     return (
       <Block flex middle style={{ backgroundColor:"white", flex:1}}>
@@ -270,7 +321,8 @@ const cheack = (value, type)=>{
               
               <Block center width={width*0.4} style={styles.box}>
                 <Pressable 
-               onPress={pickImage}
+               onPress={editFlag? pickImage: null}
+               
                
                 > 
             <Image
@@ -303,11 +355,12 @@ const cheack = (value, type)=>{
               <Text style={styles.text}>First Name</Text>
                      < TextInput
                       autoCorrect = {false}
-                      style={styles.xsmalInput}
+                     style={[styles.xsmalInput, {borderColor: FnameError?"red":"black", borderWidth: editFlag? 0.3 : 0}]}
                       placeholder="Joe"
-                      value={data.fname}
+                      value={Fname}
                       onChangeText={setFname}
                       onBlur =  {()=>validOne(1)}
+                      editable={editFlag}
                       />
               </View>
                     
@@ -316,11 +369,13 @@ const cheack = (value, type)=>{
                      < TextInput
                      autoCorrect = {false}
 
-                      style={[styles.xsmalInput, {borderColor: LnameError?"red":"black"}]}
+                      style={[styles.xsmalInput, {borderColor: LnameError?"red":"black",borderWidth: editFlag? 0.3 : 0}]}
                       placeholder="Grek"
-                      value={data.lname}
+                      value={Lname}
                       onChangeText={setLname}
                       onBlur = {()=>validOne(2)}
+                      editable={editFlag}
+
                       />
                       </View>
                       
@@ -351,12 +406,13 @@ const cheack = (value, type)=>{
                      < TextInput
                      autoCorrect = {false}
                       keyboardType="number-pad"
-                       style={[styles.smallInput, {borderColor: phoneError?"red":"black"}]}
+                       style={[styles.smallInput, {borderColor: phoneError?"red":"black",borderWidth: editFlag? 0.3 : 0}]}
                       placeholder="66005500"
-                      value={data.phone}
-                      onChangeText={(value) => cheack(value,"phone")}
+                      value={phone}
+                      onChangeText={setPhone}
                       onBlur = {()=>validOne(4)}
                       maxLength={8}
+                      editable={editFlag}
 
                       />
           </View>
@@ -376,6 +432,7 @@ const cheack = (value, type)=>{
                       value={data.email}
                       onChangeText={(value) => cheack(value,"email")}
                       onBlur = {()=>validOne(5)}
+                      editable={false}
 
                       />
           </View>
@@ -385,14 +442,24 @@ const cheack = (value, type)=>{
         <View style={styles.con}>
               {/* Display the selected date */}
                 <Text style={styles.text}>Date of Birth</Text>
-                <Pressable style={styles.pickedDateContainer} onPress={showPicker}>
-                  <Text style={styles.pickedDate}>{date.toDateString()}</Text>
+                <Pressable style={styles.pickedDateContainer} onPress={editFlag? showPicker: null}>
+                  <Text style={styles.pickedDate}>{dob ? dob.toLocaleDateString(): date.toLocaleDateString()}</Text>
 
                 </Pressable>
 
            
 
              {/* The date picker */}
+             {isPickerShow && (
+                <View style={{ flexDirection:"row",justifyContent:"space-between", width:"120%",padding:"1%", marginTop:"5%"}}>  
+                  <Pressable onPress={hidePicker}>
+                    <Text style={{fontSize:18}}>Cancel</Text>
+                  </Pressable>
+                   <Pressable onPress={hidePicker}>
+                    <Text style={{fontSize:18}}>Confirm</Text>
+                  </Pressable>
+                </View>
+                 )}
               {isPickerShow && (
                   <DateTimePicker
                     value={date}
@@ -402,18 +469,10 @@ const cheack = (value, type)=>{
                     onChange={onChange}
                     style={styles.datePicker}
                     maximumDate={max}
+                    // editable={false}
                   />
                 )}
-                 {isPickerShow && (
-                <View style={{ flexDirection:"row",justifyContent:"space-between", width:"70%",padding:5}}>  
-                  <Pressable onPress={hidePicker}>
-                    <Text style={{fontSize:18}}>Cancel</Text>
-                  </Pressable>
-                   <Pressable onPress={hidePicker}>
-                    <Text style={{fontSize:18}}>Confirm</Text>
-                  </Pressable>
-                </View>
-                 )}
+                
           </View>
 
       </Block>
@@ -421,25 +480,44 @@ const cheack = (value, type)=>{
       {/*--------- Buttons ----------*/}
 
           
-      <Block right width={width*0.84} style={{flexDirection:"row",borderWidth:1, justifyContent:"space-between"}} >
-        
+      <Block flex width={width*0.84} height={height*0.07} style={{flexDirection:"row",borderWidth:0, justifyContent:"space-between", marginTop:"2%"}} >
+          
+          {editFlag? 
                 <Button
                       mode="contained"
                       style={styles.createButton} 
-                      onPress={()=>setEditModalVisible(true)}
+                      onPress={()=>setEditFlag(!editFlag)}
                       >
+                       
                         <Text bold size={normalize(15)} color={argonTheme.COLORS.WHITE}>
                           Save
                         </Text>
+                       
+                        
                   </Button>
+                  :
+                   <Button
+                      mode="contained"
+                      style={styles.createButton} 
+                      onPress={()=>setEditFlag(!editFlag)}
+                      >
+                       
+                        <Text bold size={normalize(15)} color={argonTheme.COLORS.WHITE}>
+                          Edit
+                        </Text>
+                       
+                        
+                  </Button>
+                  }
+
                  
                 <Button
                           mode="contained"
-                          buttonColor="red"
+                          // buttonColor="red"
                       style={styles.cancelButton} 
                       onPress={()=>navigation.goBack()}
                       >
-                        <Text bold ize={normalize(15)} color={argonTheme.COLORS.WHITE}>
+                        <Text bold size={normalize(15)} color={argonTheme.COLORS.WHITE}>
                           Cancel
                         </Text>
                   </Button>
@@ -593,13 +671,16 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   createButton: {
-    width: width * 0.20,
-    marginBottom: "4%",
+    width: width * 0.30,
+    // height:"100%"
+    //marginBottom: "4%",
 
   },
    cancelButton: {
-    width: width * 0.20,
-    //marginBottom: "4%",
+    width: width * 0.30,
+    // height:"100%"
+
+    // marginBottom: "4%",
     backgroundColor: theme.COLORS.MUTED    
   },
  
@@ -662,7 +743,7 @@ const styles = StyleSheet.create({
     padding: "9%",
     backgroundColor: '#FFF',
     borderRadius: "12%",
-    //borderWidth:0.3
+    borderWidth:0.3
     // marginTop:"5%"
   },
   pickedDate: {
@@ -674,9 +755,9 @@ const styles = StyleSheet.create({
   },
   // This only works on iOS
   datePicker: {
-    width: 320,
-    height: 260,
-   display: 'flex',
+    width: width*0.8,
+    height: height*0.2,
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
