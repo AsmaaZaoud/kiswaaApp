@@ -25,6 +25,7 @@ import {  Card, Header } from "../../components"
 
 import {Icon,AntDesign,FontAwesome} from "react-native-vector-icons"
 import ArButton from "../../components/Button";
+import { normalize } from "./AdminHome";
 
 const { width , height} = Dimensions.get("screen");
 
@@ -158,9 +159,9 @@ const Families = ({navigation}) => {
         
         >
                   
-                <DataTable.Cell textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.fname}</DataTable.Cell>
-                <DataTable.Cell textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.email}</DataTable.Cell>
-                <DataTable.Cell numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.phone}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize: normalize(25)}}>{x.fname}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize: normalize(25)}}>{x.email}</DataTable.Cell>
+                <DataTable.Cell numeric textStyle={{fontSize: normalize(25)}}>{x.phone}</DataTable.Cell>
 
           
             </DataTable.Row>

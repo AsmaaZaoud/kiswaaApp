@@ -139,8 +139,8 @@ const  AdminHome = ({navigation}) => {
 
   {/*--------- Dashboard -------------*/}
           <TabView.Item value={0} style={styles.comp}>
-            <View>
-              <Text>hhh</Text>
+            <View style={{justifyContent:"center", alignContent:"center", alignItems:"center"}}>
+              <Text style={{fontSize: normalize(25)}}>Dashboard</Text>
 
             </View>
           </TabView.Item>
