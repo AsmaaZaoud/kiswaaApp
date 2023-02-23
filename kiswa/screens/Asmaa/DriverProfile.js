@@ -12,133 +12,174 @@ import {
   TouchableOpacity,
   Platform,
   ScrollView,
-   PixelRatio,
-   Modal
+  PixelRatio,
+  Modal,
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
-import {  Icon, Input, Select } from "../../components";
+import { Icon, Input, Select } from "../../components";
 import { Images, argonTheme } from "../../constants";
 
 import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { Button } from "react-native-paper";
 
 import validator from "validator";
 
-import {Feather,AntDesign,Ionicons,MaterialCommunityIcons} from "react-native-vector-icons"
-
+import {
+  Feather,
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "react-native-vector-icons";
 
 //Firebase
 import { signOut } from "firebase/auth";
-import { auth, db,storage} from "../../config";
-import { doc, setDoc, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
-import { getStorage, ref, uploadBytes,uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import { auth, db, storage } from "../../config";
+import {
+  doc,
+  setDoc,
+  getDocs,
+  getDoc,
+  addDoc,
+  collection,
+} from "firebase/firestore";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
 export function normalize(size) {
- 
-  const newSize = size * scale 
-  if (Platform.OS === 'ios') {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
 
-const DriverProfile = ({navigation}) => {
+const DriverProfile = ({ navigation }) => {
+  const [deviceType, setDeviceType] = useState("");
 
   // let user = auth?.currentUser?.email;
   let user = "rajo@driver.com";
 
   const [data, setData] = useState({});
 
-    const read = async () => {
-        const docRef = doc(db, "drivers", user);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-            setData(docSnap.data());
-            setFname(docSnap.data().fname)
-            setLname(docSnap.data().lname)
-            setPhone(docSnap.data().phone)
-            setEmail(docSnap.data().email)
-            setDob(docSnap.data().dob.toDate())
-            // alert(dob)
-            setQId(docSnap.data().qId)
-        } else {
-          console.log("No such document!");
-        }
-      };
-
-  const update = async()=>{
-    console.log(Fname,Lname,phone,location)
+  const read = async () => {
     const docRef = doc(db, "drivers", user);
-    await setDoc(docRef, { fname:Fname, lname:Lname,phone:phone, dob:dob}, { merge: true })
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      setData(docSnap.data());
+      setFname(docSnap.data().fname);
+      setLname(docSnap.data().lname);
+      setPhone(docSnap.data().phone);
+      setEmail(docSnap.data().email);
+      setImage(docSnap.data().image)
+      setDob(docSnap.data().dob.toDate());
+      // alert(dob)
+      setQId(docSnap.data().qId);
+    } else {
+      console.log("No such document!");
+    }
+  };
+
+  const update = async () => {
+    setEditFlag(false)
+    await updateImage()
+    console.log(Fname, Lname, phone, dob);
+    const docRef = doc(db, "drivers", user);
+    await setDoc(
+      docRef,
+      { fname: Fname, lname: Lname, phone: phone, dob: dob },
+      { merge: true }
+    )
       .then(() => {
         console.log("data updated");
-        navigation.goBack()
-        
+        //navigation.goBack();
+
         //read();
       })
       .catch((error) => {
         console.log(error.message);
       });
-  }
-
-  useEffect(() => {
-     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
-     read()
-    //  setFname("jo")
-    //  setLname("Gr")
-    //  setPhone("12345678")
-
-    // setArr(pick);
-  }, []);
-  const [deviceType, setDeviceType] =useState("")
-
-  const [chosenDate, setChosenDate] = useState(new Date());
-  const [image, setImage] = useState(null);
-  const [fileName, setFileName] = useState();
-
-    const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-          
-        });
-       
-
-
-      if (!result.cancelled) {
-        setImage(result.uri);
-         setMsg(false)
-        //setFileName(result.uri.substring(result.uri.toString().lastIndexOf("/") +1));
-        let c = result.uri.substring(result.uri.toString().lastIndexOf("/") +1)
-        setFileName(c)
-      }
   };
 
+  const updateImage = async () => {
+    const docRef = doc(db, "drivers", user);
+    await setDoc(docRef, { image: image }, { merge: true })
+      .then(() => {
+        console.log("data updated");
+        read();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
+  useEffect(() => {
+    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
+    read();
+  }, []);
 
-    const storage = getStorage();
-    const storageRef = ref(storage, 'some-child');
-  
-    const uploadImage = async () => {
-        console.log("got in upload");
-        const imgRef = ref(storage, fileName);
-        const img = await fetch(image);
-        const bytes = await img.blob();
-        await uploadBytesResumable(imgRef, bytes);
-    };
+  //Image pick  -----------------
+  const [image, setImage] = useState(null);
+  const [fileName, setFileName] = useState();
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-    const max = new Date()
+    if (!result.cancelled) {
+      setImage(result.uri);
+      setMsg(false);
+      //setFileName(result.uri.substring(result.uri.toString().lastIndexOf("/") +1));
+      let c = result.uri.substring(result.uri.toString().lastIndexOf("/") + 1);
+      setFileName(c);
+    }
+  };
+
+  //Image upload----------------
+  const storage = getStorage();
+  const storageRef = ref(storage, "some-child");
+
+  const uploadImage = async () => {
+    console.log("got in upload");
+    const imgRef = ref(storage, fileName);
+    const img = await fetch(image);
+    const bytes = await img.blob();
+    await uploadBytesResumable(imgRef, bytes);
+  };
+
+  //Date pick -------------
+
+  const max = new Date();
+  const [isPickerShow, setIsPickerShow] = useState(false);
+  const [date, setDate] = useState(new Date(Date.now()));
+
+  const showPicker = () => {
+    setIsPickerShow(true);
+  };
+  const hidePicker = () => {
+    setIsPickerShow(false);
+  };
+
+  const onChange = (event, value) => {
+    setDate(value);
+    setDob(value);
+  };
+
   const [Fname, setFname] = useState("");
   const [Lname, setLname] = useState("");
   const [phone, setPhone] = useState("");
@@ -147,16 +188,7 @@ const DriverProfile = ({navigation}) => {
   const [dob, setDob] = useState();
   const [zone, setZone] = useState("");
 
-  // const [date, setDate] = useState(new Date())
-  const [open, setOpen] = useState(false)
-
-
-  // const [image, setImage] = useState();
-  const [url, setUrl] = useState();
-  //const [fileName, setFileName] = useState();
-  const [datePicker, setDatePicker] = useState(false);
- 
- const [FnameError, setFnameError] = useState();
+  const [FnameError, setFnameError] = useState();
   const [LnameError, setLnameError] = useState();
   const [phoneError, setPhoneError] = useState();
   const [emailError, setEmailError] = useState();
@@ -165,487 +197,479 @@ const DriverProfile = ({navigation}) => {
   const [msg, setMsg] = useState(false);
   const [flag, setFlag] = useState(true);
 
-const [ZoneError, setZoneError] = useState(true);
 
-
-
-
-const [isPickerShow, setIsPickerShow] = useState(false);
-const [date, setDate] = useState(new Date(Date.now()));
-
-  const showPicker = () => {
-    setIsPickerShow(true);
-  };
-  const hidePicker = () => {
-    setIsPickerShow(false);
-
-  };
-
-  const onChange = (event, value) => {
-   setDate(value)
-   setDob(value)
-
-    // setDob(value);
-    if (Platform.OS === 'android') {
-      setIsPickerShow(false);
-    }
-  };
-  
-    // const data = {fname:"Joe", lname:"Grek", phone:"66996699", qId:"30100000203", email:"joe@gmail.com"}
   const [editModalVisible, setEditModalVisible] = useState(false);
 
-
- const add = async () => {
-  alert("add")
-  uploadImage();
-    const docRef = doc(db, "drivers", email)
-    await setDoc(docRef, { fname: Fname,
+  const add = async () => {
+    alert("add");
+    uploadImage();
+    const docRef = doc(db, "drivers", email);
+    await setDoc(docRef, {
+      fname: Fname,
       email: email,
       lname: Lname,
       phone: phone,
       qId: qId,
-      dob:dob,
-      zone:zone ,
-      image:fileName
-    })
+      dob: dob,
+      zone: zone,
+      image: fileName,
+    });
     console.log("Document written with ID: ", docRef.id);
-    navigation.goBack()
+    navigation.goBack();
   };
-   
 
-  const validOne = (x) =>{
-    setFlag(false)
-    switch(x){
-      
+  const validOne = (x) => {
+    setFlag(false);
+    switch (x) {
       case 1:
-              Fname == "" ? setFnameError(true) : setFnameError(false)
-              //setFname(value)
-              break
+        Fname == "" ? setFnameError(true) : setFnameError(false);
+        //setFname(value)
+        break;
       case 2:
-
-              Lname == "" ? setLnameError(true) : setLnameError(false)
-              // setLname(value)
-              break
+        Lname == "" ? setLnameError(true) : setLnameError(false);
+        // setLname(value)
+        break;
       case 3:
-              qId.length != 11? setQIdError(true) :setQIdError(false)
-              // setQId(value)
-              break
+        qId.length != 11 ? setQIdError(true) : setQIdError(false);
+        // setQId(value)
+        break;
       case 4:
-              phone.length != 8? setPhoneError(true) :setPhoneError(false)
-              // setPhone(value)
-              break
+        phone.length != 8 ? setPhoneError(true) : setPhoneError(false);
+        // setPhone(value)
+        break;
       case 5:
-              validator.isEmail(email) == false? setEmailError(true):setEmailError(false)
-              
-              break
+        validator.isEmail(email) == false
+          ? setEmailError(true)
+          : setEmailError(false);
+
+        break;
       case 6:
-              dob == "" ? setDobError(true) : setDobError(false)
-              break
+        dob == "" ? setDobError(true) : setDobError(false);
+        break;
       case 7:
-        //alert(zone)
-
+      //alert(zone)
     }
-                  
-  }
+  };
 
-  const validCreate = () =>{
-      
-        !FnameError &&
-          !LnameError &&
-            !emailError &&
-              !phoneError && 
-                !qIdError &&
-                  zone &&
-                  image &&
-                  !flag &&
-                  !dobError ? add(): setMsg(true)
+  const validCreate = () => {
+    !FnameError &&
+    !LnameError &&
+    !emailError &&
+    !phoneError &&
+    !qIdError &&
+    zone &&
+    image &&
+    !flag &&
+    !dobError
+      ? add()
+      : setMsg(true);
+  };
 
-      
-                  
-
-  }
-
-const cheack = (value, type)=>{
-  if (type == "phone"){
-    if (value.length == 8 ){
-        setPhoneError(false) 
+  const cheack = (value, type) => {
+    if (type == "phone") {
+      if (value.length == 8) {
+        setPhoneError(false);
         //setPhone(value)
-      }setPhone(value)
-  }
-  else if (type == "id"){
-    if (value.length ==11 ){
-        setQIdError(false) 
+      }
+      setPhone(value);
+    } else if (type == "id") {
+      if (value.length == 11) {
+        setQIdError(false);
         //setPhone(value)
-      }setQId(value)
-  }
+      }
+      setQId(value);
+    } else if (type == "email") {
+      validator.isEmail(value) == true
+        ? setEmailError(false)
+        : setEmailError(true);
 
-  else if (type == "email"){
-    validator.isEmail(value) == true ? setEmailError(false) :setEmailError(true)
-       
-      setEmail(value)
-  }
-   
-   
-  
-}
+      setEmail(value);
+    }
+  };
 
- const onSignOut = () => {
+  const onSignOut = () => {
     signOut(auth)
       .then(() => navigation.navigate("Login"))
       .catch((error) => console.log("Error logging out: ", error));
   };
 
-  const [editFlag, setEditFlag] = useState(false)
-  
-    return (
-      <Block flex middle style={{ backgroundColor:"white", flex:1}}>
-          <View style={{backgroundColor:"#8C02FE", width:width}}>
-          <View style={styles.topl}>
-            <Pressable onPress={()=>navigation.goBack()} style={{flexDirection:"row"}}>
-              <Ionicons name="arrow-back" size={ deviceType=="mobile" ?30: 45} color="white" />
-              <Text style={{fontSize:normalize(18), marginTop:"3%", color:"white"}}>Back</Text>
-            </Pressable>
-            {/* <Image source={require('../../assets/imgs/kiswaLogo.png')} style={{width:150, height:50}} width={width*0.27} height={height*0.05} /> */}
-            <Pressable onPress={onSignOut}>
-              <MaterialCommunityIcons name="logout" size={ deviceType=="mobile" ?30: 45} color="white" />
-            </Pressable>
-        </View>
-        </View>
-          <Block safe flex style={{marginTop:50, backgroundColor:"white", flex:1}}>
-             {/* <Text style={{fontSize:30}}>Edit</Text> */}
+  const [editFlag, setEditFlag] = useState(false);
 
-
-            <Block style={styles.registerContainer}>
-              <Block flex>
-        
-              
-              <Block center width={width*0.4} style={styles.box}>
-                <Pressable 
-               onPress={editFlag? pickImage: null}
-               
-               
-                > 
-            <Image
-                   style={styles.profileImage}
-                     source={{ uri: image? image : "https://1.bp.blogspot.com/-kWt2PZi-rC0/VbXLK5Eg0sI/AAAAAAAAx6M/V40UYN78YVs/s1600/passport2015-201507251917.jpg" }}
-                  />
-                  
-                  {/* {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add photo</Text>} */}
-
-                  </Pressable>
-                     
-              </Block>
-               <View>
-            {msg ?
-              <Text style={{color:"red",textAlign:"center", marginTop:15, fontSize:18}}>Please Fill al feilds and select image!</Text>
-              :null}
+  return (
+    <Block flex middle style={{ backgroundColor: "white", flex: 1 }}>
+      <View style={{ backgroundColor: "#8C02FE", width: width }}>
+        <View style={styles.topl}>
+          <Pressable
+            onPress={() => navigation.goBack()}
+            style={{ flexDirection: "row" }}
+          >
+            <Ionicons
+              name="arrow-back"
+              size={deviceType == "mobile" ? 30 : 45}
+              color="white"
+            />
+            <Text
+              style={{
+                fontSize: normalize(18),
+                marginTop: "3%",
+                color: "white",
+              }}
+            >
+              Back
+            </Text>
+          </Pressable>
+          {/* <Image source={require('../../assets/imgs/kiswaLogo.png')} style={{width:150, height:50}} width={width*0.27} height={height*0.05} /> */}
+          <Pressable onPress={onSignOut}>
+            <MaterialCommunityIcons
+              name="logout"
+              size={deviceType == "mobile" ? 30 : 45}
+              color="white"
+            />
+          </Pressable>
         </View>
-               
-   {/*------- Form ---------*/}
-                <Block flex  center >
-                  <ScrollView>
-                  <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior="padding"
-                    enabled
+      </View>
+      <Block
+        safe
+        flex
+        style={{ marginTop: 50, backgroundColor: "white", flex: 1 }}
+      >
+        {/* <Text style={{fontSize:30}}>Edit</Text> */}
+
+        <Block style={styles.registerContainer}>
+          <Block flex>
+            <Block center width={width * 0.4} style={styles.box}>
+              <Pressable onPress={editFlag ? pickImage : null}>
+                <Image
+                  style={styles.profileImage}
+                  source={{
+                    uri: image
+                      ? image
+                      : "https://cdn.onlinewebfonts.com/svg/img_266351.png",
+                  }}
+                />
+
+                {/* {image?<Text style={styles.name}>Change</Text>:<Text style={styles.name}>Add photo</Text>} */}
+              </Pressable>
+            </Block>
+            <View>
+              {msg ? (
+                <Text
+                  style={{
+                    color: "red",
+                    textAlign: "center",
+                    marginTop: 15,
+                    fontSize: 18,
+                  }}
+                >
+                  Please Fill al feilds and select image!
+                </Text>
+              ) : null}
+            </View>
+
+            {/*------- Form ---------*/}
+            <Block flex center>
+              <ScrollView>
+                <KeyboardAvoidingView
+                  style={{ flex: 1 }}
+                  behavior="padding"
+                  enabled
+                >
+                  <Block
+                    row
+                    width={width * 0.8}
+                    style={{
+                      marginTop: "10%",
+                      marginBottom: 5,
+                      justifyContent: "space-between",
+                    }}
                   >
-      <Block row width={width * 0.8} style={{marginTop:"10%", marginBottom: 5, justifyContent:"space-between" }}>
-                   
-            <View style={{width:"45%"}}>
-              <Text style={styles.text}>First Name</Text>
-                     < TextInput
-                      autoCorrect = {false}
-                     style={[styles.xsmalInput, {borderColor: FnameError?"red":"black", borderWidth: editFlag? 0.3 : 0}]}
-                      placeholder="Joe"
-                      value={Fname}
-                      onChangeText={setFname}
-                      onBlur =  {()=>validOne(1)}
-                      editable={editFlag}
+                    <View style={{ width: "45%" }}>
+                      <Text style={styles.text}>First Name</Text>
+                      <TextInput
+                        autoCorrect={false}
+                        style={[
+                          styles.xsmalInput,
+                          {
+                            borderColor: FnameError ? "red" : "black",
+                            borderWidth: editFlag ? 0.3 : 0,
+                          },
+                        ]}
+                        placeholder="Joe"
+                        value={Fname}
+                        onChangeText={setFname}
+                        onBlur={() => validOne(1)}
+                        editable={editFlag}
                       />
-              </View>
-                    
-             <View style={{width:"45%"}}>
-                   <Text style={styles.text}>Last Name</Text>
-                     < TextInput
-                     autoCorrect = {false}
+                    </View>
 
-                      style={[styles.xsmalInput, {borderColor: LnameError?"red":"black",borderWidth: editFlag? 0.3 : 0}]}
-                      placeholder="Grek"
-                      value={Lname}
-                      onChangeText={setLname}
-                      onBlur = {()=>validOne(2)}
-                      editable={editFlag}
-
+                    <View style={{ width: "45%" }}>
+                      <Text style={styles.text}>Last Name</Text>
+                      <TextInput
+                        autoCorrect={false}
+                        style={[
+                          styles.xsmalInput,
+                          {
+                            borderColor: LnameError ? "red" : "black",
+                            borderWidth: editFlag ? 0.3 : 0,
+                          },
+                        ]}
+                        placeholder="Grek"
+                        value={Lname}
+                        onChangeText={setLname}
+                        onBlur={() => validOne(2)}
+                        editable={editFlag}
                       />
-                      </View>
-                      
+                    </View>
+                  </Block>
 
-      </Block>
-                    
-      <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
-                   
-          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>Qatar ID</Text>
-                     < TextInput
-                     autoCorrect = {false}
-                      keyboardType="number-pad"
-                      inputMode="numeric"
-                      style={[styles.smallInput]}
-                      placeholder="30101200033"
-                      value={data.qId}
-                      onChangeText={(value) => cheack(value,"id")}
-                      onBlur = {()=>validOne(3)}
-                      maxLength={11}
-                      editable={false}
-
+                  <Block
+                    width={width * 0.8}
+                    style={{
+                      marginBottom: 15,
+                      flexDirection: width > 500 ? "row" : "colunm",
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: width > 500 ? "50%" : "100%",
+                        marginRight: width > 500 ? 5 : 0,
+                      }}
+                    >
+                      <Text style={styles.text}>Qatar ID</Text>
+                      <TextInput
+                        autoCorrect={false}
+                        keyboardType="number-pad"
+                        inputMode="numeric"
+                        style={[styles.smallInput]}
+                        placeholder="30101200033"
+                        value={data.qId}
+                        onChangeText={(value) => cheack(value, "id")}
+                        onBlur={() => validOne(3)}
+                        maxLength={11}
+                        editable={false}
                       />
-          </View>
+                    </View>
 
-         <View style={{width: width >500 ?"50%":"100%", marginLeft:width >500 ?15:0}}>
-                    <Text style={styles.text}>Phone</Text>
-                     < TextInput
-                     autoCorrect = {false}
-                      keyboardType="number-pad"
-                       style={[styles.smallInput, {borderColor: phoneError?"red":"black",borderWidth: editFlag? 0.3 : 0}]}
-                      placeholder="66005500"
-                      value={phone}
-                      onChangeText={setPhone}
-                      onBlur = {()=>validOne(4)}
-                      maxLength={8}
-                      editable={editFlag}
-
+                    <View
+                      style={{
+                        width: width > 500 ? "50%" : "100%",
+                        marginLeft: width > 500 ? 15 : 0,
+                      }}
+                    >
+                      <Text style={styles.text}>Phone</Text>
+                      <TextInput
+                        autoCorrect={false}
+                        keyboardType="number-pad"
+                        style={[
+                          styles.smallInput,
+                          {
+                            borderColor: phoneError ? "red" : "black",
+                            borderWidth: editFlag ? 0.3 : 0,
+                          },
+                        ]}
+                        placeholder="66005500"
+                        value={phone}
+                        onChangeText={setPhone}
+                        onBlur={() => validOne(4)}
+                        maxLength={8}
+                        editable={editFlag}
                       />
-          </View>
+                    </View>
+                  </Block>
 
-          
-      </Block>
-      
-      
-       <Block  width={width * 0.8} style={{ marginBottom: 15, flexDirection:width>500?"row":"colunm"}}>
-                   
-          <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>Email</Text>
-                     < TextInput
-                      autoCorrect = {false}
-                      style={[styles.smallInput, {borderColor: emailError?"red":"black"}]}
-                      placeholder="abc@example"
-                      value={data.email}
-                      onChangeText={(value) => cheack(value,"email")}
-                      onBlur = {()=>validOne(5)}
-                      editable={false}
-
+                  <Block
+                    width={width * 0.8}
+                    style={{
+                      marginBottom: 15,
+                      flexDirection: width > 500 ? "row" : "colunm",
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: width > 500 ? "50%" : "100%",
+                        marginRight: width > 500 ? 5 : 0,
+                      }}
+                    >
+                      <Text style={styles.text}>Email</Text>
+                      <TextInput
+                        autoCorrect={false}
+                        style={[
+                          styles.smallInput,
+                          { borderColor: emailError ? "red" : "black" },
+                        ]}
+                        placeholder="abc@example"
+                        value={data.email}
+                        onChangeText={(value) => cheack(value, "email")}
+                        onBlur={() => validOne(5)}
+                        editable={false}
                       />
-          </View>
+                    </View>
 
-
-
-        <View style={styles.con}>
-              {/* Display the selected date */}
-                <Text style={styles.text}>Date of Birth</Text>
-                <Pressable style={styles.pickedDateContainer} onPress={editFlag? showPicker: null}>
-                  <Text style={styles.pickedDate}>{dob ? dob.toLocaleDateString(): date.toLocaleDateString()}</Text>
-
-                </Pressable>
-
-           
-
-             {/* The date picker */}
-             {isPickerShow && (
-                <View style={{ flexDirection:"row",justifyContent:"space-between", width:"120%",padding:"1%", marginTop:"5%"}}>  
-                  <Pressable onPress={hidePicker}>
-                    <Text style={{fontSize:18}}>Cancel</Text>
-                  </Pressable>
-                   <Pressable onPress={hidePicker}>
-                    <Text style={{fontSize:18}}>Confirm</Text>
-                  </Pressable>
-                </View>
-                 )}
-              {isPickerShow && (
-                  <DateTimePicker
-                    value={date}
-                    mode={'date'}
-                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                    is24Hour={true}
-                    onChange={onChange}
-                    style={styles.datePicker}
-                    maximumDate={max}
-                    // editable={false}
-                  />
-                )}
-                
-          </View>
-
-      </Block>
-      
-      {/*--------- Buttons ----------*/}
-
-          
-      <Block flex width={width*0.84} height={height*0.07} style={{flexDirection:"row",borderWidth:0, justifyContent:"space-between", marginTop:"2%"}} >
-          
-          {editFlag? 
-                <Button
-                      mode="contained"
-                      style={styles.createButton} 
-                      onPress={()=>setEditFlag(!editFlag)}
+                    <View style={styles.con}>
+                      {/* Display the selected date */}
+                      <Text style={styles.text}>Date of Birth</Text>
+                      <Pressable
+                        style={[styles.pickedDateContainer, {borderWidth:editFlag? 0.3:0}]}
+                        onPress={editFlag ? showPicker : null}
                       >
-                       
-                        <Text bold size={normalize(15)} color={argonTheme.COLORS.WHITE}>
+                        <Text style={styles.pickedDate}>
+                          {dob
+                            ? dob.toLocaleDateString()
+                            : date.toLocaleDateString()}
+                        </Text>
+                      </Pressable>
+
+                      {/* The date picker */}
+                      {isPickerShow && (
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            width: "120%",
+                            padding: "1%",
+                            marginTop: "5%",
+                          }}
+                        >
+                          <Pressable onPress={hidePicker}>
+                            <Text style={{ fontSize: 18 }}>Cancel</Text>
+                          </Pressable>
+                          <Pressable onPress={hidePicker}>
+                            <Text style={{ fontSize: 18 }}>Confirm</Text>
+                          </Pressable>
+                        </View>
+                      )}
+                      {isPickerShow && (
+                        <DateTimePicker
+                          value={date}
+                          mode={"date"}
+                          display={
+                            Platform.OS === "ios" ? "spinner" : "default"
+                          }
+                          is24Hour={true}
+                          onChange={onChange}
+                          style={styles.datePicker}
+                          maximumDate={max}
+                          // editable={false}
+                        />
+                      )}
+                    </View>
+                  </Block>
+
+                  {/*--------- Buttons ----------*/}
+
+                  <Block
+                    flex
+                    width={width * 0.84}
+                    height={height * 0.07}
+                    style={{
+                      flexDirection: "row",
+                      borderWidth: 0,
+                      justifyContent: "space-between",
+                      marginTop: "2%",
+                    }}
+                  >
+                    
+
+                      {editFlag?
+                    <Button
+                      mode="contained"
+                      // buttonColor="red"
+                      style={styles.cancelButton}
+                      onPress={() => setEditFlag(false)}
+                    >
+                      <Text
+                        bold
+                        size={normalize(15)}
+                        color={argonTheme.COLORS.WHITE}
+                      >
+                        Cancel
+                      </Text>
+                    </Button>
+                    :
+                    <View></View>
+                    }
+
+                    {editFlag ? (
+                      <Button
+                        mode="contained"
+                        style={styles.createButton}
+                        onPress={update}
+                      >
+                        <Text
+                          bold
+                          size={normalize(15)}
+                          color={argonTheme.COLORS.WHITE}
+                        >
                           Save
                         </Text>
-                       
-                        
-                  </Button>
-                  :
-                   <Button
-                      mode="contained"
-                      style={styles.createButton} 
-                      onPress={()=>setEditFlag(!editFlag)}
+                      </Button>
+                    ) : (
+                      <Button
+                        mode="contained"
+                        style={styles.createButton}
+                        onPress={() => setEditFlag(!editFlag)}
                       >
-                       
-                        <Text bold size={normalize(15)} color={argonTheme.COLORS.WHITE}>
+                        <Text
+                          bold
+                          size={normalize(15)}
+                          color={argonTheme.COLORS.WHITE}
+                        >
                           Edit
                         </Text>
-                       
-                        
-                  </Button>
-                  }
-
-                 
-                <Button
-                          mode="contained"
-                          // buttonColor="red"
-                      style={styles.cancelButton} 
-                      onPress={()=>navigation.goBack()}
-                      >
-                        <Text bold size={normalize(15)} color={argonTheme.COLORS.WHITE}>
-                          Cancel
-                        </Text>
-                  </Button>
-                    </Block>
-                  </KeyboardAvoidingView>
+                      </Button>
+                    )}
+                  </Block>
+                </KeyboardAvoidingView>
               </ScrollView>
-                </Block>
-
-    <Modal
-        animationType="slide"
-        transparent={true}
-        visible={editModalVisible}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-             <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>First Name</Text>
-                     < TextInput
-                      autoCorrect = {false}
-                      style={[styles.xsmalInput, {borderColor: FnameError?"red":"black"}]}
-                      placeholder="Joe"
-                      value={Fname}
-                      onChangeText={setFname}
-                      onBlur =  {()=>validOne(1)}
-                      />
-          </View>
-             <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>First Name</Text>
-                     < TextInput
-                      autoCorrect = {false}
-                      style={[styles.xsmalInput, {borderColor: FnameError?"red":"black"}]}
-                      placeholder="Joe"
-                      value={Fname}
-                      onChangeText={setFname}
-                      onBlur =  {()=>validOne(1)}
-                      />
-          </View>
-             <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>First Name</Text>
-                     < TextInput
-                      autoCorrect = {false}
-                      style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
-                      placeholder="Joe"
-                      value={Fname}
-                      onChangeText={setFname}
-                      onBlur =  {()=>validOne(1)}
-                      />
-          </View>
-             <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>First Name</Text>
-                     < TextInput
-                      autoCorrect = {false}
-                      style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
-                      placeholder="Joe"
-                      value={Fname}
-                      onChangeText={setFname}
-                      onBlur =  {()=>validOne(1)}
-                      />
-          </View>
-             <View style={{width: width >500 ?"50%":"100%", marginRight: width >500 ?5:0}}>
-                    <Text style={styles.text}>First Name</Text>
-                     < TextInput
-                      autoCorrect = {false}
-                      style={[styles.smallInput, {borderColor: FnameError?"red":"black"}]}
-                      placeholder="Joe"
-                      value={Fname}
-                      onChangeText={setFname}
-                      onBlur =  {()=>validOne(1)}
-                      />
-          </View>
-            <Pressable
-              color={theme.COLORS.PRIMARY}
-              style={[styles.button]}
-              onPress={()=>setEditModalVisible(false)}
-            >
-              <Text style={{ color: "white", alignSelf: "center" }}>Done</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-              </Block>
             </Block>
+
+          
           </Block>
+        </Block>
       </Block>
-    );
-  
-}
+    </Block>
+  );
+};
 
 const styles = StyleSheet.create({
-   topl:{
-    width:width*.97,
-    padding:"2%",
-    flexDirection:'row',
-    justifyContent:"space-between",
-    backgroundColor:"#8C02FE",
-    marginTop:"3%"
+  topl: {
+    width: width * 0.97,
+    padding: "2%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#8C02FE",
+    marginTop: "3%",
   },
-  xsmalInput:{
-      width:"100%",
-     backgroundColor:"white",
-      borderRadius:"10%",
-      padding:"10%",
-      fontSize:normalize(18),
-      //borderWidth:0.3
-      color:"#a59cae",
-      // borderBottomWidth:1
+  xsmalInput: {
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: "10%",
+    padding: "10%",
+    fontSize: normalize(18),
+    //borderWidth:0.3
+    color: "#a59cae",
+    // borderBottomWidth:1
   },
-  smallInput:{
-    width:"100%",
-     backgroundColor:"white",
-      borderRadius:10,
-      padding:15,
-      fontSize:20,
-      //borderWidth:0.3,
-      color:"#a59cae"
-
+  smallInput: {
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 15,
+    fontSize: 20,
+    //borderWidth:0.3,
+    color: "#a59cae",
   },
- input: {
+  input: {
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
     borderRadius: 8,
   },
-    text:{
-      fontSize:normalize(20),
-      color:"#111"
-    },
+  text: {
+    fontSize: normalize(20),
+    color: "#111",
+  },
   registerContainer: {
     width: width * 0.9,
     height: height * 0.875,
@@ -654,67 +678,63 @@ const styles = StyleSheet.create({
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
-      height: 4
+      height: 4,
     },
     shadowRadius: 8,
     shadowOpacity: 0.1,
     elevation: 1,
-    overflow: "hidden"
+    overflow: "hidden",
   },
-  
+
   inputIcons: {
-    marginRight: 12
+    marginRight: 12,
   },
   passwordCheck: {
     paddingLeft: 15,
     paddingTop: 13,
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   createButton: {
-    width: width * 0.30,
+    width: width * 0.3,
     // height:"100%"
     //marginBottom: "4%",
-
   },
-   cancelButton: {
-    width: width * 0.30,
+  cancelButton: {
+    width: width * 0.3,
     // height:"100%"
 
     // marginBottom: "4%",
-    backgroundColor: theme.COLORS.MUTED    
+    backgroundColor: theme.COLORS.MUTED,
   },
- 
-    imageContainer:{
-      width:"100%",
-      height:"20%",
-      //borderWidth:2
-    },
-    box: {
+
+  imageContainer: {
+    width: "100%",
+    height: "20%",
+    //borderWidth:2
+  },
+  box: {
     marginTop: 10,
-    
   },
   profileImage: {
-    width: width*0.4,
-    height: width*0.4,
+    width: width * 0.4,
+    height: width * 0.4,
     marginBottom: 0,
-    borderRadius:"85%",
-    borderWidth:0.3,
-    
+    borderRadius: "85%",
+    borderWidth: 0.3,
   },
-  profileImageEdit:{
-    width: width*0.3,
-    height: width*0.3,
-    borderRadius:"85%",
+  profileImageEdit: {
+    width: width * 0.3,
+    height: width * 0.3,
+    borderRadius: "85%",
+  },
 
-  },
-  
   name: {
     fontSize: 35,
     marginBottom: 0,
-    fontWeight: 'bold',
-    color: '#1E90FF',
+    fontWeight: "bold",
+    color: "#1E90FF",
   },
- 
+
   dropdown: {
     //marginBottom: 10,
     padding: 7,
@@ -729,37 +749,37 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 
-    con: {
-      // borderWidth:1,
-      //height:"30%",
-      width:"70%",
-      borderRadius:10,
-      //paddingHorizontal:13,
-      fontSize:20,
-      marginTop:"5%"
+  con: {
+    // borderWidth:1,
+    //height:"30%",
+    width: "70%",
+    borderRadius: 10,
+    //paddingHorizontal:13,
+    fontSize: 20,
+    marginTop: "5%",
   },
   pickedDateContainer: {
-    width: width*0.8,
+    width: width * 0.8,
     padding: "9%",
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: "12%",
-    borderWidth:0.3
+    borderWidth: 0.3,
     // marginTop:"5%"
   },
   pickedDate: {
     fontSize: normalize(18),
-    color: '#a59cae',
+    color: "#a59cae",
   },
   btnContainer: {
     padding: 30,
   },
   // This only works on iOS
   datePicker: {
-    width: width*0.8,
-    height: height*0.2,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    width: width * 0.8,
+    height: height * 0.2,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
   centeredView: {
     justifyContent: "center",
