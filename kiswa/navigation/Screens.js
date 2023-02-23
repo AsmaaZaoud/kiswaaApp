@@ -16,7 +16,6 @@ import Profile from "../screens/Profile";
 import React from "react";
 import Register from "../screens/Register";
 
-import Login from "../screens/Login"
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
 

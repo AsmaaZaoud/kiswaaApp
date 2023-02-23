@@ -23,8 +23,7 @@ import {
   setDoc,
   addDoc,
   collection,
-  getDocs,
-  getDoc,
+  
   query,
   where,
   deleteDoc,
@@ -34,8 +33,8 @@ import {
   getDocs,
   getDoc,
   Timestamp,
-  onSnapshot,
-  collection,
+  
+  
 } from "firebase/firestore";
 import { db } from "../config";
 
