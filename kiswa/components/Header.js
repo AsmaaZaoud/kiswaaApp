@@ -1,6 +1,6 @@
 import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
-import { TouchableOpacity, StyleSheet, Platform, Dimensions } from 'react-native';
+import { TouchableOpacity, StyleSheet, Platform, Dimensions, Image} from 'react-native';
 import { Button, Block, NavBar, Text, theme } from 'galio-framework';
 
 import Icon from './Icon';
@@ -53,61 +53,74 @@ class Header extends React.Component {
   renderRight = () => {
     const { white, title, navigation } = this.props;
 
-    if (title === 'Title') {
-      return [
-        <BellButton key='chat-title' navigation={navigation} isWhite={white} />,
-        <BasketButton key='basket-title' navigation={navigation} isWhite={white} />
-      ]
-    }
+    // if (title === 'Title') {
+    //   return [
+    //     <Block>
+    //     <Text>icon</Text>
+    //     <BellButton key='chat-title' navigation={navigation} isWhite={white} />,
+    //     <BasketButton key='basket-title' navigation={navigation} isWhite={white} />
+    //     </Block>
+    //   ]
+    // }
 
-    switch (title) {
-      case 'Home':
-        return ([
-          <BellButton key='chat-home' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Deals':
-        return ([
-          <BellButton key='chat-categories' navigation={navigation} />,
-          <BasketButton key='basket-categories' navigation={navigation} />
-        ]);
-      case 'Categories':
-        return ([
-          <BellButton key='chat-categories' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-categories' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Category':
-        return ([
-          <BellButton key='chat-deals' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Profile':
-        return ([
-          <BellButton key='chat-profile' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Product':
-        return ([
-          <SearchButton key='search-product' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-product' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Search':
-        return ([
-          <BellButton key='chat-search' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
-        ]);
-      case 'Settings':
-        return ([
-          <BellButton key='chat-search' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
-        ]);
-      default:
-        break;
-    }
+    // switch (title) {
+    //   case 'Home':
+    //     return ([
+    //       <BellButton key='chat-home' navigation={navigation} isWhite={white} />,
+    //       <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
+    //     ]);
+    //   case 'Deals':
+    //     return ([
+    //       <BellButton key='chat-categories' navigation={navigation} />,
+    //       <BasketButton key='basket-categories' navigation={navigation} />
+    //     ]);
+    //   case 'Categories':
+    //     return ([
+    //       <BellButton key='chat-categories' navigation={navigation} isWhite={white} />,
+    //       <BasketButton key='basket-categories' navigation={navigation} isWhite={white} />
+    //     ]);
+    //   case 'Category':
+    //     return ([
+    //       <BellButton key='chat-deals' navigation={navigation} isWhite={white} />,
+    //       <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
+    //     ]);
+    //   case 'Profile':
+    //     return ([
+    //       <BellButton key='chat-profile' navigation={navigation} isWhite={white} />,
+    //       <BasketButton key='basket-deals' navigation={navigation} isWhite={white} />
+    //     ]);
+    //   case 'Product':
+    //     return ([
+    //       <SearchButton key='search-product' navigation={navigation} isWhite={white} />,
+    //       <BasketButton key='basket-product' navigation={navigation} isWhite={white} />
+    //     ]);
+    //   case 'Search':
+    //     return ([
+    //       <BellButton key='chat-search' navigation={navigation} isWhite={white} />,
+    //       <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
+    //     ]);
+    //   case 'Settings':
+    //     return ([
+    //       <BellButton key='chat-search' navigation={navigation} isWhite={white} />,
+    //       <BasketButton key='basket-search' navigation={navigation} isWhite={white} />
+    //     ]);
+    //   default:
+    //     break;
+    // }
   }
   renderSearch = () => {
     const { navigation } = this.props;
     return (
+      <Block right>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <Image
+        style={{width: 30, height: 30, marginRight: '5%'}}
+        source={{
+          uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
+        }}
+      />
+      </TouchableOpacity>
+      <Text style={{marginRight: '5%'}}>Log In/ Sign Up</Text>
       <Input
         right
         color="black"
@@ -117,6 +130,7 @@ class Header extends React.Component {
         onFocus={() => navigation.navigate('Pro')}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
       />
+      </Block>
     );
   }
   renderOptions = () => {
@@ -124,7 +138,7 @@ class Header extends React.Component {
 
     return (
       <Block row style={styles.options}>
-        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
+        {/* <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
           <Block row middle>
             <Icon name="diamond" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON} />
             <Text size={16} style={styles.tabTitle}>{optionLeft || 'Beauty'}</Text>
@@ -135,7 +149,7 @@ class Header extends React.Component {
             <Icon size={16} name="bag-17" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON}/>
             <Text size={16} style={styles.tabTitle}>{optionRight || 'Fashion'}</Text>
           </Block>
-        </Button>
+        </Button> */}
       </Block>
     );
   }

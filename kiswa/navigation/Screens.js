@@ -9,12 +9,12 @@ import { Block } from "galio-framework";
 import CustomDrawerContent from "./Menu";
 import Elements from "../screens/Elements";
 // screens
-import Home from "../screens/Home";
-import Onboarding from "../screens/Onboarding";
+import Home from "../screens/Syeda/Home";
+import Onboarding from "../screens/Syeda/Onboarding";
 import Pro from "../screens/Pro";
 import Profile from "../screens/Profile";
 import React from "react";
-import Register from "../screens/Register";
+import Register from "../screens/Syeda/Register";
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
@@ -94,6 +94,20 @@ function ElementsStack(props) {
     </Stack.Navigator>
   );
 }
+
+//Syeda****** For later
+// function Donors(props) {
+//   return (
+//     <Stack.Navigator
+//       screenOptions={{
+//         mode: "card",
+//         headerShown: false,
+//       }}
+//     >
+
+//     </Stack.Navigator>
+//   );
+// }
 
 function ArticlesStack(props) {
   return (
@@ -279,6 +293,7 @@ function HomeStack(props) {
         headerShown: "screen",
       }}
     >
+      {/* /********* Syeda**********/}
       <Stack.Screen
         name="Home"
         component={Home}
@@ -325,6 +340,7 @@ export default function OnboardingStack(props) {
         headerShown: false,
       }}
     >
+
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -332,7 +348,13 @@ export default function OnboardingStack(props) {
           headerTransparent: true,
         }}
       />
+
       <Stack.Screen name="App" component={AppStack} />
+
+      {/* /********* Syeda**********/}
+
+      <Stack.Screen name="Register" component={Register} />
+
 
       
      <Stack.Screen
