@@ -201,8 +201,10 @@ export default function RegisterFamily({ navigation }) {
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <Block flex>
-              <Block flex={0.12} middle>
-                <Image source={Images.Logo} />
+              <Block flex={0.19} >
+                
+              <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.navigate("Onboarding")}>Go Back</Text>
+              <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: 20, margin: 20 }}>Register as Family</Text>
               </Block>
               <Block flex center>
                 <KeyboardAvoidingView

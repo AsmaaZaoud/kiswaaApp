@@ -19,7 +19,7 @@ const Onboarding = ({ navigation }) => {
   return (
     <Block flex style={styles.container}>
       <Block center>
-        <Image source={require('../../Images/kiswa-logo.jpg')} style={styles.logo} />
+        <Image source={require('../../assets/imgs/kiswaLogo.jpg')} style={styles.logo} />
       </Block>
 
 
@@ -47,7 +47,7 @@ const Onboarding = ({ navigation }) => {
           <Text style={{color: 'white', textAlign: 'center'}}>DONOR</Text>
         </Block>
         <Block>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.replace("RegisterFamily")}>
           <Image
             style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20  }}
             source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2904/2904889.png' }}
