@@ -26,32 +26,14 @@ import {  Card, Header } from "../../components"
 import {Icon,AntDesign,FontAwesome} from "react-native-vector-icons"
 import ArButton from "../../components/Button";
 import { normalize } from "./AdminHome";
-import DriverDetails from "./DriverDetails";
 
 const { width , height} = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
-const categories = [
-  {
-    title: "Music Album",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?fit=crop&w=840&q=80",
-    price: "$125",
-  },
-  {
-    title: "Events",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1543747579-795b9c2c3ada?fit=crop&w=840&q=80",
-    price: "$35",
-  },
-];
 
-const Drivers = ({navigation}) => {
+
+const DriverDetails = ({navigation}) => {
 
   const [deviceType, setDeviceType] =useState("")
 
@@ -112,10 +94,10 @@ const Drivers = ({navigation}) => {
   const [drivers, setDrivers] = useState([]);
   const [allDrivers, setAllDrivers] = useState([]);
  
-  const [flag, setFlag] = useState(false)
+    let user = "Wsd@ass.com"
    const readAllWhere = async () => {
     let temp = [];
-    const q = query(collection(db, "drivers"));
+    const q = query(collection(db, "drivers",user,"orders"));
     const docs = await getDocs(q);
     // console.log(docs)
     docs.forEach((doc) => {
@@ -129,10 +111,12 @@ const Drivers = ({navigation}) => {
 
     return (
       <Block flex >
-          <View style={styles.container}> 
+        <View>
+            <Text>Hiii</Text>
+        </View>
+          {/* <View style={styles.container}> 
       
               <DataTable>
-                <Text>hh</Text>
                   <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
                       <View style={{flexDirection:"row"}}> 
                         <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
@@ -155,15 +139,15 @@ const Drivers = ({navigation}) => {
 
               </DataTable.Header>
       {drivers && drivers.map((x)=>
-        <DataTable.Row key={x.email} onPress={()=>setFlag(true)}
+        <DataTable.Row key={x.email}
                     style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
 
         
         >
                   
-                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.fname}</DataTable.Cell>
-                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell>
-                <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.type}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.user}</DataTable.Cell>
+                <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.location}</DataTable.Cell>
 
           
             </DataTable.Row>
@@ -171,13 +155,9 @@ const Drivers = ({navigation}) => {
               )}
 
             </DataTable>
-     {flag?
-          <DriverDetails />:null
-          }
-        
+     
    
-          </View>
-            
+          </View> */}
      </Block>
     );
   
@@ -185,7 +165,7 @@ const Drivers = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    //flex: 1,
+    flex: 1,
     backgroundColor: '#EBEBEB',
     //paddingTop: 50,
     paddingHorizontal: "5%",
@@ -279,4 +259,4 @@ const styles = StyleSheet.create({
   {color:"black", fontSize:width*0.04}
 })
 
-export default Drivers;
+export default DriverDetails;

@@ -34,6 +34,7 @@ import AdminHomeCopy from "../screens/Asmaa/AdminHomeCopy";
 import DriveProfile from "../screens/Asmaa/DriverProfile";
 import Deliver from "../screens/Asmaa/Deliver";
 import Pickup from "../screens/Asmaa/Pickup";
+import DriverDetails from "../screens/Asmaa/DriverDetails";
 //invent
 import InventoryClerks from "../screens/Asmaa/InventoryClerks";
 import AddClerk from "../screens/Asmaa/AddClerk";
@@ -360,6 +361,7 @@ export default function OnboardingStack(props) {
         <Stack.Screen name="Pickup" component={Pickup} />
       <Stack.Screen name="Deliver" component={Deliver} />
        <Stack.Screen name="DriveProfile" component={DriveProfile} />
+       <Stack.Screen name="DriverDetails" component={DriverDetails} />
 
         <Stack.Screen name="AdminHome" component={AdminHome} 
       option={{
