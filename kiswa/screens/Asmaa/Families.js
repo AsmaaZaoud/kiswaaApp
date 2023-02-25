@@ -16,7 +16,7 @@ import { Button} from "galio-framework";
 //FireBase
 import { auth } from "../../config";
 
-import { doc, query, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
+import { doc, query, getDocs, getDoc,addDoc ,collection, where} from "firebase/firestore";
 import { db } from "../../config";
 //argon
 import { Images, argonTheme, articles } from "../../constants/";
@@ -125,6 +125,70 @@ const Families = ({navigation}) => {
     setAllDrivers(temp)
     //console.log(drivers);
   };
+  const [flag, setFlag] = useState(false)
+
+    const [requests, setRequests] = useState([]);
+   //  let user = "Wsd@ass.com"
+   const readOne = async (user) => {
+    let temp = [];
+    const q = query(collection(db, "familyRequests"),where("familyID", "==", user));
+    const docs = await getDocs(q);
+    // console.log(docs)
+    docs.forEach((doc) => {
+      // let hour = doc.data().dateTime.toDate().getHours() 
+      let t = doc.data()
+      // t.time = hour + ":00"
+      // t.date = doc.data().dateTime.toDate().toLocaleDateString()
+      temp.push(t);
+      console.log(doc.id, " => ", t);
+      // console.log(t);
+
+    });
+    setRequests(temp);
+  
+    // setAllorderss(temp)
+    //console.log(drivers);
+    setFlag(true)
+  };
+
+   const renderCards = () => {
+  return(
+   
+           <Block>
+        <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
+                      <View style={{flexDirection:"row"}}> 
+                    <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>{flag}</Text>
+                      </View>
+                   
+                  </Block>
+                   <DataTable.Header style={{borderWidth:1, borderColor:"black", width:"90%",marginLeft:"3%",backgroundColor:"#c37aed",}}>
+                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Cart</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Status</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Email</DataTable.Title>
+
+                {/* <DataTable.Title numeric textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Time</DataTable.Title> */}
+
+              </DataTable.Header>
+      {requests && requests.map((x)=>
+        <DataTable.Row key={x.user} 
+                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"#ebdbf5", borderWidth:1}}
+
+        
+        >
+                  
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.cart}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.status}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.familyID}</DataTable.Cell>
+                {/* <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.time}</DataTable.Cell> */}
+
+          
+            </DataTable.Row>
+                
+              )}
+              </Block>
+  )
+   
+    }
 
     return (
       <Block flex > 
@@ -155,7 +219,7 @@ const Families = ({navigation}) => {
 
               </DataTable.Header>
       {drivers && drivers.map((x)=>
-        <DataTable.Row key={x.email}
+        <DataTable.Row key={x.email} onPress={()=>readOne(x.email)}
                     style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
 
         
@@ -169,6 +233,10 @@ const Families = ({navigation}) => {
             </DataTable.Row>
                 
               )}
+
+               {flag?
+                    renderCards()
+              :null}
 
             </DataTable>
    
