@@ -127,12 +127,69 @@ const Drivers = ({navigation}) => {
     //console.log(drivers);
   };
 
+  const [driver, setDriver] = useState({});
+
+   let user = "Wsd@ass.com"
+   const readDriver = async () => {
+    let temp = [];
+    const q = query(collection(db, "drivers",user,"orders"));
+    const docs = await getDocs(q);
+    // console.log(docs)
+    docs.forEach((doc) => {
+      temp.push(doc.data());
+      //console.log(doc.id, " => ", doc.data());
+    });
+    setDrivers(temp);
+    setAllDrivers(temp)
+    //console.log(drivers);
+  };
+
+  const renderCards = () => {
+  return(
+   
+           <Block>
+        <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
+                      <View style={{flexDirection:"row"}}> 
+                        {/* <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/>  */}
+                    <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>{flag}</Text>
+                      </View>
+                    {/* <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}> */}
+                      
+                      {/* <Text style={{fontSize:deviceType=="mobile" ?18: 26, color:"#FFF"}}>Add</Text>  */}
+                      
+                      {/* </Button>     */}
+                  </Block>
+                   <DataTable.Header style={{borderTopWidth:0,borderBottomWidth:2, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white",}}>
+                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Type</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Location</DataTable.Title>
+                <DataTable.Title numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Time</DataTable.Title>
+
+              </DataTable.Header>
+      {drivers && drivers.map((x)=>
+        <DataTable.Row key={x.email} onPress={()=>setFlag(true)}
+                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
+
+        
+        >
+                  
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.fname}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell>
+                <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell>
+
+          
+            </DataTable.Row>
+                
+              )}
+              </Block>
+  )
+   
+    }
     return (
       <Block flex >
           <View style={styles.container}> 
       
               <DataTable>
-                <Text>hh</Text>
+               
                   <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
                       <View style={{flexDirection:"row"}}> 
                         <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
@@ -155,7 +212,7 @@ const Drivers = ({navigation}) => {
 
               </DataTable.Header>
       {drivers && drivers.map((x)=>
-        <DataTable.Row key={x.email} onPress={()=>setFlag(true)}
+        <DataTable.Row key={x.email} onPress={()=>setFlag(x.fname)}
                     style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
 
         
@@ -170,14 +227,18 @@ const Drivers = ({navigation}) => {
                 
               )}
 
+                {flag?
+                    renderCards()
+              :null}
+              
             </DataTable>
-     {flag?
-          <DriverDetails />:null
-          }
+         
+          
+          
         
    
           </View>
-            
+             
      </Block>
     );
   
@@ -186,6 +247,8 @@ const Drivers = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     //flex: 1,
+    // borderWidth:2,
+    // borderColor:"red",
     backgroundColor: '#EBEBEB',
     //paddingTop: 50,
     paddingHorizontal: "5%",

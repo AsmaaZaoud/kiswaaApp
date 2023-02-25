@@ -110,10 +110,10 @@ const DriverDetails = ({navigation}) => {
   };
 
     return (
-      <Block flex >
-        <View>
+      <Block  >
+    
             <Text>Hiii</Text>
-        </View>
+    
           {/* <View style={styles.container}> 
       
               <DataTable>
