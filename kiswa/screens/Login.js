@@ -45,16 +45,20 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState();
   const [signedIn, setSignedIn] = useState(false);
 
+<<<<<<< Updated upstream
 
    const reformat = (doc) => {
+=======
+  const reformat = (doc) => {
+    console.log({ id: doc.id, ...doc.data() });
+>>>>>>> Stashed changes
     return { id: doc.id, ...doc.data() };
   };
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async () => {
-        const clerk = await getDoc(doc(db, "inventoryWorkers", email));
-       
         const driver = await getDoc(doc(db, "drivers", email));
+<<<<<<< Updated upstream
         // const admin = "admin@admin.com"
         // user = reformat(user)
         if (email ==  "Admin@admin.com"){
@@ -70,6 +74,19 @@ const Login = ({ navigation }) => {
           
         
 
+=======
+        const driverId = reformat(driver).id;
+        const clerk = await getDoc(doc(db, "inventoryWorkers", email));
+        const celrkID = reformat(clerk).id;
+        // const temp = email;
+        email == "Admin@admin.com"
+          ? navigation.replace("AdminHome")
+          : email == celrkID
+          ? navigation.replace("InventoryClerkHomePage")
+          : email == driverId
+          ? navigation.replace("DriverHome")
+          : navigation.replace("App");
+>>>>>>> Stashed changes
       })
       .catch((error) => {
         console.log(error.message);
