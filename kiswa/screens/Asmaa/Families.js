@@ -127,10 +127,12 @@ const Families = ({navigation}) => {
   };
 
     return (
-      <Block flex >
+      <Block flex > 
+     
           <View style={styles.container}> 
-      
+    
               <DataTable>
+                
                   <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
                       <View style={{flexDirection:"row"}}> 
                         <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
@@ -169,9 +171,10 @@ const Families = ({navigation}) => {
               )}
 
             </DataTable>
-     
+   
    
           </View>
+        
      </Block>
     );
   
@@ -183,6 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EBEBEB',
     //paddingTop: 50,
     paddingHorizontal: "5%",
+    height:400
   },
   head:{
     // flexDirection:"row",
