@@ -16,10 +16,8 @@ import Profile from "../screens/Profile";
 import React from "react";
 import Register from "../screens/Syeda/Register";
 
-<<<<<<< Updated upstream
-=======
 import Login from "../screens/Login";
->>>>>>> Stashed changes
+
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
 
@@ -27,7 +25,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Login from "../screens/Login";
 import RegisterFamily from "../screens/Meimouna/RegisterFamily";
 import FamilyHome from "../screens/Meimouna/FamilyHome";
 import FamilyRequest from "../screens/Meimouna/FamilyRequest";
@@ -382,17 +379,17 @@ export default function OnboardingStack(props) {
 
       <Stack.Screen name="App" component={AppStack} />
 
-<<<<<<< Updated upstream
+
       {/* /********* Syeda**********/}
 
       <Stack.Screen name="Register" component={Register} />
 
 
       
-     <Stack.Screen
-=======
+     {/* <Stack.Screen */}
+
       <Stack.Screen
->>>>>>> Stashed changes
+
         name="InventoryClerkHomePage"
         component={InventoryClerkHomePage}
       />
@@ -402,12 +399,12 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="DriverHome" component={DriverHome} />
 
       <Stack.Screen name="Login" component={Login} />
-<<<<<<< Updated upstream
+
       <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
       <Stack.Screen name="FamilyHome" component={FamilyHome} />
       <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
-=======
->>>>>>> Stashed changes
+
+
     </Stack.Navigator>
   );
 }

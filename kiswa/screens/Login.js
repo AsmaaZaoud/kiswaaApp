@@ -45,20 +45,16 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState();
   const [signedIn, setSignedIn] = useState(false);
 
-<<<<<<< Updated upstream
-
-   const reformat = (doc) => {
-=======
   const reformat = (doc) => {
     console.log({ id: doc.id, ...doc.data() });
->>>>>>> Stashed changes
+
     return { id: doc.id, ...doc.data() };
   };
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async () => {
         const driver = await getDoc(doc(db, "drivers", email));
-<<<<<<< Updated upstream
+
         // const admin = "admin@admin.com"
         // user = reformat(user)
         if (email ==  "Admin@admin.com"){
@@ -71,10 +67,7 @@ const Login = ({ navigation }) => {
         }else{
           navigation.replace("App")
         }
-          
-        
 
-=======
         const driverId = reformat(driver).id;
         const clerk = await getDoc(doc(db, "inventoryWorkers", email));
         const celrkID = reformat(clerk).id;
@@ -86,7 +79,7 @@ const Login = ({ navigation }) => {
           : email == driverId
           ? navigation.replace("DriverHome")
           : navigation.replace("App");
->>>>>>> Stashed changes
+
       })
       .catch((error) => {
         console.log(error.message);
