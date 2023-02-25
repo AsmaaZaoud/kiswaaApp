@@ -127,10 +127,10 @@ const Drivers = ({navigation}) => {
     //console.log(drivers);
   };
 
-  const [driver, setDriver] = useState({});
+  const [orders, setOrders] = useState([]);
 
-   let user = "Wsd@ass.com"
-   const readDriver = async () => {
+  //  let user = "Wsd@ass.com"
+   const readOne = async (user) => {
     let temp = [];
     const q = query(collection(db, "drivers",user,"orders"));
     const docs = await getDocs(q);
@@ -139,9 +139,10 @@ const Drivers = ({navigation}) => {
       temp.push(doc.data());
       //console.log(doc.id, " => ", doc.data());
     });
-    setDrivers(temp);
-    setAllDrivers(temp)
+    setOrders(temp);
+    // setAllorderss(temp)
     //console.log(drivers);
+    setFlag(true)
   };
 
   const renderCards = () => {
@@ -150,31 +151,26 @@ const Drivers = ({navigation}) => {
            <Block>
         <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
                       <View style={{flexDirection:"row"}}> 
-                        {/* <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/>  */}
                     <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>{flag}</Text>
                       </View>
-                    {/* <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}> */}
-                      
-                      {/* <Text style={{fontSize:deviceType=="mobile" ?18: 26, color:"#FFF"}}>Add</Text>  */}
-                      
-                      {/* </Button>     */}
+                   
                   </Block>
-                   <DataTable.Header style={{borderTopWidth:0,borderBottomWidth:2, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white",}}>
-                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Type</DataTable.Title>
-                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Location</DataTable.Title>
-                <DataTable.Title numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Time</DataTable.Title>
+                   <DataTable.Header style={{borderWidth:1, borderColor:"black", width:"90%",marginLeft:"3%",backgroundColor:"#c37aed",}}>
+                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Type</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Location</DataTable.Title>
+                <DataTable.Title numeric textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Time</DataTable.Title>
 
               </DataTable.Header>
-      {drivers && drivers.map((x)=>
-        <DataTable.Row key={x.email} onPress={()=>setFlag(true)}
-                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
+      {orders && orders.map((x)=>
+        <DataTable.Row key={x.user} 
+                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"#ebdbf5", borderWidth:1}}
 
         
         >
                   
-                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.fname}</DataTable.Cell>
-                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell>
-                <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.type}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.user}</DataTable.Cell>
+                <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.type}</DataTable.Cell>
 
           
             </DataTable.Row>
@@ -201,33 +197,27 @@ const Drivers = ({navigation}) => {
                       
                       </Button>    
                   </Block>
-
-        
-
               
                 <DataTable.Header style={{borderTopWidth:0,borderBottomWidth:2, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white",}}>
-                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Name</DataTable.Title>
-                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Email</DataTable.Title>
-                <DataTable.Title numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Phone</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize:normalize(25) }}>Name</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title>
+                <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title>
 
               </DataTable.Header>
-      {drivers && drivers.map((x)=>
-        <DataTable.Row key={x.email} onPress={()=>setFlag(x.fname)}
-                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
-
-        
-        >
+              {drivers && drivers.map((x)=>
+                <DataTable.Row key={x.email} onPress={()=>readOne(x.email)}
+                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}>
                   
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.fname}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell>
                 <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell>
 
           
-            </DataTable.Row>
+                  </DataTable.Row>
                 
-              )}
+                )}
 
-                {flag?
+              {flag?
                     renderCards()
               :null}
               
