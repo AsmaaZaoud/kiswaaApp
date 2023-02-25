@@ -26,13 +26,19 @@ import { db } from "../config";
 const { width, height } = Dimensions.get("screen");
 
 import validator from "validator";
+<<<<<<< HEAD
 
 import * as Location from "expo-location";
+=======
+import * as Location from "expo-location";
+import { ScrollView } from "react-native-gesture-handler";
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
 
 const Register = ({ navigation }) => {
 
 
   const [email, setEmail] = useState();
+<<<<<<< HEAD
   const [emailError, setEmailError] = useState("");
 
   const [password, setPassword] = useState();
@@ -40,10 +46,20 @@ const Register = ({ navigation }) => {
 
   const [name, setName] = useState();
   const [nameError, setNameError] = useState();
+=======
+  const [emailError, setEmailError] = useState()
+
+  const [password, setPassword] = useState();
+  const [passwordError, setPasswordError] = useState()
+
+  const [name, setName] = useState();
+  const [nameError, setNameError] = useState()
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
 
   const [signedIn, setSignedIn] = useState(false);
   const [flag, setflag] = useState(0);
 
+<<<<<<< HEAD
   const [location, setLocation] = useState();
   const [locationError, setLocationError] = useState("");
 
@@ -53,6 +69,15 @@ const Register = ({ navigation }) => {
   const [registerError, setRegisteerError] = useState("");
 
   const [stat, setStat] = useState("denid");
+=======
+  const [location, setLocation] = useState("");
+  const [locationError, setLocationError] = useState("");
+
+  const [phoneError, setPhoneError] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const [stat, setStat] = useState("denied");
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
 
   let user = auth?.currentUser?.email;
   console.log('user logged in: ', user)
@@ -62,7 +87,11 @@ const Register = ({ navigation }) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(() =>
         console.log("registered"),
+<<<<<<< HEAD
         navigation.navigate("Login")
+=======
+        navigation.replace("App")
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
       )
       .catch((error) => {
         console.log(error.message)
@@ -145,14 +174,101 @@ const Register = ({ navigation }) => {
   };
 
 
+  const validation = () => {
+
+    if(email != undefined){
+      if (validator.isEmail(email)) {
+        setEmailError("");
+      } else {
+        setEmailError("Email is not vaild");
+      }
+    }
+    else {
+      setEmailError("Email is not vaild");
+    }
+
+
+    if(password != undefined){
+      if (password.length >= 6) {
+        setPasswordError("");
+      } else {
+        setPasswordError("Password must be at least 6 characters");
+      }
+    }
+    else {
+      setPasswordError("Password must be at least 6 characters");
+    }
+
+
+    console.log("name", name)
+    //console.log("name value", name.value)
+
+    if (name != undefined) {
+      setNameError("");
+    } else {
+      setNameError("Enter Your first Name");
+    }
+
+    if (phone.length === 8) {
+      setPhoneError("");
+    } else {
+      setPhoneError("Phone number should be valid and 8 digits");
+    }
+    if (stat === "granted") {
+      setLocationError("");
+    } else {
+      setLocationError("Allow Location");
+    }
+
+    if (
+      validator.isEmail(email) && 
+      password != undefined &&
+      name != undefined &&
+      phone.length === 8 &&
+      stat == "granted"
+    ) {
+      console.log(stat);
+      console.log("okay");
+      handleRegister();
+    }
+  };
+
+  const getLocation = () => {
+    const getPermissions = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      setStat(status);
+      console.log("stat... ", stat);
+      console.log(status);
+      if (status !== "granted") {
+        console.log("Please grant location permissions");
+        return;
+      }
+
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation);
+    };
+    getPermissions();
+  };
+
+
   // render() {
   return (
+<<<<<<< HEAD
     <Block flex middle>
+=======
+    
+    <Block flex middle>
+      
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
       <StatusBar hidden />
       <ImageBackground
         source={Images.RegisterBackground}
         style={{ width, height, zIndex: 1 }}
       >
+<<<<<<< HEAD
+=======
+        
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             {/* <Block flex={0.25} middle style={styles.socialConnect}> */}
@@ -187,6 +303,7 @@ const Register = ({ navigation }) => {
                 </Block> */}
             {/* </Block> */}
 
+<<<<<<< HEAD
             <Block style={{ alignSelf: 'center' }}>
               <Image
                 style={{ width: 150, height: 150 }}
@@ -195,6 +312,16 @@ const Register = ({ navigation }) => {
             <Text size={20} style={{ alignSelf: 'center', padding: 20 }}>
               SIGN UP AS A DONOR
             </Text>
+=======
+            {/* <Block style={{ alignSelf: 'center' }}>
+              <Image
+                style={{ width: 50, height: 50 }}
+                source={require('../Images/donate.png')} />
+            </Block>
+            <Text size={12} style={{ alignSelf: 'center', padding: 20 }}>
+              SIGN UP AS A DONOR
+            </Text> */}
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
 
             <Block flex>
               <Block middle >
@@ -230,6 +357,7 @@ const Register = ({ navigation }) => {
                     >
                       {nameError}
                     </Text>
+<<<<<<< HEAD
                   </Block>
                   <Block width={width * 0.35} style={{ marginBottom: 10 }}>
                     <Button
@@ -305,6 +433,87 @@ const Register = ({ navigation }) => {
                     </Text>
                   </Block>
 
+=======
+                  </Block>
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
+                      placeholder="Phone Number"
+                      value={phone}
+                      onChangeText={setPhone}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="phone"
+                          family="AntDesign"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {phoneError}
+                    </Text>
+                  </Block>
+
+
+                  <Block width={width * 0.35} style={{ marginBottom: 10 }}>
+                      <Button
+                        color={stat !== "granted" ? "default" : "primary"}
+                        style={styles.createButton}
+                        onPress={getLocation}
+                      >
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Location
+                        </Text>
+                      </Button>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "red",
+                          fontSize: 12,
+                        }}
+                      >
+                        {locationError}
+                      </Text>
+                    </Block>
+
+
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
+                      placeholder="Email"
+                      value={email}
+                      onChangeText={setEmail}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="ic_mail_24px"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {emailError}
+                    </Text>
+                  </Block>
+
+
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
                   <Block width={width * 0.8}>
                     <Input
                       password
@@ -329,17 +538,28 @@ const Register = ({ navigation }) => {
                         fontSize: 12,
                       }}
                     >
+<<<<<<< HEAD
                       {passError}
                     </Text>
                     <Block row style={styles.passwordCheck}>
                       {/* <Text size={12} color={argonTheme.COLORS.MUTED}>
+=======
+                      {passwordError}
+                    </Text>
+                    {/* <Block row style={styles.passwordCheck}> */}
+                    {/* <Text size={12} color={argonTheme.COLORS.MUTED}>
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
                           password strength:
                         </Text>
                         <Text bold size={12} color={argonTheme.COLORS.SUCCESS}>
                           {" "}
                           strong
                         </Text> */}
+<<<<<<< HEAD
                     </Block>
+=======
+                    {/* </Block> */}
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
                   </Block>
                   <Block row width={width * 0.75}>
                     <Checkbox
@@ -366,6 +586,7 @@ const Register = ({ navigation }) => {
                         CREATE ACCOUNT
                       </Text>
                     </Button>
+<<<<<<< HEAD
                     <Text
                       style={{
                         textAlign: "center",
@@ -375,13 +596,23 @@ const Register = ({ navigation }) => {
                     >
                       {registerError}
                     </Text>
+=======
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
                   </Block>
                 </KeyboardAvoidingView>
               </Block>
             </Block>
           </Block>
+<<<<<<< HEAD
         </Block>
       </ImageBackground>
+=======
+   
+        </Block>
+        
+      </ImageBackground>
+      
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
     </Block>
   );
   // }

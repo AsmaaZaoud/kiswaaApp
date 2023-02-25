@@ -37,6 +37,10 @@
     "react-native-reanimated": "~2.8.0",
     "react-native-safe-area-context": "4.2.4",
     "react-native-screens": "~3.11.1",
+<<<<<<< HEAD
+=======
+    "validation": "^0.0.1",
+>>>>>>> f5d4fdb89dea078ff02e7aa85cf287ed52683e38
     "validator": "^13.9.0"
   },
   "devDependencies": {
