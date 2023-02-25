@@ -9,14 +9,14 @@ import {
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
-import { Button, Icon, Input } from "../components";
-import { Images, argonTheme } from "../constants";
+import { Button, Icon, Input } from "../../components";
+import { Images, argonTheme } from "../../constants";
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../config";
+import { auth } from "../../config";
 
 import {
   doc,
@@ -33,38 +33,29 @@ import {
   getDoc,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "../config";
+import { db } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 
-const Login = ({ navigation }) => {
+const LoginFamily = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [signedIn, setSignedIn] = useState(false);
 
-  const reformat = (doc) => {
-    return { id: doc.id, ...doc.data() };
-  };
+  const [user, setUser] = useState({});
+
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then(async () => {
-        const clerk = await getDoc(doc(db, "inventoryWorkers", email));
-
-        const driver = await getDoc(doc(db, "drivers", email));
-        const family = await getDoc(doc(db, "families", email.toLowerCase()));
-        // const admin = "admin@admin.com"
-        // user = reformat(user)
-        if (email == "Admin@admin.com") {
-          navigation.replace("AdminHome");
-        } else if (email === reformat(clerk).id) {
-          navigation.replace("InventoryClerkHomePage");
-        } else if (email === reformat(driver).id) {
-          navigation.replace("DriverHome");
-        } else if (email.toLowerCase() === reformat(family).id) {
-          navigation.replace("FamilyHome", email);
-        } else {
-          navigation.replace("App");
-        }
+      .then(() => {
+        console.log("Logged in");
+        setSignedIn(true);
+        getFamily();
+        // let type = email.slice(-10, -4);
+        // if (type == "family") {
+        //   navigation.navigate("FamilyHome", email);
+        // } else {
+        //   navigation.replace("App");
+        // }
       })
       .catch((error) => {
         console.log(error.message);
@@ -75,7 +66,7 @@ const Login = ({ navigation }) => {
 
   const getFamily = async () => {
     console.log(email);
-    const docRef = doc(db, "families", email.toLowerCase());
+    const docRef = doc(db, "families", email);
     const docSnap = await getDoc(docRef);
     let temp;
     if (docSnap.exists()) {
@@ -234,4 +225,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default LoginFamily;

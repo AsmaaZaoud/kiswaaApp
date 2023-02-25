@@ -29,7 +29,7 @@ const FamilyHome = ({ route, navigation }) => {
 
   const getFamily = async () => {
     console.log(id);
-    const docRef = doc(db, "families", id.toLowerCase());
+    const docRef = doc(db, "families", id);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {

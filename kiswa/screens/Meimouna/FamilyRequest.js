@@ -43,12 +43,13 @@ import { color, set } from "react-native-reanimated";
 
 const FamilyRequest = ({ route, navigation }) => {
   const id = route.params;
-  const [index, setIndex] = useState();
+  const [index, setIndex] = React.useState(0);
   const groups = { 0: "Men", 1: "Women", 2: "Boys", 3: "Girls" };
 
-  // useEffect(() => {
-  //   readAllWhere();
-  // }, [id]);
+  useEffect(() => {
+    getCart();
+    console.log(index);
+  }, [id]);
 
   const data = [
     { key: "T-shirt" },
@@ -105,10 +106,10 @@ const FamilyRequest = ({ route, navigation }) => {
   const [color, setColor] = useState(colors[0].label);
   const [size, setSize] = useState("S");
 
-  console.log(ageGroup, type, quantity, color, size);
+  // console.log(ageGroup, type, quantity, color, size);
 
   const [modalVisible, setModalVisible] = useState(false);
-
+  console.log(index);
   // const readAllWhere = async () => {
   //   const q = query(collection(db, "families"), where("email", "==", id));
   //   const docs = await getDocs(q);
@@ -118,15 +119,60 @@ const FamilyRequest = ({ route, navigation }) => {
   //     setId(doc.id);
   //   });
   // };
+  const [cartId, setCartId] = useState("");
+
+  const getCart = async () => {
+    console.log(id);
+    console.log("cartt..");
+    const q = query(
+      collection(db, "familyRequests"),
+      where("familyID", "==", id),
+      where("cart", "==", "open")
+    );
+    console.log("gett.");
+    const docs = await getDocs(q);
+    // console.log(docs.forEach((doc) => doc.data()));
+    let temp = [];
+    docs.forEach((doc) => {
+      console.log("mm");
+      temp.push({
+        id: doc.id,
+        data: doc.data(),
+      });
+    });
+    console.log(temp);
+    if (temp.length > 0) {
+      console.log(temp);
+      setCartId(temp[0].id);
+      console.log(cartId);
+    } else {
+      console.log("no open cart");
+      NewCart();
+    }
+  };
+  const NewCart = async () => {
+    const docRef = await addDoc(collection(db, "familyRequests"), {
+      familyID: id,
+      cart: "open",
+      status: "pending",
+    });
+
+    console.log("Request add with ID: ", docRef.id, "for user ", id);
+    setCartId(docRef.id);
+  };
 
   const Save = async () => {
-    const docRef = await addDoc(collection(db, "families", id, "request"), {
-      ageGroup: ageGroup,
-      type: type,
-      quantity: quantity,
-      color: color,
-      size: size,
-    })
+    console.log(cartId);
+    const docRef = await addDoc(
+      collection(db, "familyRequests", cartId, "Items"),
+      {
+        ageGroup: ageGroup,
+        type: type,
+        quantity: quantity,
+        color: color,
+        size: size,
+      }
+    )
       .then(() => {
         console.log("Request add with ID: ", "for user ", id);
         // navigation.navigate("FamilyHome");
@@ -147,30 +193,39 @@ const FamilyRequest = ({ route, navigation }) => {
     <View style={{ backgroundColor: modalVisible ? "#F7EEF7" : "white" }}>
       <NavBar
         title="Reques Clothes"
-        style={{ height: 80, borderWidth: 1, marginTop: 20, marginBottom: 20 }}
+        style={{
+          height: "10%",
+          borderWidth: 1,
+          marginTop: "2%",
+          marginBottom: "2%",
+        }}
       />
-      <Block style={{ alignItems: "center", marginTop: 20 }}>
+      <Block style={{ alignItems: "center", marginTop: "3%" }}>
         <Text style={{ color: "#842DCE", fontSize: 22, fontWeight: "bold" }}>
           Please choose Catagory
         </Text>
       </Block>
 
-      <Block style={{ height: 300, marginTop: 20 }}>
+      <Block style={{ height: "52%", marginTop: "3%", width: "100%" }}>
         <Tab
+          style={{ width: "100%" }}
           value={index}
           onChange={setIndex}
           indicatorStyle={{
             backgroundColor: "#842DCE",
             height: 3,
           }}
-          //   variant="primary"
+          //variant="primary"
+          scrollable={true}
+          iconPosition="top"
+          dense={false}
         >
-          <Tab.Item title="Men" titleStyle={{ fontSize: 12 }}>
+          <Tab.Item title="Men" titleStyle={{ fontSize: 14 }}>
             <Image
               source={require("../../assets/imgs/men-icon.png")}
               style={{
-                width: 80,
-                height: 80,
+                width: 88,
+                height: 88,
               }}
             />
             <Text>Men</Text>
@@ -179,8 +234,8 @@ const FamilyRequest = ({ route, navigation }) => {
             <Image
               source={require("../../assets/imgs/women-icon.png")}
               style={{
-                width: 80,
-                height: 80,
+                width: 88,
+                height: 88,
               }}
             />
             <Text>Women</Text>
@@ -189,8 +244,8 @@ const FamilyRequest = ({ route, navigation }) => {
             <Image
               source={require("../../assets/imgs/boy-icon.png")}
               style={{
-                width: 80,
-                height: 80,
+                width: 88,
+                height: 88,
               }}
             />
             <Text>Boys</Text>
@@ -199,8 +254,8 @@ const FamilyRequest = ({ route, navigation }) => {
             <Image
               source={require("../../assets/imgs/girl-icon.png")}
               style={{
-                width: 80,
-                height: 80,
+                width: 88,
+                height: 88,
               }}
             />
             <Text>Girls</Text>
@@ -211,7 +266,8 @@ const FamilyRequest = ({ route, navigation }) => {
           <TabView.Item
             style={{
               width: "100%",
-              height: 450,
+              height: "100%",
+              // backgroundColor: "lightgray",
             }}
           >
             <View>
@@ -233,9 +289,14 @@ const FamilyRequest = ({ route, navigation }) => {
               </View>
             </View>
           </TabView.Item>
-          <TabView.Item style={{ width: "100%", height: 450 }}>
+          <TabView.Item
+            style={{
+              width: "100%",
+              height: "100%",
+              // backgroundColor: "lightpink",
+            }}
+          >
             <View>
-              <Text></Text>
               <View style={styles.board}>
                 {WType.map((x, i) => (
                   <Pressable
@@ -253,7 +314,7 @@ const FamilyRequest = ({ route, navigation }) => {
               </View>
             </View>
           </TabView.Item>
-          <TabView.Item style={{ width: "100%", height: 450 }}>
+          <TabView.Item style={{ width: "100%", height: "100%" }}>
             <View>
               <Text></Text>
               <View style={styles.board}>
@@ -273,7 +334,7 @@ const FamilyRequest = ({ route, navigation }) => {
               </View>
             </View>
           </TabView.Item>
-          <TabView.Item style={{ width: "100%", height: 450 }}>
+          <TabView.Item style={{ width: "100%", height: "100%" }}>
             <View style={{ alignItems: "center" }}>
               <Text></Text>
               <View style={styles.board}>
@@ -437,12 +498,33 @@ const FamilyRequest = ({ route, navigation }) => {
                     Save();
                   }}
                 >
-                  <Text style={styles.textStyle}>Save Request</Text>
+                  <Text style={styles.textStyle}>Add Item</Text>
                 </Pressable>
               </Block>
             </View>
           </View>
         </Modal>
+      </Block>
+      <Block>
+        <Pressable
+          onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
+          style={{
+            marginTop: "20%",
+            marginBottom: "10%",
+            backgroundColor: "#842DCE",
+            height: "18%",
+            width: "60%",
+            alignItems: "center",
+            justifyContent: "center",
+            marginLeft: "20%",
+            borderRadius: 8,
+            padding: 5,
+          }}
+        >
+          <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
+            View Cart
+          </Text>
+        </Pressable>
       </Block>
     </View>
   );
@@ -472,7 +554,7 @@ const styles = StyleSheet.create({
   },
   board: {
     width: "90%",
-    margin: 18,
+    margin: "5%",
     // borderColor: "white",
     // borderWidth: 5, #FDEEF4
     flexDirection: "row",
@@ -540,6 +622,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+    padding: "2%",
   },
   modalText: {
     marginBottom: 18,
