@@ -12,6 +12,7 @@ import React, { useEffect, useState } from 'react'
 import {   View, Alert, TextInput, FlatList, TouchableOpacity , Table} from 'react-native'
 import { DataTable } from 'react-native-paper';
 import { Button} from "galio-framework";
+import { Dropdown } from "react-native-element-dropdown";
 
 //FireBase
 import { auth } from "../../config";
@@ -102,6 +103,21 @@ const Drivers = ({navigation}) => {
       description: 'User 9',
     },
   ]
+const zones = [
+    { label: " All Zones", value: "0" },
+    { label: "Doha", value: "1" },
+    { label: "Al Rayyan", value: "2" },
+    { label: "Rumeilah", value: "3" },
+    { label: "Wadi Al Sail", value: "4" },
+    { label: "Al Daayen", value: "5" },
+    { label: "Umm Salal", value: "6" },
+    { label: "Al Wakra", value: "7" },
+    { label: "Al Khor", value: "8" },
+    { label: "Al Shamal", value: "9" },
+    { label: "Al Shahaniya", value: "10" },
+  ];
+    const [zone, setZone] = useState("");
+const [ZoneError, setZoneError] = useState(true);
 
   useEffect(() => {
     readAllWhere();
@@ -221,8 +237,25 @@ const Drivers = ({navigation}) => {
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.fname}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell>
                 <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell>
+                <DataTable.Cell >
 
-          
+            <Dropdown
+                        style={[styles.smallInput, {padding:11}]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        data={zones}
+                        maxHeight={160}
+                        
+                        labelField="label"
+                        valueField="value"
+                        // placeholder={zone? zone : "Select zone"}
+                        value={x.zone}
+                        onChange={(item) => {
+                          setZone(item.label);
+                          setZoneError(false)
+                        }}
+                      ></Dropdown>
+              </DataTable.Cell>
                   </DataTable.Row>
                 
                 )}
@@ -339,7 +372,16 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
   },
   rowData:
-  {color:"black", fontSize:width*0.04}
+  {color:"black", fontSize:width*0.04},
+   smallInput:{
+    width:normalize(100),
+    //height:10,
+    // backgroundColor:"white",
+      borderRadius:10,
+      //padding:15,
+      fontSize:20,
+      //borderWidth:0.3
+  }
 })
 
 export default Drivers;
