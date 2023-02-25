@@ -136,10 +136,17 @@ const Drivers = ({navigation}) => {
     const docs = await getDocs(q);
     // console.log(docs)
     docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+      let hour = doc.data().dateTime.toDate().getHours() 
+      let t = doc.data()
+      t.time = hour + ":00"
+      t.date = doc.data().dateTime.toDate().toLocaleDateString()
+      temp.push(t);
+      // console.log(doc.id, " => ", t);
+      // console.log(t);
+
     });
     setOrders(temp);
+  
     // setAllorderss(temp)
     //console.log(drivers);
     setFlag(true)
@@ -158,6 +165,8 @@ const Drivers = ({navigation}) => {
                    <DataTable.Header style={{borderWidth:1, borderColor:"black", width:"90%",marginLeft:"3%",backgroundColor:"#c37aed",}}>
                 <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Type</DataTable.Title>
                 <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Location</DataTable.Title>
+                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Date</DataTable.Title>
+
                 <DataTable.Title numeric textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Time</DataTable.Title>
 
               </DataTable.Header>
@@ -169,8 +178,9 @@ const Drivers = ({navigation}) => {
         >
                   
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.type}</DataTable.Cell>
-                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.user}</DataTable.Cell>
-                <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.type}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.location}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.date}</DataTable.Cell>
+                <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.time}</DataTable.Cell>
 
           
             </DataTable.Row>
