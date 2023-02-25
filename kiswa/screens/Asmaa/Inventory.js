@@ -23,8 +23,9 @@ import { Images, argonTheme, articles } from "../../constants/";
 
 import {  Card, Header } from "../../components"
 
-import {Icon,AntDesign,FontAwesome} from "react-native-vector-icons"
+import {Icon,Feather,FontAwesome} from "react-native-vector-icons"
 import ArButton from "../../components/Button";
+import { normalize } from "@rneui/themed";
 
 const { width , height} = Dimensions.get("screen");
 
@@ -107,8 +108,8 @@ const Inventory = ({navigation}) => {
 
   }, []);
 
-  const [drivers, setDrivers] = useState([]);
-  const [allDrivers, setAllDrivers] = useState([]);
+  const [inventory, setInventory] = useState([]);
+  const [allinventory, setAllInventory] = useState([]);
  
 
    const readAllWhere = async () => {
@@ -118,52 +119,57 @@ const Inventory = ({navigation}) => {
     // console.log(docs)
     docs.forEach((doc) => {
       temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+      console.log(doc.id, " => ", doc.data());
     });
-    setDrivers(temp);
-    setAllDrivers(temp)
-    console.log(drivers);
+    setInventory(temp);
+    setAllInventory(temp)
+    console.log(inventory);
   };
 
     return (
       <Block flex >
           <View style={styles.container}> 
       
-              <DataTable>
-                  <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
+           
+
+            <DataTable>
+               <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
                       <View style={{flexDirection:"row"}}> 
-                        <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
+                        <Feather name="box" size={deviceType=="mobile" ?30: 45}/> 
                     <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>Inventory</Text>
                       </View>
                      
                   </Block>
-
-        
-
-              
-                <DataTable.Header style={{borderTopWidth:0,borderBottomWidth:2, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white",}}>
-                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Type</DataTable.Title>
-                <DataTable.Title textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Size</DataTable.Title>
-                <DataTable.Title numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Color</DataTable.Title>
-
-              </DataTable.Header>
-      {drivers && drivers.map((x)=>
-        <DataTable.Row key={x.email}
-                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
-
-        
-        >
-                  
-                <DataTable.Cell textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.fname}</DataTable.Cell>
-                <DataTable.Cell textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.email}</DataTable.Cell>
-                <DataTable.Cell numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.03}}>{x.phone}</DataTable.Cell>
-
-          
-            </DataTable.Row>
+          <DataTable.Header>
+            <DataTable.Title textStyle={{fontSize:normalize(15)}}>ID</DataTable.Title>
+            <DataTable.Title textStyle={{fontSize:normalize(15)}} >Type</DataTable.Title>
+            <DataTable.Title textStyle={{fontSize:normalize(15)}}>Size</DataTable.Title>
+            <DataTable.Title textStyle={{fontSize:normalize(15)}}>Color</DataTable.Title>
+            <DataTable.Title textStyle={{fontSize:normalize(15)}}>Gender</DataTable.Title>
+            <DataTable.Title textStyle={{fontSize:normalize(15)}}>Age</DataTable.Title>
+            <DataTable.Title textStyle={{fontSize:normalize(15)}}>Quality</DataTable.Title>
+            <DataTable.Title textStyle={{fontSize:normalize(15)}}>Available</DataTable.Title>
+          </DataTable.Header>
+          {/* <ScrollView vertical="true"> */}
+            {inventory.map((i, x) => (
+              <DataTable.Row style={{ height: "1%" }}>
+                <DataTable.Cell id={i.id}>{x+1}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.age}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
+                {/* hide not availabe items */}
+                {/* {i.available == true ? <DataTable.Cell>Available</DataTable.Cell> : null} */}
+                <DataTable.Cell>
+                  {i.available == true ? "Available" : "Not-Available"}
+                </DataTable.Cell>
                 
-              )}
-
-            </DataTable>
+              </DataTable.Row>
+            ))}
+          {/* </ScrollView> */}
+        </DataTable>
      
    
           </View>
