@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0
   },
   logo: {
-    width: 300,
+    width: 450,
     height: 200,
     zIndex: 2,
     position: 'relative',
