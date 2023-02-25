@@ -124,9 +124,9 @@ const DriverHome = ({navigation}) => {
           <View style={styles.userCard}>
                <Feather name="user" size={50} />
                <View style={{marginLeft:10}}>
-                  <Text style={{fontSize:15, fontWeight:"bold"}}>Name </Text>
-                  <Text style={{fontSize:15,fontWeight:"bold"}}>Phone </Text>
-                  <Text style={{fontSize:15,fontWeight:"bold"}}>Email </Text>
+                  <Text style={{fontSize:normalize(15), fontWeight:"bold"}}>Name </Text>
+                  <Text style={{fontSize:normalize(15),fontWeight:"bold"}}>Phone </Text>
+                  <Text style={{fontSize:normalize(15),fontWeight:"bold"}}>Email </Text>
                </View>
           </View>
          
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   dataTitles: {
     fontSize: normalize(15) ,
     // color: '#999',
-    marginTop:"5%",
+   // marginTop:"5%",
     marginLeft:"5%"
   },
   pickupButtonContainer: {
