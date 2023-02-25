@@ -26,66 +26,100 @@ const DriverHome = ({navigation}) => {
   const [arr ,setArr] = useState([])
    useEffect(() => {
      width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
-    setArr(pick);
-  }, []);
+    // setArr(pick);
+    readOrders()
+    setArr(pickup)
+    
+  }, [arr]);
 
   const onSignOut = () => {
     signOut(auth)
       .then(() => navigation.navigate("Login"))
       .catch((error) => console.log("Error logging out: ", error));
   };
-    const pick = [
-        {
-            id:"0012red3",
-            userName: "Asmaa",
-            zone: "Gharafa"
-        },
-        {
-            id:"0033948",
-            userName: "Sara",
-            zone: "Alkhor"
+//     const pick = [
+//         {
+//             id:"0012red3",
+//             userName: "Asmaa",
+//             zone: "Gharafa"
+//         },
+//         {
+//             id:"0033948",
+//             userName: "Sara",
+//             zone: "Alkhor"
 
-        },
-        {
-            id:"003754",
-            userName: "Ahmad",
-            zone: "Wakra"
+//         },
+//         {
+//             id:"003754",
+//             userName: "Ahmad",
+//             zone: "Wakra"
 
-        }
+//         }
 
-  ]
- const deliv = [
-        {
-            id:"0012red3",
-            userName: "Ahmad",
-            zone: "doha"
-        },
-        {
-            id:"0033948",
-            userName: "naser",
-            zone: "Alkhor"
+//   ]
+//  const deliv = [
+//         {
+//             id:"0012red3",
+//             userName: "Ahmad",
+//             zone: "doha"
+//         },
+//         {
+//             id:"0033948",
+//             userName: "naser",
+//             zone: "Alkhor"
 
-        },
-        {
-            id:"003754",
-            userName: "sara",
-            zone: "Wakra"
+//         },
+//         {
+//             id:"003754",
+//             userName: "sara",
+//             zone: "Wakra"
 
-        }
+//         }
 
-  ]
+//   ]
 
   const change = (type) => {
     if (type == "deliv") {
       setType("deliv")
-      setArr(deliv)
+      setArr(deliver)
     }
     else {
       setType("pick")
-      setArr(pick)
+      setArr(pickup)
 
     }
   }
+
+  const [orders ,setOrders] = useState([])
+  const [pickup ,setPickup] = useState([])
+  const [deliver ,setDeliver] = useState([])
+
+
+  let user = "Wsd@ass.com"
+  const readOrders = async () => {
+    let temp = [];
+    let pick = []
+    let deliv =[]
+    const q = query(collection(db, "drivers",user,"orders"));
+    const docs = await getDocs(q);
+    // console.log(docs)
+    docs.forEach((doc) => {
+      let hour = doc.data().dateTime.toDate().getHours() 
+      let t = doc.data()
+      t.time = hour + ":00"
+      t.date = doc.data().dateTime.toDate().toLocaleDateString()
+      temp.push(t);
+      // temp.push(doc.data());
+      //console.log(doc.id, " => ", doc.data());
+      doc.data().type =="pickup" ? pick.push(t):deliv.push(t)
+    });
+    setOrders(temp);
+    setPickup(pick)
+    setDeliver(deliv)
+    setArr(pick)
+    //console.log(drivers);
+  };
+
     return (
         
       <Block flex  >
@@ -114,7 +148,7 @@ const DriverHome = ({navigation}) => {
     <View  style={styles.home}>
         {  
         arr.map((x)=>
-            <View key={x.id} style={styles.card}>
+            <View key={x.user} style={styles.card}>
               <View style={{flexDirection:"row", justifyContent:"space-between"}}>
           <Text style={styles.cardTitle}>Order No</Text>
 
@@ -133,18 +167,18 @@ const DriverHome = ({navigation}) => {
           <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
           <View style={[styles.dataView,{flexDirection:"row"}]}>
            <Ionicons name="md-today-sharp" size={30} />
-            <Text style={styles.dataTitles}>17-Feb-2023</Text>
+            <Text style={styles.dataTitles}>{x.date}</Text>
           </View>
           <View style={[styles.dataView,{flexDirection:"row"}]}>
            <Ionicons name="time-outline" size={30} />
-            <Text style={styles.dataTitles}>12:00 PM</Text>
+            <Text style={styles.dataTitles}>{x.time} PM</Text>
           </View>
           </View>
 
           <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
           <View style={[styles.dataView,{flexDirection:"row"}]}>
            <Ionicons name="location-outline" size={30} />
-            <Text style={styles.dataTitles}>Alkhor</Text>
+            <Text style={styles.dataTitles}>{x.location}</Text>
           </View>
           <View style={[styles.dataView,{flexDirection:"row"}]}>
            <Ionicons name="map-outline" size={30} />
