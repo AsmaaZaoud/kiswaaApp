@@ -17,7 +17,7 @@ import { Dropdown } from "react-native-element-dropdown";
 //FireBase
 import { auth } from "../../config";
 
-import { doc, query, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
+import { doc, query, getDocs, getDoc,addDoc ,collection, setDoc} from "firebase/firestore";
 import { db } from "../../config";
 //argon
 import { Images, argonTheme, articles } from "../../constants/";
@@ -206,6 +206,33 @@ const [ZoneError, setZoneError] = useState(true);
   )
    
     }
+
+    // const changeZone =(zone,i) =>{
+    //     console.log(zone)
+    //     console.log(i)
+    //     const { email, ...rest } = i;
+    //     console.log(email)
+        
+    // }
+  const update = async (zone,obj) => {
+    const { email, ...rest } = obj;
+    await setDoc(
+      doc(db, "drivers", email),
+      {
+        zone:zone
+      },
+      { merge: true }
+    )
+      .then(() => {
+        console.log("data updated");
+        readAllWhere()
+        //setEditModalVisible(!editModalVisible);
+        // setSelectedItem(null);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
     return (
       <Block flex >
           <View style={styles.container}> 
@@ -228,18 +255,20 @@ const [ZoneError, setZoneError] = useState(true);
                 <DataTable.Title textStyle={{fontSize:normalize(25) }}>Name</DataTable.Title>
                 <DataTable.Title textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title>
                 <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title>
+                <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Zone</DataTable.Title>
+
 
               </DataTable.Header>
-              {drivers && drivers.map((x)=>
+              {drivers && drivers.map((x,i)=>
                 <DataTable.Row key={x.email} onPress={()=>readOne(x.email)}
                     style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}>
                   
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.fname}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell>
                 <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell>
-                <DataTable.Cell >
-
-            <Dropdown
+                <DataTable.Cell numeric >
+                  <Dropdown
+                        
                         style={[styles.smallInput, {padding:11}]}
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
@@ -248,13 +277,16 @@ const [ZoneError, setZoneError] = useState(true);
                         
                         labelField="label"
                         valueField="value"
-                        // placeholder={zone? zone : "Select zone"}
+                        placeholder={x.zone? x.zone : "Select zone"}
                         value={x.zone}
                         onChange={(item) => {
+                          update(item.label,x)
                           setZone(item.label);
                           setZoneError(false)
                         }}
                       ></Dropdown>
+                   
+            
               </DataTable.Cell>
                   </DataTable.Row>
                 
@@ -374,7 +406,7 @@ const styles = StyleSheet.create({
   rowData:
   {color:"black", fontSize:width*0.04},
    smallInput:{
-    width:normalize(100),
+    width:normalize(130),
     //height:10,
     // backgroundColor:"white",
       borderRadius:10,
