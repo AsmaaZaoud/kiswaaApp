@@ -256,6 +256,7 @@ const [ZoneError, setZoneError] = useState(true);
                 <DataTable.Title textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title>
                 {/* <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title> */}
                 <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Zone</DataTable.Title>
+                <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Zone</DataTable.Title>
 
 
               </DataTable.Header>
@@ -288,6 +289,7 @@ const [ZoneError, setZoneError] = useState(true);
                    
             
               </DataTable.Cell>
+                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>X</DataTable.Cell>
                   </DataTable.Row>
                 
                 )}

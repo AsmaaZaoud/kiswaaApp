@@ -83,7 +83,7 @@ const  AdminHome = ({navigation}) => {
   // console.log(ageGroup, type, quantity, color, size);
   console.log(index)
   return (
-    <View style={{backgroundColor:"#8C02FE"}}>
+    <View style={{backgroundColor:"#5e1e7f"}}>
         <View style={styles.top}>
             <Image source={require('../../assets/imgs/kiswaLogo.png')} style={{width:150, height:50}} width={width*0.27} height={height*0.05} />
             <Pressable onPress={onSignOut}>
@@ -103,7 +103,7 @@ const  AdminHome = ({navigation}) => {
           value={index}
           onChange={setIndex}
           indicatorStyle={{
-            backgroundColor: "#8411CE",
+            backgroundColor: "#5e1e7f",
             height: 3,
             
           }}
