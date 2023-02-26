@@ -175,12 +175,12 @@ const Families = ({navigation}) => {
 
         
         >
-                  
+                <ScrollView>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.cart}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.status}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.familyID}</DataTable.Cell>
                 {/* <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.time}</DataTable.Cell> */}
-
+</ScrollView>  
           
             </DataTable.Row>
                 
