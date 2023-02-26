@@ -175,12 +175,12 @@ const Families = ({navigation}) => {
 
         
         >
-                <ScrollView>
+           
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.cart}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.status}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.familyID}</DataTable.Cell>
                 {/* <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.time}</DataTable.Cell> */}
-</ScrollView>  
+
           
             </DataTable.Row>
                 
@@ -191,11 +191,7 @@ const Families = ({navigation}) => {
     }
 
     return (
-      <Block flex > 
-     
-          <View style={styles.container}> 
-    
-              <DataTable>
+              <DataTable style={{height:100}}>
                 
                   <Block style={[styles.head,{height:height *0.08,justifyContent:"space-between"}]}>
                       <View style={{flexDirection:"row"}}> 
@@ -218,32 +214,36 @@ const Families = ({navigation}) => {
                 <DataTable.Title numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Phone</DataTable.Title>
 
               </DataTable.Header>
+               
+                
       {drivers && drivers.map((x)=>
         <DataTable.Row key={x.email} onPress={()=>readOne(x.email)}
                     style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
 
-        
         >
                   
                 <DataTable.Cell textStyle={{fontSize: normalize(25)}}>{x.fname}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize: normalize(25)}}>{x.email}</DataTable.Cell>
                 <DataTable.Cell numeric textStyle={{fontSize: normalize(25)}}>{x.phone}</DataTable.Cell>
 
-          
+            
             </DataTable.Row>
                 
               )}
+             
+            
 
                {flag?
                     renderCards()
               :null}
 
             </DataTable>
-   
-   
-          </View>
         
-     </Block>
+   
+
+   
+        
+   
     );
   
 }
@@ -251,7 +251,7 @@ const Families = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EBEBEB',
+    // backgroundColor: '#EBEBEB',
     //paddingTop: 50,
     paddingHorizontal: "5%",
     height:400
