@@ -254,7 +254,7 @@ const [ZoneError, setZoneError] = useState(true);
                 <DataTable.Header style={{borderTopWidth:0,borderBottomWidth:2, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white",}}>
                 <DataTable.Title textStyle={{fontSize:normalize(25) }}>Name</DataTable.Title>
                 <DataTable.Title textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title>
-                <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title>
+                {/* <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title> */}
                 <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Zone</DataTable.Title>
 
 
@@ -265,13 +265,13 @@ const [ZoneError, setZoneError] = useState(true);
                   
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.fname}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell>
-                <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell>
+                {/* <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell> */}
                 <DataTable.Cell numeric >
                   <Dropdown
                         
                         style={[styles.smallInput, {padding:11}]}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
+                        placeholderStyle={{fontSize:normalize(20)}}
+                        selectedTextStyle={{fontSize:normalize(10)}}
                         data={zones}
                         maxHeight={160}
                         
@@ -406,12 +406,12 @@ const styles = StyleSheet.create({
   rowData:
   {color:"black", fontSize:width*0.04},
    smallInput:{
-    width:normalize(130),
+    width:width*0.25,
     //height:10,
     // backgroundColor:"white",
       borderRadius:10,
       //padding:15,
-      fontSize:20,
+      fontSize: normalize(20),
       //borderWidth:0.3
   }
 })
