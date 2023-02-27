@@ -116,6 +116,31 @@ const Donate = ({ navigation }) => {
         setTime('6PM - 10PM')
     }
 
+    // const [validDrop, setValidDrop] = useState('Select Clothing Item')
+    const [dropError, setDropError] = useState('')
+
+    const [amountError, setAmountError] = useState('')
+
+    const error = () => {
+        if (cloth === '') {
+            setDropError('Please select a clothing item')
+            return
+        }
+        else {
+            setDropError('')
+        }
+        if (amount === ''){
+            setAmountError('Please enter amount')
+            return
+        }
+        else {
+            setAmountError('')
+        }
+        if (cloth !== '' && amount !== ''){
+            navigation.navigate("CheckOut", {uri: ItemURI, type: cloth, amount: amount})
+        }
+    }
+
 
     return (
         <ScrollView
@@ -127,7 +152,7 @@ const Donate = ({ navigation }) => {
                 </Block>
                 <Text onPress={() => navigation.navigate("Home")} style={{ alignSelf: 'flex-start', marginLeft: '5%', fontSize: 20, color: 'purple' }}>Go Back</Text>
 
-                <Block style={{ marginTop: '15%' }}>
+                <Block style={{ marginTop: '10%' }}>
 
                 </Block>
 
@@ -141,6 +166,7 @@ const Donate = ({ navigation }) => {
                     </Block>
 
                     <Block right style={{ width: '65%', alignItems: 'flex-start' }}>
+                    <Text style={{ fontSize: 15, color: 'red' }}>{dropError}</Text>
                         <Dropdown
                             style={styles.dropdown}
                             placeholderStyle={styles.placeholderStyle}
@@ -160,7 +186,7 @@ const Donate = ({ navigation }) => {
                             }}
                         />
 
-                        <Text style={{ fontSize: 15 }}>Enter Amount: </Text>
+                        <Text style={{ fontSize: 15, color: 'red' }}>{amountError}</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Amount"
@@ -191,7 +217,7 @@ const Donate = ({ navigation }) => {
             </Block>
 
             <Block style={{ alignItems: 'center', marginTop: 80 }}>
-                <Button style={{width: '80%'}} onPress={() => navigation.navigate("CheckOut", {uri: ItemURI, type: cloth, amount: amount})}>DONATE</Button>
+                <Button style={{width: '80%'}} onPress={error}>DONATE</Button>
             </Block>
         </ScrollView>
 
