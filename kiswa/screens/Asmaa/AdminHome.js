@@ -108,7 +108,7 @@ const  AdminHome = ({navigation}) => {
           }}
         >
           <Tab.Item onChange={setIndex} value={0} title="Men" style={{borderBottomColor: index==0? "#5e1e7f":"white", borderBottomWidth:5}} >
-            <FontAwesome  name="home" size={ deviceType=="mobile" ?30: 45} color="#8411CE"/>
+            <FontAwesome  name="home" size={ deviceType=="mobile" ?30: 45} />
             <Text style={{fontSize: normalize(19)  }}>Home</Text>
           </Tab.Item>
           <Tab.Item  onChange={setIndex} value={1} title="Women" style={{borderBottomColor: index==1? "#5e1e7f":"white", borderBottomWidth:5}}>
