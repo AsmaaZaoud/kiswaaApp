@@ -12,18 +12,14 @@ import {
     PixelRatio,
     Image
 } from "react-native";
-import { Block, Checkbox, Text, theme } from "galio-framework";
+import { Block, Text, theme } from "galio-framework";
 
-import { Button, Icon, Input } from "../../components";
+import { Button } from "../../components";
 import { Images, argonTheme } from "../../constants";
 
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-} from "firebase/auth";
 import { auth } from "../../config";
 
-import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../config";
 
 import * as Location from "expo-location";
@@ -43,6 +39,20 @@ export function normalize(size) {
 
 const CheckOut = ({ route, navigation }) => {
 
+    const done = async () => {
+        const docRef = await addDoc(collection(db, "guestDonor"), {
+          phone: phone,
+          email: email,
+          location: location,
+          type: route.params.type,
+          amount: route.params.amount,
+        //   timeSlot: route.params.time
+        });
+        console.log("Document written with ID: ", docRef.id);
+    
+        navigation.navigate("Thankyou")
+      }
+
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
 
@@ -60,11 +70,6 @@ const CheckOut = ({ route, navigation }) => {
     let user = auth?.currentUser?.email;
 
     console.log('user logged in: ', user)
-
-    //store values in database in done function
-    const done = () => {
-        navigation.navigate("Thankyou")
-    };
 
 
     const getLocation = () => {
@@ -85,7 +90,7 @@ const CheckOut = ({ route, navigation }) => {
             }
 
             let currentLocation = await Location.getCurrentPositionAsync({});
-            console.log(currentLocation)
+            console.log('currentLocation',currentLocation)
             setLocation(currentLocation);
         };
         getPermissions();
@@ -176,6 +181,7 @@ const CheckOut = ({ route, navigation }) => {
                                         <Text>X {route.params.amount}</Text>
                                     </Block>
                                 </Block>
+                                {/* <Text>Pick Up: {route.params.time}</Text> */}
                             </Block>
 
                             <View style={styles.container}>
