@@ -170,6 +170,7 @@ const Drivers = ({ navigation }) => {
           </View>
         </Block>
         <DataTable.Header
+          key={1}
           style={{
             borderWidth: 1,
             borderColor: "black",
@@ -291,6 +292,7 @@ const Drivers = ({ navigation }) => {
           </Block>
 
           <DataTable.Header
+            key={1}
             style={{
               borderTopWidth: 0,
               borderBottomWidth: 2,
@@ -387,7 +389,31 @@ const Drivers = ({ navigation }) => {
             </ScrollView>
           </View>
 
-          {flag ? renderCards() : null}
+          {flag && orders.length == 0 ? (
+            <View
+              style={{
+                width: width * 0.5,
+                height: height * 0.2,
+                // borderWidth: 2,
+                justifyContent: "center",
+                margin: "25%",
+                alignContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: normalize(50),
+                  color: "#5e1e7f",
+                }}
+              >
+                No Orders Yet
+              </Text>
+            </View>
+          ) : flag && orders.length != 0 ? (
+            renderCards()
+          ) : null}
         </DataTable>
       </View>
     </Block>

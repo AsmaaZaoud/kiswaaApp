@@ -141,6 +141,7 @@ const Families = ({ navigation }) => {
           </View>
         </Block>
         <DataTable.Header
+          key={1}
           style={{
             borderWidth: 1,
             borderColor: "black",
@@ -222,6 +223,7 @@ const Families = ({ navigation }) => {
       </Block>
 
       <DataTable.Header
+        key={1}
         style={{
           borderTopWidth: 0,
           borderBottomWidth: 2,
