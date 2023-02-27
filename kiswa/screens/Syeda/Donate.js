@@ -145,8 +145,11 @@ const Donate = ({ navigation }) => {
                 </Block>
 
                 <Image
+                style = {{width: 50, height: 50}}
                 source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3161/3161837.png'}}
                 ></Image>
+
+                <View></View>
 
             </Block>
         </ScrollView>
