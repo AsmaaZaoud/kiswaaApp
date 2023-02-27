@@ -19,7 +19,20 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 const Donate = ({ navigation }) => {
 
-    let clothesArr = []
+    const [ItemURI, setItemURI] = useState('')
+
+    const changeCloth = (itemValue) => {
+        console.log(itemValue)
+        setCloth(itemValue)
+        console.log('cloth: ', cloth)
+
+        const selectedData = ClothTypeData.find((item) => item.value === itemValue);
+        console.log('selectedData: ', selectedData)
+        console.log('selectedDataURI: ', selectedData.uri)
+        setItemURI(selectedData.uri)
+    }
+
+
 
     useEffect(() => {
         console.log(cloth)
@@ -28,7 +41,7 @@ const Donate = ({ navigation }) => {
 
     //dropdown
 
-    const [cloth, setCloth] = useState();
+    const [cloth, setCloth] = useState('');
 
     const ClothTypeData = [
         { label: "Blouse", value: "Blouse", uri: 'https://cdn-icons-png.flaticon.com/512/8323/8323136.png' },
@@ -82,56 +95,62 @@ const Donate = ({ navigation }) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.articles}>
             <Block style={styles.container}>
-                {/* <Text>Donate page</Text> */}
+                
+                <Block style={{ marginTop: '15%' }}>
+                </Block>
+                <Text onPress={() => navigation.navigate("Home")} style={{alignSelf: 'flex-start', marginLeft: '5%', fontSize: 20, color: 'purple'}}>Go Back</Text>
 
-                <Block style={{marginTop: '20%'}}></Block>
+                <Block style={{ marginTop: '15%' }}>
+                
+                </Block>
 
-                <Block row style={{borderWidth: 1, borderColor: 'red', width: '100%'}}>
-                    <Block left style={{borderWidth: 1, borderColor: 'blue', width: '30%'}}>
+
+                <Block row style={{ width: '100%', borderWidth: 1, borderColor: 'red' }}>
+                    <Block left style={{ width: '30%' }}>
                         <Image
                             style={styles.Image}
-                            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/8323/8323136.png' }}
+                            source={{ uri: ItemURI }}
                         ></Image>
                     </Block>
 
-                    <Block right style={{borderWidth: 1, borderColor: 'green', width: '65%', alignItems: 'flex-start'}}>
-                    <Dropdown
-                        style={styles.dropdown}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
-                        iconStyle={styles.iconStyle}
-                        data={ClothTypeData}
-                        search
-                        maxHeight={300}
-                        labelField="label"
-                        valueField="value"
-                        placeholder="Select Clothing Item"
-                        searchPlaceholder="Search..."
-                        value={cloth}
-                        onChange={(item) => {
-                            setCloth(item.value);
-                        }}
-                    />
+                    <Block right style={{ width: '65%', alignItems: 'flex-start' }}>
+                        <Dropdown
+                            style={styles.dropdown}
+                            placeholderStyle={styles.placeholderStyle}
+                            selectedTextStyle={styles.selectedTextStyle}
+                            inputSearchStyle={styles.inputSearchStyle}
+                            iconStyle={styles.iconStyle}
+                            data={ClothTypeData}
+                            search
+                            maxHeight={300}
+                            labelField="label"
+                            valueField="value"
+                            placeholder="Select Clothing Item"
+                            searchPlaceholder="Search..."
+                            value={cloth}
+                            onChange={(item) => {
+                                changeCloth(item.value);
+                            }}
+                        />
 
-                    <Text style={{ fontSize: 15 }}>Enter Amount: </Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Amount"
-                        value={amount}
-                        onChangeText={handleNumberChange}
-                        keyboardType="numeric"
-                    />
+                        <Text style={{ fontSize: 15 }}>Enter Amount: </Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Amount"
+                            value={amount}
+                            onChangeText={handleNumberChange}
+                            keyboardType="numeric"
+                        />
                     </Block>
                 </Block>
 
-                <Button
-                    style={{ width: '100%' }}
-                    onPress={() => navigation.navigate("Home")}>
-                    GO BACK
-                </Button>
+                <Image
+                source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3161/3161837.png'}}
+                ></Image>
+
             </Block>
         </ScrollView>
+
     );
 }
 
@@ -139,7 +158,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     dropdown: {
         margin: 16,
