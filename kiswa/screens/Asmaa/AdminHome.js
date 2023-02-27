@@ -29,7 +29,7 @@ import Donors from "./Donors";
 
 
 const { width,height } = Dimensions.get('screen');
- const scale = width / 834;
+ const scale = width / 830;
 export function normalize(size) {
  
   const newSize = size * scale 
@@ -103,8 +103,8 @@ const  AdminHome = ({navigation}) => {
           value={index}
           onChange={setIndex}
           indicatorStyle={{
-            // backgroundColor: "#5e1e7f",
-            // height: 3,
+            backgroundColor: "#fff",
+            height: 0.2,
             
           }}
         >

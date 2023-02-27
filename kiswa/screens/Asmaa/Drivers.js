@@ -4,6 +4,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  Pressable,
   ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -178,17 +179,17 @@ const [ZoneError, setZoneError] = useState(true);
                       </View>
                    
                   </Block>
-                   <DataTable.Header style={{borderWidth:1, borderColor:"black", width:"90%",marginLeft:"3%",backgroundColor:"#c37aed",}}>
-                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Type</DataTable.Title>
-                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Location</DataTable.Title>
-                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Date</DataTable.Title>
+                   <DataTable.Header style={{borderWidth:1, borderColor:"black", width:"95%",marginLeft:"3%",backgroundColor:"#5e1e7f",}}>
+                <DataTable.Title textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Type</DataTable.Title>
+                <DataTable.Title textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Location</DataTable.Title>
+                <DataTable.Title textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Date</DataTable.Title>
 
-                <DataTable.Title numeric textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Time</DataTable.Title>
+                <DataTable.Title numeric textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Time</DataTable.Title>
 
               </DataTable.Header>
       {orders && orders.map((x)=>
         <DataTable.Row key={x.user} 
-                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"#ebdbf5", borderWidth:1}}
+                    style={{width:"95%", height:"12%", marginLeft:"3%", backgroundColor:"#f3e5f5", borderWidth:1}}
 
         
         >
@@ -207,13 +208,6 @@ const [ZoneError, setZoneError] = useState(true);
    
     }
 
-    // const changeZone =(zone,i) =>{
-    //     console.log(zone)
-    //     console.log(i)
-    //     const { email, ...rest } = i;
-    //     console.log(email)
-        
-    // }
   const update = async (zone,obj) => {
     const { email, ...rest } = obj;
     await setDoc(
@@ -244,7 +238,7 @@ const [ZoneError, setZoneError] = useState(true);
                         <FontAwesome name="user" size={deviceType=="mobile" ?30: 45}/> 
                     <Text style = {{ fontSize: deviceType=="mobile" ?20: 30, marginLeft:"5%"}}>Driverss</Text>
                       </View>
-                    <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}>
+                    <Button  color="#6a1b9a"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}>
                       
                       <Text style={{fontSize:deviceType=="mobile" ?18: 26, color:"#FFF"}}>Add</Text> 
                       
@@ -252,26 +246,34 @@ const [ZoneError, setZoneError] = useState(true);
                   </Block>
               
                 <DataTable.Header style={{borderTopWidth:0,borderBottomWidth:2, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white",}}>
+                <DataTable.Title textStyle={{fontSize:normalize(25) }}>User</DataTable.Title>
+
                 <DataTable.Title textStyle={{fontSize:normalize(25) }}>Name</DataTable.Title>
-                <DataTable.Title textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title>
+                {/* <DataTable.Title  textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title> */}
                 {/* <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title> */}
                 <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Zone</DataTable.Title>
-                <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Zone</DataTable.Title>
+                <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Delete</DataTable.Title>
 
 
               </DataTable.Header>
               {drivers && drivers.map((x,i)=>
                 <DataTable.Row key={x.email} onPress={()=>readOne(x.email)}
-                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}>
+                    style={{width:"90%", height:"10%", marginLeft:"3%", backgroundColor:"white"}}>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>
+                 <Image style={styles.profileImage} source={{
+                    uri: x.image
+                      ? x.image
+                      : "https://cdn.onlinewebfonts.com/svg/img_266351.png",
+                  }}/>
+                  </DataTable.Cell>
                   
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.fname}</DataTable.Cell>
-                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell>
-                {/* <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell> */}
+                {/* <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell> */}
                 <DataTable.Cell numeric >
-                  <Dropdown
+                  <Dropdown 
                         
                         style={[styles.smallInput, {padding:11}]}
-                        placeholderStyle={{fontSize:normalize(20)}}
+                        placeholderStyle={{fontSize:normalize(23), textAlign:"right"}}
                         selectedTextStyle={{fontSize:normalize(10)}}
                         data={zones}
                         maxHeight={160}
@@ -289,8 +291,14 @@ const [ZoneError, setZoneError] = useState(true);
                    
             
               </DataTable.Cell>
-                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>X</DataTable.Cell>
-                  </DataTable.Row>
+                 <DataTable.Cell numeric  >
+                 <Pressable style={{borderColor:"#bdbdbd", borderWidth:1,backgroundColor:"#bdbdbd",borderRadius:"5%"}} >
+                  <Text style={{fontSize:normalize(25), width:normalize(100),color:"blac", textAlign:"center"}}>X</Text>
+                 </Pressable>
+                       
+                  
+                    </DataTable.Cell>
+                 </DataTable.Row>
                 
                 )}
 
@@ -342,6 +350,15 @@ const styles = StyleSheet.create({
     textAlign:"left"
 
 
+  },
+  profileImage: {
+   width: width*0.03,
+    height: width*0.03,
+   borderRadius: "30%"
+  },
+  tabletitle:{
+    fontWeight:"bold", 
+    color:"white"
   },
   formContent: {
     flexDirection: 'row',
@@ -405,16 +422,16 @@ const styles = StyleSheet.create({
     //color:"purple",
     fontWeight:"bold",
   },
-  rowData:
-  {color:"black", fontSize:width*0.04},
-   smallInput:{
-    width:width*0.25,
-    //height:10,
-    // backgroundColor:"white",
-      borderRadius:10,
-      //padding:15,
-      fontSize: normalize(20),
-      //borderWidth:0.3
+  rowData:{
+    color:"black", 
+    fontSize:width*0.04
+  },
+   
+  smallInput:{
+    width:width*0.2,
+    // borderWidth:2,
+    fontSize: normalize(20),
+    textAlign:"right"
   }
 })
 
