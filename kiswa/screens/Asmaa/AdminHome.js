@@ -103,32 +103,32 @@ const  AdminHome = ({navigation}) => {
           value={index}
           onChange={setIndex}
           indicatorStyle={{
-            backgroundColor: "#5e1e7f",
-            height: 3,
+            // backgroundColor: "#5e1e7f",
+            // height: 3,
             
           }}
         >
-          <Tab.Item onChange={setIndex} value={0} title="Men" >
+          <Tab.Item onChange={setIndex} value={0} title="Men" style={{borderBottomColor: index==0? "#5e1e7f":"white", borderBottomWidth:5}} >
             <FontAwesome  name="home" size={ deviceType=="mobile" ?30: 45} color="#8411CE"/>
             <Text style={{fontSize: normalize(19)  }}>Home</Text>
           </Tab.Item>
-          <Tab.Item value={1} title="Women" titleStyle={{ fontSize: 12 }}>
+          <Tab.Item  onChange={setIndex} value={1} title="Women" style={{borderBottomColor: index==1? "#5e1e7f":"white", borderBottomWidth:5}}>
               <FontAwesome  name="car" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{fontSize: normalize(19)  }}>Drivers</Text>
           </Tab.Item>
-          <Tab.Item value={2} title="Boys">
+          <Tab.Item onChange={setIndex} value={2} title="Boys" style={{borderBottomColor: index==2? "#5e1e7f":"white", borderBottomWidth:5}}>
              <FontAwesome  name="user" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{ fontSize:  normalize (19) }}>Families</Text>
           </Tab.Item>
-          <Tab.Item value={3} title="Girls" titleStyle={{ fontSize: 12 }}>
+          <Tab.Item  onChange={setIndex} value={3} title="Girls" style={{borderBottomColor: index==3? "#5e1e7f":"white", borderBottomWidth:5}}>
               <FontAwesome  name="gift" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{fontSize: normalize(19)  }}>Donors</Text>
           </Tab.Item>
-            <Tab.Item value={4} title="Girls" titleStyle={{ fontSize: 12 }}>
+            <Tab.Item onChange={setIndex} value={4} title="Girls" style={{borderBottomColor: index==4? "#5e1e7f":"white", borderBottomWidth:5}}>
               <FontAwesome  name="users" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{fontSize: normalize(19)  }}>Clerk</Text>
           </Tab.Item>
-           <Tab.Item value={5} title="Girls" titleStyle={{ fontSize: 12 }}>
+           <Tab.Item  onChange={setIndex} value={5} title="Girls" style={{borderBottomColor: index==5? "#5e1e7f":"white", borderBottomWidth:5}}>
               <FontAwesome  name="database" size={ deviceType=="mobile" ?30: 45}/>
             <Text style={{ fontSize: normalize(19)  }}>Inventory</Text>
           </Tab.Item>
