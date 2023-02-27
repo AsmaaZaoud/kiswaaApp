@@ -111,47 +111,38 @@ class Header extends React.Component {
   renderSearch = () => {
     const { navigation } = this.props;
     return (
-      <Block right>
+      <Block style={{justifyContent: 'flex-end', marginRight: '-80%'}}>
         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
         <Image
-        style={{width: 30, height: 30, marginRight: '5%'}}
+        style={{width: 30, height: 30, marginLeft: '50%'}}
         source={{
           uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
         }}
       />
       </TouchableOpacity>
-      <Text style={{marginRight: '5%'}}>Log In/ Sign Up</Text>
-      <Input
-        right
-        color="black"
-        style={styles.search}
-        placeholder="What are you looking for?"
-        placeholderTextColor={'#8898AA'}
-        onFocus={() => navigation.navigate('Pro')}
-        iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
-      />
+      <Text style={{marginLeft: '18%'}}>Log In/ Sign Up</Text>
       </Block>
     );
   }
   renderOptions = () => {
     const { navigation, optionLeft, optionRight } = this.props;
 
-    return (
-      <Block row style={styles.options}>
-        {/* <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon name="diamond" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON} />
-            <Text size={16} style={styles.tabTitle}>{optionLeft || 'Beauty'}</Text>
-          </Block>
-        </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon size={16} name="bag-17" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON}/>
-            <Text size={16} style={styles.tabTitle}>{optionRight || 'Fashion'}</Text>
-          </Block>
-        </Button> */}
-      </Block>
-    );
+    // return (
+    //   // <Block row style={styles.options}>
+    //     {/* <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
+    //       <Block row middle>
+    //         <Icon name="diamond" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON} />
+    //         <Text size={16} style={styles.tabTitle}>{optionLeft || 'Beauty'}</Text>
+    //       </Block>
+    //     </Button>
+    //     <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
+    //       <Block row middle>
+    //         <Icon size={16} name="bag-17" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON}/>
+    //         <Text size={16} style={styles.tabTitle}>{optionRight || 'Fashion'}</Text>
+    //       </Block>
+    //     </Button> */}
+    //   {/* </Block> */}
+    // );
   }
   renderTabs = () => {
     const { tabs, tabIndex, navigation } = this.props;

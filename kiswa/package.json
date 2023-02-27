@@ -38,7 +38,7 @@
     "prop-types": "^15.7.2",
     "react": "17.0.2",
     "react-native": "0.68.2",
-    "react-native-element-dropdown": "^2.7.0",
+    "react-native-element-dropdown": "^2.7.1",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-modal-dropdown": "git+https://github.com/siemiatj/react-native-modal-dropdown.git",
