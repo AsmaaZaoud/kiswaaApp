@@ -15,7 +15,6 @@ import {
 } from "react-native";
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Donate = ({ navigation }) => {
 
@@ -90,26 +89,56 @@ const Donate = ({ navigation }) => {
         }
     };
 
+    //time intervals
+
+    const [time, setTime] = useState('')
+
+    const [flag1, setFlag1] = useState(0)
+    const [flag2, setFlag2] = useState(0)
+    const [flag3, setFlag3] = useState(0)
+
+    const changeColor1 = () => {
+        setFlag1(1)
+        setFlag2(0)
+        setFlag3(0)
+        setTime('8AM - 12PM')
+    }
+
+    const changeColor2 = () => {
+        setFlag1(0)
+        setFlag2(1)
+        setFlag3(0)
+        setTime('12PM - 6PM')
+    }
+
+    const changeColor3 = () => {
+        setFlag1(0)
+        setFlag2(0)
+        setFlag3(1)
+        setTime('6PM - 10PM')
+    }
+
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.articles}>
             <Block style={styles.container}>
-                
-                <Block style={{ marginTop: '15%' }}>
-                </Block>
-                <Text onPress={() => navigation.navigate("Home")} style={{alignSelf: 'flex-start', marginLeft: '5%', fontSize: 20, color: 'purple'}}>Go Back</Text>
 
                 <Block style={{ marginTop: '15%' }}>
-                
+                </Block>
+                <Text onPress={() => navigation.navigate("Home")} style={{ alignSelf: 'flex-start', marginLeft: '5%', fontSize: 20, color: 'purple' }}>Go Back</Text>
+
+                <Block style={{ marginTop: '15%' }}>
+
                 </Block>
 
 
-                <Block row style={{ width: '100%', borderWidth: 1, borderColor: 'red' }}>
+                <Block row style={{ width: '100%' }}>
                     <Block left style={{ width: '30%' }}>
                         <Image
                             style={styles.Image}
-                            source={{ uri: ItemURI }}
+                            source={{ uri: ItemURI == '' ? 'https://cdn-icons-png.flaticon.com/128/6834/6834320.png' : ItemURI }}
                         ></Image>
                     </Block>
 
@@ -144,13 +173,27 @@ const Donate = ({ navigation }) => {
                     </Block>
                 </Block>
 
-                <Image
-                style = {{width: 50, height: 50}}
-                source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3161/3161837.png'}}
-                ></Image>
+                <Block style={{ borderWidth: 0.5, borderColor: 'black', margin: 10, width: '100%' }}></Block>
 
-                <View></View>
+                {/* <Image
+                    style={{ width: 50, height: 50 }}
+                    source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3161/3161837.png' }}
+                ></Image> */}
 
+            </Block>
+
+            <Block style={{ margin: 20 }}></Block>
+
+            <Text style={{ fontSize: 20, margin: 15 }}>Select which time interval for pick-up of donation:</Text>
+
+            <Block style={{ flexDirection: 'row', flexWrap: 'wrap', margin: 10 }}>
+                <Button onPress={changeColor1} style={{ backgroundColor: flag1 === 0 ? 'purple' : 'green' }}>8AM - 12PM</Button>
+                <Button onPress={changeColor2} style={{ backgroundColor: flag2 === 0 ? 'purple' : 'green' }}>12PM - 6PM</Button>
+                <Button onPress={changeColor3} style={{ backgroundColor: flag3 === 0 ? 'purple' : 'green' }}>6PM - 10PM</Button>
+            </Block>
+
+            <Block style={{ alignItems: 'center', marginTop: 80 }}>
+                <Button style={{width: '80%'}} onPress={() => navigation.navigate("CheckOut")}>DONATE</Button>
             </Block>
         </ScrollView>
 
