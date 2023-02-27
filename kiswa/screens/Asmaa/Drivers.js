@@ -18,7 +18,7 @@ import { Dropdown } from "react-native-element-dropdown";
 //FireBase
 import { auth } from "../../config";
 
-import { doc, query, getDocs, getDoc,addDoc ,collection, setDoc} from "firebase/firestore";
+import { doc, query, getDocs, getDoc,addDoc ,collection, setDoc, deleteDoc} from "firebase/firestore";
 import { db } from "../../config";
 //argon
 import { Images, argonTheme, articles } from "../../constants/";
@@ -169,6 +169,19 @@ const [ZoneError, setZoneError] = useState(true);
     setFlag(true)
   };
 
+      
+const deleteDriver = async (id) => {
+    const driverDoc = doc(db, "drivers", id); //remove driver
+    await deleteDoc(driverDoc)
+      .then(() => {
+        alert("data delted");
+        readAllWhere()
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   const renderCards = () => {
   return(
    
@@ -246,9 +259,9 @@ const [ZoneError, setZoneError] = useState(true);
                   </Block>
               
                 <DataTable.Header style={{borderTopWidth:0,borderBottomWidth:2, borderColor:"black", width:"90%",marginLeft:"3%", backgroundColor:"white",}}>
-                <DataTable.Title textStyle={{fontSize:normalize(25) }}>User</DataTable.Title>
-
                 <DataTable.Title textStyle={{fontSize:normalize(25) }}>Name</DataTable.Title>
+
+                <DataTable.Title textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title>
                 {/* <DataTable.Title  textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title> */}
                 {/* <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title> */}
                 <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Zone</DataTable.Title>
@@ -260,14 +273,10 @@ const [ZoneError, setZoneError] = useState(true);
                 <DataTable.Row key={x.email} onPress={()=>readOne(x.email)}
                     style={{width:"90%", height:"10%", marginLeft:"3%", backgroundColor:"white"}}>
                 <DataTable.Cell textStyle={{fontSize:normalize(25) }}>
-                 <Image style={styles.profileImage} source={{
-                    uri: x.image
-                      ? x.image
-                      : "https://cdn.onlinewebfonts.com/svg/img_266351.png",
-                  }}/>
+                {x.fname}
                   </DataTable.Cell>
                   
-                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.fname}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.phone}</DataTable.Cell>
                 {/* <DataTable.Cell textStyle={{fontSize:normalize(25) }}>{x.email}</DataTable.Cell> */}
                 <DataTable.Cell numeric >
                   <Dropdown 
@@ -292,7 +301,7 @@ const [ZoneError, setZoneError] = useState(true);
             
               </DataTable.Cell>
                  <DataTable.Cell numeric  >
-                 <Pressable style={{borderColor:"#bdbdbd", borderWidth:1,backgroundColor:"#bdbdbd",borderRadius:"5%"}} >
+                 <Pressable onPress={()=>deleteDriver(x.email)} style={{borderColor:"#bdbdbd", borderWidth:1,backgroundColor:"#bdbdbd",borderRadius:"5%"}} >
                   <Text style={{fontSize:normalize(25), width:normalize(100),color:"blac", textAlign:"center"}}>X</Text>
                  </Pressable>
                        

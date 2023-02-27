@@ -68,8 +68,7 @@ const  AdminHome = ({navigation}) => {
   const groups = { 0: "Men", 1: "Women", 2: "Boys", 3: "Girls" };
 
 
-    
-    
+
     
   
 

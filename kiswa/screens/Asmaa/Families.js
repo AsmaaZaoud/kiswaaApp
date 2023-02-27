@@ -53,56 +53,12 @@ const categories = [
 const Families = ({navigation}) => {
 
   const [deviceType, setDeviceType] =useState("")
+  const [hover, setHover] =useState(false)
 
-  const data = [
-    {
-      id: 1,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar1.png',
-      description: 'Rajo ',
-    },
-    {
-      id: 2,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar2.png',
-      description: 'User 2',
-    },
-    {
-      id: 3,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-      description: 'User 3',
-    },
-    {
-      id: 4,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar4.png',
-      description: 'User 4',
-    },
-    {
-      id: 5,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar5.png',
-      description: 'User 5',
-    },
-    {
-      id: 6,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar6.png',
-      description: 'User 6',
-    },
-    {
-      id: 7,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar1.png',
-      description: 'User 7',
-    },
-    {
-      id: 8,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar2.png',
-      description: 'User 8',
-    },
-    {
-      id: 9,
-      icon: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-      description: 'User 9',
-    },
-  ]
+ 
 
   useEffect(() => {
+    setFlag(false)
     readAllWhere();
      width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
 
@@ -130,6 +86,7 @@ const Families = ({navigation}) => {
     const [requests, setRequests] = useState([]);
    //  let user = "Wsd@ass.com"
    const readOne = async (user) => {
+    setHover(user)
     let temp = [];
     const q = query(collection(db, "familyRequests"),where("familyID", "==", user));
     const docs = await getDocs(q);
@@ -161,17 +118,17 @@ const Families = ({navigation}) => {
                       </View>
                    
                   </Block>
-                   <DataTable.Header style={{borderWidth:1, borderColor:"black", width:"90%",marginLeft:"3%",backgroundColor:"#c37aed",}}>
-                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Cart</DataTable.Title>
-                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Status</DataTable.Title>
-                <DataTable.Title textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Email</DataTable.Title>
+                   <DataTable.Header style={{borderWidth:1, borderColor:"black", width:"90%",marginLeft:"3%",backgroundColor:"#5e1e7f",}}>
+                <DataTable.Title textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Cart</DataTable.Title>
+                <DataTable.Title textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Status</DataTable.Title>
+                <DataTable.Title textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Email</DataTable.Title>
 
-                {/* <DataTable.Title numeric textStyle={{fontSize: normalize(25), fontWeight:"bold"}}>Time</DataTable.Title> */}
+                {/* <DataTable.Title numeric textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Time</DataTable.Title> */}
 
               </DataTable.Header>
       {requests && requests.map((x)=>
         <DataTable.Row key={x.user} 
-                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"#ebdbf5", borderWidth:1}}
+                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor: "#f3e5f5", borderWidth:1}}
 
         
         >
@@ -214,15 +171,15 @@ const Families = ({navigation}) => {
                 <DataTable.Title numeric textStyle={{fontSize:deviceType == "mobile" ? width*0.04 : width*0.025, fontWeight:"bold"}}>Phone</DataTable.Title>
 
               </DataTable.Header>
-               
-                
+               <View height={flag? height*0.2 : height*0.5}>
+                <ScrollView>
       {drivers && drivers.map((x)=>
         <DataTable.Row key={x.email} onPress={()=>readOne(x.email)}
-                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:"white"}}
+                    style={{width:"90%", height:"12%", marginLeft:"3%", backgroundColor:hover==x.email ? "#f3e5f5":"white"}}
 
         >
                   
-                <DataTable.Cell textStyle={{fontSize: normalize(25)}}>{x.fname}</DataTable.Cell>
+                <DataTable.Cell textStyle={{fontSize: normalize(25)}}>{x.firstName}</DataTable.Cell>
                 <DataTable.Cell textStyle={{fontSize: normalize(25)}}>{x.email}</DataTable.Cell>
                 <DataTable.Cell numeric textStyle={{fontSize: normalize(25)}}>{x.phone}</DataTable.Cell>
 
@@ -230,7 +187,8 @@ const Families = ({navigation}) => {
             </DataTable.Row>
                 
               )}
-             
+             </ScrollView>
+             </View>
             
 
                {flag?
@@ -255,6 +213,11 @@ const styles = StyleSheet.create({
     //paddingTop: 50,
     paddingHorizontal: "5%",
     height:400
+  },
+  
+  tabletitle:{
+    fontWeight:"bold", 
+    color:"white"
   },
   head:{
     // flexDirection:"row",

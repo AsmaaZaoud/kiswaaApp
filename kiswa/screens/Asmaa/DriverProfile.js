@@ -68,7 +68,7 @@ const DriverProfile = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
 
   // let user = auth?.currentUser?.email;
-  let user = "rajo@driver.com";
+  let user = "sam@mail.com";
 
   const [data, setData] = useState({});
 
@@ -297,7 +297,7 @@ const DriverProfile = ({ navigation }) => {
 
   return (
     <Block flex middle style={{ backgroundColor: "white", flex: 1 }}>
-      <View style={{ backgroundColor: "#8C02FE", width: width }}>
+      <View style={{ backgroundColor: "#5e1e7f", width: width }}>
         <View style={styles.topl}>
           <Pressable
             onPress={() => navigation.goBack()}
@@ -637,7 +637,7 @@ const styles = StyleSheet.create({
     padding: "2%",
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#8C02FE",
+    backgroundColor: "#5e1e7f",
     marginTop: "3%",
   },
   xsmalInput: {

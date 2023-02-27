@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet,Image, Dimensions,Platform, PixelRatio, ScrollView, Text, View, Pressable } from 'react-native';
 import { Block, theme } from 'galio-framework';
-import {Feather,AntDesign,Ionicons,MaterialCommunityIcons} from "react-native-vector-icons"
+import {Feather,FontAwesome,Ionicons,MaterialCommunityIcons} from "react-native-vector-icons"
 //Firebase
 import { auth } from "../../config";
 import { doc, query, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
@@ -30,7 +30,7 @@ const DriverHome = ({navigation}) => {
     readOrders()
     setArr(pickup)
     
-  }, [arr]);
+  }, []);
 
   const onSignOut = () => {
     signOut(auth)
@@ -95,7 +95,7 @@ const DriverHome = ({navigation}) => {
   const [deliver ,setDeliver] = useState([])
 
 
-  let user = "arham@driver.com"
+  let user = "sam@mail.com"
   const readOrders = async () => {
     let temp = [];
     let pick = []
@@ -110,7 +110,7 @@ const DriverHome = ({navigation}) => {
       t.date = doc.data().dateTime.toDate().toLocaleDateString()
       temp.push(t);
       // temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+      console.log(doc.id, " => ", doc.data());
       doc.data().type =="pickup" ? pick.push(t):deliv.push(t)
     });
     setOrders(temp);
@@ -124,7 +124,7 @@ const DriverHome = ({navigation}) => {
         
       <Block flex  >
          
-        <View style={{backgroundColor:"#8C02FE", width:width}}>
+        <View style={{backgroundColor:"#5e1e7f", width:width}}>
           <View style={styles.topl}>
             <Image source={require('../../assets/imgs/kiswaLogo.png')} style={{width:150, height:50}} width={width*0.27} height={height*0.05} />
             <Pressable onPress={onSignOut}>
@@ -156,7 +156,7 @@ const DriverHome = ({navigation}) => {
 
           </View>
           <View style={styles.userCard}>
-               <Feather name="user" size={50} />
+               <FontAwesome name="user-circle-o" size={50} />
                <View style={{marginLeft:10}}>
                   <Text style={{fontSize:normalize(15), fontWeight:"bold"}}>Name </Text>
                   <Text style={{fontSize:normalize(15),fontWeight:"bold"}}>Phone </Text>
@@ -166,22 +166,22 @@ const DriverHome = ({navigation}) => {
          
           <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
           <View style={[styles.dataView,{flexDirection:"row"}]}>
-           <Ionicons name="md-today-sharp" size={30} />
+           <Ionicons name="md-today-sharp" size={30} color="#5e1e7f"/>
             <Text style={styles.dataTitles}>{x.date}</Text>
           </View>
           <View style={[styles.dataView,{flexDirection:"row"}]}>
-           <Ionicons name="time-outline" size={30} />
+           <Ionicons name="time-outline" size={30} color="#5e1e7f" />
             <Text style={styles.dataTitles}>{x.time} PM</Text>
           </View>
           </View>
 
           <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
           <View style={[styles.dataView,{flexDirection:"row"}]}>
-           <Ionicons name="location-outline" size={30} />
+           <Ionicons name="location-outline" size={30} color="#5e1e7f" />
             <Text style={styles.dataTitles}>{x.location}</Text>
           </View>
           <View style={[styles.dataView,{flexDirection:"row"}]}>
-           <Ionicons name="map-outline" size={30} />
+           <Ionicons name="map-outline" size={30} color="#5e1e7f" />
             <Text style={styles.dataTitles}>Open Map</Text>
           </View>
           </View>
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     padding:"2%",
     flexDirection:'row',
     justifyContent:"space-between",
-    backgroundColor:"#8C02FE",
+    backgroundColor:"#5e1e7f",
     marginTop:"3%"
   },
   nav:{
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
      fontSize:normalize(19), 
   },
   selected:{
-    color: "#8C02FE",
+    color: "#5e1e7f",
      fontSize:normalize(19), 
      fontWeight:"bold"
   },
@@ -247,9 +247,10 @@ const styles = StyleSheet.create({
     borderRadius: "10%",
   },
   cardTitle: {
-    fontSize: normalize(17),
+    fontSize: normalize(20),
     marginBottom: "6%",
-  },
+    // color:"#5e1e7f"
+   },
   userCard:{
     borderWidth:1, 
     borderColor:"lightgrey",
@@ -273,13 +274,13 @@ const styles = StyleSheet.create({
 
   },
   dataTitles: {
-    fontSize: normalize(15) ,
+    fontSize: normalize(19) ,
     // color: '#999',
-   // marginTop:"5%",
+   marginTop:"2%",
     marginLeft:"5%"
   },
   pickupButtonContainer: {
-    backgroundColor: '#8C02FE',
+    backgroundColor: '#5e1e7f',
     borderRadius: "7%",
     width:width*0.4,
     margin:"6%"
