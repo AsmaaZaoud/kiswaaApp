@@ -12,10 +12,14 @@ const Home = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
         <Button
-          style={{ width: '50%', alignSelf: 'center' }}
+          style={{ width: '80%', alignSelf: 'center', borderRadius: 20, marginTop: 30 }}
+          onPress={() => navigation.navigate("Donate")}
         >
-          DONATE NOW
+          <Text style={{fontSize: 25, color: 'white'}}>DONATE  NOW</Text>
         </Button>
+
+        <Block style={{margin: 30}}></Block>
+
         <Block flex>
             <Block flex row style={styles.request}>
             
@@ -79,7 +83,7 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   home: {
     width: width,
-    backgroundColor: '#490066'
+    // backgroundColor: '#490066'
   },
   articles: {
     width: width - theme.SIZES.BASE * 2,
@@ -89,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DCD0FF',
     borderRadius: 20,
     height: 100,
-    marginVertical: 10
+    marginVertical: 5
   }
 });
 

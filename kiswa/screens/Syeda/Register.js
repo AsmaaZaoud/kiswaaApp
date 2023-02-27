@@ -62,7 +62,7 @@ const Register = ({ navigation }) => {
 
   const [stat, setStat] = useState("denied");
 
-  let user = auth.currentUser.email;
+  let user = auth?.currentUser?.email;
 
   console.log('user logged in: ', user)
 
