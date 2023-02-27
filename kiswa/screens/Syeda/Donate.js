@@ -23,6 +23,7 @@ const Donate = ({ navigation }) => {
 
     useEffect(() => {
         console.log(cloth)
+        console.log(amount)
     })
 
     //dropdown
@@ -71,7 +72,6 @@ const Donate = ({ navigation }) => {
     const [amount, setAmount] = useState('');
 
     const handleNumberChange = (text) => {
-        // Only allow numbers
         if (/^\d+$/.test(text) || text === '') {
             setAmount(text);
         }
@@ -82,7 +82,10 @@ const Donate = ({ navigation }) => {
             <Text>Donate page</Text>
 
 
-            <Image></Image>
+            <Image
+            style={styles.Image}
+            // source={{uri: cloth}}
+            ></Image>
        
 
             <Dropdown
@@ -109,7 +112,7 @@ const Donate = ({ navigation }) => {
                 style={styles.input}
                 placeholder="Amount"
                 value={amount}
-                onChangeText={setAmount}
+                onChangeText={handleNumberChange}
                 keyboardType="numeric"
             />
 
@@ -162,6 +165,69 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10
       },
+      Image: {
+        width: 100,
+        height: 100
+      }
 })
 
 export default Donate;
+
+
+
+
+
+// import React, { useState } from 'react';
+// import { View, Text, Picker } from 'react-native';
+
+// const App = () => {
+//   const [selectedValue, setSelectedValue] = useState('');
+//   const data = [
+//     { id: 1, name: 'John' },
+//     { id: 2, name: 'Jane' },
+//     { id: 3, name: 'Bob' },
+//   ];
+
+//   const handleValueChange = (itemValue) => {
+//     setSelectedValue(itemValue);
+//   };
+
+//   const selectedData = data.find((item) => item.name === selectedValue);
+
+//   return (
+//     <View>
+//       <Picker selectedValue={selectedValue} onValueChange={handleValueChange}>
+//         <Picker.Item label="Select a name" value="" />
+//         {data.map((item) => (
+//           <Picker.Item key={item.id} label={item.name} value={item.name} />
+//         ))}
+//       </Picker>
+//       {selectedData ? (
+//         <Text>{`Selected data: ${selectedData.id} - ${selectedData.name}`}</Text>
+//       ) : (
+//         <Text>Please select a name</Text>
+//       )}
+//     </View>
+//   );
+// };
+
+// export default App;
+
+
+
+// In this example, we use the Picker component to create a dropdown of names. We initialize the selectedValue state variable to an empty string, which represents the currently selected value in the dropdown. We also define an array of data objects, each with an id and a name property.
+
+// We define a handleValueChange function that takes the selected value as an argument and updates the selectedValue state variable accordingly.
+
+// We use the find array method to search for an object in the data array that has a name property equal to the currently selected value. We store the result in the selectedData variable.
+
+// We then render a message that displays the id and name properties of the selected data, or a prompt to select a name if no data is currently selected.
+
+// We pass the selectedValue state variable as the selectedValue prop of the Picker component, so it reflects the currently selected value. We also pass the handleValueChange function as the onValueChange prop, so it's called whenever the selected value changes.
+
+// We use the map array method to render a Picker.Item component for each object in the data array, with the name property as the label and value.
+
+// You can customize the data and rendering of the dropdown to suit your needs, and use different array methods to retrieve the corresponding value from the array.
+
+
+
