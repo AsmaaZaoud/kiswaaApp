@@ -5,7 +5,8 @@ import {
   StyleSheet,
   StatusBar,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 
@@ -15,83 +16,104 @@ import argonTheme from "../../constants/Theme";
 import Images from "../../constants/Images";
 
 const Onboarding = ({ navigation }) => {
-
   return (
     <Block flex style={styles.container}>
-      <Block center>
-        <Image source={require('../../assets/imgs/kiswaLogo.jpg')} style={styles.logo} />
+      <TouchableOpacity onPress={() => navigation.replace("Login")}>
+        <Text style={{ marginTop: "17%", marginLeft: "85%", color: "#C5C5C5" }}>
+          Login
+        </Text>
+      </TouchableOpacity>
+
+      <Block center style={{ marginTop: "20%" }}>
+        <Image
+          source={require("../../assets/Fatima/Logo.png")}
+          style={styles.logo}
+        />
       </Block>
 
-
-      <Block center style={{ width: '90%' }}>
-        <Text style={{ color: 'white', fontSize: 15, textAlign: 'center' }}>
-          Kiswa is a free platform on which you can either choose to become a donor and donate clothes
-          or a receiver and receive clothes.
+      {/* <Block center style={{ width: "90%", marginTop: "30%" }}>
+        <Text style={{ color: "white", fontSize: 15, textAlign: "center" }}>
+          Kiswa is a free platform on which you can either choose to become a
+          donor and donate clothes or a receiver and receive clothes.
         </Text>
 
-        <Text style={{ color: 'white', fontSize: 15, textAlign: 'center' }}>
-          We accept clothes of all quality types. The good quality ones go to people who requested them
-          and the worn out ones go to recycling organizations.
+        <Text style={{ color: "white", fontSize: 15, textAlign: "center" }}>
+          We accept clothes of all quality types. The good quality ones go to
+          people who requested them and the worn out ones go to recycling
+          organizations.
         </Text>
-      </Block>
+      </Block> */}
 
-
-      <Block style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flex:1 }}>
-        <Block>
+      {/* <Block
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+        }}
+      > */}
+      <Block
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Block style={{ marginLeft: "3%" }}>
           <TouchableOpacity onPress={() => navigation.replace("App")}>
-          <Image
-            style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20 }}
-            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/812/812319.png' }}
-          ></Image>
+            <Image
+              style={styles.images}
+              source={require("../../assets/Fatima/heart.png")}
+            ></Image>
           </TouchableOpacity>
-          <Text style={{color: 'white', textAlign: 'center'}}>DONOR</Text>
+          <Text style={styles.lable}>DONATE</Text>
         </Block>
-        <Block>
-        <TouchableOpacity onPress={() => navigation.replace("RegisterFamily")}>
-          <Image
-            style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20  }}
-            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2904/2904889.png' }}
-          ></Image>
+        <Block style={{ marginLeft: "17%" }}>
+          <TouchableOpacity
+            onPress={() => navigation.replace("RegisterFamily")}
+          >
+            <Image
+              style={styles.images}
+              source={require("../../assets/Fatima/donation.png")}
+            ></Image>
+
+            <Text style={styles.lable}>RECEIVE</Text>
           </TouchableOpacity>
-          <Text style={{color: 'white', textAlign: 'center'}}>RECEIVER</Text>
         </Block>
       </Block>
-   
-
     </Block>
+    // </Block>
   );
-
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#541178'
-  },
-  padded: {
-    paddingHorizontal: theme.SIZES.BASE * 2,
-    position: "relative",
-    bottom: theme.SIZES.BASE,
-    zIndex: 2,
-  },
-  button: {
-    width: width - theme.SIZES.BASE * 4,
-    height: theme.SIZES.BASE * 3,
-    shadowRadius: 0,
-    shadowOpacity: 0
+    backgroundColor: "#4B0095",
   },
   logo: {
-    width: 300,
-    height: 200,
-    zIndex: 2,
-    position: 'relative',
-    marginTop: '5%'
+    width: width - theme.SIZES.BASE,
+    height: theme.SIZES.BASE * 15,
+    position: "relative",
+    marginTop: "10%",
+    resizeMode: "contain",
   },
   title: {
-    marginTop: '-5%'
+    marginTop: "-5%",
   },
   subTitle: {
-    marginTop: 20
-  }
+    marginTop: 20,
+  },
+  lable: {
+    color: "#C5C5C5",
+    textAlign: "center",
+    fontFamily: "Cochin",
+    // justifyContent: "center",
+  },
+  images: {
+    width: width - theme.SIZES.BASE * 18,
+    height: theme.SIZES.BASE * 18,
+    resizeMode: "contain",
+  },
 });
 
 export default Onboarding;
