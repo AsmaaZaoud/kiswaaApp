@@ -31,8 +31,6 @@ const Donate = ({ navigation }) => {
         setItemURI(selectedData.uri)
     }
 
-
-
     useEffect(() => {
         console.log(cloth)
         console.log(amount)
@@ -193,7 +191,7 @@ const Donate = ({ navigation }) => {
             </Block>
 
             <Block style={{ alignItems: 'center', marginTop: 80 }}>
-                <Button style={{width: '80%'}} onPress={() => navigation.navigate("CheckOut")}>DONATE</Button>
+                <Button style={{width: '80%'}} onPress={() => navigation.navigate("CheckOut", {uri: ItemURI, type: cloth, amount: amount})}>DONATE</Button>
             </Block>
         </ScrollView>
 
