@@ -19,7 +19,7 @@ const Onboarding = ({ navigation }) => {
   return (
     <Block flex style={styles.container}>
       <Block center>
-        <Image source={require("../../assets/imgs/kiswaLogo.jpg")} />
+        {/* <Image source={require("../../assets/imgs/kiswaLogo.jpg")} /> */}
         <TouchableOpacity onPress={() => navigation.replace("Login")}>
           <Text
             style={{ marginTop: "17%", marginLeft: "85%", color: "#C5C5C5" }}
