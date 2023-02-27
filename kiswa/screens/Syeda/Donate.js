@@ -121,6 +121,10 @@ const Donate = ({ navigation }) => {
 
     const [amountError, setAmountError] = useState('')
 
+    const [dateError, setDateError] = useState('')
+
+    const [timeError, setTimeError] = useState('')
+
     const error = () => {
         if (cloth === '') {
             setDropError('Please select a clothing item')
@@ -129,16 +133,114 @@ const Donate = ({ navigation }) => {
         else {
             setDropError('')
         }
-        if (amount === ''){
+        if (amount === '') {
             setAmountError('Please enter amount')
             return
         }
         else {
             setAmountError('')
         }
-        if (cloth !== '' && amount !== ''){
-            navigation.navigate("CheckOut", {uri: ItemURI, type: cloth, amount: amount})
+
+        if (time === ''){
+            setTimeError('Please select a time interval')
+            return
         }
+        else{
+            setTimeError('')
+        }
+        if (date === ''){
+            setDateError('Please select a date interval')
+            return
+        }
+        else{
+            setDateError('')
+        }
+        if (cloth !== '' && amount !== '' && time !== '' && date !== '' ) {
+            navigation.navigate("CheckOut", { uri: ItemURI, type: cloth, amount: amount, time: time, date: date })
+        }
+    }
+
+    //dates
+
+    //todays date
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1; // add 1 to get the correct month (0-indexed)
+    const year = currentDate.getFullYear();
+
+    // Format the date as a string
+    const dateString = `${day}/${month}/${year}`;
+    console.log('date string: ', dateString)
+
+    const first2 = new Date();
+    first2.setDate(currentDate.getDate() + 3);
+    console.log('first2', first2)
+    const first2day = first2.getDate();
+    const first2month = first2.getMonth() + 1; // add 1 to get the correct month (0-indexed)
+    const first2year = first2.getFullYear();
+    const first2date = `${first2day}/${first2month}/${first2year}`;
+    console.log('first2date: ', first2date)
+
+    console.log('currentdate: ', currentDate)
+
+    const sec1 = new Date();
+    sec1.setDate(currentDate.getDate() + 4);
+    const sec1day = sec1.getDate();
+    const sec1month = sec1.getMonth() + 1;
+    const sec1year = sec1.getFullYear();
+    const sec1date = `${sec1day}/${sec1month}/${sec1year}`;
+    console.log('sec1date: ', sec1date)
+
+    const sec2 = new Date();
+    sec2.setDate(currentDate.getDate() + 6);
+    const sec2day = sec2.getDate();
+    const sec2month = sec2.getMonth() + 1;
+    const sec2year = sec2.getFullYear();
+    const sec2date = `${sec2day}/${sec2month}/${sec2year}`;
+    console.log('sec2date: ', sec2date)
+
+    const third1 = new Date();
+    third1.setDate(currentDate.getDate() + 7);
+    const third1day = third1.getDate();
+    const third1month = third1.getMonth() + 1;
+    const third1year = third1.getFullYear();
+    const third1date = `${third1day}/${third1month}/${third1year}`;
+    console.log('third1date: ', third1date)
+
+    const third2 = new Date();
+    third2.setDate(currentDate.getDate() + 9);
+    const third2day = third2.getDate();
+    const third2month = third2.getMonth() + 1;
+    const third2year = third2.getFullYear();
+    const third2date = `${third2day}/${third2month}/${third2year}`;
+    console.log('third2date: ', third2date)
+
+
+    const [check1, setCheck1] = useState(0)
+    const [check2, setCheck2] = useState(0)
+    const [check3, setCheck3] = useState(0)
+
+    const [date, setDate] = useState('')
+
+    const checkColor1 = () => {
+        setCheck1(1)
+        setCheck2(0)
+        setCheck3(0)
+        setDate(`${dateString} - ${first2date}`)
+    }
+
+    const checkColor2 = () => {
+        setCheck1(0)
+        setCheck2(1)
+        setCheck3(0)
+        setDate(`${sec1date} - ${sec2date}`)
+    }
+
+    const checkColor3 = () => {
+        setCheck1(0)
+        setCheck2(0)
+        setCheck3(1)
+        setDate(`${third1date} - ${third2date}`)
     }
 
 
@@ -166,7 +268,7 @@ const Donate = ({ navigation }) => {
                     </Block>
 
                     <Block right style={{ width: '65%', alignItems: 'flex-start' }}>
-                    <Text style={{ fontSize: 15, color: 'red' }}>{dropError}</Text>
+                        <Text style={{ fontSize: 15, color: 'red' }}>{dropError}</Text>
                         <Dropdown
                             style={styles.dropdown}
                             placeholderStyle={styles.placeholderStyle}
@@ -208,16 +310,24 @@ const Donate = ({ navigation }) => {
 
             <Block style={{ margin: 20 }}></Block>
 
-            <Text style={{ fontSize: 20, margin: 15 }}>Select which time interval for pick-up of donation:</Text>
+            <Text style={{ fontSize: 20, margin: 15 }}>Select which date and time interval for pick-up of donation:</Text>
 
+            <Text style={{ fontSize: 15, color: 'red', marginLeft: 20 }}>{timeError}</Text>
             <Block style={{ flexDirection: 'row', flexWrap: 'wrap', margin: 10 }}>
                 <Button onPress={changeColor1} style={{ backgroundColor: flag1 === 0 ? 'purple' : 'green' }}>8AM - 12PM</Button>
                 <Button onPress={changeColor2} style={{ backgroundColor: flag2 === 0 ? 'purple' : 'green' }}>12PM - 6PM</Button>
                 <Button onPress={changeColor3} style={{ backgroundColor: flag3 === 0 ? 'purple' : 'green' }}>6PM - 10PM</Button>
             </Block>
 
+            <Text style={{ fontSize: 15, color: 'red', marginLeft: 20 }}>{dateError}</Text>
+            <Block style={{ flexDirection: 'row', flexWrap: 'wrap', margin: 10 }}>
+                <Button onPress={checkColor1} style={{ backgroundColor: check1 === 0 ? 'purple' : 'green' }}><Text style={{ color: 'white' }}>{dateString} - {first2date}</Text></Button>
+                <Button onPress={checkColor2} style={{ backgroundColor: check2 === 0 ? 'purple' : 'green' }}><Text style={{ color: 'white' }}>{sec1date} - {sec2date}</Text></Button>
+                <Button onPress={checkColor3} style={{ backgroundColor: check3 === 0 ? 'purple' : 'green' }}><Text style={{ color: 'white' }}>{third1date} - {third2date}</Text></Button>
+            </Block>
+
             <Block style={{ alignItems: 'center', marginTop: 80 }}>
-                <Button style={{width: '80%'}} onPress={error}>DONATE</Button>
+                <Button style={{ width: '80%' }} onPress={error}>DONATE</Button>
             </Block>
         </ScrollView>
 

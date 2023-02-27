@@ -46,7 +46,8 @@ const CheckOut = ({ route, navigation }) => {
           location: location,
           type: route.params.type,
           amount: route.params.amount,
-        //   timeSlot: route.params.time
+          timeSlot: route.params.time,
+          dateSlot: route.params.date
         });
         console.log("Document written with ID: ", docRef.id);
     
@@ -181,7 +182,8 @@ const CheckOut = ({ route, navigation }) => {
                                         <Text>X {route.params.amount}</Text>
                                     </Block>
                                 </Block>
-                                {/* <Text>Pick Up: {route.params.time}</Text> */}
+                                <Text>Pick Up Time Interval: {route.params.time}</Text>
+                                <Text>Pick Up Date Interval: {route.params.date}</Text>
                             </Block>
 
                             <View style={styles.container}>
