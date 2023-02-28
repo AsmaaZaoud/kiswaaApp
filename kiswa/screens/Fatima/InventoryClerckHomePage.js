@@ -82,9 +82,6 @@ const InventoryClerkHomePage = ({ navigation }) => {
   // ////////////////////////////////////////// //
   // DB
   const reformat = (doc) => {
-    for (let i = 1; i <= items.length; i++) {
-      IDs.includes(i) ? null : IDs.push(i);
-    }
     return { id: doc.id, ...doc.data() };
   };
 
@@ -95,7 +92,6 @@ const InventoryClerkHomePage = ({ navigation }) => {
       );
     };
     listenAll();
-    console.log(IDs);
   }, []);
 
   const set = async () => {
@@ -201,7 +197,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
         }}
       >
         <Block style={{ width: "5%" }}></Block>
-        <Image source={require("../../components/Fatima/image 1.png")} />
+        <Image source={require("../../components/Fatima/logo.png")} />
         <Block style={{ justifyContent: "center", marginLeft: "30%" }}>
           <Text style={{ color: "white", fontSize: "20%" }}>
             Inventory Clerk
@@ -250,7 +246,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
           <ScrollView vertical="true">
             {items.map((i, x) => (
               <DataTable.Row style={{ height: "1%" }}>
-                <DataTable.Cell id={i.id}>{IDs[x]}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{[x + 1]}</DataTable.Cell>
                 <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
                 <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
                 <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>

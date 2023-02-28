@@ -23,7 +23,6 @@ import {
   setDoc,
   addDoc,
   collection,
-  
   query,
   where,
   deleteDoc,
@@ -33,59 +32,92 @@ import {
   getDocs,
   getDoc,
   Timestamp,
-  
-  
 } from "firebase/firestore";
 import { db } from "../config";
+import { async } from "@firebase/util";
+import { set } from "react-native-reanimated";
 
 const { width, height } = Dimensions.get("screen");
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [signedIn, setSignedIn] = useState(false);
 
+  // reformat
   const reformat = (doc) => {
-    console.log({ id: doc.id, ...doc.data() });
-
     return { id: doc.id, ...doc.data() };
   };
+
+  const getUser = async () => {
+    // user = "";
+    // console.log("hi");
+    const clerk = await getDoc(doc(db, "inventoryWorkers", email));
+    const driver = await getDoc(doc(db, "drivers", email));
+    // console.log(clerk[email].exists());
+    console.log(email == reformat(clerk).id);
+    if (email == "Admin@admin.com") {
+      console.log("admin");
+      user = "admin";
+      return user;
+    }
+    if (email == reformat(clerk).id) {
+      console.log("clerk");
+      user = "clerk";
+      return user;
+    }
+    if (email == reformat(driver).id) {
+      console.log("driver");
+      user = "driver";
+      return user;
+    }
+  };
+  // Handel Error + Login
+  const [error, setError] = useState({ satus: false, key: null, msg: "" });
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(async () => {
-        const driver = await getDoc(doc(db, "drivers", email));
-
-        // const admin = "admin@admin.com"
-        // user = reformat(user)
-        if (email ==  "Admin@admin.com"){
-          navigation.replace("AdminHome")
-        }
-        else if (email === reformat(clerk).id ){
-            navigation.replace("InventoryClerkHomePage")
-        }else if(email === reformat(driver).id ){
-            navigation.replace("DriverHome")
-        }else{
-          navigation.replace("App")
-        }
-
-        const driverId = reformat(driver).id;
-        const clerk = await getDoc(doc(db, "inventoryWorkers", email));
-        const celrkID = reformat(clerk).id;
-        // const temp = email;
-        email == "Admin@admin.com"
-          ? navigation.replace("AdminHome")
-          : email == celrkID
-          ? navigation.replace("InventoryClerkHomePage")
-          : email == driverId
-          ? navigation.replace("DriverHome")
-          : navigation.replace("App");
-
-      })
-      .catch((error) => {
-        console.log(error.message);
-        alert(error.message);
-        setSignedIn(false);
+    if (email == null || email == "")
+      setError({
+        satus: true,
+        key: "email",
+        msg: "please Enter a valid email",
       });
+    else if (password == null || password == "")
+      setError({
+        satus: true,
+        key: "pass",
+        msg: "please Enter a valid password",
+      });
+    else {
+      signInWithEmailAndPassword(auth, email, password)
+        .then(async () => {
+          user = await getUser();
+          console.log(user);
+          if (user == "admin") {
+            navigation.replace("AdminHome");
+            console.log("Admin");
+          } if (user == "clerk") {
+            console.log("hi");
+            navigation.replace("InventoryClerkHomePage");
+            return;
+            // console.log("clerk");
+          } if (user == "driver") {
+            navigation.replace("DriverHome");
+            return
+            // console.log("driver");
+          }
+          navigation.replace("App");
+
+          setError({ satus: false, key: null, msg: "" });
+        })
+        .catch((error) => {
+          console.log(error.code);
+          console.log(error.message);
+          setError({ satus: true, key: "db", msg: error.message });
+          error.code == "auth/user-not-found"
+            ? setError({ satus: true, key: "db", msg: "Check your email" })
+            : setError({ satus: true, key: "db", msg: error.message });
+          // setSignedIn(false);
+        });
+    }
   };
 
   const getFamily = async () => {
@@ -115,14 +147,17 @@ const Login = ({ navigation }) => {
     <Block flex middle>
       <StatusBar hidden />
       <ImageBackground
-        source={Images.RegisterBackground}
+        source={require("../assets/Fatima/background.png")}
         style={{ width, height, zIndex: 1 }}
       >
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <Block flex>
               <Block flex={0.17} middle>
-                <Image source={Images.Logo} />
+                <Image
+                  source={require("../assets/Fatima/Logo.png")}
+                  style={styles.logo}
+                />
               </Block>
               <Block flex center>
                 <KeyboardAvoidingView
@@ -139,13 +174,18 @@ const Login = ({ navigation }) => {
                       iconContent={
                         <Icon
                           size={16}
-                          color={argonTheme.COLORS.ICON}
+                          color={"#5A9DA0"}
                           name="ic_mail_24px"
                           family="ArgonExtra"
                           style={styles.inputIcons}
                         />
                       }
                     />
+                    {error.key == "email" && error.satus && (
+                      <Text style={{ paddingLeft: "13%" }} color="red">
+                        {error.msg}
+                      </Text>
+                    )}
                   </Block>
                   <Block width={width * 0.8}>
                     <Input
@@ -157,19 +197,29 @@ const Login = ({ navigation }) => {
                       iconContent={
                         <Icon
                           size={16}
-                          color={argonTheme.COLORS.ICON}
+                          color={"#5A9DA0"}
                           name="padlock-unlocked"
                           family="ArgonExtra"
                           style={styles.inputIcons}
                         />
                       }
                     />
+                    {error.key == "pass" && error.satus && (
+                      <Text style={{ paddingLeft: "13%" }} color="red">
+                        {error.msg}
+                      </Text>
+                    )}
+                    {error.key == "db" && error.satus && (
+                      <Text style={{ paddingLeft: "13%" }} color="red" bold>
+                        {error.msg}
+                      </Text>
+                    )}
                   </Block>
 
                   <Block middle>
                     <Button
                       color="primary"
-                      style={styles.createButton}
+                      style={styles.login}
                       onPress={handleLogin}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
@@ -177,8 +227,8 @@ const Login = ({ navigation }) => {
                       </Text>
                     </Button>
                     <Button
-                      color="primary"
-                      style={styles.createButton}
+                      color={"#F0936F"}
+                      style={styles.signUp}
                       onPress={() => navigation.navigate("RegisterFamily")}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
@@ -197,11 +247,18 @@ const Login = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  logo: {
+    width: width - theme.SIZES.BASE * 6,
+    height: theme.SIZES.BASE * 60,
+    position: "relative",
+    // marginBottom: "10%",
+    resizeMode: "contain",
+  },
   registerContainer: {
     width: width * 0.9,
     height: height * 0.875,
     backgroundColor: "#F4F5F7",
-    borderRadius: 4,
+    borderRadius: 6,
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
@@ -243,9 +300,15 @@ const styles = StyleSheet.create({
     paddingTop: 13,
     paddingBottom: 30,
   },
-  createButton: {
+  login: {
     width: width * 0.5,
     marginTop: 25,
+    backgroundColor: "#E49D81",
+  },
+  signUp: {
+    width: width * 0.5,
+    marginTop: 25,
+    backgroundColor: "#F0936F",
   },
 });
 

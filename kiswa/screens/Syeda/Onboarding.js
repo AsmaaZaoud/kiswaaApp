@@ -18,18 +18,61 @@ import Images from "../../constants/Images";
 const Onboarding = ({ navigation }) => {
   return (
     <Block flex style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.replace("Login")}>
-        <Text style={{ marginTop: "17%", marginLeft: "85%", color: "#C5C5C5" }}>
-          Login
-        </Text>
-      </TouchableOpacity>
+      <ImageBackground
+        resizeMode="cover"
+        source={require("../../assets/Fatima/background.png")}
+        style={{ width, height, zIndex: 1 }}
+      >
+        <TouchableOpacity onPress={() => navigation.replace("Login")}>
+          <Text
+            style={{
+              marginTop: "17%",
+              marginLeft: "80%",
+              color: "#FAF9F6",
+              fontFamily: "Cochin",
+              fontSize: 18,
+            }}
+            bold
+          >
+            Login
+          </Text>
+        </TouchableOpacity>
+        <Block center style={{ marginTop: "20%" }}>
+          <Image
+            source={require("../../assets/Fatima/Logo.png")}
+            style={styles.logo}
+          />
+        </Block>
+        <Block
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Block style={{ marginLeft: "3%" }}>
+            <TouchableOpacity onPress={() => navigation.replace("App")}>
+              <Image
+                style={styles.images}
+                source={require("../../assets/Fatima/heart.png")}
+              ></Image>
+            </TouchableOpacity>
+            <Text style={styles.lable}>DONATE</Text>
+          </Block>
+          <Block style={{ marginLeft: "17%" }}>
+            <TouchableOpacity
+              onPress={() => navigation.replace("RegisterFamily")}
+            >
+              <Image
+                style={styles.images}
+                source={require("../../assets/Fatima/donation.png")}
+              ></Image>
 
-      <Block center style={{ marginTop: "20%" }}>
-        <Image
-          source={require("../../assets/Fatima/Logo.png")}
-          style={styles.logo}
-        />
-      </Block>
+              <Text style={styles.lable}>RECEIVE</Text>
+            </TouchableOpacity>
+          </Block>
+        </Block>
+      </ImageBackground>
 
       {/* <Block center style={{ width: "90%", marginTop: "30%" }}>
         <Text style={{ color: "white", fontSize: 15, textAlign: "center" }}>
@@ -52,35 +95,6 @@ const Onboarding = ({ navigation }) => {
           flex: 1,
         }}
       > */}
-      <Block
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Block style={{ marginLeft: "3%" }}>
-          <TouchableOpacity onPress={() => navigation.replace("App")}>
-            <Image
-              style={styles.images}
-              source={require("../../assets/Fatima/heart.png")}
-            ></Image>
-          </TouchableOpacity>
-          <Text style={styles.lable}>DONATE</Text>
-        </Block>
-        <Block style={{ marginLeft: "17%" }}>
-          <TouchableOpacity
-            onPress={() => navigation.replace("RegisterFamily")}
-          >
-            <Image
-              style={styles.images}
-              source={require("../../assets/Fatima/donation.png")}
-            ></Image>
-
-            <Text style={styles.lable}>RECEIVE</Text>
-          </TouchableOpacity>
-        </Block>
-      </Block>
     </Block>
     // </Block>
   );
@@ -104,7 +118,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   lable: {
-    color: "#C5C5C5",
+    color: "#FAF9F6",
     textAlign: "center",
     fontFamily: "Cochin",
     // justifyContent: "center",
@@ -113,6 +127,10 @@ const styles = StyleSheet.create({
     width: width - theme.SIZES.BASE * 18,
     height: theme.SIZES.BASE * 18,
     resizeMode: "contain",
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
   },
 });
 
