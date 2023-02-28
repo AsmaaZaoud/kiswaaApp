@@ -82,7 +82,7 @@ const DriverProfile = ({ navigation }) => {
       setLname(docSnap.data().lname);
       setPhone(docSnap.data().phone);
       setEmail(docSnap.data().email);
-      setImage(docSnap.data().image)
+      setImage(docSnap.data().image);
       setDob(docSnap.data().dob.toDate());
       // alert(dob)
       setQId(docSnap.data().qId);
@@ -92,8 +92,8 @@ const DriverProfile = ({ navigation }) => {
   };
 
   const update = async () => {
-    setEditFlag(false)
-    await updateImage()
+    setEditFlag(false);
+    await updateImage();
     console.log(Fname, Lname, phone, dob);
     const docRef = doc(db, "drivers", user);
     await setDoc(
@@ -196,7 +196,6 @@ const DriverProfile = ({ navigation }) => {
   const [dobError, setDobError] = useState();
   const [msg, setMsg] = useState(false);
   const [flag, setFlag] = useState(true);
-
 
   const [editModalVisible, setEditModalVisible] = useState(false);
 
@@ -509,7 +508,10 @@ const DriverProfile = ({ navigation }) => {
                       {/* Display the selected date */}
                       <Text style={styles.text}>Date of Birth</Text>
                       <Pressable
-                        style={[styles.pickedDateContainer, {borderWidth:editFlag? 0.3:0}]}
+                        style={[
+                          styles.pickedDateContainer,
+                          { borderWidth: editFlag ? 0.3 : 0 },
+                        ]}
                         onPress={editFlag ? showPicker : null}
                       >
                         <Text style={styles.pickedDate}>
@@ -568,26 +570,24 @@ const DriverProfile = ({ navigation }) => {
                       marginTop: "2%",
                     }}
                   >
-                    
-
-                      {editFlag?
-                    <Button
-                      mode="contained"
-                      // buttonColor="red"
-                      style={styles.cancelButton}
-                      onPress={() => setEditFlag(false)}
-                    >
-                      <Text
-                        bold
-                        size={normalize(15)}
-                        color={argonTheme.COLORS.WHITE}
+                    {editFlag ? (
+                      <Button
+                        mode="contained"
+                        // buttonColor="red"
+                        style={styles.cancelButton}
+                        onPress={() => setEditFlag(false)}
                       >
-                        Cancel
-                      </Text>
-                    </Button>
-                    :
-                    <View></View>
-                    }
+                        <Text
+                          bold
+                          size={normalize(15)}
+                          color={argonTheme.COLORS.WHITE}
+                        >
+                          Cancel
+                        </Text>
+                      </Button>
+                    ) : (
+                      <View></View>
+                    )}
 
                     {editFlag ? (
                       <Button
@@ -622,8 +622,6 @@ const DriverProfile = ({ navigation }) => {
                 </KeyboardAvoidingView>
               </ScrollView>
             </Block>
-
-          
           </Block>
         </Block>
       </Block>
