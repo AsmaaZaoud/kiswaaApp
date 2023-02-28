@@ -15,11 +15,10 @@ import Pro from "../screens/Pro";
 import Profile from "../screens/Profile";
 import React from "react";
 import Register from "../screens/Register";
-import Login from "../screens/Login"
+import Login from "../screens/Login";
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
-
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -35,6 +34,7 @@ import DriveProfile from "../screens/Asmaa/DriverProfile";
 import Deliver from "../screens/Asmaa/Deliver";
 import Pickup from "../screens/Asmaa/Pickup";
 import DriverDetails from "../screens/Asmaa/DriverDetails";
+import Dashboard from "../screens/Asmaa/Dashboard";
 //invent
 import InventoryClerks from "../screens/Asmaa/InventoryClerks";
 import AddClerk from "../screens/Asmaa/AddClerk";
@@ -43,7 +43,6 @@ import Inventory from "../screens/Asmaa/Inventory";
 
 //Donor
 import Donors from "../screens/Asmaa/Donors";
-
 
 //Families
 import Families from "../screens/Asmaa/Families";
@@ -159,27 +158,31 @@ function InventoryStack(props) {
 //Asmaa
 function Driver(props) {
   return (
-    <Stack.Navigator
-      initialRouteName="DriverHome"
-    >
-      <Stack.Screen name="Drivers" component={Drivers} options={{
-          title: 'AdminHome',
+    <Stack.Navigator initialRouteName="DriverHome">
+      <Stack.Screen
+        name="Drivers"
+        component={Drivers}
+        options={{
+          title: "AdminHome",
           headerStyle: {
-            backgroundColor: 'darkblue',
+            backgroundColor: "darkblue",
           },
-          headerTintColor: 'white',
+          headerTintColor: "white",
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
-        }} />
-         <Stack.Screen name="DriverHome" component={DriverHome} />
+        }}
+      />
+      <Stack.Screen name="DriverHome" component={DriverHome} />
 
-          <Stack.Screen name="AddDriver" component={AddDriver} 
-      options={{title: 'AddDriver'}}/>
-        <Stack.Screen name="Pickup" component={Pickup} />
+      <Stack.Screen
+        name="AddDriver"
+        component={AddDriver}
+        options={{ title: "AddDriver" }}
+      />
+      <Stack.Screen name="Pickup" component={Pickup} />
       <Stack.Screen name="Deliver" component={Deliver} />
-       <Stack.Screen name="DriveProfile" component={DriveProfile} />
-
+      <Stack.Screen name="DriveProfile" component={DriveProfile} />
     </Stack.Navigator>
   );
 }
@@ -194,26 +197,30 @@ function Admin(props) {
         headerShown: "screen",
       }}
     >
-      <Stack.Screen name="AdminHome" component={AdminHome} 
-      option={{
-          title: 'AdminHome',
+      <Stack.Screen
+        name="AdminHome"
+        component={AdminHome}
+        option={{
+          title: "AdminHome",
           headerStyle: {
-            backgroundColor: 'darkblue',
+            backgroundColor: "darkblue",
           },
-          headerTintColor: 'white',
+          headerTintColor: "white",
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
-        }} />
-     
+        }}
+      />
+
       <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
 
-      <Stack.Screen name="AddClerk" component={AddClerk} 
-      options={{title: 'AddClerk'}}/>
-     
+      <Stack.Screen
+        name="AddClerk"
+        component={AddClerk}
+        options={{ title: "AddClerk" }}
+      />
 
       <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
-     
 
       <Stack.Screen name="Donors" component={Donors} />
       <Stack.Screen name="Families" component={Families} />
@@ -314,7 +321,6 @@ function HomeStack(props) {
   );
 }
 
-
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator
@@ -332,69 +338,70 @@ export default function OnboardingStack(props) {
       />
       <Stack.Screen name="App" component={AppStack} />
 
-      
-     <Stack.Screen
+      <Stack.Screen
         name="InventoryClerkHomePage"
         component={InventoryClerkHomePage}
       />
-    
 
-  
       <Stack.Screen name="Login" component={Login} />
 
-
-
- <Stack.Screen name="Drivers" component={Drivers} options={{
-          title: 'AdminHome',
+      <Stack.Screen
+        name="Drivers"
+        component={Drivers}
+        options={{
+          title: "AdminHome",
           headerStyle: {
-            backgroundColor: 'darkblue',
+            backgroundColor: "darkblue",
           },
-          headerTintColor: 'white',
+          headerTintColor: "white",
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
-        }} />
-         <Stack.Screen name="DriverHome" component={DriverHome} />
+        }}
+      />
+      <Stack.Screen name="DriverHome" component={DriverHome} />
 
-          <Stack.Screen name="AddDriver" component={AddDriver} 
-      options={{title: 'AddDriver'}}/>
-        <Stack.Screen name="Pickup" component={Pickup} />
+      <Stack.Screen
+        name="AddDriver"
+        component={AddDriver}
+        options={{ title: "AddDriver" }}
+      />
+      <Stack.Screen name="Pickup" component={Pickup} />
       <Stack.Screen name="Deliver" component={Deliver} />
-       <Stack.Screen name="DriveProfile" component={DriveProfile} />
-       <Stack.Screen name="DriverDetails" component={DriverDetails} />
+      <Stack.Screen name="DriveProfile" component={DriveProfile} />
+      <Stack.Screen name="DriverDetails" component={DriverDetails} />
+      <Stack.Screen name="Dashboard" component={Dashboard} />
 
-        <Stack.Screen name="AdminHome" component={AdminHome} 
-      option={{
-          title: 'AdminHome',
+      <Stack.Screen
+        name="AdminHome"
+        component={AdminHome}
+        option={{
+          title: "AdminHome",
           headerStyle: {
-            backgroundColor: 'darkblue',
+            backgroundColor: "darkblue",
           },
-          headerTintColor: 'white',
+          headerTintColor: "white",
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
-        }} />
-     
+        }}
+      />
+
       <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
 
-      <Stack.Screen name="AddClerk" component={AddClerk} 
-      options={{title: 'AddClerk'}}/>
-     
+      <Stack.Screen
+        name="AddClerk"
+        component={AddClerk}
+        options={{ title: "AddClerk" }}
+      />
 
       <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
-     
 
       <Stack.Screen name="Donors" component={Donors} />
       <Stack.Screen name="Families" component={Families} />
       <Stack.Screen name="Clerks" component={Clerks} />
       <Stack.Screen name="Inventory" component={Inventory} />
     </Stack.Navigator>
-
-
-
-
-
-    
   );
 }
 
