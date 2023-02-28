@@ -11,14 +11,15 @@ const Home = ({ navigation }) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
+          <Text style={{alignSelf: 'center', fontSize: 20}}>Ready to Donate ?</Text>
         <Button
-          style={{ width: '80%', alignSelf: 'center', borderRadius: 20, marginTop: 30 }}
+          style={{ width: '80%', alignSelf: 'center', borderRadius: 20 }}
           onPress={() => navigation.navigate("Donate")}
         >
           <Text style={{fontSize: 25, color: 'white'}}>DONATE  NOW</Text>
         </Button>
 
-        <Block style={{margin: 30}}></Block>
+        <Block style={{margin: 20}}></Block>
 
         <Block flex>
             <Block flex row style={styles.request}>
