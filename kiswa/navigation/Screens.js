@@ -197,20 +197,7 @@ function InventoryStack(props) {
 function DriverStack(props) {
   return (
     <Stack.Navigator initialRouteName="DriverHome">
-      <Stack.Screen
-        name="Drivers"
-        component={Drivers}
-        options={{
-          title: "AdminHome",
-          headerStyle: {
-            backgroundColor: "darkblue",
-          },
-          headerTintColor: "white",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
-      />
+      <Stack.Screen name="Drivers" component={Drivers} />
       <Stack.Screen name="DriverHome" component={DriverHome} />
 
       <Stack.Screen
@@ -368,43 +355,50 @@ export default function OnboardingStack(props) {
         headerShown: false,
       }}
     >
-
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
-        option={{
-          headerTransparent: true,
-        }}
+        option={{ headerTransparent: true }}
       />
 
       <Stack.Screen name="App" component={AppStack} />
-
 
       {/* /********* Syeda**********/}
 
       <Stack.Screen name="Register" component={Register} />
 
+      {/* <Stack.Screen */}
 
-      
-     {/* <Stack.Screen */}
-
+      {/* /********* Fatima - Clerk **********/}
       <Stack.Screen
-
         name="InventoryClerkHomePage"
         component={InventoryClerkHomePage}
       />
 
+      {/* /********* Asmaa - Admin **********/}
+
       <Stack.Screen name="AdminHome" component={AdminHome} />
+      <Stack.Screen name="AddClerk" component={AddClerk} />
+      <Stack.Screen name="Clerks" component={Clerks} />
+      <Stack.Screen name="Inventory" component={Inventory} />
+
+      {/* /********* Asmaa - Driver **********/}
 
       <Stack.Screen name="DriverHome" component={DriverHome} />
+      <Stack.Screen name="AddDriver" component={AddDriver} />
+      <Stack.Screen name="DriveProfile" component={DriveProfile} />
+      <Stack.Screen name="Donors" component={Donors} />
+      <Stack.Screen name="Families" component={Families} />
+
+      {/* /*********  LogIn **********/}
 
       <Stack.Screen name="Login" component={Login} />
+
+      {/* /*********  Meimouna - Family **********/}
 
       <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
       <Stack.Screen name="FamilyHome" component={FamilyHome} />
       <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
-
-
     </Stack.Navigator>
   );
 }
@@ -465,9 +459,9 @@ function AppStack(props) {
       <Drawer.Screen
         name="DriverHome"
         component={DriverStack}
-        // options={{
-        //   headerShown: true,
-        // }}
+        options={{
+          headerShown: false,
+        }}
       />
       <Drawer.Screen
         name="Account"
