@@ -50,7 +50,7 @@ const FamilyHome = ({ route, navigation }) => {
       />
       <Block style={styles.header1}>
         <Block>
-          <Text style={styles.text}>Welcom,</Text>
+          <Text style={styles.text}>Welcome,</Text>
           <Text style={styles.textt}>{userName}</Text>
         </Block>
         <Block>

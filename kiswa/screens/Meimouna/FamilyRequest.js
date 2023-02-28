@@ -217,7 +217,7 @@ const FamilyRequest = ({ route, navigation }) => {
           }}
           //variant="primary"
           scrollable={true}
-          iconPosition="top"
+          // iconPosition="top"
           dense={false}
         >
           <Tab.Item title="Men" titleStyle={{ fontSize: 14 }}>
