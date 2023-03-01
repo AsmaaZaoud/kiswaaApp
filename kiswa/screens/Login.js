@@ -40,8 +40,8 @@ import { set } from "react-native-reanimated";
 const { width, height } = Dimensions.get("screen");
 
 const Login = ({ navigation }) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // reformat
   const reformat = (doc) => {
@@ -51,8 +51,13 @@ const Login = ({ navigation }) => {
   const getUser = async () => {
     // user = "";
     // console.log("hi");
+
     const clerk = await getDoc(doc(db, "inventoryWorkers", email));
+    console.log(reformat(clerk).id);
     const driver = await getDoc(doc(db, "drivers", email));
+    console.log(reformat(driver).id);
+
+    //alert(reformat(clerk).id);
     // console.log(clerk[email].exists());
     console.log(email == reformat(clerk).id);
     if (email == "Admin@admin.com") {
@@ -68,6 +73,7 @@ const Login = ({ navigation }) => {
     if (email == reformat(driver).id) {
       console.log("driver");
       user = "driver";
+      console.log("hehehheh");
       return user;
     }
   };
@@ -90,19 +96,24 @@ const Login = ({ navigation }) => {
       signInWithEmailAndPassword(auth, email, password)
         .then(async () => {
           user = await getUser();
-          console.log(user);
+          // alert(user)
+          console.log(user == "admin");
           if (user == "admin") {
+            // alert("hi");
             navigation.replace("AdminHome");
             console.log("Admin");
-          } if (user == "clerk") {
+            return;
+          }
+          if (user == "clerk") {
             console.log("hi");
             navigation.replace("InventoryClerkHomePage");
             return;
             // console.log("clerk");
-          } if (user == "driver") {
+          }
+          if (user == "driver") {
             navigation.replace("DriverHome");
-            return
-            // console.log("driver");
+            console.log("driver");
+            return;
           }
           navigation.replace("App");
 
@@ -152,14 +163,14 @@ const Login = ({ navigation }) => {
       >
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
-            <Block flex>
+            <Block flex style={{ marginTop: "10%" }}>
               <Block flex={0.17} middle>
                 <Image
-                  source={require("../assets/Fatima/Logo.png")}
+                  source={require("../assets/Fatima/BlackLogo-noBackground.png")}
                   style={styles.logo}
                 />
               </Block>
-              <Block flex center>
+              <Block flex center style={{ marginTop: "40%" }}>
                 <KeyboardAvoidingView
                   style={{ flex: 1 }}
                   behavior="padding"

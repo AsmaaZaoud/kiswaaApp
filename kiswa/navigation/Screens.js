@@ -170,29 +170,28 @@ function InventoryStack(props) {
     </Stack.Navigator>
   );
 }
-
-// function DriverStack(props) {
-//   return (
-//     <Stack.Navigator
-//       initialRouteName="InventoryClerkHomePage"
-//       screenOptions={{
-//         mode: "card",
-//         headerShown: "screen",
-//       }}
-//     >
-//       <Stack.Screen
-//         name="InventoryClerkHomePage"
-//         component={InventoryClerkHomePage}
-//         options={{
-//           header: ({ navigation, scene }) => (
-//             <Header title="Home Page" navigation={navigation} scene={scene} />
-//           ),
-//           //   cardStyle: { backgroundColor: "#F8F9FE" },
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// }
+function AdminStack(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="AdminHome"
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="AdminHome"
+        component={AdminHome}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Home Page" navigation={navigation} scene={scene} />
+          ),
+          //   cardStyle: { backgroundColor: "#F8F9FE" },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 //Asmaa
 function DriverStack(props) {
   return (
@@ -213,47 +212,47 @@ function DriverStack(props) {
 }
 
 //Asmaa
-function Admin(props) {
-  return (
-    <Stack.Navigator
-      initialRouteName="AdminHome"
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
-      }}
-    >
-      <Stack.Screen
-        name="AdminHome"
-        component={AdminHome}
-        option={{
-          title: "AdminHome",
-          headerStyle: {
-            backgroundColor: "darkblue",
-          },
-          headerTintColor: "white",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
-      />
+// function AdminStack(props) {
+//   return (
+//     <Stack.Navigator
+//       initialRouteName="AdminHome"
+//       screenOptions={{
+//         mode: "card",
+//         headerShown: "screen",
+//       }}
+//     >
+//       <Stack.Screen
+//         name="AdminHome"
+//         component={AdminHome}
+//         option={{
+//           title: "AdminHome",
+//           headerStyle: {
+//             backgroundColor: "darkblue",
+//           },
+//           headerTintColor: "white",
+//           headerTitleStyle: {
+//             fontWeight: "bold",
+//           },
+//         }}
+//       />
 
-      <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
+//       <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
 
-      <Stack.Screen
-        name="AddClerk"
-        component={AddClerk}
-        options={{ title: "AddClerk" }}
-      />
+//       <Stack.Screen
+//         name="AddClerk"
+//         component={AddClerk}
+//         options={{ title: "AddClerk" }}
+//       />
 
-      <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
+//       <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
 
-      <Stack.Screen name="Donors" component={Donors} />
-      <Stack.Screen name="Families" component={Families} />
-      <Stack.Screen name="Clerks" component={Clerks} />
-      <Stack.Screen name="Inventory" component={Inventory} />
-    </Stack.Navigator>
-  );
-}
+//       <Stack.Screen name="Donors" component={Donors} />
+//       <Stack.Screen name="Families" component={Families} />
+//       <Stack.Screen name="Clerks" component={Clerks} />
+//       <Stack.Screen name="Inventory" component={Inventory} />
+//     </Stack.Navigator>
+//   );
+// }
 function ProfileStack(props) {
   return (
     <Stack.Navigator
@@ -374,10 +373,11 @@ export default function OnboardingStack(props) {
         name="InventoryClerkHomePage"
         component={InventoryClerkHomePage}
       />
+      <Stack.Screen name="AdminHome" component={AdminHome} />
 
       {/* /********* Asmaa - Admin **********/}
 
-      <Stack.Screen name="AdminHome" component={AdminHome} />
+      {/* <Stack.Screen name="AdminHome" component={AdminHome} /> */}
       <Stack.Screen name="AddClerk" component={AddClerk} />
       <Stack.Screen name="Clerks" component={Clerks} />
       <Stack.Screen name="Inventory" component={Inventory} />
@@ -459,6 +459,13 @@ function AppStack(props) {
       <Drawer.Screen
         name="DriverHome"
         component={DriverStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="AdminHome"
+        component={AdminStack}
         options={{
           headerShown: false,
         }}
