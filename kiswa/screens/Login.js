@@ -111,29 +111,6 @@ const Login = ({ navigation }) => {
     }
   };
 
-  const getFamily = async () => {
-    console.log(email);
-    const docRef = doc(db, "families", email.toLowerCase());
-    const docSnap = await getDoc(docRef);
-    let temp;
-    if (docSnap.exists()) {
-      console.log(temp);
-
-      temp = docSnap.data();
-      setUser(temp);
-      console.log(docSnap.data());
-      console.log(user);
-      console.log(temp);
-    } else {
-      console.log("No such document!");
-    }
-    if (temp !== undefined) {
-      navigation.navigate("FamilyHome", email);
-    } else {
-      navigation.replace("App");
-    }
-  };
-
   return (
     <Block flex middle>
       <StatusBar hidden />
@@ -239,10 +216,9 @@ const Login = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   logo: {
-    width: width - theme.SIZES.BASE * 6,
+    width: width - theme.SIZES.BASE * 25,
     height: theme.SIZES.BASE * 60,
     position: "relative",
-    // marginBottom: "10%",
     resizeMode: "contain",
   },
   registerContainer: {
