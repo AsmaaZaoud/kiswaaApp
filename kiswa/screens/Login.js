@@ -42,6 +42,7 @@ const { width, height } = Dimensions.get("screen");
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userr, setUserr] = useState("");
 
   // reformat
   const reformat = (doc) => {
