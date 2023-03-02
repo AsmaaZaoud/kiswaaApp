@@ -197,7 +197,10 @@ const InventoryClerkHomePage = ({ navigation }) => {
         }}
       >
         <Block style={{ width: "5%" }}></Block>
-        <Image source={require("../../components/Fatima/logo.png")} />
+        <Image
+        hegiht={height*10}
+          source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
+        />
         <Block style={{ justifyContent: "center", marginLeft: "30%" }}>
           <Text style={{ color: "white", fontSize: "20%" }}>
             Inventory Clerk
