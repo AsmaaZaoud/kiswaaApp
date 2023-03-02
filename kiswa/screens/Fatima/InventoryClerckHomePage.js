@@ -53,9 +53,13 @@ import {
   QualityData as QualityData,
   AgeCategory as AgeCategory,
 } from "../../components/Fatima/Data";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config";
+
 import Test from "../../components/Fatima/Test";
 import AddItemModal from "../../components/Fatima/AddItemModal";
-const InventoryClerkHomePage = () => {
+
+const InventoryClerkHomePage = ({ navigation }) => {
   // const
   const [IDs, setIDs] = useState([]);
   const [selectedItem, setSelectedItem] = useState([]);
@@ -69,12 +73,15 @@ const InventoryClerkHomePage = () => {
   //
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [testVisible, setTestVisible] = useState(false);
+  //
+  const onSignOut = () => {
+    signOut(auth)
+      .then(() => navigation.navigate("Login"))
+      .catch((error) => console.log("Error logging out: ", error));
+  };
   // ////////////////////////////////////////// //
   // DB
   const reformat = (doc) => {
-    for (let i = 1; i <= items.length; i++) {
-      IDs.includes(i) ? null : IDs.push(i);
-    }
     return { id: doc.id, ...doc.data() };
   };
 
@@ -85,7 +92,6 @@ const InventoryClerkHomePage = () => {
       );
     };
     listenAll();
-    console.log(IDs);
   }, []);
 
   const set = async () => {
@@ -191,14 +197,17 @@ const InventoryClerkHomePage = () => {
         }}
       >
         <Block style={{ width: "5%" }}></Block>
-        <Image source={require("../../components/Fatima/image 1.png")} />
+        <Image
+        hegiht={height*10}
+          source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
+        />
         <Block style={{ justifyContent: "center", marginLeft: "30%" }}>
           <Text style={{ color: "white", fontSize: "20%" }}>
             Inventory Clerk
           </Text>
         </Block>
         <Block style={{ alignSelf: "right", marginLeft: "30%", width: "5%" }}>
-          <Icon name="sign-out" size={30} color="white" />
+          <Icon name="sign-out" size={30} color="white" onPress={onSignOut} />
         </Block>
         <Block style={{ justifyContent: "right", width: "5%" }}>
           <Icon name="user" size={30} color="white" />
@@ -240,7 +249,7 @@ const InventoryClerkHomePage = () => {
           <ScrollView vertical="true">
             {items.map((i, x) => (
               <DataTable.Row style={{ height: "1%" }}>
-                <DataTable.Cell id={i.id}>{IDs[x]}</DataTable.Cell>
+                <DataTable.Cell id={i.id}>{[x + 1]}</DataTable.Cell>
                 <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
                 <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
                 <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>

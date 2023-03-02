@@ -15,6 +15,7 @@ import {
   Table,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 
 import {
   BarChart,
@@ -23,6 +24,16 @@ import {
   LineChart,
   ProgressChart,
 } from "react-native-chart-kit";
+=======
+import {
+  View,
+  Alert,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+  Table,
+} from "react-native";
+>>>>>>> main
 import { DataTable } from "react-native-paper";
 import { Button } from "galio-framework";
 
@@ -51,24 +62,6 @@ const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
-const categories = [
-  {
-    title: "Music Album",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?fit=crop&w=840&q=80",
-    price: "$125",
-  },
-  {
-    title: "Events",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1543747579-795b9c2c3ada?fit=crop&w=840&q=80",
-    price: "$35",
-  },
-];
 
 const Inventory = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
@@ -93,6 +86,7 @@ const Inventory = ({ navigation }) => {
     setInventory(temp);
     setAllInventory(temp);
     console.log(inventory);
+<<<<<<< HEAD
   };
   const data = {
     labels: ["January", "February", "March", "April", "May", "June"],
@@ -101,11 +95,17 @@ const Inventory = ({ navigation }) => {
         data: [20, 45, 28, 80, 99, 43],
       },
     ],
+=======
+>>>>>>> main
   };
 
   return (
     <Block flex>
+<<<<<<< HEAD
       {/* <View style={styles.container}>
+=======
+      <View style={styles.container}>
+>>>>>>> main
         <DataTable>
           <Block
             style={[
@@ -151,6 +151,10 @@ const Inventory = ({ navigation }) => {
               Available
             </DataTable.Title>
           </DataTable.Header>
+<<<<<<< HEAD
+=======
+          {/* <ScrollView vertical="true"> */}
+>>>>>>> main
           {inventory.map((i, x) => (
             <DataTable.Row style={{ height: "1%" }}>
               <DataTable.Cell id={i.id}>{x + 1}</DataTable.Cell>
@@ -160,11 +164,17 @@ const Inventory = ({ navigation }) => {
               <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
               <DataTable.Cell id={i.id}>{i.age}</DataTable.Cell>
               <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
+<<<<<<< HEAD
+=======
+              {/* hide not availabe items */}
+              {/* {i.available == true ? <DataTable.Cell>Available</DataTable.Cell> : null} */}
+>>>>>>> main
               <DataTable.Cell>
                 {i.available == true ? "Available" : "Not-Available"}
               </DataTable.Cell>
             </DataTable.Row>
           ))}
+<<<<<<< HEAD
         </DataTable>
       </View> */}
 
@@ -202,6 +212,10 @@ const Inventory = ({ navigation }) => {
           absolute
           verticalLabelRotation={30}
         />
+=======
+          {/* </ScrollView> */}
+        </DataTable>
+>>>>>>> main
       </View>
     </Block>
   );

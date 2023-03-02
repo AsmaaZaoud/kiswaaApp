@@ -8,8 +8,17 @@ import {
   ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
+  Platform,
+  PixelRatio,
+  View,
+  Alert,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+  Table,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import {
   View,
   Alert,
@@ -18,6 +27,8 @@ import {
   TouchableOpacity,
   Table,
 } from "react-native";
+=======
+>>>>>>> main
 import { DataTable } from "react-native-paper";
 import { Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
@@ -42,11 +53,26 @@ import { Images, argonTheme, articles } from "../../constants/";
 import { Card, Header } from "../../components";
 
 import { Icon, AntDesign, FontAwesome } from "react-native-vector-icons";
+<<<<<<< HEAD
 import ArButton from "../../components/Button";
 import { normalize } from "./AdminHome";
 import DriverDetails from "./DriverDetails";
 
 const { width, height } = Dimensions.get("screen");
+=======
+// import { normalize } from "..Asmaa/AdminHome";
+
+const { width, height } = Dimensions.get("screen");
+const scale = width / 824;
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
+>>>>>>> main
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;

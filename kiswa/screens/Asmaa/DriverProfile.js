@@ -103,6 +103,10 @@ const DriverProfile = ({ navigation }) => {
     )
       .then(() => {
         console.log("data updated");
+<<<<<<< HEAD
+=======
+        read();
+>>>>>>> main
         //navigation.goBack();
 
         //read();
