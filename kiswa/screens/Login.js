@@ -49,38 +49,39 @@ const Login = ({ navigation }) => {
   };
 
   const getUser = async () => {
-    // user = "";
-    // console.log("hi");
-
-    const clerk = await getDoc(doc(db, "inventoryWorkers", email));
-    console.log(reformat(clerk).id);
-    const driver = await getDoc(doc(db, "drivers", email));
-    console.log(reformat(driver).id);
-
-    //alert(reformat(clerk).id);
-    // console.log(clerk[email].exists());
-    console.log(email == reformat(clerk).id);
     if (email == "Admin@admin.com") {
-      console.log("admin");
-      user = "admin";
-      return user;
+      navigation.navigate("AdminHome");
+      return;
     }
-    if (email == reformat(clerk).id) {
-      console.log("clerk");
-      user = "clerk";
-      return user;
-    }
-    if (email == reformat(driver).id) {
-      console.log("driver");
-      user = "driver";
-      console.log("hehehheh");
-      return user;
+    const driver = doc(db, "drivers", email.toLowerCase());
+    const clerk = doc(db, "inventoryWorkers", email.toLowerCase());
+    const family = doc(db, "families", email);
+    const donor = doc(db, "donors", email.toLowerCase());
+
+    const driverSnap = await getDoc(driver);
+    const clerkSnap = await getDoc(clerk);
+    const familySnap = await getDoc(family);
+    const donorSnap = await getDoc(donor);
+
+    console.log("11111", driverSnap.exists());
+    console.log("2222", clerkSnap.exists());
+    console.log("33333", familySnap.exists());
+    console.log("4444", donorSnap.exists());
+
+    if (driverSnap.exists()) {
+      navigation.navigate("DriverHome");
+    } else if (clerkSnap.exists()) {
+      navigation.navigate("InventoryClerkHomePage");
+    } else if (familySnap.exists()) {
+      navigation.navigate("FamilyHome");
+    } else if (donorSnap.exists()) {
+      navigation.navigate("App");
     }
   };
-  // Handel Error + Login
+
   const [error, setError] = useState({ satus: false, key: null, msg: "" });
   const handleLogin = () => {
-    if (email == null || email == "")
+    if (email == null || email == "" || !email.includes("@"))
       setError({
         satus: true,
         key: "email",
@@ -95,28 +96,7 @@ const Login = ({ navigation }) => {
     else {
       signInWithEmailAndPassword(auth, email, password)
         .then(async () => {
-          user = await getUser();
-          // alert(user)
-          console.log(user == "admin");
-          if (user == "admin") {
-            // alert("hi");
-            navigation.replace("AdminHome");
-            console.log("Admin");
-            return;
-          }
-          if (user == "clerk") {
-            console.log("hi");
-            navigation.replace("InventoryClerkHomePage");
-            return;
-            // console.log("clerk");
-          }
-          if (user == "driver") {
-            navigation.replace("DriverHome");
-            console.log("driver");
-            return;
-          }
-          navigation.replace("App");
-
+          await getUser();
           setError({ satus: false, key: null, msg: "" });
         })
         .catch((error) => {
@@ -126,7 +106,6 @@ const Login = ({ navigation }) => {
           error.code == "auth/user-not-found"
             ? setError({ satus: true, key: "db", msg: "Check your email" })
             : setError({ satus: true, key: "db", msg: error.message });
-          // setSignedIn(false);
         });
     }
   };
