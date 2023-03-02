@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   Image,
@@ -7,15 +7,29 @@ import {
   Dimensions,
   TouchableOpacity,
   View,
+  PixelRatio,
+  Platform,
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 
-const { height, width } = Dimensions.get("screen");
-
+const { width, height } = Dimensions.get("screen");
+const scale = width / 450;
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 import argonTheme from "../../constants/Theme";
 import Images from "../../constants/Images";
 
 const Onboarding = ({ navigation }) => {
+  const [deviceType, setDeviceType] = useState("");
+  useEffect(() => {
+    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
+  }, []);
   return (
     <Block flex style={styles.container}>
       <ImageBackground
@@ -30,7 +44,7 @@ const Onboarding = ({ navigation }) => {
               marginLeft: "80%",
               color: "#FAF9F6",
               fontFamily: "Cochin",
-              fontSize: 18,
+              fontSize: normalize(18),
             }}
             bold
           >
@@ -53,7 +67,9 @@ const Onboarding = ({ navigation }) => {
           <Block style={{ marginLeft: "3%" }}>
             <TouchableOpacity onPress={() => navigation.replace("App")}>
               <Image
-                style={styles.images}
+                style={
+                  deviceType == "mobile" ? styles.images : styles.imagesIpad
+                }
                 source={require("../../assets/Fatima/heart.png")}
               ></Image>
             </TouchableOpacity>
@@ -64,7 +80,9 @@ const Onboarding = ({ navigation }) => {
               onPress={() => navigation.replace("RegisterFamily")}
             >
               <Image
-                style={styles.images}
+                style={
+                  deviceType == "mobile" ? styles.images : styles.imagesIpad
+                }
                 source={require("../../assets/Fatima/donation.png")}
               ></Image>
 
@@ -108,8 +126,10 @@ const styles = StyleSheet.create({
     width: width - theme.SIZES.BASE,
     height: theme.SIZES.BASE * 15,
     position: "relative",
-    marginTop: "10%",
+    // marginTop: "10%",
     resizeMode: "contain",
+    // borderWidth: 1,
+    marginTop: 0,
   },
   title: {
     marginTop: "-5%",
@@ -121,12 +141,22 @@ const styles = StyleSheet.create({
     color: "#FAF9F6",
     textAlign: "center",
     fontFamily: "Cochin",
+    fontSize: normalize(19),
     // justifyContent: "center",
   },
   images: {
     width: width - theme.SIZES.BASE * 18,
     height: theme.SIZES.BASE * 18,
     resizeMode: "contain",
+    marginTop: "30%",
+  },
+  imagesIpad: {
+    width: width - theme.SIZES.BASE * 30,
+    height: theme.SIZES.BASE * 18,
+    resizeMode: "contain",
+    marginTop: "40%",
+
+    // borderWidth: 1,
   },
   image: {
     flex: 1,
