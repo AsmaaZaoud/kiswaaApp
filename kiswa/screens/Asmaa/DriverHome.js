@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from 'react';
-import { StyleSheet,Image, Dimensions,Platform, PixelRatio, ScrollView, Text, View, Pressable } from 'react-native';
-import { Block, theme } from 'galio-framework';
-import {Feather,FontAwesome,Ionicons,MaterialCommunityIcons} from "react-native-vector-icons"
-=======
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -23,7 +17,6 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from "react-native-vector-icons";
->>>>>>> main
 //Firebase
 import { auth } from "../../config";
 import {
@@ -46,20 +39,6 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
-<<<<<<< HEAD
-const DriverHome = ({navigation}) => {
-
-
-  const [deviceType, setDeviceType] =useState("")
-  const [type ,setType] = useState("pick")
-  const [arr ,setArr] = useState([])
-   useEffect(() => {
-     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad")
-    // setArr(pick);
-    readOrders()
-    setArr(pickup)
-    
-=======
 const DriverHome = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
   const [type, setType] = useState("pick");
@@ -69,7 +48,6 @@ const DriverHome = ({ navigation }) => {
     // setArr(pick);
     readOrders();
     setArr(pickup);
->>>>>>> main
   }, []);
 
   const onSignOut = () => {
@@ -77,122 +55,46 @@ const DriverHome = ({ navigation }) => {
       .then(() => navigation.navigate("Login"))
       .catch((error) => console.log("Error logging out: ", error));
   };
-<<<<<<< HEAD
-//     const pick = [
-//         {
-//             id:"0012red3",
-//             userName: "Asmaa",
-//             zone: "Gharafa"
-//         },
-//         {
-//             id:"0033948",
-//             userName: "Sara",
-//             zone: "Alkhor"
+  //     const pick = [
+  //         {
+  //             id:"0012red3",
+  //             userName: "Asmaa",
+  //             zone: "Gharafa"
+  //         },
+  //         {
+  //             id:"0033948",
+  //             userName: "Sara",
+  //             zone: "Alkhor"
 
-//         },
-//         {
-//             id:"003754",
-//             userName: "Ahmad",
-//             zone: "Wakra"
+  //         },
+  //         {
+  //             id:"003754",
+  //             userName: "Ahmad",
+  //             zone: "Wakra"
 
-//         }
+  //         }
 
-//   ]
-//  const deliv = [
-//         {
-//             id:"0012red3",
-//             userName: "Ahmad",
-//             zone: "doha"
-//         },
-//         {
-//             id:"0033948",
-//             userName: "naser",
-//             zone: "Alkhor"
+  //   ]
+  //  const deliv = [
+  //         {
+  //             id:"0012red3",
+  //             userName: "Ahmad",
+  //             zone: "doha"
+  //         },
+  //         {
+  //             id:"0033948",
+  //             userName: "naser",
+  //             zone: "Alkhor"
 
-//         },
-//         {
-//             id:"003754",
-//             userName: "sara",
-//             zone: "Wakra"
+  //         },
+  //         {
+  //             id:"003754",
+  //             userName: "sara",
+  //             zone: "Wakra"
 
-//         }
+  //         }
 
-//   ]
-
-  const change = (type) => {
-    if (type == "deliv") {
-      setType("deliv")
-      setArr(deliver)
-    }
-    else {
-      setType("pick")
-      setArr(pickup)
-
-    }
-  }
-
-  const [orders ,setOrders] = useState([])
-  const [pickup ,setPickup] = useState([])
-  const [deliver ,setDeliver] = useState([])
-
-
-  let user = "sam@mail.com"
-  const readOrders = async () => {
-    let temp = [];
-    let pick = []
-    let deliv =[]
-    const q = query(collection(db, "drivers",user,"orders"));
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      let hour = doc.data().dateTime.toDate().getHours() 
-      let t = doc.data()
-      t.time = hour + ":00"
-      t.date = doc.data().dateTime.toDate().toLocaleDateString()
-      temp.push(t);
-      // temp.push(doc.data());
-      console.log(doc.id, " => ", doc.data());
-      doc.data().type =="pickup" ? pick.push(t):deliv.push(t)
-    });
-    setOrders(temp);
-    setPickup(pick)
-    setDeliver(deliv)
-    setArr(pick)
-    //console.log(drivers);
-  };
-
-    return (
-        
-      <Block flex  >
-         
-        <View style={{backgroundColor:"#5e1e7f", width:width}}>
-          <View style={styles.topl}>
-            <Image source={require('../../assets/imgs/kiswaLogo.png')} style={{width:150, height:50}} width={width*0.27} height={height*0.05} />
-            <Pressable onPress={onSignOut}>
-              <MaterialCommunityIcons name="logout" size={ deviceType=="mobile" ?30: 45} color="white" />
-            </Pressable>
-        </View>
-        </View>
-        
-        <Block style={styles.nav}>
-            <Pressable onPress={()=>change("pick")}> 
-              <Text style={type == "pick"? styles.selected : styles.unselected}>Pickup</Text>
-            </Pressable>
-           
-            <Text style={styles.unselected}>|</Text>
-            <Pressable onPress={()=>change("deliv")}>
-               <Text  style={type == "deliv"? styles.selected : styles.unselected}>Deliver</Text>
-               </Pressable>
-        </Block>
-         <ScrollView>
- 
-    <View  style={styles.home}>
-        {  
-        arr.map((x)=>
-            <View key={x.user} style={styles.card}>
-              <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-          <Text style={styles.cardTitle}>Order No</Text>
-=======
+  //   ]
 
   const change = (type) => {
     if (type == "deliv") {
@@ -207,7 +109,6 @@ const DriverHome = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
   const [pickup, setPickup] = useState([]);
   const [deliver, setDeliver] = useState([]);
->>>>>>> main
 
   let user = "sam@mail.com";
   const readOrders = async () => {
@@ -234,53 +135,12 @@ const DriverHome = ({ navigation }) => {
     //console.log(drivers);
   };
 
-<<<<<<< HEAD
-          </View>
-          <View style={styles.userCard}>
-               <FontAwesome name="user-circle-o" size={50} />
-               <View style={{marginLeft:10}}>
-                  <Text style={{fontSize:normalize(15), fontWeight:"bold"}}>Name </Text>
-                  <Text style={{fontSize:normalize(15),fontWeight:"bold"}}>Phone </Text>
-                  <Text style={{fontSize:normalize(15),fontWeight:"bold"}}>Email </Text>
-               </View>
-          </View>
-         
-          <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
-          <View style={[styles.dataView,{flexDirection:"row"}]}>
-           <Ionicons name="md-today-sharp" size={30} color="#5e1e7f"/>
-            <Text style={styles.dataTitles}>{x.date}</Text>
-          </View>
-          <View style={[styles.dataView,{flexDirection:"row"}]}>
-           <Ionicons name="time-outline" size={30} color="#5e1e7f" />
-            <Text style={styles.dataTitles}>{x.time} PM</Text>
-          </View>
-          </View>
-
-          <View style={{flexDirection:"row", justifyContent:"space-between", marginTop:15}}>
-          <View style={[styles.dataView,{flexDirection:"row"}]}>
-           <Ionicons name="location-outline" size={30} color="#5e1e7f" />
-            <Text style={styles.dataTitles}>{x.location}</Text>
-          </View>
-          <View style={[styles.dataView,{flexDirection:"row"}]}>
-           <Ionicons name="map-outline" size={30} color="#5e1e7f" />
-            <Text style={styles.dataTitles}>Open Map</Text>
-          </View>
-          </View>
-
-          <View style={{justifyContent:"center", alignItems:"center"}}>
-          <Pressable style={styles.pickupButtonContainer}>
-           { type == "pick" ?
-            <Text style={styles.pickupButton}>Pick up</Text>
-            :
-             <Text style={styles.pickupButton}>Deliver</Text>
-             }
-=======
   return (
     <Block flex>
       <View style={{ backgroundColor: "#5e1e7f", width: width }}>
         <View style={styles.topl}>
           <Image
-            source={require("../../assets/imgs/kiswaLogo.jpg")}
+            source={require("../../assets/imgs/kiswaLogo.png")}
             style={{ width: 150, height: 50 }}
             width={width * 0.27}
             height={height * 0.05}
@@ -291,7 +151,6 @@ const DriverHome = ({ navigation }) => {
               size={deviceType == "mobile" ? 30 : 45}
               color="white"
             />
->>>>>>> main
           </Pressable>
         </View>
       </View>
@@ -393,16 +252,6 @@ const DriverHome = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
-<<<<<<< HEAD
- 
-  topl:{
-    width:width*.97,
-    padding:"2%",
-    flexDirection:'row',
-    justifyContent:"space-between",
-    backgroundColor:"#5e1e7f",
-    marginTop:"3%"
-=======
   topl: {
     width: width * 0.97,
     padding: "2%",
@@ -410,7 +259,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "#5e1e7f",
     marginTop: "3%",
->>>>>>> main
   },
   nav: {
     marginVertical: "7%",
@@ -423,17 +271,10 @@ const styles = StyleSheet.create({
   unselected: {
     fontSize: normalize(19),
   },
-<<<<<<< HEAD
-  selected:{
-    color: "#5e1e7f",
-     fontSize:normalize(19), 
-     fontWeight:"bold"
-=======
   selected: {
     color: "#5e1e7f",
     fontSize: normalize(19),
     fontWeight: "bold",
->>>>>>> main
   },
   home: {
     marginHorizontal: "10%",
@@ -449,16 +290,6 @@ const styles = StyleSheet.create({
     fontSize: normalize(20),
     marginBottom: "6%",
     // color:"#5e1e7f"
-<<<<<<< HEAD
-   },
-  userCard:{
-    borderWidth:1, 
-    borderColor:"lightgrey",
-    margin:"2%", 
-    borderRadius:"7%", 
-    flexDirection:"row", 
-    padding:"3%",
-=======
   },
   userCard: {
     borderWidth: 1,
@@ -467,7 +298,6 @@ const styles = StyleSheet.create({
     borderRadius: "7%",
     flexDirection: "row",
     padding: "3%",
->>>>>>> main
     shadowColor: "#666",
     shadowOffset: {
       width: 1,
@@ -482,15 +312,6 @@ const styles = StyleSheet.create({
     marginBottom: "6%",
   },
   dataTitles: {
-<<<<<<< HEAD
-    fontSize: normalize(19) ,
-    // color: '#999',
-   marginTop:"2%",
-    marginLeft:"5%"
-  },
-  pickupButtonContainer: {
-    backgroundColor: '#5e1e7f',
-=======
     fontSize: normalize(19),
     // color: '#999',
     marginTop: "2%",
@@ -498,7 +319,6 @@ const styles = StyleSheet.create({
   },
   pickupButtonContainer: {
     backgroundColor: "#5e1e7f",
->>>>>>> main
     borderRadius: "7%",
     width: width * 0.4,
     margin: "6%",

@@ -11,11 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { DataTable } from "react-native-paper";
 import { theme } from "galio-framework";
-<<<<<<< HEAD
 import Dashboard from "./Dashboard";
-=======
-
->>>>>>> main
 import { Tab, TabView } from "@rneui/themed";
 
 //FireBase
@@ -69,7 +65,6 @@ const AdminHome = ({ navigation }) => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
 
-<<<<<<< HEAD
   const navbar = [
     {
       name: "Dashboard",
@@ -102,8 +97,6 @@ const AdminHome = ({ navigation }) => {
       icon: require("../../assets/imgs/Clerk.png"),
     },
   ];
-=======
->>>>>>> main
   const [color, setColor] = useState("#e1ddf0");
   const [page, setPage] = useState("Dashboard");
 
@@ -125,17 +118,13 @@ const AdminHome = ({ navigation }) => {
   // console.log(ageGroup, type, quantity, color, size);
   console.log(index);
   return (
-    <View style={{ backgroundColor: "#5e1e7f" }}>
+    <View style={{ backgroundColor: "#4B0095" }}>
       <View style={styles.top}>
         <Image
-<<<<<<< HEAD
-          source={require("../../assets/imgs/kiswaLogo.png")}
-=======
-          source={require("../../assets/imgs/kiswaLogo.jpg")}
->>>>>>> main
-          style={{ width: 150, height: 50 }}
+          source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
+          style={{ width: 120, height: 40 }}
           width={width * 0.27}
-          height={height * 0.05}
+          height={height * 0.06}
         />
         <Pressable onPress={onSignOut}>
           <MaterialCommunityIcons
@@ -166,11 +155,15 @@ const AdminHome = ({ navigation }) => {
             value={0}
             title="Men"
             style={{
-              borderBottomColor: index == 0 ? "#5e1e7f" : "white",
+              borderBottomColor: index == 0 ? "#af9ec6" : "white",
               borderBottomWidth: 5,
             }}
           >
-            <FontAwesome name="home" size={deviceType == "mobile" ? 30 : 45} />
+            <FontAwesome
+              name="home"
+              size={deviceType == "mobile" ? 30 : 45}
+              color="#e68d69"
+            />
             <Text style={{ fontSize: normalize(19) }}>Home</Text>
           </Tab.Item>
           <Tab.Item
@@ -178,11 +171,15 @@ const AdminHome = ({ navigation }) => {
             value={1}
             title="Women"
             style={{
-              borderBottomColor: index == 1 ? "#5e1e7f" : "white",
+              borderBottomColor: index == 1 ? "#af9ec6" : "white",
               borderBottomWidth: 5,
             }}
           >
-            <FontAwesome name="car" size={deviceType == "mobile" ? 30 : 45} />
+            <FontAwesome
+              color="#e68d69"
+              name="car"
+              size={deviceType == "mobile" ? 30 : 45}
+            />
             <Text style={{ fontSize: normalize(19) }}>Drivers</Text>
           </Tab.Item>
           <Tab.Item
@@ -190,11 +187,15 @@ const AdminHome = ({ navigation }) => {
             value={2}
             title="Boys"
             style={{
-              borderBottomColor: index == 2 ? "#5e1e7f" : "white",
+              borderBottomColor: index == 2 ? "#af9ec6" : "white",
               borderBottomWidth: 5,
             }}
           >
-            <FontAwesome name="user" size={deviceType == "mobile" ? 30 : 45} />
+            <FontAwesome
+              color="#e68d69"
+              name="user"
+              size={deviceType == "mobile" ? 30 : 45}
+            />
             <Text style={{ fontSize: normalize(19) }}>Families</Text>
           </Tab.Item>
           <Tab.Item
@@ -202,11 +203,15 @@ const AdminHome = ({ navigation }) => {
             value={3}
             title="Girls"
             style={{
-              borderBottomColor: index == 3 ? "#5e1e7f" : "white",
+              borderBottomColor: index == 3 ? "#af9ec6" : "white",
               borderBottomWidth: 5,
             }}
           >
-            <FontAwesome name="gift" size={deviceType == "mobile" ? 30 : 45} />
+            <FontAwesome
+              color="#e68d69"
+              name="gift"
+              size={deviceType == "mobile" ? 30 : 45}
+            />
             <Text style={{ fontSize: normalize(19) }}>Donors</Text>
           </Tab.Item>
           <Tab.Item
@@ -214,11 +219,15 @@ const AdminHome = ({ navigation }) => {
             value={4}
             title="Girls"
             style={{
-              borderBottomColor: index == 4 ? "#5e1e7f" : "white",
+              borderBottomColor: index == 4 ? "#af9ec6" : "white",
               borderBottomWidth: 5,
             }}
           >
-            <FontAwesome name="users" size={deviceType == "mobile" ? 30 : 45} />
+            <FontAwesome
+              color="#e68d69"
+              name="users"
+              size={deviceType == "mobile" ? 30 : 45}
+            />
             <Text style={{ fontSize: normalize(19) }}>Clerk</Text>
           </Tab.Item>
           <Tab.Item
@@ -226,11 +235,12 @@ const AdminHome = ({ navigation }) => {
             value={5}
             title="Girls"
             style={{
-              borderBottomColor: index == 5 ? "#5e1e7f" : "white",
+              borderBottomColor: index == 5 ? "#af9ec6" : "white",
               borderBottomWidth: 5,
             }}
           >
             <FontAwesome
+              color="#e68d69"
               name="database"
               size={deviceType == "mobile" ? 30 : 45}
             />
@@ -241,7 +251,6 @@ const AdminHome = ({ navigation }) => {
 
         <TabView value={index} onChange={setIndex} animationType="spring">
           {/*--------- Dashboard -------------*/}
-<<<<<<< HEAD
           <TabView.Item style={styles.comp}>
             {/* <Text style={{fontSize: normalize(25)}}>Dashboard</Text> */}
             <Dashboard />
@@ -268,41 +277,6 @@ const AdminHome = ({ navigation }) => {
             </View>
           </TabView.Item>
 
-=======
-          <TabView.Item value={0} style={styles.comp}>
-            <View
-              style={{
-                justifyContent: "center",
-                alignContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: normalize(25) }}>Dashboard</Text>
-            </View>
-          </TabView.Item>
-
-          {/*--------- Drivers -------------*/}
-          <TabView.Item style={styles.comp}>
-            <View style={styles.board}>
-              <Drivers navigation={navigation} />
-            </View>
-          </TabView.Item>
-
-          {/*--------- Families -------------*/}
-          <TabView.Item style={styles.comp}>
-            <View style={styles.board}>
-              <Families navigation={navigation} />
-            </View>
-          </TabView.Item>
-
-          {/*--------- Donors -------------*/}
-          <TabView.Item style={styles.comp}>
-            <View style={styles.board}>
-              <Donors navigation={navigation} />
-            </View>
-          </TabView.Item>
-
->>>>>>> main
           {/*--------- clerks -------------*/}
           <TabView.Item style={styles.comp}>
             <View style={styles.board}>

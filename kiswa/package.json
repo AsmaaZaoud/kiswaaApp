@@ -38,15 +38,11 @@
     "prop-types": "^15.7.2",
     "react": "17.0.2",
     "react-native": "0.68.2",
-<<<<<<< HEAD
     "react-native-chart-kit": "^6.12.0",
     "react-native-date-picker": "^4.2.8",
     "react-native-datepicker": "^1.7.2",
-    "react-native-element-dropdown": "^2.6.0",
-=======
     "react-native-element-dropdown": "^2.7.0",
     "react-native-elements": "^3.4.3",
->>>>>>> main
     "react-native-gesture-handler": "~2.2.1",
     "react-native-modal-dropdown": "git+https://github.com/siemiatj/react-native-modal-dropdown.git",
     "react-native-numeric-input": "^1.9.1",
@@ -56,11 +52,7 @@
     "react-native-screens": "~3.11.1",
     "react-native-vector-icons": "^9.2.0",
     "validator": "^13.9.0",
-<<<<<<< HEAD
     "react-native-svg": "12.3.0"
-=======
-    "expo-splash-screen": "~0.15.1"
->>>>>>> main
   },
   "devDependencies": {
     "babel-preset-expo": "~9.1.0"
