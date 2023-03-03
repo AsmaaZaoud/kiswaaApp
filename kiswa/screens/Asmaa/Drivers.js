@@ -259,7 +259,8 @@ const Drivers = ({ navigation }) => {
               </Text>
             </View>
             <Button
-              color="#6a1b9a"
+              // color="#6a1b9a"
+              color="#5AA15A"
               style={{ width: "25%", height: "50%" }}
               onPress={() => navigation.navigate("AddDriver")}
             >
@@ -349,9 +350,9 @@ const Drivers = ({ navigation }) => {
                       <Pressable
                         onPress={() => deleteDriver(x.email)}
                         style={{
-                          borderColor: "#bdbdbd",
+                          borderColor: "#F8694C",
                           borderWidth: 1,
-                          backgroundColor: "#bdbdbd",
+                          backgroundColor: "#F8694C",
                           borderRadius: "5%",
                         }}
                       >

@@ -62,6 +62,7 @@ const Inventory = ({ navigation }) => {
 
   const [inventory, setInventory] = useState([]);
   const [allinventory, setAllInventory] = useState([]);
+  const [blouse, setBlouse] = useState([]);
 
   const readAllWhere = async () => {
     let temp = [];
@@ -76,6 +77,7 @@ const Inventory = ({ navigation }) => {
     setAllInventory(temp);
     console.log(inventory);
   };
+
   const data = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
