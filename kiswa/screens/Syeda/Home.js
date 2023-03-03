@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Dimensions, ScrollView, Image, TouchableOpacity, View, Animated, SafeAreaView } from 'react-native';
 import { Block, theme, Text, Button } from 'galio-framework';
-// import Card from '../../components/Syeda/Card';
+import LilacCard from '../../components/Syeda/LilacCard';
 
 //firebase
 import {
@@ -20,57 +20,60 @@ import {
 import { db } from "../../config";
 
 const { width } = Dimensions.get('screen');
-
+import { auth } from '../../config';
 
 const Home = ({ route, navigation }) => {
 
-const [itemsArray, setItemsArray] = useState([])
-const [ItemsDic, setItemsDic] = useState([])
-itemsArray.map((item) => ItemsDic.push({type: item.data.type, quantity: item.data.quantity}))
-//console.log('itemDic : ', ItemsDic)
+  let user = auth?.currentUser?.email;
+  console.log("user: ", user)
 
-let shortList = ItemsDic.slice(0, 6); 
-console.log('shortlsit: ', shortList)
+  const [itemsArray, setItemsArray] = useState([])
+  const [ItemsDic, setItemsDic] = useState([])
+  itemsArray.map((item) => ItemsDic.push({ type: item.data.type, quantity: item.data.quantity }))
+  //console.log('itemDic : ', ItemsDic)
+
+  let shortList = ItemsDic.slice(0, 6);
+  console.log('shortlsit: ', shortList)
 
   //read from database
   //readAllWhere 
-const readAllWhere = async () => {
-  const q = query(collection(db, "familyRequests"), where("status", "==", 'pending'));
-  const docs = await getDocs(q);
-  docs.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    //console.log(doc.id, " => ", doc.data());
-  });
+  const readAllWhere = async () => {
+    const q = query(collection(db, "familyRequests"), where("status", "==", 'pending'));
+    const docs = await getDocs(q);
+    docs.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+    });
 
-  let temp = [];
+    let temp = [];
 
-  docs.forEach((doc) => {
-    temp.push({
-      id: doc.id,
-      data: doc.data(),
-      items: getCartItems(doc.id)
+    docs.forEach((doc) => {
+      temp.push({
+        id: doc.id,
+        data: doc.data(),
+        items: getCartItems(doc.id)
+      })
     })
-  })
-}
+  }
 
-const getCartItems = async (cartId) => {
-  const docRef = collection(db, "familyRequests", cartId, "Items");
-  const docSnap = await getDocs(docRef);
-  let temp = []
-  docSnap.forEach((doc) => {
-    temp.push({
-      id: doc.id,
-      data: doc.data()
+  const getCartItems = async (cartId) => {
+    const docRef = collection(db, "familyRequests", cartId, "Items");
+    const docSnap = await getDocs(docRef);
+    let temp = []
+    docSnap.forEach((doc) => {
+      temp.push({
+        id: doc.id,
+        data: doc.data()
+      })
     })
-  }) 
-  //console.log('temp: ', temp)
-  setItemsArray(temp)
-  return temp
-}
+    //console.log('temp: ', temp)
+    setItemsArray(temp)
+    return temp
+  }
 
-//console.log('outside itemarray = ', itemsArray)
+  //console.log('outside itemarray = ', itemsArray)
 
-// ********************************************************************************************************
+  // ********************************************************************************************************
 
   //clothes type data
   const ClothTypeData = [
@@ -105,7 +108,7 @@ const getCartItems = async (cartId) => {
     { label: "T-Shirt", value: "T-Shirt", uri: 'https://i.pinimg.com/564x/d6/9c/5a/d69c5a1ba98ce97c40a16ff506233f7a.jpg' },
     { label: "Vest", value: "Vest", uri: 'https://i.pinimg.com/564x/59/21/ee/5921eee1e4634223a5df0da907613fb3.jpg' },
     { label: "Waistcoat", value: "Waistcoat", uri: 'https://i.pinimg.com/564x/3e/08/99/3e08991d443b518440421b339f93c72b.jpg' },
-];
+  ];
 
   //clothTypeURI
   const [ItemURI, setItemURI] = useState('')
@@ -135,72 +138,69 @@ const getCartItems = async (cartId) => {
   const renderArticles = () => {
     return (
       <SafeAreaView style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.articles}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.articles}>
 
-        <View>
+          <View>
 
-        {/* header */}
+            {/* header */}
 
-        <Block style={styles.header}>
-          {/* <Block style={{ flexDirection: 'row' }}> */}
-            <Block center>
-              <Image
-                style={styles.avatar}
-                source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1173/1173817.png' }}>
-              </Image>
+            <Block style={styles.header}>
+              {/* <Block style={{ flexDirection: 'row' }}> */}
+              <Block center>
+                <Image
+                  style={styles.avatar}
+                  source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1173/1173817.png' }}>
+                </Image>
+              </Block>
+              <Block center style={{}}>
+                <Text style={{ fontSize: 25, alignSelf: 'center', fontWeight: 'bold' }}>Hello, {user === undefined ? 'Guest!' : user}</Text>
+                <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? 'Placeholder Text' : user}</Text>
+                <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
+                {/* <Text style={{  fontWeight: 'bold', alignSelf: 'center' }}>Let's share goodness!</Text> */}
+              </Block>
+              {/* </Block> */}
             </Block>
-            <Block center style={{}}>
-              <Text style={{ fontSize: 15, alignSelf: 'center' }}>Hello, Guest!</Text>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', alignSelf: 'center' }}>Let's share goodness!</Text>
-            </Block>
-          {/* </Block> */}
-        </Block>
 
-        {/* animated opening text */}
-        {/* <Text style={{ fontSize: 30, fontWeight: 'bold', margin: 10, alignSelf: 'center' }}>Creating a better world, one donation at a time.</Text> */}
-        <Animated.View style={{ transform: [{ translateY: animatedValue }] }}>
-          <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
-            Creating a better world, one donation at a time.
-          </Text>
-        </Animated.View>
+            {/* animated opening text */}
+            {/* <Text style={{ fontSize: 30, fontWeight: 'bold', margin: 10, alignSelf: 'center' }}>Creating a better world, one donation at a time.</Text> */}
+            <Animated.View style={{ transform: [{ translateY: animatedValue }] }}>
+              <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
+                Creating a better world, one donation at a time.
+              </Text>
+            </Animated.View>
 
 
-        {/* animated button */}
-        <TouchableOpacity
-          style={[styles.button, isActive && styles.buttonActive]}
-          onPress={handlePress}
-        >
-          <Text style={styles.buttonText}>DONATE</Text>
-          <View style={[styles.buttonOverlay, isActive && styles.buttonOverlayActive]}></View>
-          <View style={[styles.buttonBackground, isActive && styles.buttonBackgroundActive]}></View>
-        </TouchableOpacity>
+            {/* animated button */}
+            <TouchableOpacity
+              style={[styles.button, isActive && styles.buttonActive]}
+              onPress={handlePress}
+            >
+              <Text style={styles.buttonText}>DONATE</Text>
+              <View style={[styles.buttonOverlay, isActive && styles.buttonOverlayActive]}></View>
+              <View style={[styles.buttonBackground, isActive && styles.buttonBackgroundActive]}></View>
+            </TouchableOpacity>
 
-        {/* requests */}
-        {
-        shortList.map((item, index) => {
-            return (
-              <View key={index} style={{ textAlign: "center" }}>
-                <Text>
-                  {item.type}
-                </Text>
-                <Text>
-                  {item.quantity}
-                </Text>
-              </View>
-            );
-          })
-          }
+            {/* requests */}
+            {
+              shortList.map((item, index) => {
+                return (
+                  <View key={index} style={{ textAlign: "center" }}>
+                    <Text>
+                      {item.type}
+                    </Text>
+                    <Text>
+                      {item.quantity}
+                    </Text>
+                  </View>
+                );
+              })
+            }
 
-        {/* <Image
-          style={styles.Image}
-          source={{ uri: ItemURI }}
-        ></Image> */}
+          </View>
 
-</View>
-
-      </ScrollView>
+        </ScrollView>
       </SafeAreaView>
     )
   }
@@ -242,8 +242,10 @@ const styles = StyleSheet.create({
   },
   header: {
     width: width,
-    height: 160,
-    backgroundColor: '#F1ECFF'
+    height: 180,
+    backgroundColor: '#F1ECFF',
+    // borderWidth: 1,
+    // borderColor: 'red'
   },
   avatar: {
     width: 60,
@@ -302,7 +304,7 @@ const styles = StyleSheet.create({
   buttonBackgroundActive: {
     opacity: 1,
     transform: [{ translateX: 25 }, { translateY: 25 }],
-  }, 
+  },
 });
 
 export default Home;

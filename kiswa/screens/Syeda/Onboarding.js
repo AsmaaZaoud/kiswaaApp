@@ -43,8 +43,8 @@ const Onboarding = ({ navigation }) => {
             style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20 }}
             source={{ uri: 'https://cdn-icons-png.flaticon.com/512/812/812319.png' }}
           ></Image>
-          </TouchableOpacity>
           <Text style={{color: 'white', textAlign: 'center'}}>DONOR</Text>
+          </TouchableOpacity>
         </Block>
         <Block>
         <TouchableOpacity onPress={() => navigation.replace("RegisterFamily")}>
@@ -52,8 +52,8 @@ const Onboarding = ({ navigation }) => {
             style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20  }}
             source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2904/2904889.png' }}
           ></Image>
-          </TouchableOpacity>
           <Text style={{color: 'white', textAlign: 'center'}}>RECEIVER</Text>
+          </TouchableOpacity>
         </Block>
       </Block>
    

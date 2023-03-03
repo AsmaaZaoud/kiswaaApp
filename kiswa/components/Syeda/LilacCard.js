@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
 
-const Card = ({ imageUrl, title, subtitle }) => {
+const LilacCard = ({ imageUrl, title, subtitle }) => {
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{ uri: imageUrl }} />
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Card;
+export default LilacCard;
