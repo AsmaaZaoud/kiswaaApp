@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Dimensions, ScrollView, Image, TouchableOpacity, View, Animated, SafeAreaView } from 'react-native';
-import { Card } from 'react-native-elements';
 import { Block, theme, Text, Button } from 'galio-framework';
+// import Card from '../../components/Syeda/Card';
 
 //firebase
 import {
@@ -75,38 +75,37 @@ const getCartItems = async (cartId) => {
   //clothes type data
   const ClothTypeData = [
     { label: "Abaya", value: "Abaya", uri: 'https://i.pinimg.com/550x/dc/31/24/dc31248fa6e537002acb7ad4be14e08c.jpg' },
-    { label: "Blouse", value: "Blouse", uri: 'https://cdn-icons-png.flaticon.com/512/8323/8323136.png' },
-    { label: "Caftan", value: "Caftan", uri: 'https://cdn-icons-png.flaticon.com/512/5238/5238311.png' },
-    { label: "Cardigan", value: "Cardigan", uri: 'https://cdn-icons-png.flaticon.com/128/3345/3345635.png' },
-    { label: "Coat", value: "Coat", uri: 'https://cdn-icons-png.flaticon.com/128/7157/7157441.png' },
-    { label: "Dress", value: "Dress", uri: 'https://cdn-icons-png.flaticon.com/128/9833/9833994.png' },
-    { label: "Dungarees", value: "Dungarees", uri: 'https://cdn-icons-png.flaticon.com/128/2161/2161057.png' },
-    { label: "Jacket", value: "Jacket", uri: 'https://cdn-icons-png.flaticon.com/128/2806/2806051.png' },
-    { label: "Jeans", value: "Jeans", uri: 'https://cdn-icons-png.flaticon.com/128/599/599388.png' },
-    { label: "Jumper", value: "Jumper", uri: 'https://cdn-icons-png.flaticon.com/128/9774/9774105.png' },
-    { label: "Jumpsuit", value: "Jumpsuit", uri: 'https://cdn-icons-png.flaticon.com/128/2290/2290478.png' },
-    { label: "Leggings", value: "Leggings", uri: 'https://cdn-icons-png.flaticon.com/128/9381/9381563.png' },
-    { label: "Legwarmers", value: "Legwarmers", uri: 'https://cdn-icons-png.flaticon.com/128/8853/8853176.png' },
-    { label: "Pants / Trousers", value: "Pants / Trousers", uri: 'https://cdn-icons-png.flaticon.com/128/2390/2390116.png' },
-    { label: "Playsuit", value: "Playsuit", uri: 'https://cdn-icons-png.flaticon.com/128/122/122709.png' },
-    { label: "Pajamas", value: "Pajamas", uri: 'https://cdn-icons-png.flaticon.com/128/4446/4446182.png' },
-    { label: "Shawl", value: "Shawl", uri: 'https://cdn-icons-png.flaticon.com/128/2947/2947449.png' },
-    { label: "Shirt", value: "Shirt", uri: 'https://www.shutterstock.com/image-photo/rack-clothes-after-drycleaning-near-260nw-1421481467.jpg' },
-    { label: "Shoes", value: "Shoes", uri: 'https://cdn-icons-png.flaticon.com/128/5479/5479005.png' },
-    { label: "Shorts", value: "Shorts", uri: 'https://cdn-icons-png.flaticon.com/128/2237/2237015.png' },
-    { label: "Skirt", value: "Skirt", uri: 'https://cdn-icons-png.flaticon.com/512/4507/4507761.png' },
-    { label: "Sock", value: "Sock", uri: 'https://cdn-icons-png.flaticon.com/128/843/843877.png' },
-    { label: "Sweater", value: "Sweater", uri: 'https://cdn-icons-png.flaticon.com/128/9385/9385884.png' },
-    { label: "Hoodie", value: "Hoodie", uri: 'https://cdn-icons-png.flaticon.com/128/9431/9431181.png' },
-    { label: "Thawb", value: "Thawb", uri: 'https://globalsymbols.com/uploads/production/image/imagefile/7701/15_7701_8b682d28-a326-4b6a-a85f-67edf995d2d0.png' },
-    { label: "Tights", value: "Tights", uri: 'https://cdn-icons-png.flaticon.com/128/3343/3343878.png' },
-    { label: "Tops", value: "Tops", uri: 'https://cdn-icons-png.flaticon.com/128/3258/3258170.png' },
-    { label: "Tracksuit", value: "Tracksuit", uri: 'https://cdn-icons-png.flaticon.com/128/5783/5783203.png' },
-    { label: "T-Shirt", value: "T-Shirt", uri: 'https://ae01.alicdn.com/kf/S8aecf0dfd4164c178cc47be230db45ccc.jpg_640x640q90.jpg' },
-    { label: "Waistcoat", value: "Waistcoat", uri: 'https://cdn-icons-png.flaticon.com/128/4343/4343628.png' },
+    { label: "Blouse", value: "Blouse", uri: 'https://i.pinimg.com/564x/d9/1b/87/d91b87a86b9924cdce26b631bd3a968e.jpg' },
+    { label: "Cardigan", value: "Cardigan", uri: 'https://i.pinimg.com/564x/a5/84/9d/a5849d187e57e693c6d765436893030a.jpg' },
+    { label: "Coat", value: "Coat", uri: 'https://i.pinimg.com/564x/f6/73/7d/f6737d49a2571e063cd811812c3a922c.jpg' },
+    { label: "Dress", value: "Dress", uri: 'https://i.pinimg.com/564x/a9/1b/cb/a91bcb63b4c31333a9402f74200a36a3.jpg' },
+    { label: "Dungarees", value: "Dungarees", uri: 'https://i.pinimg.com/564x/81/50/b7/8150b7d936418924a9851aa6939d02a1.jpg' },
+    { label: "Jacket", value: "Jacket", uri: 'https://i.etsystatic.com/11147089/c/2250/2250/342/0/il/adfdf1/3588743348/il_300x300.3588743348_2ol1.jpg' },
+    { label: "Jeans", value: "Jeans", uri: 'https://i.pinimg.com/564x/a2/3c/13/a23c134ebdc47581fa854c248633a8f5.jpg' },
+    { label: "Jumper", value: "Jumper", uri: 'https://www.shutterstock.com/image-photo/colorful-warm-knitted-sweater-on-260nw-1602062266.jpg' },
+    { label: "Jumpsuit", value: "Jumpsuit", uri: 'https://i.pinimg.com/564x/04/00/83/040083896aaf020fa83aa12dbac805fe.jpg' },
+    { label: "Kaftan", value: "Kaftan", uri: 'https://i.etsystatic.com/31945487/r/il/2aadec/3870275767/il_fullxfull.3870275767_od8t.jpg' },
+    { label: "Leggings", value: "Leggings", uri: 'https://img.ltwebstatic.com/images3_pi/2021/11/12/16367142048379ff7550b0945fe5fe1250671f03b1_thumbnail_600x.webp' },
+    { label: "Legwarmers", value: "Legwarmers", uri: 'https://i.pinimg.com/564x/a1/aa/38/a1aa3845e69b70935f9ed6d8c39b90fa.jpg' },
+    { label: "Pants / Trousers", value: "Pants / Trousers", uri: 'https://media.istockphoto.com/id/530930442/photo/row-of-black-pants-hangs-in-wardrobe-at-home.jpg?s=612x612&w=0&k=20&c=ZFM23HW4i3gKgfT5PplBTTajAq3L1qGG30MCjWqZliA=' },
+    { label: "Playsuit", value: "Playsuit", uri: 'https://ae01.alicdn.com/kf/HTB1W34cPxnaK1RjSZFtq6zC2VXai/Korean-Style-2019-New-Fashion-Women-s-Playsuits-Chic-Double-Pocket-Skinny-Strap-Long-sleeved-Casual.jpg_Q90.jpg_.webp' },
+    { label: "Pajamas", value: "Pajamas", uri: 'https://i.pinimg.com/474x/05/2d/70/052d70095c9f0fea47b0b001d14512d0.jpg' },
+    { label: "Scarf", value: "Scarf", uri: 'https://i.pinimg.com/564x/f8/51/cf/f851cf13ae7a409e48236722980614f1.jpg' },
+    { label: "Shawl", value: "Shawl", uri: 'https://i.pinimg.com/564x/5e/4c/2e/5e4c2e27259f462f873b21f2174d8a55.jpg' },
+    { label: "Shirt", value: "Shirt", uri: 'https://i.pinimg.com/564x/5c/16/17/5c1617cc8f266adfd425e452773dddaf.jpg' },
+    { label: "Shorts", value: "Shorts", uri: 'https://i.pinimg.com/474x/89/1b/c7/891bc76dfb42ae14d5fbda7b92f7247b.jpg' },
+    { label: "Skirt", value: "Skirt", uri: 'https://i.pinimg.com/564x/b4/de/32/b4de32ed91466917f3c6720529372612.jpg' },
+    { label: "Sock", value: "Sock", uri: 'https://i.pinimg.com/564x/2b/ca/5f/2bca5f01f7fb038d12d5a6f9fa4127d4.jpg' },
+    { label: "Sweater", value: "Sweater", uri: 'https://i.pinimg.com/564x/d3/b2/51/d3b2515feca557aff75d23077b2479e8.jpg' },
+    { label: "Sweatpants/ Joggers", value: "Sweatpants/ Joggers", uri: 'https://i.pinimg.com/474x/bf/ce/b0/bfceb02f5a2874054a31332054d56d0c.jpg' },
+    { label: "Hoodie", value: "Hoodie", uri: 'https://i.pinimg.com/564x/0d/8b/a8/0d8ba8f1e8cd55a6fe1b9f08a494dad2.jpg' },
+    { label: "Thawb", value: "Thawb", uri: 'http://sc04.alicdn.com/kf/H5ec6274087e746629e20854d88f49c99R.jpg' },
+    { label: "Tops", value: "Tops", uri: 'https://i.pinimg.com/564x/5c/ad/15/5cad15407e6c1e9b393337dc7d17c530.jpg' },
+    { label: "Tracksuit", value: "Tracksuit", uri: 'https://i.pinimg.com/564x/9c/d0/ff/9cd0ffa1d5cde7b61135f378bbbdc38c.jpg' },
+    { label: "T-Shirt", value: "T-Shirt", uri: 'https://i.pinimg.com/564x/d6/9c/5a/d69c5a1ba98ce97c40a16ff506233f7a.jpg' },
+    { label: "Vest", value: "Vest", uri: 'https://i.pinimg.com/564x/59/21/ee/5921eee1e4634223a5df0da907613fb3.jpg' },
+    { label: "Waistcoat", value: "Waistcoat", uri: 'https://i.pinimg.com/564x/3e/08/99/3e08991d443b518440421b339f93c72b.jpg' },
 ];
-
-//https://images.pexels.com/photos/5016610/pexels-photo-5016610.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2
 
   //clothTypeURI
   const [ItemURI, setItemURI] = useState('')

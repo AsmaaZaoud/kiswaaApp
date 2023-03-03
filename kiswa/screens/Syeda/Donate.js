@@ -43,7 +43,6 @@ const Donate = ({ navigation }) => {
     const ClothTypeData = [
         { label: "Abaya", value: "Abaya", uri: 'https://thumbs.dreamstime.com/b/%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5-rgb-210879656.jpg' },
         { label: "Blouse", value: "Blouse", uri: 'https://cdn-icons-png.flaticon.com/512/8323/8323136.png' },
-        { label: "Caftan", value: "Caftan", uri: 'https://cdn-icons-png.flaticon.com/512/5238/5238311.png' },
         { label: "Cardigan", value: "Cardigan", uri: 'https://cdn-icons-png.flaticon.com/128/3345/3345635.png' },
         { label: "Coat", value: "Coat", uri: 'https://cdn-icons-png.flaticon.com/128/7157/7157441.png' },
         { label: "Dress", value: "Dress", uri: 'https://cdn-icons-png.flaticon.com/128/9833/9833994.png' },
@@ -52,24 +51,26 @@ const Donate = ({ navigation }) => {
         { label: "Jeans", value: "Jeans", uri: 'https://cdn-icons-png.flaticon.com/128/599/599388.png' },
         { label: "Jumper", value: "Jumper", uri: 'https://cdn-icons-png.flaticon.com/128/9774/9774105.png' },
         { label: "Jumpsuit", value: "Jumpsuit", uri: 'https://cdn-icons-png.flaticon.com/128/2290/2290478.png' },
+        { label: "Kaftan", value: "Kaftan", uri: 'https://cdn-icons-png.flaticon.com/512/5238/5238311.png' },
         { label: "Leggings", value: "Leggings", uri: 'https://cdn-icons-png.flaticon.com/128/9381/9381563.png' },
         { label: "Legwarmers", value: "Legwarmers", uri: 'https://cdn-icons-png.flaticon.com/128/8853/8853176.png' },
         { label: "Pants / Trousers", value: "Pants / Trousers", uri: 'https://cdn-icons-png.flaticon.com/128/2390/2390116.png' },
         { label: "Playsuit", value: "Playsuit", uri: 'https://cdn-icons-png.flaticon.com/128/122/122709.png' },
         { label: "Pajamas", value: "Pajamas", uri: 'https://cdn-icons-png.flaticon.com/128/4446/4446182.png' },
-        { label: "Shawl", value: "Shawl", uri: 'https://cdn-icons-png.flaticon.com/128/2947/2947449.png' },
+        { label: "Scarf", value: "Scarf", uri: 'https://cdn-icons-png.flaticon.com/128/9296/9296583.png' },
+        { label: "Shawl", value: "Shawl", uri: 'https://cdn-icons-png.flaticon.com/512/2806/2806217.png' },
         { label: "Shirt", value: "Shirt", uri: 'https://cdn-icons-png.flaticon.com/128/2503/2503380.png' },
-        { label: "Shoes", value: "Shoes", uri: 'https://cdn-icons-png.flaticon.com/128/5479/5479005.png' },
         { label: "Shorts", value: "Shorts", uri: 'https://cdn-icons-png.flaticon.com/128/2237/2237015.png' },
         { label: "Skirt", value: "Skirt", uri: 'https://cdn-icons-png.flaticon.com/512/4507/4507761.png' },
         { label: "Sock", value: "Sock", uri: 'https://cdn-icons-png.flaticon.com/128/843/843877.png' },
         { label: "Sweater", value: "Sweater", uri: 'https://cdn-icons-png.flaticon.com/128/9385/9385884.png' },
+        { label: "Sweatpants/ Joggers", value: "Sweatpants/ Joggers", uri: 'https://cdn-icons-png.flaticon.com/512/2793/2793946.png' },
         { label: "Hoodie", value: "Hoodie", uri: 'https://cdn-icons-png.flaticon.com/128/9431/9431181.png' },
         { label: "Thawb", value: "Thawb", uri: 'https://globalsymbols.com/uploads/production/image/imagefile/7701/15_7701_8b682d28-a326-4b6a-a85f-67edf995d2d0.png' },
-        { label: "Tights", value: "Tights", uri: 'https://cdn-icons-png.flaticon.com/128/3343/3343878.png' },
         { label: "Tops", value: "Tops", uri: 'https://cdn-icons-png.flaticon.com/128/3258/3258170.png' },
         { label: "Tracksuit", value: "Tracksuit", uri: 'https://cdn-icons-png.flaticon.com/128/5783/5783203.png' },
         { label: "T-Shirt", value: "T-Shirt", uri: 'https://cdn-icons-png.flaticon.com/128/892/892458.png' },
+        { label: "Vest", value: "Vest", uri: 'https://cdn-icons-png.flaticon.com/512/586/586493.png' },
         { label: "Waistcoat", value: "Waistcoat", uri: 'https://cdn-icons-png.flaticon.com/128/4343/4343628.png' },
     ];
 
@@ -137,21 +138,21 @@ const Donate = ({ navigation }) => {
             setAmountError('')
         }
 
-        if (time === ''){
+        if (time === '') {
             setTimeError('Please select a time interval')
             return
         }
-        else{
+        else {
             setTimeError('')
         }
-        if (date === ''){
+        if (date === '') {
             setDateError('Please select a date interval')
             return
         }
-        else{
+        else {
             setDateError('')
         }
-        if (cloth !== '' && amount !== '' && time !== '' && date !== '' ) {
+        if (cloth !== '' && amount !== '' && time !== '' && date !== '') {
             navigation.navigate("CheckOut", { uri: ItemURI, type: cloth, amount: amount, time: time, date: date })
         }
     }
