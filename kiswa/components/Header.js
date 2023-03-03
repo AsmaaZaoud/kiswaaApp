@@ -111,17 +111,17 @@ class Header extends React.Component {
   renderSearch = () => {
     const { navigation } = this.props;
     // return (
-    //   <Block style={{justifyContent: 'flex-end', marginRight: '-80%'}}>
-    //     <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-    //     <Image
-    //     style={{width: 30, height: 30, marginLeft: '45%'}}
-    //     source={{
-    //       uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
-    //     }}
-    //   />
-    //   </TouchableOpacity>
-    //   <Text style={{marginLeft: '15%'}}>Log In/ Sign Up</Text>
-    //   </Block>
+      // <Block style={{justifyContent: 'flex-end', marginRight: '-80%'}}>
+      //   <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+      //   <Image
+      //   style={{width: 30, height: 30, marginLeft: '45%'}}
+      //   source={{
+      //     uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
+      //   }}
+      // />
+      // </TouchableOpacity>
+      // <Text style={{marginLeft: '15%'}}>Log In/ Sign Up</Text>
+      // </Block>
     // );
   }
   renderOptions = () => {

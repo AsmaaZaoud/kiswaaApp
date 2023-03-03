@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   image: {
-    height: 100, // Reduced image height
+    height: 150, // Reduced image height
     resizeMode: 'cover',
   },
   divider: {
@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#4B0082',
   },
   textContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.75)', // Reduced opacity of text container
-    padding: 24, // Increased padding
+    backgroundColor: '#F1ECFF', // Reduced opacity of text container
+    padding: 10, // Increased padding
   },
   title: {
     fontSize: 24,

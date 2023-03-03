@@ -21,6 +21,7 @@ import { db } from "../../config";
 
 const { width } = Dimensions.get('screen');
 import { auth } from '../../config';
+import { object } from 'prop-types';
 
 const Home = ({ route, navigation }) => {
 
@@ -30,10 +31,26 @@ const Home = ({ route, navigation }) => {
   const [itemsArray, setItemsArray] = useState([])
   const [ItemsDic, setItemsDic] = useState([])
   itemsArray.map((item) => ItemsDic.push({ type: item.data.type, quantity: item.data.quantity }))
-  //console.log('itemDic : ', ItemsDic)
 
-  let shortList = ItemsDic.slice(0, 6);
-  console.log('shortlsit: ', shortList)
+  console.log('itemsArray: ', itemsArray)
+  console.log('itemDic : ', ItemsDic)
+
+  let shortList2 = ItemsDic.slice(0, 8);
+  let shortList = [
+    { "quantity": 1, "type": "Jumper" },
+    { "quantity": 1, "type": "Sweater" },
+    { "quantity": 1, "type": "Sweatpants/Joggers" },
+    { "quantity": 2, "type": "Hoodie" },
+    { "quantity": 1, "type": "Thawb" },
+    { "quantity": 1, "type": "Tops" }
+  ]
+  console.log('shortList2: ', shortList2)
+
+  let uniqueList = shortList2.filter((item, index, self) => index === self.findIndex(t => t.type === item.type))
+
+  console.log('uniquelist: ', uniqueList)
+
+  shortList2.map((item) => console.log(item.type))
 
   //read from database
   //readAllWhere 
@@ -82,47 +99,46 @@ const Home = ({ route, navigation }) => {
     { label: "Cardigan", value: "Cardigan", uri: 'https://i.pinimg.com/564x/a5/84/9d/a5849d187e57e693c6d765436893030a.jpg' },
     { label: "Coat", value: "Coat", uri: 'https://i.pinimg.com/564x/f6/73/7d/f6737d49a2571e063cd811812c3a922c.jpg' },
     { label: "Dress", value: "Dress", uri: 'https://i.pinimg.com/564x/a9/1b/cb/a91bcb63b4c31333a9402f74200a36a3.jpg' },
-    { label: "Dungarees", value: "Dungarees", uri: 'https://i.pinimg.com/564x/81/50/b7/8150b7d936418924a9851aa6939d02a1.jpg' },
+    { label: "Dungarees", value: "Dungarees", uri: 'https://i.ytimg.com/vi/soPPAhMPHtY/maxresdefault.jpg' },
     { label: "Jacket", value: "Jacket", uri: 'https://i.etsystatic.com/11147089/c/2250/2250/342/0/il/adfdf1/3588743348/il_300x300.3588743348_2ol1.jpg' },
     { label: "Jeans", value: "Jeans", uri: 'https://i.pinimg.com/564x/a2/3c/13/a23c134ebdc47581fa854c248633a8f5.jpg' },
     { label: "Jumper", value: "Jumper", uri: 'https://www.shutterstock.com/image-photo/colorful-warm-knitted-sweater-on-260nw-1602062266.jpg' },
     { label: "Jumpsuit", value: "Jumpsuit", uri: 'https://i.pinimg.com/564x/04/00/83/040083896aaf020fa83aa12dbac805fe.jpg' },
     { label: "Kaftan", value: "Kaftan", uri: 'https://i.etsystatic.com/31945487/r/il/2aadec/3870275767/il_fullxfull.3870275767_od8t.jpg' },
-    { label: "Leggings", value: "Leggings", uri: 'https://img.ltwebstatic.com/images3_pi/2021/11/12/16367142048379ff7550b0945fe5fe1250671f03b1_thumbnail_600x.webp' },
+    { label: "Leggings", value: "Leggings", uri: 'https://i.pinimg.com/564x/9c/51/11/9c5111b9a77206aa76698ae2c41884a1.jpg' },
     { label: "Legwarmers", value: "Legwarmers", uri: 'https://i.pinimg.com/564x/a1/aa/38/a1aa3845e69b70935f9ed6d8c39b90fa.jpg' },
-    { label: "Pants / Trousers", value: "Pants / Trousers", uri: 'https://media.istockphoto.com/id/530930442/photo/row-of-black-pants-hangs-in-wardrobe-at-home.jpg?s=612x612&w=0&k=20&c=ZFM23HW4i3gKgfT5PplBTTajAq3L1qGG30MCjWqZliA=' },
+    { label: "Pants/Trousers", value: "Pants / Trousers", uri: 'https://media.istockphoto.com/id/530930442/photo/row-of-black-pants-hangs-in-wardrobe-at-home.jpg?s=612x612&w=0&k=20&c=ZFM23HW4i3gKgfT5PplBTTajAq3L1qGG30MCjWqZliA=' },
     { label: "Playsuit", value: "Playsuit", uri: 'https://ae01.alicdn.com/kf/HTB1W34cPxnaK1RjSZFtq6zC2VXai/Korean-Style-2019-New-Fashion-Women-s-Playsuits-Chic-Double-Pocket-Skinny-Strap-Long-sleeved-Casual.jpg_Q90.jpg_.webp' },
-    { label: "Pajamas", value: "Pajamas", uri: 'https://i.pinimg.com/474x/05/2d/70/052d70095c9f0fea47b0b001d14512d0.jpg' },
+    { label: "Pajamas", value: "Pajamas", uri: 'https://m.media-amazon.com/images/I/71K03lV+jIL._AC_UL1500_.jpg' },
     { label: "Scarf", value: "Scarf", uri: 'https://i.pinimg.com/564x/f8/51/cf/f851cf13ae7a409e48236722980614f1.jpg' },
-    { label: "Shawl", value: "Shawl", uri: 'https://i.pinimg.com/564x/5e/4c/2e/5e4c2e27259f462f873b21f2174d8a55.jpg' },
+    { label: "Shawl", value: "Shawl", uri: 'https://i.pinimg.com/564x/1d/3f/f2/1d3ff25944a6377fecdb049bdef2a77e.jpg' },
     { label: "Shirt", value: "Shirt", uri: 'https://i.pinimg.com/564x/5c/16/17/5c1617cc8f266adfd425e452773dddaf.jpg' },
     { label: "Shorts", value: "Shorts", uri: 'https://i.pinimg.com/474x/89/1b/c7/891bc76dfb42ae14d5fbda7b92f7247b.jpg' },
-    { label: "Skirt", value: "Skirt", uri: 'https://i.pinimg.com/564x/b4/de/32/b4de32ed91466917f3c6720529372612.jpg' },
-    { label: "Sock", value: "Sock", uri: 'https://i.pinimg.com/564x/2b/ca/5f/2bca5f01f7fb038d12d5a6f9fa4127d4.jpg' },
+    { label: "Skirt", value: "Skirt", uri: 'https://i.pinimg.com/564x/29/c9/3f/29c93f07aeb7051935cc86ac74842964.jpg' },
+    { label: "Socks", value: "Socks", uri: 'https://i.pinimg.com/564x/2b/ca/5f/2bca5f01f7fb038d12d5a6f9fa4127d4.jpg' },
     { label: "Sweater", value: "Sweater", uri: 'https://i.pinimg.com/564x/d3/b2/51/d3b2515feca557aff75d23077b2479e8.jpg' },
-    { label: "Sweatpants/ Joggers", value: "Sweatpants/ Joggers", uri: 'https://i.pinimg.com/474x/bf/ce/b0/bfceb02f5a2874054a31332054d56d0c.jpg' },
+    { label: "Sweatpants/Joggers", value: "Sweatpants/ Joggers", uri: 'https://i.pinimg.com/564x/f3/d2/a0/f3d2a0593f4224b0d01cbaf0be9e0815.jpg' },
     { label: "Hoodie", value: "Hoodie", uri: 'https://i.pinimg.com/564x/0d/8b/a8/0d8ba8f1e8cd55a6fe1b9f08a494dad2.jpg' },
     { label: "Thawb", value: "Thawb", uri: 'http://sc04.alicdn.com/kf/H5ec6274087e746629e20854d88f49c99R.jpg' },
     { label: "Tops", value: "Tops", uri: 'https://i.pinimg.com/564x/5c/ad/15/5cad15407e6c1e9b393337dc7d17c530.jpg' },
-    { label: "Tracksuit", value: "Tracksuit", uri: 'https://i.pinimg.com/564x/9c/d0/ff/9cd0ffa1d5cde7b61135f378bbbdc38c.jpg' },
+    { label: "Tracksuit", value: "Tracksuit", uri: 'https://i.pinimg.com/564x/bd/be/d1/bdbed16a24645a3ad9f42d2a528f6b3b.jpg' },
     { label: "T-Shirt", value: "T-Shirt", uri: 'https://i.pinimg.com/564x/d6/9c/5a/d69c5a1ba98ce97c40a16ff506233f7a.jpg' },
     { label: "Vest", value: "Vest", uri: 'https://i.pinimg.com/564x/59/21/ee/5921eee1e4634223a5df0da907613fb3.jpg' },
-    { label: "Waistcoat", value: "Waistcoat", uri: 'https://i.pinimg.com/564x/3e/08/99/3e08991d443b518440421b339f93c72b.jpg' },
+    { label: "Waistcoat", value: "Waistcoat", uri: 'https://content.moss.co.uk/images/extralarge/966689279_01.jpg' },
   ];
-
-  //clothTypeURI
-  const [ItemURI, setItemURI] = useState('')
 
   // animated button
   const [isActive, setIsActive] = useState(false);
 
   const handlePress = () => {
     setIsActive(!isActive);
+    navigation.navigate('Donate')
   };
 
   //animated text
   const animatedValue = useRef(new Animated.Value(-100)).current;
 
+  //useEffect
   useEffect(() => {
     Animated.timing(animatedValue, {
       toValue: 0,
@@ -134,6 +150,7 @@ const Home = ({ route, navigation }) => {
   useEffect(() => {
     readAllWhere();
   }, []);
+
 
   const renderArticles = () => {
     return (
@@ -147,7 +164,20 @@ const Home = ({ route, navigation }) => {
             {/* header */}
 
             <Block style={styles.header}>
-              {/* <Block style={{ flexDirection: 'row' }}> */}
+              {/* log in / sign up */}
+              <Block style={{ justifyContent: 'flex-end', marginRight: '-80%' }}>
+                <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                  <Image
+                    style={{ width: 30, height: 30, marginLeft: '45%' }}
+                    source={{
+                      uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
+                    }}
+                  />
+                <Text style={{ marginLeft: '35%' }}>Log In/ Sign Up</Text>
+                </TouchableOpacity>
+              </Block>
+
+              {/* header profile */}
               <Block center>
                 <Image
                   style={styles.avatar}
@@ -156,7 +186,7 @@ const Home = ({ route, navigation }) => {
               </Block>
               <Block center style={{}}>
                 <Text style={{ fontSize: 25, alignSelf: 'center', fontWeight: 'bold' }}>Hello, {user === undefined ? 'Guest!' : user}</Text>
-                <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? 'Placeholder Text' : user}</Text>
+                <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? '' : user}</Text>
                 <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
                 {/* <Text style={{  fontWeight: 'bold', alignSelf: 'center' }}>Let's share goodness!</Text> */}
               </Block>
@@ -182,17 +212,22 @@ const Home = ({ route, navigation }) => {
               <View style={[styles.buttonBackground, isActive && styles.buttonBackgroundActive]}></View>
             </TouchableOpacity>
 
+            {/* text */}
+            {/* <Text style={{fontSize: 15, margin: 20}}>Below is a list of pending requests</Text> */}
+
             {/* requests */}
             {
-              shortList.map((item, index) => {
+              uniqueList.map((item, index) => {
                 return (
-                  <View key={index} style={{ textAlign: "center" }}>
-                    <Text>
-                      {item.type}
-                    </Text>
-                    <Text>
-                      {item.quantity}
-                    </Text>
+                  <View key={index}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Donate')}>
+                      {/* <TouchableOpacity onPress={() => navigation.navigate('Donate')}> */}
+                      <LilacCard
+                        imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
+                        title={item.type}
+                        subtitle={item.quantity}
+                      />
+                    </TouchableOpacity>
                   </View>
                 );
               })
@@ -242,7 +277,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: width,
-    height: 180,
+    height: 230,
     backgroundColor: '#F1ECFF',
     // borderWidth: 1,
     // borderColor: 'red'
