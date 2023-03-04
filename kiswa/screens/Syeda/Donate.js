@@ -263,6 +263,9 @@ const Donate = ({ route, navigation }) => {
     }
 
     const [confirm, setConfirm] = useState([])
+    //console.log('tempCloth: ', tempCloth)
+    // let tempCloth = []
+    // console.log('tempCloth: ', tempCloth)
 
     const add = (cloth, amount) => {
         if (cloth === '') {
@@ -284,9 +287,11 @@ const Donate = ({ route, navigation }) => {
         console.log("ADD ICON => ", ClothTypeData.find((object) => object.label === cloth).icon)
 
         if (cloth !== '' && amount !== '') {
-            let tempCloth = []
-            tempCloth.push({cloth: cloth, amount: amount, icon: ClothTypeData.find((object) => object.label === cloth).icon})
-            setConfirm(tempCloth)
+            //tempCloth.push({cloth: cloth, amount: amount, icon: ClothTypeData.find((object) => object.label === cloth).icon})
+            // console.log('tempCloth: ', tempCloth)
+            // setConfirm(tempCloth)
+            setConfirm([...confirm, { cloth: cloth, amount: amount, icon: ClothTypeData.find((object) => object.label === cloth).icon }])
+            console.log("confirm array: ", confirm)
         }
 
         handleButtonPress()
@@ -298,7 +303,7 @@ const Donate = ({ route, navigation }) => {
         setCloth("Select Clothing Item");
         setItemURI('https://cdn-icons-png.flaticon.com/128/6834/6834320.png');
         setAmount("")
-      };
+    };
 
     return (
         <ScrollView
@@ -354,23 +359,24 @@ const Donate = ({ route, navigation }) => {
 
                 <Block style={{ borderWidth: 0.5, borderColor: 'black', margin: 10, width: '100%' }}></Block>
 
-                {
-                    confirm.map((item, index) => 
-                    <View key = {index} style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-                        <Block>
-                            <Image
-                            style={{width: 70, height: 70}}
-                            source={{uri: item.icon}}
-                            ></Image>
-                            <Block row>
-                        <Text>{item.cloth}</Text>
-                        <Text>  x{item.amount}</Text>
-                        </Block>
-                        </Block>
-                        
-                    </View>
-                    )
-                }
+                <Block style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {
+                        confirm.map((item, index) =>
+                            <View key={index} style={{ margin: 5 }}>
+                                <Block>
+                                    <Image
+                                        style={{ width: 70, height: 70 }}
+                                        source={{ uri: item.icon }}
+                                    ></Image>
+                                    <Block row>
+                                        <Text>{item.cloth}</Text>
+                                        <Text>  x{item.amount}</Text>
+                                    </Block>
+                                </Block>
+                            </View>
+                        )
+                    }
+                </Block>
 
             </Block>
 
