@@ -78,42 +78,7 @@ const FamilyCart = ({ route, navigation }) => {
     return () => unsubscribe();
   };
 
-  // const getCartItems = async () => {
-  //   console.log(cartId);
-  //   const docRef = collection(db, "familyRequests", cartId, "Items");
-  //   const docSnap = await getDocs(docRef);
-  //   let temp = [];
-  //   docSnap.forEach((doc) => {
-  //     //   console.log("mm");
-  //     temp.push({
-  //       id: doc.id,
-  //       data: doc.data(),
-  //     });
-  //   });
-  //   console.log(temp);
-  //   setCart(temp);
-  //   console.log(cart);
-  // };
-
   console.log(cart);
-  const closeRequest = async () => {
-    const docRef = doc(db, "familyRequests", cartId);
-
-    await setDoc(
-      docRef,
-      {
-        cart: "closed",
-      },
-      { merge: true }
-    )
-      .then(() => {
-        console.log("data submitted");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-    navigation.navigate("FamilyHome", id);
-  };
 
   const update = async (upId) => {
     console.log("---------------------");
@@ -174,7 +139,7 @@ const FamilyCart = ({ route, navigation }) => {
           >
             <View>
               {cart.map((x, i) => (
-                <View>
+                <View key={i}>
                   <View key={i} style={styles.board1}>
                     {/* <Text style={styles.ct}>{i + 1}</Text> */}
                     <Text style={styles.ct}>
@@ -260,11 +225,11 @@ const FamilyCart = ({ route, navigation }) => {
               marginLeft: "14%",
             }}
           >
-            <View >
+            <View>
               <Text style={{ fontSize: 19, fontWeight: "bold" }}>Total : </Text>
 
               <Text style={{ fontSize: 17, marginLeft: "15%" }}>
-                {itemcount}
+                {itemcount}{" "}
                 {cart.length > 1 || cart.length === 0 ? "items" : "item"}
               </Text>
             </View>
@@ -296,7 +261,10 @@ const FamilyCart = ({ route, navigation }) => {
         <Text></Text>
         <View style={{ alignItems: "center", justifyContent: "center" }}>
           <Pressable
-            onPress={() => (cart.length >= 1 ? closeRequest() : null)}
+            // onPress={() => (cart.length >= 1 ? closeRequest() : null)}
+            onPress={() =>
+              navigation.navigate("ConfirmFamilyCart", { cartId, id })
+            }
             style={{
               // marginBottom: "10%",
               backgroundColor: cart.length >= 1 ? "#842DCE" : "gray",

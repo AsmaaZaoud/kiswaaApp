@@ -212,7 +212,7 @@ const FamilyRequest = ({ route, navigation }) => {
           value={index}
           onChange={setIndex}
           indicatorStyle={{
-            backgroundColor: "#842DCE",
+            // backgroundColor: "#842DCE",
             height: 3,
           }}
           //variant="primary"
