@@ -146,9 +146,9 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
           <View
             style={{ width: "90%", height: 200, borderWidth: 1, margin: "5%" }}
           >
-            <Text>Time</Text>
-            <Text>Date</Text>
-            <Text>you need to inster it in the db</Text>
+            <Text>Delivery Time</Text>
+            <Text>Delivery Date</Text>
+            {/* <Text>you need to inster it in the db</Text> */}
           </View>
 
           <View style={{ alignItems: "center", justifyContent: "center" }}>

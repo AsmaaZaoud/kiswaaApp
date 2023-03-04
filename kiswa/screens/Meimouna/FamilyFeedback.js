@@ -14,7 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { addDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../../config";
-const Feedback = ({ navigation }) => {
+const FamilyFeedback = ({ navigation }) => {
   const [feedback, setfeedback] = useState("");
   const [feedbackText, setFeedbackText] = useState("");
   const [dateCreated, setDateCreated] = useState(new Date());
@@ -73,8 +73,18 @@ const Feedback = ({ navigation }) => {
         alignItems: "center",
       }}
     >
+      <Text
+        style={{
+          marginTop: "3%",
+          marginBottom: "3%",
+          color: "white",
+          fontSize: 24,
+        }}
+      >
+        Feedback
+      </Text>
       <Image
-        source={require("../../Images/feedback.png")}
+        source={require("../../assets/imgs/feedback2.png")}
         style={{
           width: "30%",
           height: "15%",
@@ -82,7 +92,7 @@ const Feedback = ({ navigation }) => {
           marginBottom: "5%",
         }}
       ></Image>
-      {/* <Text></Text> */}
+      {/* <Text>feedback</Text> */}
       {/* <Text></Text> */}
       <LinearGradient
         colors={[
@@ -111,7 +121,7 @@ const Feedback = ({ navigation }) => {
         intensity={100}
         style={{
           width: 350,
-          height: 620,
+          height: 600,
           borderWidth: 2,
           borderColor: "#fff",
           padding: 20,
@@ -119,7 +129,7 @@ const Feedback = ({ navigation }) => {
           //zIndex: 999,
         }}
       >
-        <Text></Text>
+        <Text> family feedback</Text>
         {/* <Text></Text>
         <Text></Text>
         <Text></Text> */}
@@ -141,40 +151,20 @@ const Feedback = ({ navigation }) => {
           <TouchableOpacity
             // style={{ width: "30%" }}
             style={{
-              backgroundColor: feedback == "Excellent" ? "#c5c5c5" : "#e6e3e3",
-              width: "30%",
+              backgroundColor: "white",
+              width: "31%",
               borderRadius: 50,
               justifyContent: "center",
               alignItems: "center",
               textAlign: "center",
               borderWidth: 2,
-              borderColor: "white",
+              borderColor: feedback == "Excellent" ? "#842DCE" : "lightgray",
+              padding: "1%",
             }}
             onPress={() => setfeedback("Excellent")}
           >
             <Image
-              source={require("../../Images/exc.png")}
-              style={{
-                width: "81%",
-                height: "100%",
-              }}
-            ></Image>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: feedback == "Mid" ? "#c5c5c5" : "#e6e3e3",
-              width: "30%",
-              borderRadius: 50,
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-              borderWidth: 2,
-              borderColor: "white",
-            }}
-            onPress={() => setfeedback("Mid")}
-          >
-            <Image
-              source={require("../../Images/mid.png")}
+              source={require("../../assets/imgs/Excellent-removebg-preview.png")}
               style={{
                 width: "82%",
                 height: "100%",
@@ -183,19 +173,42 @@ const Feedback = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              backgroundColor: feedback == "Verybad" ? "#c5c5c5" : "#e6e3e3",
+              backgroundColor: "white",
               width: "30%",
               borderRadius: 50,
               justifyContent: "center",
               alignItems: "center",
               textAlign: "center",
               borderWidth: 2,
-              borderColor: "white",
+              borderColor: feedback == "Mid" ? "#842DCE" : "lightgray",
+              padding: "1%",
+            }}
+            onPress={() => setfeedback("Mid")}
+          >
+            <Image
+              source={require("../../assets/imgs/medium-removebg-preview.png")}
+              style={{
+                width: "82%",
+                height: "100%",
+              }}
+            ></Image>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "white",
+              width: "31%",
+              borderRadius: 50,
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              borderWidth: 2,
+              borderColor: feedback == "Verybad" ? "#842DCE" : "lightgray",
+              padding: "1%",
             }}
             onPress={() => setfeedback("Verybad")}
           >
             <Image
-              source={require("../../Images/verybad.png")}
+              source={require("../../assets/imgs/veryBad-removebg-preview.png")}
               style={{
                 width: "77%",
                 height: "100%",
@@ -204,7 +217,7 @@ const Feedback = ({ navigation }) => {
             ></Image>
           </TouchableOpacity>
         </View>
-        <Text
+        {/* <Text
           style={{
             //textAlign: "center",
             color: "red",
@@ -214,7 +227,7 @@ const Feedback = ({ navigation }) => {
           }}
         >
           {FeedbackErro}
-        </Text>
+        </Text> */}
         <Text></Text>
         <Text style={{ fontSize: 18, marginBottom: "5%" }}>
           Do you have any thoughts you'd like to share?
@@ -238,9 +251,9 @@ const Feedback = ({ navigation }) => {
             fontSize: 16,
           }}
         />
-        <Text style={{ fontSize: 15 }}>
+        {/* <Text style={{ fontSize: 15 }}>
           {feedbackText.length == 0 ? "" : feedbackText.length + " Characters"}
-        </Text>
+        </Text> */}
         <Text
           style={{
             //textAlign: "center",
@@ -302,4 +315,4 @@ const Feedback = ({ navigation }) => {
   );
 };
 
-export default Feedback;
+export default FamilyFeedback;

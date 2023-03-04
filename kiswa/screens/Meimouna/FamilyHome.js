@@ -104,16 +104,20 @@ const FamilyHome = ({ route, navigation }) => {
             <Text>Requests History</Text>
           </Block>
         </Block>
-        <Block style={styles.box3}>
-          <Image
-            source={require("../../assets/imgs/feedback.png")}
-            style={{
-              width: 100,
-              height: 100,
-            }}
-          ></Image>
-          <Text>Give Feedback</Text>
-        </Block>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("FamilyFeedback", id)}
+        >
+          <Block style={styles.box3}>
+            <Image
+              source={require("../../assets/imgs/feedback.png")}
+              style={{
+                width: 100,
+                height: 100,
+              }}
+            ></Image>
+            <Text>Give Feedback</Text>
+          </Block>
+        </TouchableOpacity>
       </Block>
     </View>
   );
