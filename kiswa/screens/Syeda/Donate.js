@@ -262,24 +262,43 @@ const Donate = ({ route, navigation }) => {
         setDate(`${third1date} - ${third2date}`)
     }
 
+    const [confirm, setConfirm] = useState([])
+
     const add = (cloth, amount) => {
-        // if (cloth === '') {
-        //     setDropError('Please select a clothing item')
-        //     return
-        // }
-        // else {
-        //     setDropError('')
-        // }
-        // if (amount === '') {
-        //     setAmountError('Please enter amount')
-        //     return
-        // }
-        // else {
-        //     setAmountError('')
-        // }
-        // console.log("ADD CLOTH => ", cloth)
-        // console.log("ADD AMOUNT => ", amount)
+        if (cloth === '') {
+            setDropError('Please select a clothing item')
+            return
+        }
+        else {
+            setDropError('')
+        }
+        if (amount === '') {
+            setAmountError('Please enter amount')
+            return
+        }
+        else {
+            setAmountError('')
+        }
+        console.log("ADD CLOTH => ", cloth)
+        console.log("ADD AMOUNT => ", amount)
+        console.log("ADD ICON => ", ClothTypeData.find((object) => object.label === cloth).icon)
+
+        if (cloth !== '' && amount !== '') {
+            let tempCloth = []
+            tempCloth.push({cloth: cloth, amount: amount, icon: ClothTypeData.find((object) => object.label === cloth).icon})
+            setConfirm(tempCloth)
+        }
+
+        handleButtonPress()
     }
+
+    //clear input values when add button is pressed
+
+    const handleButtonPress = () => {
+        setCloth("Select Clothing Item");
+        setItemURI('https://cdn-icons-png.flaticon.com/128/6834/6834320.png');
+        setAmount("")
+      };
 
     return (
         <ScrollView
@@ -324,16 +343,34 @@ const Donate = ({ route, navigation }) => {
                 <TextInput
                     style={styles.input}
                     placeholder={'Amount'}
-                    value={quantity === '' ? amount : quantity}
+                    value={amount}
                     onChangeText={handleNumberChange}
                     keyboardType="numeric"
                 />
 
-                <TouchableOpacity style={styles.button} onPress={add(cloth, amount)}>
+                <TouchableOpacity style={styles.button} onPress={() => add(cloth, amount)}>
                     <Text style={styles.buttonText}>Add</Text>
                 </TouchableOpacity>
 
                 <Block style={{ borderWidth: 0.5, borderColor: 'black', margin: 10, width: '100%' }}></Block>
+
+                {
+                    confirm.map((item, index) => 
+                    <View key = {index} style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                        <Block>
+                            <Image
+                            style={{width: 70, height: 70}}
+                            source={{uri: item.icon}}
+                            ></Image>
+                            <Block row>
+                        <Text>{item.cloth}</Text>
+                        <Text>  x{item.amount}</Text>
+                        </Block>
+                        </Block>
+                        
+                    </View>
+                    )
+                }
 
             </Block>
 
