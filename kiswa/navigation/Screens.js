@@ -21,8 +21,9 @@ import Register from "../screens/Syeda/Register";
 //syeda
 import Donate from "../screens/Syeda/Donate";
 import CheckOut from "../screens/Syeda/CheckOut";
-import Thankyou from "../screens/Syeda/Thankyou";
+// import Thankyou from "../screens/Syeda/Thankyou";
 import LoginDonor from "../screens/Syeda/LoginDonor";
+import Feedback from "../screens/Syeda/Feedback";
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
@@ -391,7 +392,8 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Donate" component={Donate} />
       <Stack.Screen name="CheckOut" component={CheckOut} />
-      <Stack.Screen name="Thankyou" component={Thankyou} />
+      {/* <Stack.Screen name="Thankyou" component={Thankyou} /> */}
+      <Stack.Screen name="Feedback" component={Feedback} />
       
      {/* <Stack.Screen */}
 

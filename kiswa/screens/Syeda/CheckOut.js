@@ -51,7 +51,7 @@ const CheckOut = ({ route, navigation }) => {
         });
         console.log("Document written with ID: ", docRef.id);
     
-        navigation.navigate("Thankyou")
+        navigation.navigate("Feedback")
       }
 
     const [email, setEmail] = useState('');

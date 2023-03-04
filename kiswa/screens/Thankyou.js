@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 
-import { Images, argonTheme } from "../../constants";
+import { Images, argonTheme } from "../constants";
 
 import * as Location from "expo-location";
 import { Alert } from "react-native";
@@ -33,20 +33,12 @@ const Thankyou = ({ navigation }) => {
   
           <Block safe flex middle>
             <Block style={styles.registerContainer}>
-              <ImageBackground
-                source={{ uri: 'https://img.freepik.com/free-photo/violet-watercolor-texture-background_1083-172.jpg' }}
-                resizeMode="cover"
-                style={{ flex: 1, justifyContent: 'center', }}
-              >
-                <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold', marginBottom: '20%'}}>THANKYOU FOR YOUR DONATION!</Text>
-                <Image
-                style = {{width: '50%', height: '50%', alignSelf: 'center'}}
-                source={require('../../Images/confetti.gif')}
-                ></Image>
+                <Block style={{flex: 1, justifyContent: 'center'}}>
+                <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold', margin: '5%', }}>Thankyou For Your Donation!</Text>
+                <Text>Help us improve our app. How was your experience?</Text>
 
-                <Button style={{alignSelf: 'center', marginTop: '10%'}} onPress={() => navigation.goBack()}>GO BACK</Button>
-                
-                </ImageBackground>
+                <Button style={{alignSelf: 'center', marginTop: '10%'}} onPress={() => navigation.navigate('Home')}>GO BACK</Button>
+                </Block>
           </Block>
         </Block>
       </ImageBackground>
@@ -68,7 +60,7 @@ const styles = StyleSheet.create({
       shadowRadius: 8,
       shadowOpacity: 0.1,
       elevation: 1,
-      overflow: "hidden"
+      overflow: "hidden",
     },
     passwordCheck: {
       paddingLeft: 15,

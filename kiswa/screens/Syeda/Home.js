@@ -175,13 +175,13 @@ const Home = ({ route, navigation }) => {
     { label: "Waistcoat", value: "Waistcoat", uri: 'https://content.moss.co.uk/images/extralarge/966689279_01.jpg' },
   ];
 
-  // animated button
-  const [isActive, setIsActive] = useState(false);
+  // // animated button
+  // const [isActive, setIsActive] = useState(false);
 
-  const handlePress = () => {
-    setIsActive(!isActive);
-    navigation.navigate('Donate')
-  };
+  // const handlePress = () => {
+  //   setIsActive(!isActive);
+  //   navigation.navigate('Donate')
+  // };
 
   //animated text
   const animatedValue = useRef(new Animated.Value(-100)).current;
@@ -266,14 +266,9 @@ const Home = ({ route, navigation }) => {
             </Animated.View>
 
 
-            {/* animated button */}
-            <TouchableOpacity
-              style={[styles.button, isActive && styles.buttonActive]}
-              onPress={handlePress}
-            >
+            {/* lilac button */}
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Donate")}>
               <Text style={styles.buttonText}>DONATE</Text>
-              <View style={[styles.buttonOverlay, isActive && styles.buttonOverlayActive]}></View>
-              <View style={[styles.buttonBackground, isActive && styles.buttonBackgroundActive]}></View>
             </TouchableOpacity>
 
             {/* text */}
@@ -365,44 +360,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 30
   },
-  buttonActive: {
-    backgroundColor: '#7f58a8',
-  },
   buttonText: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
-  },
-  buttonOverlay: {
-    position: 'absolute',
-    top: '-50%',
-    left: '-50%',
-    width: '200%',
-    height: '200%',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    transform: [{ rotate: '45deg' }],
-    opacity: 0,
-    transitionProperty: 'opacity, transform',
-    transitionDuration: '0.3s',
-  },
-  buttonOverlayActive: {
-    opacity: 1,
-    transform: [{ translateX: 50 }, { translateY: 50 }],
-  },
-  buttonBackground: {
-    position: 'absolute',
-    top: '-120%',
-    left: '-120%',
-    width: '300%',
-    height: '300%',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    opacity: 0,
-    transitionProperty: 'opacity, transform',
-    transitionDuration: '0.3s',
-  },
-  buttonBackgroundActive: {
-    opacity: 1,
-    transform: [{ translateX: 25 }, { translateY: 25 }],
   },
 });
 
