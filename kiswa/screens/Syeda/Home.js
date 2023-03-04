@@ -30,15 +30,7 @@ const Home = ({ route, navigation }) => {
   let user = auth?.currentUser?.email;
   console.log("user: ", user)
 
-  const [itemsArray, setItemsArray] = useState([])
-  const [ItemsDic, setItemsDic] = useState([])
-  itemsArray.map((item) => ItemsDic.push({ type: item.data.type, quantity: item.data.quantity }))
-
-  // console.log('itemsArray: ', itemsArray)
-  // console.log('itemDic : ', ItemsDic)
-
-  let shortList2 = ItemsDic.slice(0, 8);
-  let shortList = [
+  let shortList2 = [
     { "quantity": 1, "type": "Jumper" },
     { "quantity": 1, "type": "Sweater" },
     { "quantity": 1, "type": "Sweatpants/Joggers" },
@@ -46,11 +38,36 @@ const Home = ({ route, navigation }) => {
     { "quantity": 1, "type": "Thawb" },
     { "quantity": 1, "type": "Tops" }
   ]
-  //console.log('shortList2: ', shortList2)
 
-  let uniqueList = shortList2.filter((item, index, self) => index === self.findIndex(t => t.type === item.type))
+  const [itemsArray, setItemsArray] = useState([])
+  const [ItemsDic, setItemsDic] = useState([])
+    
+    console.log('itemsArray: ', itemsArray)
+    console.log('itemDic : ', ItemsDic)
 
-  //console.log('uniquelist: ', uniqueList)
+    itemsArray.map((item) => ItemsDic.push({ type: item.data.type, quantity: item.data.quantity }))
+
+    let shortList = ItemsDic.slice(0, 8)
+    console.log('shortList: ', shortList)
+
+    let uniqueList = shortList.filter((item, index, self) => index === self.findIndex(t => t.type === item.type))
+    console.log('uniquelist: ', uniqueList)
+  
+    // const matchingItems = []
+    
+    // uniqueList.forEach((item) => {
+    //   console.log('itemuniqList => ', item)
+    //   ClothTypeData.forEach((clothing) => {
+    //     if (clothing.label === item.type) {
+    //       matchingItems.push({
+    //         type: item.type,
+    //         quantity: item.quantity,
+    //         uri: clothing.uri,
+    //       });
+    //     }
+    //   });
+    // });
+    // console.log("matchingItems: ", matchingItems)  
 
   //shortList2.map((item) => console.log(item.type))
 
@@ -75,6 +92,10 @@ const Home = ({ route, navigation }) => {
     })
   }
 
+  useEffect(() => {
+    readAllWhere();
+  }, [])
+
   const getCartItems = async (cartId) => {
     const docRef = collection(db, "familyRequests", cartId, "Items");
     const docSnap = await getDocs(docRef);
@@ -85,14 +106,11 @@ const Home = ({ route, navigation }) => {
         data: doc.data()
       })
     })
-    //console.log('temp: ', temp)
+    console.log('tempdata: ', temp)
     setItemsArray(temp)
+    getList()
     return temp
   }
-
-  useEffect(() => {
-    readName();
-  }, [])
 
   const [nickname, setNickname] = useState('')
 
@@ -105,6 +123,10 @@ const Home = ({ route, navigation }) => {
       setNickname(doc.data().userName)
     });
   }
+
+  useEffect(() => {
+    readName();
+  }, [])
 
   //sign out
 
@@ -173,10 +195,6 @@ const Home = ({ route, navigation }) => {
     }).start();
   }, [animatedValue]);
 
-  useEffect(() => {
-    readAllWhere();
-  }, []);
-
 
   const renderArticles = () => {
     return (
@@ -194,31 +212,31 @@ const Home = ({ route, navigation }) => {
 
               {
                 user === undefined ?
-                
-              <Block style={{ justifyContent: 'flex-end', marginRight: '-80%' }}>
-              <TouchableOpacity onPress={() => navigation.navigate("LoginDonor")}>
-                <Image
-                  style={{ width: 30, height: 30, marginLeft: '45%' }}
-                  source={{
-                    uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
-                  }}
-                />
-              <Text style={{ marginLeft: '35%' }}>Log In/ Sign Up</Text>
-              </TouchableOpacity>
-            </Block>
-            :
-            
-            <Block style={{ justifyContent: 'flex-end', marginRight: '-80%' }}>
-            <TouchableOpacity onPress={onSignOut}>
-              <Image
-                style={{ width: 30, height: 30, marginLeft: '45%' }}
-                source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
-                }}
-              />
-            <Text style={{ marginLeft: '41%' }}>Sign Out</Text>
-            </TouchableOpacity>
-          </Block>
+
+                  <Block style={{ justifyContent: 'flex-end', marginRight: '-80%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate("LoginDonor")}>
+                      <Image
+                        style={{ width: 30, height: 30, marginLeft: '45%' }}
+                        source={{
+                          uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
+                        }}
+                      />
+                      <Text style={{ marginLeft: '35%' }}>Log In/ Sign Up</Text>
+                    </TouchableOpacity>
+                  </Block>
+                  :
+
+                  <Block style={{ justifyContent: 'flex-end', marginRight: '-80%' }}>
+                    <TouchableOpacity onPress={onSignOut}>
+                      <Image
+                        style={{ width: 30, height: 30, marginLeft: '45%' }}
+                        source={{
+                          uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
+                        }}
+                      />
+                      <Text style={{ marginLeft: '41%' }}>Sign Out</Text>
+                    </TouchableOpacity>
+                  </Block>
               }
 
 
