@@ -16,12 +16,13 @@ import Profile from "../screens/Profile";
 import React from "react";
 import Register from "../screens/Syeda/Register";
 
-import Login from "../screens/Login";
+//import Login from "../screens/Login";
 
 //syeda
 import Donate from "../screens/Syeda/Donate";
 import CheckOut from "../screens/Syeda/CheckOut";
 import Thankyou from "../screens/Syeda/Thankyou";
+import LoginDonor from "../screens/Syeda/LoginDonor";
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
@@ -404,7 +405,7 @@ export default function OnboardingStack(props) {
 
       <Stack.Screen name="DriverHome" component={DriverHome} />
 
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="LoginDonor" component={LoginDonor} />
 
       <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
       <Stack.Screen name="FamilyHome" component={FamilyHome} />

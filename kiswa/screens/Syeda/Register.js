@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   StyleSheet,
@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   View,
-  Platform, 
+  Platform,
   PixelRatio
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
@@ -22,17 +22,34 @@ import {
 } from "firebase/auth";
 import { auth } from "../../config";
 
-import { doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+
+  query,
+  where,
+  deleteDoc,
+  updateDoc,
+  deleteField,
+  onSnapshot,
+  getDocs,
+  getDoc,
+  Timestamp,
+
+
+} from "firebase/firestore";
 import { db } from "../../config";
 
 import * as Location from "expo-location";
 import { Alert } from "react-native";
 
-const { width, height } = Dimensions.get("screen"); 
+const { width, height } = Dimensions.get("screen");
 const scale = width / 834;
 
 export function normalize(size) {
-  const newSize = size * scale 
+  const newSize = size * scale
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize))
   } else {
@@ -69,12 +86,31 @@ const Register = ({ navigation }) => {
   const handleRegister = () => {
     setflag(0);
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() =>
-        console.log("registered"),
-        navigation.replace("App")
+      .then(() => {
+        console.log("registered");
+        add()
+        navigation.replace("App");
+      }
       )
       .catch((error) => console.log(error.message));
   };
+
+  const add = async () => {
+    const docRef = await addDoc(collection(db, "donors"), {
+      userName: name,
+      phone: phone,
+      location: location,
+      email: email,
+    })
+      .then(() => {
+        console.log("data submitted");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    console.log("Document written with ID: ", docRef.id);
+  }
+
 
 
   const getLocation = () => {
@@ -89,7 +125,7 @@ const Register = ({ navigation }) => {
         return;
       }
       else {
-        
+
         console.log('permitted')
         Alert.alert("Your location has been recorded.")
       }
@@ -202,95 +238,191 @@ const Register = ({ navigation }) => {
 
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
-            <ImageBackground
+            {/* <ImageBackground
               source={{ uri: 'https://img.freepik.com/free-photo/violet-watercolor-texture-background_1083-172.jpg' }}
               resizeMode="cover"
               style={{ flex: 1, justifyContent: 'center', }}
-            >
-              <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.goBack()}>Go Back</Text>
-              <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: normalize(50), marginTop: 20 }}>Register as Donor</Text>
-              <View style={styles.container}>
+            > */}
+            <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.goBack()}>Go Back</Text>
+            <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: normalize(50) }}>Register as Donor</Text>
+            <View style={styles.container}>
 
-                <Text style={styles.error}>{nameError}</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Nickname"
+              <Text style={styles.error}>{nameError}</Text>
+              {/* <TextInput
+                style={styles.input}
+                placeholder="Nickname"
+                value={name}
+                onChangeText={setName}
+                autoCapitalize='words'
+              /> */}
+
+
+              <Block width={width * 0.8} >
+                <Input
+                  borderless
                   value={name}
                   onChangeText={setName}
                   autoCapitalize='words'
+                  placeholder="Nickname"
+                  iconContent={
+                    <Icon
+                      size={16}
+                      color={argonTheme.COLORS.ICON}
+                      name="hat-3"
+                      family="ArgonExtra"
+                      style={styles.inputIcons}
+                    />
+                  }
                 />
-                <Text style={styles.error}>{phoneError}</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Phone Number"
+              </Block>
+
+              <Text style={styles.error}>{phoneError}</Text>
+              <Block width={width * 0.8} >
+                <Input
+                  borderless
                   value={phone}
                   onChangeText={setPhone}
                   keyboardType="numeric"
                   maxLength={8}
+                  placeholder="Phone Number"
+                  iconContent={
+                    <Icon
+                      size={16}
+                      color={argonTheme.COLORS.ICON}
+                      name="hat-3"
+                      family="ArgonExtra"
+                      style={styles.inputIcons}
+                    />
+                  }
                 />
-                <Text style={styles.error}>{emailError}</Text>
-                <TextInput
-                  style={styles.input}
+              </Block>
+              {/* <TextInput
+                style={styles.input}
+                placeholder="Phone Number"
+                value={phone}
+                onChangeText={setPhone}
+                keyboardType="numeric"
+                maxLength={8}
+              /> */}
+              <Text style={styles.error}>{emailError}</Text>
+              <Block width={width * 0.8} >
+                <Input
+                  borderless
                   placeholder="Email"
                   value={email}
                   onChangeText={setEmail}
                   keyboardType="email-address"
                   autoCapitalize="none"
+                  iconContent={
+                    <Icon
+                      size={16}
+                      color={argonTheme.COLORS.ICON}
+                      name="hat-3"
+                      family="ArgonExtra"
+                      style={styles.inputIcons}
+                    />
+                  }
                 />
-                <Text style={styles.error}>{passError}</Text>
-                <TextInput
-                  style={styles.input}
+              </Block>
+              {/* <TextInput
+                style={styles.input}
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              /> */}
+
+              <Text style={styles.error}>{passError}</Text>
+              <Block width={width * 0.8} >
+                <Input
+                  borderless
                   placeholder="Password"
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry
+                  iconContent={
+                    <Icon
+                      size={16}
+                      color={argonTheme.COLORS.ICON}
+                      name="hat-3"
+                      family="ArgonExtra"
+                      style={styles.inputIcons}
+                    />
+                  }
                 />
-                <Text style={styles.error}>{confirmError}</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-                  secureTextEntry
+              </Block>
+              {/* <TextInput
+                style={styles.input}
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              /> */}
+              <Text style={styles.error}>{confirmError}</Text>
+              <Block width={width * 0.8} >
+                <Input
+                  borderless
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+                  iconContent={
+                    <Icon
+                      size={16}
+                      color={argonTheme.COLORS.ICON}
+                      name="hat-3"
+                      family="ArgonExtra"
+                      style={styles.inputIcons}
+                    />
+                  }
                 />
+              </Block>
+              {/* <TextInput
+                style={styles.input}
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+              /> */}
 
 
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "red",
-                    fontSize: normalize(19),
-                  }}
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "red",
+                  fontSize: normalize(19),
+                }}
+              >
+                {locationError}
+              </Text>
+              <Block width={width * 0.35}>
+                <Button
+                  color={stat !== "granted" ? "default" : "primary"}
+                  style={styles.createButton}
+                  onPress={getLocation}
                 >
-                  {locationError}
-                </Text>
-                <Block width={width * 0.35}>
-                  <Button
-                    color={stat !== "granted" ? "default" : "primary"}
-                    style={styles.createButton}
-                    onPress={getLocation}
-                  >
-                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                      Get Location
-                    </Text>
-                  </Button>
+                  <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                    Get Location
+                  </Text>
+                </Button>
 
-                </Block>
+              </Block>
 
 
-                <Block width={width * 0.35}>
-                  <Button
-                    style={styles.createButton}
-                    onPress={validation}
-                  >
-                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                      Register
-                    </Text>
-                  </Button>
-                </Block>
+              <Block width={width * 0.35}>
+                <Button
+                  style={styles.createButton}
+                  onPress={validation}
+                >
+                  <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                    Register
+                  </Text>
+                </Button>
+              </Block>
 
-              </View>
-            </ImageBackground>
+            </View>
+            {/* </ImageBackground> */}
           </Block>
         </Block>
       </ImageBackground>
@@ -348,6 +480,9 @@ const styles = StyleSheet.create({
     height: theme.SIZES.BASE * 3,
     shadowRadius: 0,
     shadowOpacity: 0
+  },
+  inputIcons: {
+    marginRight: 12,
   },
 });
 

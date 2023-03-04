@@ -23,6 +23,8 @@ const { width } = Dimensions.get('screen');
 import { auth } from '../../config';
 import { object } from 'prop-types';
 
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
 const Home = ({ route, navigation }) => {
 
   let user = auth?.currentUser?.email;
@@ -32,8 +34,8 @@ const Home = ({ route, navigation }) => {
   const [ItemsDic, setItemsDic] = useState([])
   itemsArray.map((item) => ItemsDic.push({ type: item.data.type, quantity: item.data.quantity }))
 
-  console.log('itemsArray: ', itemsArray)
-  console.log('itemDic : ', ItemsDic)
+  // console.log('itemsArray: ', itemsArray)
+  // console.log('itemDic : ', ItemsDic)
 
   let shortList2 = ItemsDic.slice(0, 8);
   let shortList = [
@@ -44,13 +46,13 @@ const Home = ({ route, navigation }) => {
     { "quantity": 1, "type": "Thawb" },
     { "quantity": 1, "type": "Tops" }
   ]
-  console.log('shortList2: ', shortList2)
+  //console.log('shortList2: ', shortList2)
 
   let uniqueList = shortList2.filter((item, index, self) => index === self.findIndex(t => t.type === item.type))
 
-  console.log('uniquelist: ', uniqueList)
+  //console.log('uniquelist: ', uniqueList)
 
-  shortList2.map((item) => console.log(item.type))
+  //shortList2.map((item) => console.log(item.type))
 
   //read from database
   //readAllWhere 
@@ -87,6 +89,30 @@ const Home = ({ route, navigation }) => {
     setItemsArray(temp)
     return temp
   }
+
+  useEffect(() => {
+    readName();
+  }, [])
+
+  const [nickname, setNickname] = useState('')
+
+  const readName = async () => {
+    const q = query(collection(db, "donors"), where("email", "==", user));
+    const docs = await getDocs(q);
+    docs.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+      setNickname(doc.data().userName)
+    });
+  }
+
+  //sign out
+
+  const onSignOut = () => {
+    signOut(auth)
+      .then(() => navigation.navigate("Onboarding"))
+      .catch((error) => console.log("Error logging out: ", error));
+  };
 
   //console.log('outside itemarray = ', itemsArray)
 
@@ -164,18 +190,38 @@ const Home = ({ route, navigation }) => {
             {/* header */}
 
             <Block style={styles.header}>
-              {/* log in / sign up */}
+              {/* log in / sign up / sign out*/}
+
+              {
+                user === undefined ?
+                
               <Block style={{ justifyContent: 'flex-end', marginRight: '-80%' }}>
-                <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-                  <Image
-                    style={{ width: 30, height: 30, marginLeft: '45%' }}
-                    source={{
-                      uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
-                    }}
-                  />
-                <Text style={{ marginLeft: '35%' }}>Log In/ Sign Up</Text>
-                </TouchableOpacity>
-              </Block>
+              <TouchableOpacity onPress={() => navigation.navigate("LoginDonor")}>
+                <Image
+                  style={{ width: 30, height: 30, marginLeft: '45%' }}
+                  source={{
+                    uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
+                  }}
+                />
+              <Text style={{ marginLeft: '35%' }}>Log In/ Sign Up</Text>
+              </TouchableOpacity>
+            </Block>
+            :
+            
+            <Block style={{ justifyContent: 'flex-end', marginRight: '-80%' }}>
+            <TouchableOpacity onPress={onSignOut}>
+              <Image
+                style={{ width: 30, height: 30, marginLeft: '45%' }}
+                source={{
+                  uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
+                }}
+              />
+            <Text style={{ marginLeft: '41%' }}>Sign Out</Text>
+            </TouchableOpacity>
+          </Block>
+              }
+
+
 
               {/* header profile */}
               <Block center>
@@ -185,7 +231,7 @@ const Home = ({ route, navigation }) => {
                 </Image>
               </Block>
               <Block center style={{}}>
-                <Text style={{ fontSize: 25, alignSelf: 'center', fontWeight: 'bold' }}>Hello, {user === undefined ? 'Guest!' : user}</Text>
+                <Text style={{ fontSize: 25, alignSelf: 'center', fontWeight: 'bold' }}>Hello, {nickname === '' ? 'Guest!' : nickname + '!'}</Text>
                 <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? '' : user}</Text>
                 <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
                 {/* <Text style={{  fontWeight: 'bold', alignSelf: 'center' }}>Let's share goodness!</Text> */}
