@@ -168,30 +168,34 @@ const Families = ({ navigation }) => {
 
           {/* <DataTable.Title numeric textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Time</DataTable.Title> */}
         </DataTable.Header>
-        {requests &&
-          requests.map((x) => (
-            <DataTable.Row
-              key={x.user}
-              style={{
-                width: "90%",
-                height: "12%",
-                marginLeft: "3%",
-                backgroundColor: "#f3e5f5",
-                borderWidth: 1,
-              }}
-            >
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.cart}
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.status}
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.familyID}
-              </DataTable.Cell>
-              {/* <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.time}</DataTable.Cell> */}
-            </DataTable.Row>
-          ))}
+        <View height={height * 0.15}>
+          <ScrollView>
+            {requests &&
+              requests.map((x) => (
+                <DataTable.Row
+                  key={x.user}
+                  style={{
+                    width: "90%",
+                    height: "12%",
+                    marginLeft: "3%",
+                    backgroundColor: "#f3e5f5",
+                    borderWidth: 1,
+                  }}
+                >
+                  <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
+                    {x.cart}
+                  </DataTable.Cell>
+                  <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
+                    {x.status}
+                  </DataTable.Cell>
+                  <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
+                    {x.familyID}
+                  </DataTable.Cell>
+                  {/* <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.time}</DataTable.Cell> */}
+                </DataTable.Row>
+              ))}
+          </ScrollView>
+        </View>
       </Block>
     );
   };

@@ -6,15 +6,25 @@ import {
   Image,
   Pressable,
   FlatList,
+  PixelRatio,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Feather, MaterialIcons } from "react-native-vector-icons";
 import { signOut } from "firebase/auth";
 import { db } from "../../config";
-import { normalize } from "./DriverHome";
 import { collection, getDocs, query } from "firebase/firestore";
 import { Block } from "galio-framework";
 const { width, height } = Dimensions.get("screen");
+const scale = width / 428;
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 
 const DriverHistory = (props, { navigation }) => {
   const id = props.email;
@@ -139,9 +149,9 @@ const styles = StyleSheet.create({
     marginTop: "3%",
   },
   title: {
-    // fontSize: normalize(25),
-    // marginTop: "5%",
-    // marginLeft: "5%",
+    fontSize: normalize(25),
+    marginTop: "5%",
+    marginLeft: "5%",
   },
   container: {
     backgroundColor: "red",

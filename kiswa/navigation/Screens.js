@@ -28,7 +28,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import RegisterFamily from "../screens/Meimouna/RegisterFamily";
 import FamilyHome from "../screens/Meimouna/FamilyHome";
 import FamilyRequest from "../screens/Meimouna/FamilyRequest";
-//drivers
+//drivers && Admin
 import Drivers from "../screens/Asmaa/Drivers";
 import AdminHome from "../screens/Asmaa/AdminHome";
 import DriverHome from "../screens/Asmaa/DriverHome";
@@ -39,6 +39,8 @@ import Deliver from "../screens/Asmaa/Deliver";
 import Pickup from "../screens/Asmaa/Pickup";
 import DriverHistory from "../screens/Asmaa/DriverHistory";
 import DriverDash from "../screens/Asmaa/DriverDash";
+import FamiliesCards from "../screens/Asmaa/FamiliesCards";
+import InventoryTable from "../screens/Asmaa/InventoryTable";
 //invent
 import InventoryClerks from "../screens/Asmaa/InventoryClerks";
 import AddClerk from "../screens/Asmaa/AddClerk";
@@ -383,6 +385,8 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="AddClerk" component={AddClerk} />
       <Stack.Screen name="Clerks" component={Clerks} />
       <Stack.Screen name="Inventory" component={Inventory} />
+      <Stack.Screen name="FamiliesCards" component={FamiliesCards} />
+      <Stack.Screen name="InventoryTable" component={InventoryTable} />
 
       {/* /********* Asmaa - Driver **********/}
 

@@ -31,7 +31,7 @@ import { signOut } from "firebase/auth";
 import { Images, argonTheme, articles } from "../../constants/";
 import { Card, Header } from "../../components";
 import {
-  AntDesign,
+  FontAwesome5,
   FontAwesome,
   MaterialCommunityIcons,
 } from "react-native-vector-icons";
@@ -46,6 +46,8 @@ import Families from "./Families";
 import Clerks from "./Clerks";
 import Inventory from "./Inventory";
 import Donors from "./Donors";
+import FamiliesCards from "./FamiliesCards";
+import InventoryTable from "./InventoryTable";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 830;
@@ -60,6 +62,7 @@ export function normalize(size) {
 
 const AdminHome = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
+  const [users, setUsers] = useState("");
 
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
@@ -124,14 +127,14 @@ const AdminHome = ({ navigation }) => {
           source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
           style={{ width: 120, height: 40 }}
           width={width * 0.33}
-          height={height * 0.05}
+          height={height * 0.08}
         />
         <Pressable onPress={onSignOut}>
           <MaterialCommunityIcons
             name="logout"
-            size={deviceType == "mobile" ? 30 : 45}
+            size={deviceType == "mobile" ? 30 : 50}
             color="white"
-            style={{ margin: 5 }}
+            style={{ marginVertical: "2%", marginTop: "28%" }}
           />
         </Pressable>
       </View>
@@ -177,10 +180,10 @@ const AdminHome = ({ navigation }) => {
           >
             <FontAwesome
               color="#e68d69"
-              name="car"
+              name="users"
               size={deviceType == "mobile" ? 30 : 45}
             />
-            <Text style={{ fontSize: normalize(19) }}>Drivers</Text>
+            <Text style={{ fontSize: normalize(19) }}>Users</Text>
           </Tab.Item>
           <Tab.Item
             onChange={setIndex}
@@ -191,12 +194,12 @@ const AdminHome = ({ navigation }) => {
               borderBottomWidth: 5,
             }}
           >
-            <FontAwesome
+            <FontAwesome5
               color="#e68d69"
-              name="user"
+              name="user-tie"
               size={deviceType == "mobile" ? 30 : 45}
             />
-            <Text style={{ fontSize: normalize(19) }}>Families</Text>
+            <Text style={{ fontSize: normalize(19) }}>Workers</Text>
           </Tab.Item>
           <Tab.Item
             onChange={setIndex}
@@ -209,42 +212,10 @@ const AdminHome = ({ navigation }) => {
           >
             <FontAwesome
               color="#e68d69"
-              name="gift"
+              name="table"
               size={deviceType == "mobile" ? 30 : 45}
             />
-            <Text style={{ fontSize: normalize(19) }}>Donors</Text>
-          </Tab.Item>
-          <Tab.Item
-            onChange={setIndex}
-            value={4}
-            title="Girls"
-            style={{
-              borderBottomColor: index == 4 ? "#af9ec6" : "white",
-              borderBottomWidth: 5,
-            }}
-          >
-            <FontAwesome
-              color="#e68d69"
-              name="users"
-              size={deviceType == "mobile" ? 30 : 45}
-            />
-            <Text style={{ fontSize: normalize(19) }}>Clerk</Text>
-          </Tab.Item>
-          <Tab.Item
-            onChange={setIndex}
-            value={5}
-            title="Girls"
-            style={{
-              borderBottomColor: index == 5 ? "#af9ec6" : "white",
-              borderBottomWidth: 5,
-            }}
-          >
-            <FontAwesome
-              color="#e68d69"
-              name="database"
-              size={deviceType == "mobile" ? 30 : 45}
-            />
-            <Text style={{ fontSize: normalize(19) }}>Inventory</Text>
+            <Text style={{ fontSize: normalize(19) }}>Tables</Text>
           </Tab.Item>
         </Tab>
         {/* </Block> */}
@@ -256,38 +227,76 @@ const AdminHome = ({ navigation }) => {
             <Dashboard />
           </TabView.Item>
 
-          {/*--------- Drivers -------------*/}
-          <TabView.Item style={styles.comp}>
-            <View style={styles.board}>
-              <Drivers navigation={navigation} />
-            </View>
-          </TabView.Item>
-
           {/*--------- Families -------------*/}
           <TabView.Item style={styles.comp}>
             <View style={styles.board}>
-              <Families navigation={navigation} />
+              <View
+                style={{
+                  width: width * 0.5,
+                  // borderWidth: 2,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginHorizontal: "6%",
+                  marginTop: "5%",
+                }}
+              >
+                <Button onPress={() => setUsers("families")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Families
+                  </Text>
+                </Button>
+                <Button onPress={() => setUsers("donors")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Donors
+                  </Text>
+                </Button>
+              </View>
+
+              {/* <Families navigation={navigation} /> */}
+              {users == "families" ? (
+                <Families navigation={navigation} />
+              ) : (
+                <Donors navigation={navigation} />
+              )}
+              <FamiliesCards navigation={navigation} />
+            </View>
+          </TabView.Item>
+          {/*--------- Drivers -------------*/}
+          <TabView.Item style={styles.comp}>
+            <View style={styles.board}>
+              <View
+                style={{
+                  width: width * 0.5,
+                  // borderWidth: 2,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginHorizontal: "6%",
+                  marginTop: "5%",
+                }}
+              >
+                <Button onPress={() => setUsers("drivers")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Drivers
+                  </Text>
+                </Button>
+                <Button onPress={() => setUsers("clerks")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Clerks
+                  </Text>
+                </Button>
+              </View>
+              {users == "drivers" ? (
+                <Drivers navigation={navigation} />
+              ) : (
+                <Clerks navigation={navigation} />
+              )}
             </View>
           </TabView.Item>
 
           {/*--------- Donors -------------*/}
           <TabView.Item style={styles.comp}>
             <View style={styles.board}>
-              <Donors navigation={navigation} />
-            </View>
-          </TabView.Item>
-
-          {/*--------- clerks -------------*/}
-          <TabView.Item style={styles.comp}>
-            <View style={styles.board}>
-              <Clerks navigation={navigation} />
-            </View>
-          </TabView.Item>
-
-          {/*--------- Inventory -------------*/}
-          <TabView.Item value={5} style={styles.comp}>
-            <View style={styles.board}>
-              <Inventory navigation={navigation} />
+              <InventoryTable navigation={navigation} />
             </View>
           </TabView.Item>
         </TabView>
@@ -298,7 +307,7 @@ const AdminHome = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   top: {
-    marginTop: "5%",
+    marginTop: "2%",
     //borderBottomWidth:0.5,
     padding: "3%",
     flexDirection: "row",

@@ -5,6 +5,8 @@ import {
   View,
   Image,
   ScrollView,
+  Platform,
+  PixelRatio,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
@@ -30,24 +32,34 @@ import {
 import { db } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
+const scale = width / 830;
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 const Dashboard = () => {
   const [deviceType, setDeviceType] = useState("");
   const stat = [
     {
+      title: "Donations",
+      data: "Donations",
+      img: require("../../assets/imgs/donation.png"),
+    },
+    {
       title: "Requests",
       data: "requests",
-      img: require("../../assets/imgs/requests.png"),
+      img: require("../../assets/imgs/requestss.png"),
     },
     {
       title: "Items",
       data: "items",
-      img: require("../../assets/imgs/donation.png"),
+      img: require("../../assets/imgs/Items.png"),
     },
-    {
-      title: "Donations",
-      data: "Donations",
-      img: require("../../assets/imgs/Families.png"),
-    },
+
     {
       title: "Feedback",
       data: "feedback",
@@ -185,7 +197,7 @@ const Dashboard = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Dashboard</Text>
+      {/* <Text style={styles.title}>Dashboard</Text> */}
       <View style={{ flexDirection: "row" }}>
         {/* <ScrollView
           horizontal={true}
@@ -194,20 +206,37 @@ const Dashboard = () => {
           width="100%"
         > */}
         <View style={styles.statistics}>
-          {stat.map((x) => (
-            <View style={styles.block}>
-              <View style={styles.imgBlock}>
-                <Image
-                  source={x.img}
-                  style={{ width: 150, height: 50 }}
-                  width={95}
-                  height={95}
-                />
-                <View>
-                  <Text>{x.title}</Text>
+          <Text
+            style={{
+              fontSize: normalize(30),
+              marginLeft: "7%",
+              borderBottomWidth: 2,
+              borderBottomColor: "black",
+            }}
+          >
+            Statistics
+          </Text>
+          <View
+            style={{
+              borderWidth: 1,
+            }}
+          ></View>
+          <View style={styles.blockss}>
+            {stat.map((x) => (
+              <View style={styles.block}>
+                <View style={styles.imgBlock}>
+                  <Image
+                    source={x.img}
+                    style={{ width: 150, height: 50 }}
+                    width={85}
+                    height={70}
+                  />
+                </View>
+                <View style={styles.text}>
+                  <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
                   <Text></Text>
 
-                  <Text>
+                  <Text style={{ fontSize: normalize(19) }}>
                     {x.data == "requests"
                       ? requests.length
                       : x.data == "donations"
@@ -218,10 +247,10 @@ const Dashboard = () => {
                   </Text>
                 </View>
               </View>
-            </View>
-          ))}
+            ))}
+          </View>
         </View>
-        <View style={styles.statistics}>
+        {/* <View style={styles.statistics}>
           {userStat.map((x) => (
             <View style={styles.block}>
               <View style={styles.imgBlock}>
@@ -248,11 +277,20 @@ const Dashboard = () => {
               </View>
             </View>
           ))}
-        </View>
+        </View> */}
         {/* </ScrollView> */}
       </View>
       <View style={{ flexDirection: "row" }}>
         <View style={styles.status}>
+          <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
+            Orders
+          </Text>
+          <View
+            style={{
+              borderWidth: 1,
+              width: "100%",
+            }}
+          ></View>
           <PieChart
             data={[
               {
@@ -296,6 +334,15 @@ const Dashboard = () => {
           />
         </View>
         <View style={styles.status}>
+          <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
+            Requests & Donors
+          </Text>
+          <View
+            style={{
+              borderWidth: 1,
+              width: "100%",
+            }}
+          ></View>
           <PieChart
             data={[
               {
@@ -352,34 +399,49 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   statistics: {
+    borderWidth: 1,
     width: width * 0.7,
-    height: height * 0.25,
-    borderWidth: 2,
+    height: height * 0.28,
+    margin: "2%",
+    borderRadius: "10%",
+    paddingBottom: "2%",
+  },
+  blockss: {
     padding: "2%",
     flexDirection: "row",
     flexWrap: "wrap",
-    margin: "2%",
+    margin: "1%",
   },
   block: {
     width: "46%",
     borderWidth: 1,
-    height: "40%",
+    height: "50%",
     margin: "2%",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    borderBottomEndRadius: "15%",
+    borderTopEndRadius: "15%",
   },
   imgBlock: {
     width: "40%",
-    height: "100%",
     padding: "2%",
     flexDirection: "row",
+    borderWidth: 1,
+    backgroundColor: "#E4E9EC",
+  },
+  text: {
+    width: "55%",
   },
 
   status: {
-    width: width * 0.48,
+    width: width * 0.6,
     height: height * 0.25,
-    // borderWidth: 1,
+    borderWidth: 1,
+    borderRadius: "20%",
     // padding: "1%",
-    flexDirection: "row",
+    // flexDirection: "row",
     flexWrap: "wrap",
     marginVertical: "3%",
+    margin: "2%",
   },
 });
