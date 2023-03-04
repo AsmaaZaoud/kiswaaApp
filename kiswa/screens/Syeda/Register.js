@@ -111,8 +111,6 @@ const Register = ({ navigation }) => {
     console.log("Document written with ID: ", docRef.id);
   }
 
-
-
   const getLocation = () => {
     const getPermissions = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -125,7 +123,6 @@ const Register = ({ navigation }) => {
         return;
       }
       else {
-
         console.log('permitted')
         Alert.alert("Your location has been recorded.")
       }

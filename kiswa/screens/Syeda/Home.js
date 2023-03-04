@@ -279,7 +279,7 @@ const Home = ({ route, navigation }) => {
               uniqueList.map((item, index) => {
                 return (
                   <View key={index}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Donate')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Donate', {type: item.type, quantity: item.quantity, uri: ClothTypeData.find((object) => object.label === item.type).uri})}>
                       {/* <TouchableOpacity onPress={() => navigation.navigate('Donate')}> */}
                       <LilacCard
                         imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 
-  // animated button
+  // lilac button
   button: {
     padding: 15,
     paddingHorizontal: 30,
