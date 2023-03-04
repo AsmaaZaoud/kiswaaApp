@@ -29,6 +29,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config";
 import { signOut } from "firebase/auth";
+import { Tab, TabView } from "@rneui/themed";
+import DriverHistory from "./DriverHistory";
+import DriverProfile from "./DriverProfile";
+
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
 export function normalize(size) {
@@ -39,62 +43,23 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
-const DriverHome = ({ navigation }) => {
+const DriverHome = (props, { navigation }) => {
+  const id = props.email;
+  // alert(id);
   const [deviceType, setDeviceType] = useState("");
   const [type, setType] = useState("pick");
   const [arr, setArr] = useState([]);
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-    // setArr(pick);
     readOrders();
     setArr(pickup);
   }, []);
-
+  const [index, setIndex] = useState(0);
   const onSignOut = () => {
     signOut(auth)
       .then(() => navigation.navigate("Login"))
       .catch((error) => console.log("Error logging out: ", error));
   };
-  //     const pick = [
-  //         {
-  //             id:"0012red3",
-  //             userName: "Asmaa",
-  //             zone: "Gharafa"
-  //         },
-  //         {
-  //             id:"0033948",
-  //             userName: "Sara",
-  //             zone: "Alkhor"
-
-  //         },
-  //         {
-  //             id:"003754",
-  //             userName: "Ahmad",
-  //             zone: "Wakra"
-
-  //         }
-
-  //   ]
-  //  const deliv = [
-  //         {
-  //             id:"0012red3",
-  //             userName: "Ahmad",
-  //             zone: "doha"
-  //         },
-  //         {
-  //             id:"0033948",
-  //             userName: "naser",
-  //             zone: "Alkhor"
-
-  //         },
-  //         {
-  //             id:"003754",
-  //             userName: "sara",
-  //             zone: "Wakra"
-
-  //         }
-
-  //   ]
 
   const change = (type) => {
     if (type == "deliv") {
@@ -115,7 +80,7 @@ const DriverHome = ({ navigation }) => {
     let temp = [];
     let pick = [];
     let deliv = [];
-    const q = query(collection(db, "drivers", user, "orders"));
+    const q = query(collection(db, "drivers", id.toLowerCase(), "orders"));
     const docs = await getDocs(q);
     // console.log(docs)
     docs.forEach((doc) => {
@@ -125,7 +90,7 @@ const DriverHome = ({ navigation }) => {
       t.date = doc.data().dateTime.toDate().toLocaleDateString();
       temp.push(t);
       // temp.push(doc.data());
-      console.log(doc.id, " => ", doc.data());
+      // console.log(doc.id, " => ", doc.data());
       doc.data().type == "pickup" ? pick.push(t) : deliv.push(t);
     });
     setOrders(temp);
@@ -136,25 +101,7 @@ const DriverHome = ({ navigation }) => {
   };
 
   return (
-    <Block flex>
-      <View style={{ backgroundColor: "#5e1e7f", width: width }}>
-        <View style={styles.topl}>
-          <Image
-            source={require("../../assets/imgs/kiswaLogo.png")}
-            style={{ width: 150, height: 50 }}
-            width={width * 0.27}
-            height={height * 0.05}
-          />
-          <Pressable onPress={onSignOut}>
-            <MaterialCommunityIcons
-              name="logout"
-              size={deviceType == "mobile" ? 30 : 45}
-              color="white"
-            />
-          </Pressable>
-        </View>
-      </View>
-
+    <View>
       <Block style={styles.nav}>
         <Pressable onPress={() => change("pick")}>
           <Text style={type == "pick" ? styles.selected : styles.unselected}>
@@ -187,13 +134,13 @@ const DriverHome = ({ navigation }) => {
                 <FontAwesome name="user-circle-o" size={50} />
                 <View style={{ marginLeft: 10 }}>
                   <Text style={{ fontSize: normalize(15), fontWeight: "bold" }}>
-                    Name{" "}
+                    Name
                   </Text>
                   <Text style={{ fontSize: normalize(15), fontWeight: "bold" }}>
-                    Phone{" "}
+                    Phone
                   </Text>
                   <Text style={{ fontSize: normalize(15), fontWeight: "bold" }}>
-                    Email{" "}
+                    Email
                   </Text>
                 </View>
               </View>
@@ -248,18 +195,10 @@ const DriverHome = ({ navigation }) => {
           ))}
         </View>
       </ScrollView>
-    </Block>
+    </View>
   );
 };
 const styles = StyleSheet.create({
-  topl: {
-    width: width * 0.97,
-    padding: "2%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#5e1e7f",
-    marginTop: "3%",
-  },
   nav: {
     marginVertical: "7%",
     marginHorizontal: "19%",

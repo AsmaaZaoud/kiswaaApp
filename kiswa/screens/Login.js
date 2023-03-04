@@ -70,7 +70,7 @@ const Login = ({ navigation }) => {
     console.log("4444", donorSnap.exists());
 
     if (driverSnap.exists()) {
-      navigation.navigate("DriverHome");
+      navigation.navigate("DriverDash", email);
     } else if (clerkSnap.exists()) {
       navigation.navigate("InventoryClerkHomePage");
     } else if (familySnap.exists()) {

@@ -123,8 +123,8 @@ const AdminHome = ({ navigation }) => {
         <Image
           source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
           style={{ width: 120, height: 40 }}
-          width={width * 0.27}
-          height={height * 0.06}
+          width={width * 0.33}
+          height={height * 0.05}
         />
         <Pressable onPress={onSignOut}>
           <MaterialCommunityIcons
@@ -298,7 +298,7 @@ const AdminHome = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   top: {
-    marginTop: "1%",
+    marginTop: "5%",
     //borderBottomWidth:0.5,
     padding: "3%",
     flexDirection: "row",
