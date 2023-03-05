@@ -25,10 +25,14 @@ import { object } from 'prop-types';
 
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
+import { useIsFocused } from "@react-navigation/native";
+
 const Home = ({ route, navigation }) => {
 
   let user = auth?.currentUser?.email;
-  console.log("user: ", user)
+  console.log("user: ", user)  
+
+  const isFocused = useIsFocused();
 
   let shortList2 = [
     { "quantity": 1, "type": "Jumper" },
@@ -93,8 +97,10 @@ const Home = ({ route, navigation }) => {
   }
 
   useEffect(() => {
-    readAllWhere();
-  }, [])
+    if (isFocused) {
+      readAllWhere();
+    }
+  }, [isFocused]);
 
   const getCartItems = async (cartId) => {
     const docRef = collection(db, "familyRequests", cartId, "Items");
@@ -124,9 +130,12 @@ const Home = ({ route, navigation }) => {
     });
   }
 
+
   useEffect(() => {
-    readName();
-  }, [])
+    if (isFocused) {
+      readName();
+    }
+  }, [isFocused]);
 
   //sign out
 

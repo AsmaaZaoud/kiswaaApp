@@ -19,14 +19,12 @@ import { Dropdown } from "react-native-element-dropdown";
 
 const Donate = ({ route, navigation }) => {
 
-    const [type, setType] = useState('')
-    const [quantity, setQuantity] = useState('')
     const [uri, setUri] = useState('')
 
     useEffect(() => {
         if (route.params && route.params.type && route.params.quantity && route.params.uri) {
             setCloth(route.params.type)
-            setQuantity(route.params.quantity)
+            setAmount(route.params.quantity)
             console.log('quantity route: ', route.params.quantity)
             setItemURI(route.params.uri)
             console.log('uri route: ', route.params.uri)
@@ -34,7 +32,7 @@ const Donate = ({ route, navigation }) => {
         }
         else {
             setCloth('')
-            setQuantity('')
+            setAmount('')
             setItemURI('')
             console.log("doesnt exit")
         }
@@ -135,7 +133,6 @@ const Donate = ({ route, navigation }) => {
         setTime('6PM - 10PM')
     }
 
-    // const [validDrop, setValidDrop] = useState('Select Clothing Item')
     const [dropError, setDropError] = useState('')
 
     const [amountError, setAmountError] = useState('')
@@ -263,9 +260,6 @@ const Donate = ({ route, navigation }) => {
     }
 
     const [confirm, setConfirm] = useState([])
-    //console.log('tempCloth: ', tempCloth)
-    // let tempCloth = []
-    // console.log('tempCloth: ', tempCloth)
 
     const add = (cloth, amount) => {
 
@@ -288,9 +282,6 @@ const Donate = ({ route, navigation }) => {
         console.log("ADD ICON => ", ClothTypeData.find((object) => object.label === cloth).icon)
 
         if (cloth !== '' && amount !== '') {
-            //tempCloth.push({cloth: cloth, amount: amount, icon: ClothTypeData.find((object) => object.label === cloth).icon})
-            // console.log('tempCloth: ', tempCloth)
-            // setConfirm(tempCloth)
             setFlag(1)
             setConfirm([...confirm, { cloth: cloth, amount: amount, icon: ClothTypeData.find((object) => object.label === cloth).icon }])
             console.log("confirm array: ", confirm)
@@ -356,7 +347,7 @@ const Donate = ({ route, navigation }) => {
                 <TextInput
                     style={styles.input}
                     placeholder={'Enter Quantity'}
-                    value={amount}
+                    value={amount === "" ? '' : amount}
                     onChangeText={handleNumberChange}
                     keyboardType="numeric"
                 />
@@ -388,9 +379,7 @@ const Donate = ({ route, navigation }) => {
 
             </Block>
 
-            <Block style={{ margin: 20 }}></Block>
-
-            <Text style={{ fontSize: 20, margin: 15 }}>Select pick-up time interval:</Text>
+            <Text style={{ fontSize: 20, marginLeft: 15 }}>Select pick-up time interval:</Text>
 
             <Text style={{ fontSize: 15, color: 'red', marginLeft: 20 }}>{timeError}</Text>
             <Block style={{ flexDirection: 'row', flexWrap: 'wrap', margin: 10 }}>
@@ -399,7 +388,7 @@ const Donate = ({ route, navigation }) => {
                 <Button onPress={changeColor3} style={{ backgroundColor: flag3 === 0 ? 'purple' : 'green' }}>6PM - 10PM</Button>
             </Block>
 
-            <Text style={{ fontSize: 20, margin: 15 }}>Select pick-up date interval:</Text>
+            <Text style={{ fontSize: 20, marginLeft: 15 }}>Select pick-up date interval:</Text>
             <Text style={{ fontSize: 15, color: 'red', marginLeft: 20 }}>{dateError}</Text>
             <Block style={{ flexDirection: 'row', flexWrap: 'wrap', margin: 10 }}>
                 <Button onPress={checkColor1} style={{ backgroundColor: check1 === 0 ? 'purple' : 'green' }}><Text style={{ color: 'white' }}>{dateString} - {first2date}</Text></Button>
@@ -407,9 +396,9 @@ const Donate = ({ route, navigation }) => {
                 <Button onPress={checkColor3} style={{ backgroundColor: check3 === 0 ? 'purple' : 'green' }}><Text style={{ color: 'white' }}>{third1date} - {third2date}</Text></Button>
             </Block>
 
-            <Block style={{ alignItems: 'center', marginTop: 80 }}>
-                <Button style={{ width: '80%' }} onPress={error}>DONATE</Button>
-            </Block>
+            <TouchableOpacity style={styles.button} onPress={() => error}>
+                    <Text style={styles.buttonText}>Donate</Text>
+                </TouchableOpacity>
         </ScrollView>
 
     );
@@ -471,7 +460,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#b19cd9',
         position: 'relative',
         overflow: 'hidden',
-        width: '50%',
+        width: '70%',
         alignItems: 'center',
         alignSelf: 'center',
         marginTop: 30
