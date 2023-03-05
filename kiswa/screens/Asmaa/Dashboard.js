@@ -47,12 +47,12 @@ const Dashboard = () => {
     {
       title: "Donations",
       data: "Donations",
-      img: require("../../assets/imgs/donation.png"),
+      img: require("../../assets/imgs/donations.png"),
     },
     {
       title: "Requests",
       data: "requests",
-      img: require("../../assets/imgs/requestss.png"),
+      img: require("../../assets/imgs/requests.png"),
     },
     {
       title: "Items",
@@ -63,24 +63,24 @@ const Dashboard = () => {
     {
       title: "Feedback",
       data: "feedback",
-      img: require("../../assets/imgs/feedback.png"),
+      img: require("../../assets/imgs/feedbacks.png"),
     },
   ];
   const userStat = [
     {
       title: "Donors",
       data: "donors",
-      img: require("../../assets/imgs/requests.png"),
+      img: require("../../assets/imgs/donor.png"),
     },
     {
       title: "Drivers",
       data: "drivers",
-      img: require("../../assets/imgs/donation.png"),
+      img: require("../../assets/imgs/family.png"),
     },
     {
       title: "Families",
       data: "families",
-      img: require("../../assets/imgs/Families.png"),
+      img: require("../../assets/imgs/family.png"),
     },
     {
       title: "Workers",
@@ -228,8 +228,8 @@ const Dashboard = () => {
                   <Image
                     source={x.img}
                     style={{ width: 150, height: 50 }}
-                    width={85}
-                    height={70}
+                    width={"90%"}
+                    height={"90%"}
                   />
                 </View>
                 <View style={styles.text}>
@@ -250,34 +250,51 @@ const Dashboard = () => {
             ))}
           </View>
         </View>
-        {/* <View style={styles.statistics}>
-          {userStat.map((x) => (
-            <View style={styles.block}>
-              <View style={styles.imgBlock}>
-                <Image
-                  source={x.img}
-                  style={{ width: 150, height: 50 }}
-                  width={95}
-                  height={95}
-                />
-                <View>
-                  <Text>{x.title}</Text>
+        <View style={styles.statistics}>
+          <Text
+            style={{
+              fontSize: normalize(30),
+              marginLeft: "7%",
+              borderBottomWidth: 2,
+              borderBottomColor: "black",
+            }}
+          >
+            Users
+          </Text>
+          <View
+            style={{
+              borderWidth: 1,
+            }}
+          ></View>
+          <View style={styles.blockss}>
+            {userStat.map((x) => (
+              <View style={styles.block}>
+                <View style={styles.imgBlock}>
+                  <Image
+                    source={x.img}
+                    style={{ width: 150, height: 50 }}
+                    width={"90%"}
+                    height={"90%"}
+                  />
+                </View>
+                <View style={styles.text}>
+                  <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
                   <Text></Text>
 
-                  <Text>
-                    {x.data == "donors"
-                      ? donors.length
-                      : x.data == "divers"
-                      ? drivers.length
-                      : x.data == "families"
-                      ? families.length
-                      : workers.length}
+                  <Text style={{ fontSize: normalize(19) }}>
+                    {x.data == "requests"
+                      ? requests.length
+                      : x.data == "donations"
+                      ? donations.length
+                      : x.data == "items"
+                      ? items.length
+                      : feedback.length}
                   </Text>
                 </View>
               </View>
-            </View>
-          ))}
-        </View> */}
+            ))}
+          </View>
+        </View>
         {/* </ScrollView> */}
       </View>
       <View style={{ flexDirection: "row" }}>
@@ -297,7 +314,7 @@ const Dashboard = () => {
                 name: "Pending",
                 population: requests.filter((item) => item.status === "pending")
                   .length,
-                color: "#FDFDBD",
+                color: "#F7A17F",
                 legendFontColor: "#7F7F7F",
                 legendFontSize: 15,
               },
@@ -306,7 +323,7 @@ const Dashboard = () => {
                 population: requests.filter(
                   (item) => item.status === "fullfied"
                 ).length,
-                color: "#C8FFD4",
+                color: "#D7C3F0",
                 legendFontColor: "#7F7F7F",
                 legendFontSize: 15,
               },
@@ -415,7 +432,7 @@ const styles = StyleSheet.create({
   block: {
     width: "46%",
     borderWidth: 1,
-    height: "50%",
+    height: "60%",
     margin: "2%",
     justifyContent: "space-between",
     flexDirection: "row",
@@ -424,10 +441,10 @@ const styles = StyleSheet.create({
   },
   imgBlock: {
     width: "40%",
-    padding: "2%",
+    padding: "3%",
     flexDirection: "row",
-    borderWidth: 1,
-    backgroundColor: "#E4E9EC",
+    // borderWidth: 1,
+    // backgroundColor: "#E4E9EC",
   },
   text: {
     width: "55%",

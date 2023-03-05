@@ -86,7 +86,11 @@ const DriverHistory = (props, { navigation }) => {
     },
   ];
   return (
-    <Block flex middle style={{ backgroundColor: "white", flex: 1 }}>
+    <Block
+      flex
+      middle
+      style={{ backgroundColor: "white", flex: 1, width: width }}
+    >
       <Block style={styles.registerContainer}>
         <Block flex>
           <Text style={styles.title}>Orders History</Text>
@@ -99,33 +103,85 @@ const DriverHistory = (props, { navigation }) => {
             renderItem={({ item }) => {
               return (
                 <View style={styles.notificationBox} key={item.type}>
-                  <Image
-                    style={styles.icon}
-                    source={require("../../assets/Asmaa/driv.png")}
-                  />
                   <View
                     style={{
-                      width: "67%",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: "2%",
+                      paddingVertical: "1%",
                     }}
                   >
-                    <Text style={styles.description}>
-                      <MaterialIcons name="location-pin" size={20} />
-
-                      {item.location}
-                    </Text>
-                    <Text style={styles.description}>
-                      <MaterialIcons name="date-range" size={20} />
-                      {item.date} -{item.time}
-                    </Text>
+                    <Text style={styles.description}>Order# </Text>
+                    <Text style={styles.description}>2FE5DF3</Text>
                   </View>
+
                   <View
                     style={{
-                      justifyContent: "flex-start",
-                      alignContent: "flex-end",
-                      marginLeft: "10%",
+                      borderWidth: 0.6,
+                      width: width * 0.9,
+                      marginBottom: "4%",
+                    }}
+                  ></View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      margin: "5%",
+                      marginTop: "1%",
                     }}
                   >
-                    <MaterialIcons name="done" size={40} color="green" />
+                    {item.type == "pickup" ? (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/imgs/pick.png")}
+                      />
+                    ) : (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/imgs/deliv.png")}
+                      />
+                    )}
+
+                    <View
+                      style={{
+                        width: "67%",
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          width: "50%",
+                          // borderWidth: 1,
+                          padding: "1%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <MaterialIcons name="location-pin" size={25} />
+                        <Text style={styles.description}>{item.location}</Text>
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          width: "75%",
+                          // borderWidth: 1,
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <MaterialIcons name="date-range" size={25} />
+                        <Text style={styles.description}>
+                          {item.date} -{item.time}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "flex-start",
+                        alignContent: "flex-end",
+                        marginLeft: "7%",
+                      }}
+                    >
+                      <MaterialIcons name="done" size={45} color="green" />
+                    </View>
                   </View>
                 </View>
               );
@@ -163,21 +219,24 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   notificationBox: {
-    padding: "5.5%",
+    width: width * 0.9,
+    // padding: "5%",
+    paddingTop: "1%",
     marginTop: "2%",
     marginBottom: "3%",
     backgroundColor: "#F1EEFF",
-    flexDirection: "row",
+    // flexDirection: "row",
     borderRadius: "15%",
     borderWidth: 0.3,
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
   },
   description: {
-    fontSize: 18,
+    fontSize: normalize(20),
     // color: "#3498db",
-    marginLeft: 10,
+    marginLeft: "3%",
+    // textAlign: "center",
   },
 });

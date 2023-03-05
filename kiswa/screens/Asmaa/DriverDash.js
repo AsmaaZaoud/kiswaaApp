@@ -34,6 +34,7 @@ import DriverHistory from "./DriverHistory";
 import DriverProfile from "./DriverProfile";
 import DriverHome from "./DriverHome";
 import Drivers from "./Drivers";
+import DriverMap from "./DriverMap";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -96,8 +97,8 @@ const DriverDash = ({ route, navigation }) => {
         {/*--------- Map -------------*/}
         <TabView.Item style={styles.comp}>
           <View style={styles.board}>
-            <Text>Map</Text>
-            {/* <Drivers navigation={navigation} /> */}
+            {/* <Text>Map</Text> */}
+            <DriverMap />
           </View>
         </TabView.Item>
 
