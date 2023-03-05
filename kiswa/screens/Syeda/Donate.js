@@ -142,37 +142,58 @@ const Donate = ({ route, navigation }) => {
     const [timeError, setTimeError] = useState('')
 
     const error = () => {
-        if (cloth === '') {
-            setDropError('Please select a clothing item')
-            return
+        if(confirm.length > 0){
+            if (time === '') {
+                setTimeError('Please select a time interval')
+                return
+            }
+            else {
+                setTimeError('')
+            }
+            if (date === '') {
+                setDateError('Please select a date interval')
+                return
+            }
+            else {
+                setDateError('')
+            }
+            if(time !== '' && date !== ''){
+                navigation.navigate("CheckOut", { itemsArray: confirm, type: cloth, amount: amount, time: time, date: date })
+            }
         }
-        else {
-            setDropError('')
-        }
-        if (amount === '') {
-            setAmountError('Please enter amount')
-            return
-        }
-        else {
-            setAmountError('')
-        }
-
-        if (time === '') {
-            setTimeError('Please select a time interval')
-            return
-        }
-        else {
-            setTimeError('')
-        }
-        if (date === '') {
-            setDateError('Please select a date interval')
-            return
-        }
-        else {
-            setDateError('')
-        }
-        if (cloth !== '' && amount !== '' && time !== '' && date !== '') {
-            navigation.navigate("CheckOut", { uri: ItemURI, type: cloth, amount: amount, time: time, date: date })
+        else{
+            if (cloth === '') {
+                setDropError('Please select a clothing item')
+                return
+            }
+            else {
+                setDropError('')
+            }
+            if (amount === '') {
+                setAmountError('Please enter amount')
+                return
+            }
+            else {
+                setAmountError('')
+            }
+    
+            if (time === '') {
+                setTimeError('Please select a time interval')
+                return
+            }
+            else {
+                setTimeError('')
+            }
+            if (date === '') {
+                setDateError('Please select a date interval')
+                return
+            }
+            else {
+                setDateError('')
+            }
+            if (cloth !== '' && amount !== '' && time !== '' && date !== '') {
+                navigation.navigate("CheckOut", { itemsArray: confirm, type: cloth, amount: amount, time: time, date: date })
+            }
         }
     }
 
@@ -396,7 +417,7 @@ const Donate = ({ route, navigation }) => {
                 <Button onPress={checkColor3} style={{ backgroundColor: check3 === 0 ? 'purple' : 'green' }}><Text style={{ color: 'white' }}>{third1date} - {third2date}</Text></Button>
             </Block>
 
-            <TouchableOpacity style={styles.button} onPress={() => error}>
+            <TouchableOpacity style={styles.button} onPress={error}>
                     <Text style={styles.buttonText}>Donate</Text>
                 </TouchableOpacity>
         </ScrollView>

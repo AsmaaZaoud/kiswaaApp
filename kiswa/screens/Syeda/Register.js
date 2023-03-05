@@ -235,24 +235,12 @@ const Register = ({ navigation }) => {
 
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
-            {/* <ImageBackground
-              source={{ uri: 'https://img.freepik.com/free-photo/violet-watercolor-texture-background_1083-172.jpg' }}
-              resizeMode="cover"
-              style={{ flex: 1, justifyContent: 'center', }}
-            > */}
+
             <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.goBack()}>Go Back</Text>
             <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: normalize(50) }}>Register as Donor</Text>
             <View style={styles.container}>
 
               <Text style={styles.error}>{nameError}</Text>
-              {/* <TextInput
-                style={styles.input}
-                placeholder="Nickname"
-                value={name}
-                onChangeText={setName}
-                autoCapitalize='words'
-              /> */}
-
 
               <Block width={width * 0.8} >
                 <Input
@@ -293,14 +281,7 @@ const Register = ({ navigation }) => {
                   }
                 />
               </Block>
-              {/* <TextInput
-                style={styles.input}
-                placeholder="Phone Number"
-                value={phone}
-                onChangeText={setPhone}
-                keyboardType="numeric"
-                maxLength={8}
-              /> */}
+
               <Text style={styles.error}>{emailError}</Text>
               <Block width={width * 0.8} >
                 <Input
@@ -321,14 +302,6 @@ const Register = ({ navigation }) => {
                   }
                 />
               </Block>
-              {/* <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              /> */}
 
               <Text style={styles.error}>{passError}</Text>
               <Block width={width * 0.8} >
@@ -349,13 +322,7 @@ const Register = ({ navigation }) => {
                   }
                 />
               </Block>
-              {/* <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-              /> */}
+
               <Text style={styles.error}>{confirmError}</Text>
               <Block width={width * 0.8} >
                 <Input
@@ -375,14 +342,6 @@ const Register = ({ navigation }) => {
                   }
                 />
               </Block>
-              {/* <TextInput
-                style={styles.input}
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                secureTextEntry
-              /> */}
-
 
               <Text
                 style={{
@@ -419,7 +378,6 @@ const Register = ({ navigation }) => {
               </Block>
 
             </View>
-            {/* </ImageBackground> */}
           </Block>
         </Block>
       </ImageBackground>

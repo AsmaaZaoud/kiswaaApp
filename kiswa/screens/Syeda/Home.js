@@ -259,7 +259,13 @@ const Home = ({ route, navigation }) => {
               </Block>
               <Block center style={{}}>
                 <Text style={{ fontSize: 25, alignSelf: 'center', fontWeight: 'bold' }}>Hello, {nickname === '' ? 'Guest!' : nickname + '!'}</Text>
-                <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? '' : user}</Text>
+                {
+                  user !== undefined ?
+                  <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? '' : user}</Text>
+                  :
+                  null
+                }
+                {/* <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? '' : user}</Text> */}
                 <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
                 {/* <Text style={{  fontWeight: 'bold', alignSelf: 'center' }}>Let's share goodness!</Text> */}
               </Block>
