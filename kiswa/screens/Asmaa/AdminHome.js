@@ -48,6 +48,7 @@ import Inventory from "./Inventory";
 import Donors from "./Donors";
 import FamiliesCards from "./FamiliesCards";
 import InventoryTable from "./InventoryTable";
+import Feedback from "./Feedback";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 830;
@@ -232,33 +233,41 @@ const AdminHome = ({ navigation }) => {
             <View style={styles.board}>
               <View
                 style={{
-                  width: width * 0.5,
+                  // width: width * 0.,
                   // borderWidth: 2,
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  marginHorizontal: "6%",
+                  // marginHorizontal: "6%",
                   marginTop: "5%",
                 }}
               >
-                <Button onPress={() => setUsers("families")}>
+                <Button size="small" onPress={() => setUsers("families")}>
                   <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
                     Families
                   </Text>
                 </Button>
-                <Button onPress={() => setUsers("donors")}>
+                <Button size="small" onPress={() => setUsers("donors")}>
                   <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
                     Donors
+                  </Text>
+                </Button>
+                <Button size="small" onPress={() => setUsers("feedback")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Feedback
                   </Text>
                 </Button>
               </View>
 
               {/* <Families navigation={navigation} /> */}
-              {users == "families" ? (
-                <Families navigation={navigation} />
-              ) : (
+              {users == "feedback" ? (
+                <Feedback navigation={navigation} />
+              ) : users == "donors" ? (
                 <Donors navigation={navigation} />
+              ) : (
+                // <FamiliesCards navigation={navigation} />
+                <Families navigation={navigation} />
               )}
-              <FamiliesCards navigation={navigation} />
+              {/* <FamiliesCards navigation={navigation} /> */}
             </View>
           </TabView.Item>
           {/*--------- Drivers -------------*/}
@@ -296,7 +305,32 @@ const AdminHome = ({ navigation }) => {
           {/*--------- Donors -------------*/}
           <TabView.Item style={styles.comp}>
             <View style={styles.board}>
-              <InventoryTable navigation={navigation} />
+              <View
+                style={{
+                  width: width * 0.5,
+                  // borderWidth: 2,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginHorizontal: "6%",
+                  marginTop: "5%",
+                }}
+              >
+                <Button onPress={() => setUsers("graph")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Graphs
+                  </Text>
+                </Button>
+                <Button onPress={() => setUsers("table")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Table
+                  </Text>
+                </Button>
+              </View>
+              {users == "graph" ? (
+                <Inventory navigation={navigation} />
+              ) : (
+                <InventoryTable navigation={navigation} />
+              )}
             </View>
           </TabView.Item>
         </TabView>

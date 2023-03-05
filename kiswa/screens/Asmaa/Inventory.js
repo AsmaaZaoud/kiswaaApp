@@ -83,76 +83,16 @@ const Inventory = ({ navigation }) => {
     datasets: [
       {
         data: [20, 45, 28, 80, 99, 43],
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        strokeWidth: 2, // optional
       },
     ],
+    legend: ["Rainy Days"], // optional
   };
 
   return (
     <Block flex>
-      {/* <View style={styles.container}>
-        <DataTable>
-          <Block
-            style={[
-              styles.head,
-              { height: height * 0.08, justifyContent: "space-between" },
-            ]}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Feather name="box" size={deviceType == "mobile" ? 30 : 45} />
-              <Text
-                style={{
-                  fontSize: deviceType == "mobile" ? 20 : 30,
-                  marginLeft: "5%",
-                }}
-              >
-                Inventory
-              </Text>
-            </View>
-          </Block>
-          <DataTable.Header>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              ID
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Type
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Size
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Color
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Gender
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Age
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Quality
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Available
-            </DataTable.Title>
-          </DataTable.Header>
-          {inventory.map((i, x) => (
-            <DataTable.Row style={{ height: "1%" }}>
-              <DataTable.Cell id={i.id}>{x + 1}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.age}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
-              <DataTable.Cell>
-                {i.available == true ? "Available" : "Not-Available"}
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
-        </DataTable>
-      </View> */}
-
-      <View
+      {/* <View
         style={{
           width: width * 0.8,
           // borderWidth: 1,
@@ -186,6 +126,144 @@ const Inventory = ({ navigation }) => {
           absolute
           verticalLabelRotation={30}
         />
+      </View> */}
+      <View style={{ flexDirection: "row", flex: 1 }}>
+        <View style={styles.status}>
+          <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
+            Ages
+          </Text>
+          <View
+            style={{
+              borderWidth: 1,
+              width: "100%",
+            }}
+          ></View>
+          <PieChart
+            data={[
+              {
+                name: "Kids",
+                population: inventory.filter((item) => item.age === "Kids")
+                  .length,
+                color: "#F7A17F",
+                legendFontColor: "#7F7F7F",
+                legendFontSize: 15,
+              },
+              {
+                name: "Men",
+                population: inventory.filter((item) => item.age === "men")
+                  .length,
+                color: "#D7C3F0",
+                legendFontColor: "#7F7F7F",
+                legendFontSize: 15,
+              },
+              {
+                name: "Women",
+                population: inventory.filter((item) => item.age === "women")
+                  .length,
+                color: "#F7C3F0",
+                legendFontColor: "#727F7F",
+                legendFontSize: 15,
+              },
+            ]}
+            width={width * 0.5}
+            height={220}
+            chartConfig={{
+              backgroundColor: "#1cc910",
+              backgroundGradientFrom: "#eff3ff",
+              backgroundGradientTo: "#efefef",
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+            }}
+            style={{
+              marginVertical: 8,
+              borderRadius: 16,
+            }}
+            accessor="population"
+            backgroundColor="transparent"
+            paddingLeft="15"
+            absolute //for the absolute number remove if you want percentage
+          />
+        </View>
+        <View style={styles.status}>
+          <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
+            Quality
+          </Text>
+          <View
+            style={{
+              borderWidth: 1,
+              width: "100%",
+            }}
+          ></View>
+          <PieChart
+            data={[
+              {
+                name: "Good",
+                population: inventory.filter((item) => item.quality === "Good")
+                  .length,
+                color: "#90DF8C",
+                legendFontColor: "#7F7F7F",
+                legendFontSize: 15,
+              },
+              {
+                name: "New",
+                population: inventory.filter((item) => item.quality === "New")
+                  .length,
+                color: "#82C9CC",
+                legendFontColor: "#7F7F7F",
+                legendFontSize: 15,
+              },
+              {
+                name: "Old",
+                population: inventory.filter((item) => item.quality === "old")
+                  .length,
+                color: "#F7C3F0",
+                legendFontColor: "#727F7F",
+                legendFontSize: 15,
+              },
+            ]}
+            width={width * 0.5}
+            height={220}
+            chartConfig={{
+              backgroundColor: "#1cc910",
+              backgroundGradientFrom: "#eff3ff",
+              backgroundGradientTo: "#efefef",
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+            }}
+            style={{
+              marginVertical: 8,
+              borderRadius: 16,
+            }}
+            accessor="population"
+            backgroundColor="transparent"
+            paddingLeft="15"
+            absolute //for the absolute number remove if you want percentage
+          />
+        </View>
+      </View>
+      <View style={{ marginTop: "45%", marginHorizontal: "10%" }}>
+        <LineChart
+          flex
+          data={data}
+          width={width * 0.6}
+          height={220}
+          chartConfig={{
+            backgroundColor: "#1cc910",
+            backgroundGradientFrom: "#eff3ff",
+            backgroundGradientTo: "#efefef",
+            decimalPlaces: 2,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+              borderRadius: 16,
+            },
+          }}
+        />
       </View>
     </Block>
   );
@@ -197,6 +275,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#EBEBEB",
     //paddingTop: 50,
     paddingHorizontal: "5%",
+  },
+  status: {
+    // flex: 1,
+    width: width * 0.56,
+    height: height * 0.25,
+    borderWidth: 1,
+    borderRadius: "20%",
+    // padding: "1%",
+    // flexDirection: "row",
+    flexWrap: "wrap",
+    marginVertical: "3%",
+    margin: "2%",
   },
   head: {
     // flexDirection:"row",

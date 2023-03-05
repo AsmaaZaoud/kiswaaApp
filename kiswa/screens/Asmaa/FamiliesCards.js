@@ -1,162 +1,154 @@
+import { Block } from "galio-framework";
+import React from "react";
 import {
-  Dimensions,
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
   Image,
-  Pressable,
-  FlatList,
-  PixelRatio,
-  Platform,
+  ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Feather, MaterialIcons } from "react-native-vector-icons";
-import { signOut } from "firebase/auth";
-import { db } from "../../config";
-import { collection, getDocs, query } from "firebase/firestore";
-import { Block } from "galio-framework";
-const { width, height } = Dimensions.get("screen");
-const scale = width / 830;
-export function normalize(size) {
-  const newSize = size * scale;
-  if (Platform.OS === "ios") {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize));
-  } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
-  }
-}
 
 const FamiliesCards = ({ navigation }) => {
-  const [deviceType, setDeviceType] = useState("");
-  const [hover, setHover] = useState(false);
+  const matches = [
+    {
+      id: 1,
+      avatar: "https://bootdey.com/img/Content/avatar/avatar2.png",
+      name: "John Doe",
+      age: "30",
+    },
+    {
+      id: 2,
+      avatar: "https://bootdey.com/img/Content/avatar/avatar3.png",
+      name: "John Doe",
+      age: "30",
+    },
+    {
+      id: 3,
+      avatar: "https://bootdey.com/img/Content/avatar/avatar4.png",
+      name: "John Doe",
+      age: "30",
+    },
+    {
+      id: 4,
+      avatar: "https://bootdey.com/img/Content/avatar/avatar5.png",
+      name: "John Doe",
+      age: "30",
+    },
+    {
+      id: 5,
+      avatar: "https://bootdey.com/img/Content/avatar/avatar6.png",
+      name: "John Doe",
+      age: "30",
+    },
+  ];
 
-  useEffect(() => {
-    setFlag(false);
-    readAllWhere();
-    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-  }, []);
-
-  const [families, setFamilies] = useState([{ name: "asma" }]);
-  const readAllWhere = async () => {
-    let temp = [];
-    const q = query(collection(db, "families"));
-    const docs = await getDocs(q);
-    console.log(docs);
-    docs.forEach((doc) => {
-      // temp.push(doc.data());
-      console.log(doc.id, " => ", doc.data());
-    });
-    setFamilies(temp);
-    // setAllDrivers(temp);
-    //console.log(drivers);
-  };
-  const [flag, setFlag] = useState(false);
-
-  const [requests, setRequests] = useState([]);
-  const readOne = async (user) => {
-    setHover(user);
-    let temp = [];
-    const q = query(
-      collection(db, "familyRequests"),
-      where("familyID", "==", user)
-    );
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      let t = doc.data();
-      temp.push(t);
-      console.log(doc.id, " => ", t);
-    });
-    setRequests(temp);
-    setFlag(true);
-  };
   return (
-    <Block flex middle style={{ backgroundColor: "white", flex: 1 }}>
-      <Block style={styles.registerContainer}>
-        <Block flex>
-          <Text style={styles.title}>Families</Text>
-          <Text>hello</Text>
-
-          <View>
-            {families.map((item) => (
-              <View style={styles.notificationBox} key={item.type}>
-                <Image
-                  style={styles.icon}
-                  source={require("../../assets/Asmaa/driv.png")}
-                />
-                <View
-                  style={{
-                    width: "67%",
-                  }}
-                >
-                  <Text style={styles.description}>
-                    <MaterialIcons name="location-pin" size={20} />
-
-                    {item.location}
-                  </Text>
-                  <Text style={styles.description}>
-                    <MaterialIcons name="date-range" size={20} />
-                    {item.date} -{item.time}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    justifyContent: "flex-start",
-                    alignContent: "flex-end",
-                    marginLeft: "10%",
-                  }}
-                >
-                  <MaterialIcons name="done" size={40} color="green" />
+    <Block>
+      <View style={styles.container}>
+        <View style={styles.sectionBody}>
+          <ScrollView horizontal contentContainerStyle={styles.sectionScroll}>
+            {matches.map(({ avatar, id, name, age }) => (
+              <View style={styles.sectionCard} key={id}>
+                <Image style={styles.sectionImage} source={{ uri: avatar }} />
+                <View style={styles.sectionInfo}>
+                  <Text style={styles.sectionLabel}>{name}</Text>
+                  <Text style={styles.sectionLabel}>Age: {age}</Text>
                 </View>
               </View>
             ))}
-          </View>
-        </Block>
-      </Block>
+          </ScrollView>
+        </View>
+      </View>
     </Block>
   );
 };
-
 export default FamiliesCards;
 
 const styles = StyleSheet.create({
-  topl: {
-    width: width * 0.97,
-    padding: "2%",
+  container: {
+    // flex: 1,
+    backgroundColor: "#FFF",
+  },
+  header: {
+    backgroundColor: "#00BFFF",
+    height: 250,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 20,
+    paddingHorizontal: 16,
+  },
+  avatar: {
+    width: 150,
+    height: 150,
+    borderRadius: 4,
+  },
+  informationContainer: {
+    width: 150,
+    height: 150,
+    marginLeft: 20,
+  },
+  name: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#ffffff",
+  },
+  label: {
+    fontSize: 12,
+    color: "#ffffff",
+    marginTop: 10,
+  },
+  section: {
+    paddingHorizontal: 16,
+    marginVertical: 5,
+  },
+  sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#5e1e7f",
-    marginTop: "3%",
+    alignItems: "center",
+    marginTop: 10,
   },
-  title: {
-    fontSize: normalize(25),
-    marginTop: "5%",
-    marginLeft: "5%",
-  },
-  container: {
-    backgroundColor: "red",
-  },
-  notificationList: {
-    marginTop: "1%",
-    padding: "3%",
-    // borderWidth: 1,
-    backgroundColor: "white",
-  },
-  notificationBox: {
-    padding: "5.5%",
-    marginTop: "2%",
-    marginBottom: "3%",
-    backgroundColor: "#F1EEFF",
-    flexDirection: "row",
-    borderRadius: "15%",
-    borderWidth: 0.3,
-  },
-  icon: {
-    width: 40,
-    height: 40,
-  },
-  description: {
+  sectionTitle: {
     fontSize: 18,
-    // color: "#3498db",
-    marginLeft: 10,
+  },
+  seeAllButton: {
+    backgroundColor: "#A9A9A9",
+    padding: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 4,
+  },
+  seeAllButtonText: {
+    color: "#eee",
+  },
+  sectionBody: {
+    marginTop: 10,
+  },
+  sectionScroll: {
+    paddingBottom: 20,
+  },
+  sectionCard: {
+    width: 200,
+    minHeight: 200,
+    backgroundColor: "#fff",
+    shadowColor: "#B0C4DE",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    margin: 10,
+    backgroundColor: "#fff",
+    borderRadius: 6,
+  },
+  sectionImage: {
+    width: "100%",
+    aspectRatio: 1,
+  },
+  sectionInfo: {
+    padding: 10,
+  },
+  sectionLabel: {
+    fontSize: 12,
+    marginBottom: 2,
   },
 });

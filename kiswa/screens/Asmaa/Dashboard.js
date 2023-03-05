@@ -7,6 +7,7 @@ import {
   ScrollView,
   Platform,
   PixelRatio,
+  SafeAreaView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
@@ -198,6 +199,7 @@ const Dashboard = () => {
   return (
     <View style={styles.container}>
       {/* <Text style={styles.title}>Dashboard</Text> */}
+
       <View style={{ flexDirection: "row" }}>
         {/* <ScrollView
           horizontal={true}

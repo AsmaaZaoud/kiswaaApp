@@ -42,6 +42,7 @@ import DriverDash from "../screens/Asmaa/DriverDash";
 import FamiliesCards from "../screens/Asmaa/FamiliesCards";
 import InventoryTable from "../screens/Asmaa/InventoryTable";
 import DriverMap from "../screens/Asmaa/DriverMap";
+import Feedback from "../screens/Asmaa/Feedback";
 //invent
 import InventoryClerks from "../screens/Asmaa/InventoryClerks";
 import AddClerk from "../screens/Asmaa/AddClerk";
@@ -399,6 +400,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="DriverHistory" component={DriverHistory} />
       <Stack.Screen name="DriverDash" component={DriverDash} />
       <Stack.Screen name="DriverMap" component={DriverMap} />
+      <Stack.Screen name="Feedback" component={Feedback} />
 
       {/* /*********  LogIn **********/}
 
