@@ -286,8 +286,8 @@ const Register = ({ navigation }) => {
                     <Icon
                       size={16}
                       color={argonTheme.COLORS.ICON}
-                      name="hat-3"
-                      family="ArgonExtra"
+                      name="phone"
+                      family="Entypo"
                       style={styles.inputIcons}
                     />
                   }
@@ -314,8 +314,8 @@ const Register = ({ navigation }) => {
                     <Icon
                       size={16}
                       color={argonTheme.COLORS.ICON}
-                      name="hat-3"
-                      family="ArgonExtra"
+                      name="email"
+                      family="Entypo"
                       style={styles.inputIcons}
                     />
                   }
@@ -342,8 +342,8 @@ const Register = ({ navigation }) => {
                     <Icon
                       size={16}
                       color={argonTheme.COLORS.ICON}
-                      name="hat-3"
-                      family="ArgonExtra"
+                      name="lock-open"
+                      family="Entypo"
                       style={styles.inputIcons}
                     />
                   }
@@ -368,8 +368,8 @@ const Register = ({ navigation }) => {
                     <Icon
                       size={16}
                       color={argonTheme.COLORS.ICON}
-                      name="hat-3"
-                      family="ArgonExtra"
+                      name="lock"
+                      family="Entypo"
                       style={styles.inputIcons}
                     />
                   }
