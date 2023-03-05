@@ -29,22 +29,54 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config";
 const ConfirmFamilyCart = ({ route, navigation }) => {
-  const colors = [
-    { label: "Black", value: "1" },
-    { label: "White", value: "2" },
-    { label: "Red", value: "3" },
-    { label: "Green", value: "4" },
-    { label: "Yellow", value: "5" },
-    { label: "Blue", value: "6" },
-    { label: "Pink", value: "7" },
-    { label: "Gray", value: "8" },
-    { label: "Brown", value: "9" },
-    { label: "Orange", value: "10" },
-    { label: "Purple", value: "11" },
-  ];
-
   // const [userinforr, setUserinforr] = useState([]);
   const { cartId, id } = route.params;
+
+  // const [theUser, setTheUser] = useState([]);
+  const [zone, setZone] = useState("");
+  const [phone, setPhone] = useState("");
+  const [theUser, setTheUser] = useState("");
+  useEffect(() => {
+    getFamily();
+  }, [id]);
+
+  const getFamily = async () => {
+    console.log(id);
+    const docRef = doc(db, "families", id);
+    const docSnap = await getDoc(docRef);
+    let temp = [];
+    if (docSnap.exists()) {
+      setTheUser(docSnap.data().email);
+      setPhone(docSnap.data().phone);
+      setZone(docSnap.data().zone);
+    } else {
+      console.log("No such document!");
+    }
+  };
+
+  // useEffect(() => {
+  //   userinfo();
+  // }, [id]);
+  // const [userinforr, setUserinforr] = useState([]);
+
+  // const userinfo = async () => {
+  //   const collectionRef = collection(db, "families");
+  //   const q = query(collectionRef);
+  //   const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  //     setUserinforr(
+  //       querySnapshot.docs.map((doc) => ({
+  //         id: doc.id,
+  //         // data: doc.data(),
+  //         zone: doc.data().zone,
+  //         phone: doc.data().phone,
+  //       }))
+  //     );
+  //     // console.log(userinforr);
+  //   });
+  //   return () => unsubscribe();
+  // };
+  // setTheUser(userinforr.find((elem) => elem.id === id));
+  // console.log(theUser.phone);
 
   const closeRequest = async () => {
     const docRef = doc(db, "familyRequests", cartId);
@@ -53,6 +85,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
       docRef,
       {
         cart: "closed",
+        dateTime: new Date(),
       },
       { merge: true }
     )
@@ -65,43 +98,11 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
     navigation.navigate("FamilyHome", id);
   };
 
-  const [theUser, setTheUser] = useState("");
-  const [zone, setZone] = useState("");
-  const [phone, setPhone] = useState("");
-  // const [theUser, setTheUser] = useState("");
-  useEffect(() => {
-    getFamily();
-  }, [id]);
-
-  const getFamily = async () => {
-    console.log(id);
-    const docRef = doc(db, "families", id);
-    const docSnap = await getDoc(docRef);
-    let temp = [];
-    if (docSnap.exists()) {
-      //console.log("Document data:", docSnap.data());
-      // temp.push({
-      //   id: docSnap.id,
-      //   // data: docSnap.data(),
-      //   zone: docSnap.data().zone,
-      //   phone: docSnap.data().phone,
-      //   email: docSnap.data().email,
-      // });
-      setTheUser(docSnap.data().email);
-      setPhone(docSnap.data().phone);
-      setZone(docSnap.data().zone);
-      //   setNanny(temp);
-      // console.log(theUser);
-    } else {
-      console.log("No such document!");
-    }
-  };
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.main}>
         <Block style={styles.hed1}>
-          <Text style={styles.text1}>Conform request</Text>
+          <Text style={styles.text1}>Contact Information</Text>
           <Text></Text>
 
           <View
@@ -134,7 +135,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               style={{ width: "95%", flexDirection: "row", marginLeft: "11%" }}
             >
               <Entypo name="email" color="#842DCE" size={29} />
-              <Text style={{ marginLeft: "5%", fontSize: 19 }}>{theUser}</Text>
+              <Text style={{ marginLeft: "5%", fontSize: 19 }}>{id}</Text>
             </View>
             {/* <Text style={{ fontSize: 18, marginLeft: "20%" }}>{theUser}</Text> */}
           </View>

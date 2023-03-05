@@ -34,12 +34,14 @@ const FeedbackConf = ({ route, navigation }) => {
       }}
     >
       <Image
-        source={require("../../Images/checked.png")}
+        source={require("../../assets/imgs/checked-removebg-preview.png")}
         style={{
           width: "31%",
           height: "15%",
           zIndex: 999,
           marginBottom: "5%",
+          backgroundColor: "white",
+          borderRadius: 70,
         }}
       ></Image>
       <Text></Text>
@@ -70,8 +72,8 @@ const FeedbackConf = ({ route, navigation }) => {
         // tint="light"
         intensity={100}
         style={{
-          width: 350,
-          height: 390,
+          width: "90%",
+          height: "70%",
           borderWidth: 2,
           borderColor: "#fff",
           padding: 20,
@@ -135,7 +137,7 @@ const FeedbackConf = ({ route, navigation }) => {
               //marginLeft: "10%",
               borderRadius: 8,
             }}
-            onPress={() => navigation.navigate("Feedback")}
+            onPress={() => navigation.navigate("FamilyFeedback")}
           >
             <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
               More Feedback

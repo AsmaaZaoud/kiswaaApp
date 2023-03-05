@@ -51,6 +51,7 @@ const FamilyFeedback = ({ navigation }) => {
       dateTime: dateCreated.toLocaleDateString(),
       type: "family",
       user: user.email,
+      dateTime: new Date(),
     })
       .then(() => {
         console.log("feedback added");
@@ -286,6 +287,7 @@ const FamilyFeedback = ({ navigation }) => {
               //marginLeft: "10%",
               borderRadius: 8,
             }}
+            onPress={() => navigation.navigate("FamilyHome", user.email)}
           >
             <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
               Cancel

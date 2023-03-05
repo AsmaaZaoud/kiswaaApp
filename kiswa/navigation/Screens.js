@@ -32,6 +32,9 @@ import FamilyRequest from "../screens/Meimouna/FamilyRequest";
 import FamilyCart from "../screens/Meimouna/FamilyCart";
 import ConfirmFamilyCart from "../screens/Meimouna/ConfirmFamilyCart";
 import FamilyFeedback from "../screens/Meimouna/FamilyFeedback";
+import FeedbackConf from "../screens/Meimouna/FeedbackConf";
+import RequestHistory from "../screens/Meimouna/RequestHistory";
+import RequestHistoryComp from "../screens/Meimouna/RequestHistoryComp";
 //drivers
 import Drivers from "../screens/Asmaa/Drivers";
 import AdminHome from "../screens/Asmaa/AdminHome";
@@ -381,6 +384,9 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="FamilyCart" component={FamilyCart} />
       <Stack.Screen name="ConfirmFamilyCart" component={ConfirmFamilyCart} />
       <Stack.Screen name="FamilyFeedback" component={FamilyFeedback} />
+      <Stack.Screen name="FeedbackConf" component={FeedbackConf} />
+      <Stack.Screen name="RequestHistory" component={RequestHistory} />
+      <Stack.Screen name="RequestHistoryComp" component={RequestHistoryComp} />
     </Stack.Navigator>
   );
 }

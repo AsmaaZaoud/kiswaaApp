@@ -101,7 +101,7 @@ const FamilyCart = ({ route, navigation }) => {
         setType("");
         setQuantity(0);
         setColor(colors[0].label);
-        setSize("");
+        setSize("S");
         setModalVisible(!modalVisible);
         // navigation.navigate("FamilyCart", cartId, id);
       })
