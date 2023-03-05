@@ -48,7 +48,9 @@ export default function RequestHistory({ route, navigation }) {
   return (
     <View>
       <Text>Request History</Text>
-
+      {request.length == 0 ? (
+        <Text>there are no complete requests yet</Text>
+      ) : null}
       {request.map((elem, i) => (
         <Card title="cart">
           <View
