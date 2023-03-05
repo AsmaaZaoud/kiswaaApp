@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { db } from "../../config";
+import { auth } from "../../config";
+import {addDoc, collection} from "firebase/firestore";
 
 const feedbackEmojis = [
   { id: 1, name: 'very-bad', link: 'https://cdn-icons-png.flaticon.com/512/2691/2691051.png', value: 1 },
@@ -27,9 +30,18 @@ const Feedback = ({ navigation }) => {
   const handleSubmit = () => {
     console.log('Selected Emoji:', selectedEmoji);
     console.log('Feedback Text:', feedbackText);
+    add()
     setModalVisible(false);
     navigation.navigate("Home")
   };
+
+  const add = async () => {
+    const docRef = await addDoc(collection(db, "donorFeedback"), {
+    rating: selectedEmoji.name,
+    feedbackText: feedbackText
+    });
+    console.log("Document written with ID: ", docRef.id);
+    }
 
   const renderFeedbackInput = () => {
     if (!selectedEmoji || selectedEmoji.value >= 4) {
