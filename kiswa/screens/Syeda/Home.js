@@ -282,7 +282,7 @@ const Home = ({ route, navigation }) => {
                     <TouchableOpacity onPress={() => navigation.navigate('Donate', {type: item.type, quantity: item.quantity, uri: ClothTypeData.find((object) => object.label === item.type).uri})}>
                       {/* <TouchableOpacity onPress={() => navigation.navigate('Donate')}> */}
                       <LilacCard
-                        imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
+                        //imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
                         title={item.type}
                         subtitle={item.quantity}
                       />

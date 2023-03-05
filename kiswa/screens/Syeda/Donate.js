@@ -12,7 +12,7 @@ import {
     PixelRatio,
     Image,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
 } from "react-native";
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
@@ -268,6 +268,7 @@ const Donate = ({ route, navigation }) => {
     // console.log('tempCloth: ', tempCloth)
 
     const add = (cloth, amount) => {
+
         if (cloth === '') {
             setDropError('Please select a clothing item')
             return
@@ -290,6 +291,7 @@ const Donate = ({ route, navigation }) => {
             //tempCloth.push({cloth: cloth, amount: amount, icon: ClothTypeData.find((object) => object.label === cloth).icon})
             // console.log('tempCloth: ', tempCloth)
             // setConfirm(tempCloth)
+            setFlag(1)
             setConfirm([...confirm, { cloth: cloth, amount: amount, icon: ClothTypeData.find((object) => object.label === cloth).icon }])
             console.log("confirm array: ", confirm)
         }
@@ -305,24 +307,30 @@ const Donate = ({ route, navigation }) => {
         setAmount("")
     };
 
+    const [flag, setFlag] = useState(0)
+
+    const handleRemoveItem = (index) => {
+        const newItems = confirm.filter((item, i) => i !== index);
+        setConfirm(newItems);
+      };
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.articles}>
             <Block style={styles.container}>
 
-                <Block style={{ marginTop: '15%' }}></Block>
-
-                <Text onPress={() => navigation.navigate("Home")} style={{ alignSelf: 'flex-start', marginLeft: '5%', fontSize: 20, color: 'purple' }}>Go Back</Text>
-
-                <Block style={{ marginTop: '10%' }}></Block>
-
-                <Block style={{ width: '100%' }}>
-                    <Image
+                    <ImageBackground
                         style={styles.Image}
                         source={{ uri: ItemURI == '' ? 'https://cdn-icons-png.flaticon.com/128/6834/6834320.png' : ItemURI }}
-                    ></Image>
-                </Block>
+                    >
+                        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                            <Image
+                            style={styles.backButton}
+                            source = {{uri: 'https://cdn-icons-png.flaticon.com/512/54/54623.png'}}
+                            ></Image>
+                        </TouchableOpacity>
+                    </ImageBackground>
 
                 <Text style={{ fontSize: 15, color: 'red' }}>{dropError}</Text>
                 <Dropdown
@@ -347,7 +355,7 @@ const Donate = ({ route, navigation }) => {
                 <Text style={{ fontSize: 15, color: 'red' }}>{amountError}</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder={'Amount'}
+                    placeholder={'Enter Quantity'}
                     value={amount}
                     onChangeText={handleNumberChange}
                     keyboardType="numeric"
@@ -362,21 +370,21 @@ const Donate = ({ route, navigation }) => {
                 <Block style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                     {
                         confirm.map((item, index) =>
-                            <View key={index} style={{ margin: 5 }}>
-                                <Block>
-                                    <Image
-                                        style={{ width: 70, height: 70 }}
-                                        source={{ uri: item.icon }}
-                                    ></Image>
-                                    <Block row>
-                                        <Text>{item.cloth}</Text>
-                                        <Text>  x{item.amount}</Text>
-                                    </Block>
-                                </Block>
-                            </View>
+                        <View key = {index} style={styles.smallContainer}>
+                        <View style={styles.smallSquare}>
+                          <Image style={styles.smallImage} source={{ uri: item.icon }} />
+                          <Text style={styles.smallText}>{item.cloth}</Text>
+                          <Text style={styles.smallText}>x{item.amount}</Text>
+                          <TouchableOpacity style={styles.smallCloseButton} onPress={() => handleRemoveItem(index)}>
+                            <Text style={styles.smallCloseButtonText}>X</Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
                         )
                     }
                 </Block>
+                
+                <Block style={{ borderWidth: flag === 1 ? 0.5 : 0, borderColor: 'black', margin: 10, width: '100%' }}></Block>
 
             </Block>
 
@@ -442,14 +450,17 @@ const styles = StyleSheet.create({
         width: '90%',
         height: 40,
         margin: 15,
-        borderWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        //borderWidth: 1,
         padding: 10,
-        borderRadius: 10
+        fontSize: 18
+        //borderRadius: 10
     },
     Image: {
-        width: '90%',
-        height: 300,
-        borderRadius: 10,
+        width: '100%',
+        height: 400,
+        //borderRadius: 10,
         overflow: 'hidden',
         alignSelf: 'center'
     },
@@ -470,6 +481,58 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
     },
+    backButton: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'white',
+        borderRadius: 25,
+        margin: 20
+    },
+
+    //add button items
+
+    smallContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 10,
+      },
+      smallSquare: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        width: 110,
+        height: 180,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+      },
+      smallImage: {
+        width: 60,
+        height: 60,
+        //borderRadius: 10,
+      },
+      smallText: {
+        //marginTop: 5,
+        fontSize: 14,
+        //fontWeight: 'bold',
+      },
+      smallCloseButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        backgroundColor: '#b19cd9',
+        borderRadius: 10,
+        width: 25,
+        height: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      smallCloseButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+
+
 })
 
 export default Donate;
