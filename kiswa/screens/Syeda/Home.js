@@ -78,11 +78,11 @@ const Home = ({ route, navigation }) => {
   //read from database
   //readAllWhere 
   const readAllWhere = async () => {
-    const q = query(collection(db, "familyRequests"), where("status", "==", 'pending'));
+    const q = query(collection(db, "familyRequests"), where("status", "==", "pending"));
     const docs = await getDocs(q);
     docs.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      //console.log(doc.id, " => ", doc.data());
+      console.log(doc.id, " => ", doc.data());
     });
 
     let temp = [];
@@ -114,7 +114,7 @@ const Home = ({ route, navigation }) => {
     })
     console.log('tempdata: ', temp)
     setItemsArray(temp)
-    getList()
+    //getList()
     return temp
   }
 
@@ -159,7 +159,7 @@ const Home = ({ route, navigation }) => {
     { label: "Dungarees", value: "Dungarees", uri: 'https://i.ytimg.com/vi/soPPAhMPHtY/maxresdefault.jpg' },
     { label: "Jacket", value: "Jacket", uri: 'https://i.etsystatic.com/11147089/c/2250/2250/342/0/il/adfdf1/3588743348/il_300x300.3588743348_2ol1.jpg' },
     { label: "Jeans", value: "Jeans", uri: 'https://i.pinimg.com/564x/a2/3c/13/a23c134ebdc47581fa854c248633a8f5.jpg' },
-    { label: "Jumper", value: "Jumper", uri: 'https://www.shutterstock.com/image-photo/colorful-warm-knitted-sweater-on-260nw-1602062266.jpg' },
+    { label: "Jumper", value: "Jumper", uri: 'https://i.pinimg.com/564x/65/70/13/65701369d99d39458f99e4d04f80ab4d.jpg' },
     { label: "Jumpsuit", value: "Jumpsuit", uri: 'https://i.pinimg.com/564x/04/00/83/040083896aaf020fa83aa12dbac805fe.jpg' },
     { label: "Kaftan", value: "Kaftan", uri: 'https://i.etsystatic.com/31945487/r/il/2aadec/3870275767/il_fullxfull.3870275767_od8t.jpg' },
     { label: "Leggings", value: "Leggings", uri: 'https://i.pinimg.com/564x/9c/51/11/9c5111b9a77206aa76698ae2c41884a1.jpg' },
@@ -297,7 +297,7 @@ const Home = ({ route, navigation }) => {
                     <TouchableOpacity onPress={() => navigation.navigate('Donate', {type: item.type, quantity: item.quantity, uri: ClothTypeData.find((object) => object.label === item.type).uri})}>
                       {/* <TouchableOpacity onPress={() => navigation.navigate('Donate')}> */}
                       <LilacCard
-                        //imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
+                        imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
                         title={item.type}
                         subtitle={item.quantity}
                       />

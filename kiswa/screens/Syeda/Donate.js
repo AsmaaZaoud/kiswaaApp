@@ -19,8 +19,6 @@ import { Dropdown } from "react-native-element-dropdown";
 
 const Donate = ({ route, navigation }) => {
 
-    const [uri, setUri] = useState('')
-
     useEffect(() => {
         if (route.params && route.params.type && route.params.quantity && route.params.uri) {
             setCloth(route.params.type)
@@ -36,7 +34,7 @@ const Donate = ({ route, navigation }) => {
             setItemURI('')
             console.log("doesnt exit")
         }
-    }, [uri])
+    }, [ItemURI])
 
     const [ItemURI, setItemURI] = useState('')
 
@@ -69,7 +67,7 @@ const Donate = ({ route, navigation }) => {
         { label: "Dungarees", value: "Dungarees", icon: 'https://cdn-icons-png.flaticon.com/128/2161/2161057.png', uri: 'https://i.ytimg.com/vi/soPPAhMPHtY/maxresdefault.jpg' },
         { label: "Jacket", value: "Jacket", icon: 'https://cdn-icons-png.flaticon.com/128/2806/2806051.png', uri: 'https://i.etsystatic.com/11147089/c/2250/2250/342/0/il/adfdf1/3588743348/il_300x300.3588743348_2ol1.jpg' },
         { label: "Jeans", value: "Jeans", icon: 'https://cdn-icons-png.flaticon.com/128/599/599388.png', uri: 'https://i.pinimg.com/564x/a2/3c/13/a23c134ebdc47581fa854c248633a8f5.jpg' },
-        { label: "Jumper", value: "Jumper", icon: 'https://cdn-icons-png.flaticon.com/128/9774/9774105.png', uri: 'https://www.shutterstock.com/image-photo/colorful-warm-knitted-sweater-on-260nw-1602062266.jpg' },
+        { label: "Jumper", value: "Jumper", icon: 'https://cdn-icons-png.flaticon.com/128/9774/9774105.png', uri: 'https://i.pinimg.com/564x/65/70/13/65701369d99d39458f99e4d04f80ab4d.jpg' },
         { label: "Jumpsuit", value: "Jumpsuit", icon: 'https://cdn-icons-png.flaticon.com/128/2290/2290478.png', uri: 'https://i.pinimg.com/564x/04/00/83/040083896aaf020fa83aa12dbac805fe.jpg' },
         { label: "Kaftan", value: "Kaftan", icon: 'https://cdn-icons-png.flaticon.com/512/5238/5238311.png', uri: 'https://i.etsystatic.com/31945487/r/il/2aadec/3870275767/il_fullxfull.3870275767_od8t.jpg' },
         { label: "Leggings", value: "Leggings", icon: 'https://cdn-icons-png.flaticon.com/128/9381/9381563.png', uri: 'https://i.pinimg.com/564x/9c/51/11/9c5111b9a77206aa76698ae2c41884a1.jpg' },
@@ -158,7 +156,7 @@ const Donate = ({ route, navigation }) => {
                 setDateError('')
             }
             if(time !== '' && date !== ''){
-                navigation.navigate("CheckOut", { itemsArray: confirm, type: cloth, amount: amount, time: time, date: date })
+                navigation.navigate("CheckOut", { itemsArray: confirm, time: time, date: date })
             }
         }
         else{
@@ -192,7 +190,7 @@ const Donate = ({ route, navigation }) => {
                 setDateError('')
             }
             if (cloth !== '' && amount !== '' && time !== '' && date !== '') {
-                navigation.navigate("CheckOut", { itemsArray: confirm, type: cloth, amount: amount, time: time, date: date })
+                navigation.navigate("CheckOut", { itemsArray: confirm, time: time, date: date })
             }
         }
     }
