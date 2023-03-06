@@ -43,19 +43,23 @@ const Home = ({ route, navigation }) => {
     { "quantity": 1, "type": "Tops" }
   ]
 
+  
   const [itemsArray, setItemsArray] = useState([])
-  const [ItemsDic, setItemsDic] = useState([])
+  // const [ItemsDic, setItemsDic] = useState([])
+  const [number, setNumber] = useState()
+  const [nickname, setNickname] = useState('')
     
-    //####console.log('itemsArray: ', itemsArray)
-    //####console.log('itemDic : ', ItemsDic)
+    console.log('itemsArrayOUTSIDE: ', itemsArray)
+    //console.log('itemDic : ', ItemsDic)
 
+    let ItemsDic = []
     itemsArray.map((item) => ItemsDic.push({ type: item.data.type, quantity: item.data.quantity }))
 
     let shortList = ItemsDic.slice(0, 10)
-    //####console.log('shortList: ', shortList)
+    //console.log('shortList: ', shortList)
 
     let uniqueList = shortList.filter((item, index, self) => index === self.findIndex(t => t.type === item.type))
-    //####console.log('uniquelist: ', uniqueList)
+    //console.log('uniquelist: ', uniqueList)
   
     // const matchingItems = []
     
@@ -77,31 +81,20 @@ const Home = ({ route, navigation }) => {
 
   //read from database
 
-  let counter = 0;
-  const [number, setNumber] = useState()
+  useEffect(() => {
+    if (isFocused) {
+        readAllWhere() 
+    }
+  }, [isFocused]);
 
-  const readDonations = async () => {
-    const q = query(collection(db, "donorDonation"), where("email", "==", user));
-    const docs = await getDocs(q);
-    // let counter = 0
-    docs.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    counter += 1
-    //setCounter(counter)
-    console.log(doc.id, " => ", doc.data());
-    });
-    setNumber(counter)
-    console.log("counter: ", counter)
-   } 
-
-
+  
   //readAllWhere 
   const readAllWhere = async () => {
     const q = query(collection(db, "familyRequests"), where("status", "==", "pending"));
     const docs = await getDocs(q);
     docs.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+      console.log('readAllWhere => ' , doc.id, " => ", doc.data());
     });
 
     let temp = [];
@@ -115,25 +108,6 @@ const Home = ({ route, navigation }) => {
     })
   }
 
-  
-  useEffect(() => {
-    if (isFocused) {
-        readAllWhere() 
-    }
-  }, [isFocused]);
-
-  {
-    user !== undefined ?
-    useEffect(() => {
-      if(isFocused){
-      readDonations()
-      readName()
-      }
-    }, [isFocused])
-    :
-    null
-  }
-
   const getCartItems = async (cartId) => {
     const docRef = collection(db, "familyRequests", cartId, "Items");
     const docSnap = await getDocs(docRef);
@@ -144,15 +118,39 @@ const Home = ({ route, navigation }) => {
         data: doc.data()
       })
     })
-    // ####console.log('tempdata: ', temp)
+    //console.log('tempdata: ', temp)
     setItemsArray(temp)
-    //getList()
-    return temp
+    console.log('ItemsArray INSIDE', itemsArray)
+    //return temp
   }
+  console.log('ItemsArray outsideeeee', itemsArray)
 
-  const [nickname, setNickname] = useState('')
+  useEffect(() => {
+    if(isFocused){
+      if(user !== undefined){
+        readDonations()
+        readName()
+      }
+    }
+  }, [isFocused])
 
-  const readName = async () => {
+  let counter = 0;
+
+  const readDonations = async () => {
+    const q = query(collection(db, "donorDonation"), where("email", "==", user));
+    const docs = await getDocs(q);
+    // let counter = 0
+    docs.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    counter += 1
+    //setCounter(counter)
+    console.log("readDonations => " ,doc.id, " => ", doc.data());
+    });
+    setNumber(counter)
+    //console.log("counter: ", counter)
+   } 
+
+   const readName = async () => {
     const q = query(collection(db, "donors"), where("email", "==", user));
     const docs = await getDocs(q);
     docs.forEach((doc) => {
@@ -162,24 +160,12 @@ const Home = ({ route, navigation }) => {
     });
   }
 
-
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     readName();
-  //   }
-  // }, [isFocused]);
-
   //sign out
-
   const onSignOut = () => {
     signOut(auth)
       .then(() => navigation.navigate("Onboarding"))
       .catch((error) => console.log("Error logging out: ", error));
   };
-
-  //console.log('outside itemarray = ', itemsArray)
-
-  // ********************************************************************************************************
 
   //clothes type data
   const ClothTypeData = [
@@ -215,14 +201,6 @@ const Home = ({ route, navigation }) => {
     { label: "Vest", value: "Vest", uri: 'https://i.pinimg.com/564x/59/21/ee/5921eee1e4634223a5df0da907613fb3.jpg' },
     { label: "Waistcoat", value: "Waistcoat", uri: 'https://content.moss.co.uk/images/extralarge/966689279_01.jpg' },
   ];
-
-  // // animated button
-  // const [isActive, setIsActive] = useState(false);
-
-  // const handlePress = () => {
-  //   setIsActive(!isActive);
-  //   navigation.navigate('Donate')
-  // };
 
   //animated text
   const animatedValue = useRef(new Animated.Value(-100)).current;
@@ -311,15 +289,11 @@ const Home = ({ route, navigation }) => {
                   <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
                 }
 
-                {/* <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? '' : user}</Text> */}
-                {/* <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text> */}
-                {/* <Text style={{  fontWeight: 'bold', alignSelf: 'center' }}>Let's share goodness!</Text> */}
               </Block>
               {/* </Block> */}
             </Block>
 
             {/* animated opening text */}
-            {/* <Text style={{ fontSize: 30, fontWeight: 'bold', margin: 10, alignSelf: 'center' }}>Creating a better world, one donation at a time.</Text> */}
             <Animated.View style={{ transform: [{ translateY: animatedValue }] }}>
               <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
                 Creating a better world, one donation at a time.
@@ -332,18 +306,14 @@ const Home = ({ route, navigation }) => {
               <Text style={styles.buttonText}>DONATE</Text>
             </TouchableOpacity>
 
-            {/* text */}
-            {/* <Text style={{fontSize: 15, margin: 20}}>Below is a list of pending requests</Text> */}
-
             {/* requests */}
             {
               uniqueList.map((item, index) => {
                 return (
                   <View key={index}>
                     <TouchableOpacity onPress={() => navigation.navigate('Donate', {type: item.type, quantity: item.quantity, uri: ClothTypeData.find((object) => object.label === item.type).uri})}>
-                      {/* <TouchableOpacity onPress={() => navigation.navigate('Donate')}> */}
                       <LilacCard
-                        imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
+                        //imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
                         title={item.type}
                         subtitle={item.quantity}
                       />

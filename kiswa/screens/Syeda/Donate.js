@@ -139,6 +139,8 @@ const Donate = ({ route, navigation }) => {
 
     const [timeError, setTimeError] = useState('')
 
+    const [confirm, setConfirm] = useState([])
+
     const error = () => {
         if(confirm.length > 0){
             if (time === '') {
@@ -278,8 +280,6 @@ const Donate = ({ route, navigation }) => {
         setDate(`${third1date} - ${third2date}`)
     }
 
-    const [confirm, setConfirm] = useState([])
-
     const add = (cloth, amount) => {
 
         if (cloth === '') {
@@ -366,7 +366,7 @@ const Donate = ({ route, navigation }) => {
                 <TextInput
                     style={styles.input}
                     placeholder={'Enter Quantity'}
-                    value={amount === "" ? '' : amount}
+                    value={amount}
                     onChangeText={handleNumberChange}
                     keyboardType="numeric"
                 />
@@ -415,7 +415,7 @@ const Donate = ({ route, navigation }) => {
                 <Button onPress={checkColor3} style={{ backgroundColor: check3 === 0 ? 'purple' : 'green' }}><Text style={{ color: 'white' }}>{third1date} - {third2date}</Text></Button>
             </Block>
 
-            <TouchableOpacity style={styles.button} onPress={error}>
+            <TouchableOpacity style={styles.button} onPress={() => error()}>
                     <Text style={styles.buttonText}>Donate</Text>
                 </TouchableOpacity>
         </ScrollView>

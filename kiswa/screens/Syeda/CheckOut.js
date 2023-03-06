@@ -71,7 +71,7 @@ const CheckOut = ({ route, navigation }) => {
     const [phone, setPhone] = useState('');
     const [location, setLocation] = useState('');
 
-    let confirm = [route.params.itemsArray]
+    let confirm = route.params.itemsArray
     console.log("confirm: ", confirm)
 
     const readName = async () => {
@@ -114,6 +114,7 @@ const CheckOut = ({ route, navigation }) => {
         console.log("Document written with ID: ", docRef.id);
 
         confirm.map(async (item) => {
+            console.log(docRef.id)
             const docRef2 = await addDoc(collection(db, "donorDonation", docRef.id, "Items"), {
                 type: item.cloth,
                 quantity: item.amount,
@@ -146,7 +147,7 @@ const CheckOut = ({ route, navigation }) => {
         console.log("Document written with ID: ", docRef.id);
 
         confirm.map(async (item) => {
-            const docRef2 = await addDoc(collection(db, "donorDonation", docRef.id, "Items"), {
+            const docRef2 = await addDoc(collection(db, "guestDonor", docRef.id, "Items"), {
                 type: item.cloth,
                 quantity: item.amount,
             });
@@ -295,7 +296,7 @@ const CheckOut = ({ route, navigation }) => {
                                 user !== undefined ?
                                     <View style={styles.container}>
                                         <Block width={width * 0.8}>
-                                            <TouchableOpacity style={styles.donateButton} onPress={donate}>
+                                            <TouchableOpacity style={styles.donateButton} onPress={() => donate()}>
                                                 <Text style={styles.donateButtonText}>Donate</Text>
                                             </TouchableOpacity>
                                             {/* <Button
