@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   Dimensions,
+  Button,
 } from "react-native";
 import React from "react";
 import { useState, useEffect } from "react";
@@ -39,6 +40,11 @@ const { width } = Dimensions.get("screen");
 const ConfirmFamilyCart = ({ route, navigation }) => {
   // const [userinforr, setUserinforr] = useState([]);
   const { cartId, id } = route.params;
+
+  const [flag1, setFlag1] = useState(0);
+  const [flag2, setFlag2] = useState(0);
+  const [flag3, setFlag3] = useState(0);
+  const [time, setTime] = useState("");
 
   // const [theUser, setTheUser] = useState([]);
   const [zone, setZone] = useState("");
@@ -191,9 +197,76 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                 marginLeft: "5%",
               }}
             >
-              <Text>Delivery Time</Text>
-              <Text>Delivery Date</Text>
+              {/* <Text>Delivery Time</Text>
+              <Text>Delivery Date</Text> */}
               {/* <Text>you need to inster it in the db</Text> */}
+              <View>
+                <Text style={{ fontSize: 20, marginLeft: 15 }}>
+                  Select -up time interval:
+                </Text>
+
+                <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
+                  {/* {} */}
+                </Text>
+                <Block
+                  style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}
+                >
+                  <Pressable
+                    onPress={{}}
+                    style={{
+                      backgroundColor: flag1 === 0 ? "purple" : "green",
+                    }}
+                  >
+                    <Text>8AM - 12PM</Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={{}}
+                    style={{
+                      backgroundColor: flag2 === 0 ? "purple" : "green",
+                    }}
+                  >
+                    <Text>12PM - 6PM</Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={{}}
+                    style={{
+                      backgroundColor: flag3 === 0 ? "purple" : "green",
+                    }}
+                  >
+                    <Text>6PM - 10PM</Text>
+                  </Pressable>
+                </Block>
+
+                <Text style={{ fontSize: 20, marginLeft: 15 }}>
+                  Select pick-up date interval:
+                </Text>
+                <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
+                  {}
+                </Text>
+                <Block
+                  style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}
+                >
+                  <Pressable
+                    onPress={{}}
+                    style={{
+                      backgroundColor: "purple",
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>{/* {} - {} */}</Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={{}}
+                    style={{
+                      backgroundColor: "purple",
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>{/* {} - {} */}</Text>
+                  </Pressable>
+                  <Pressable onPress={{}} style={{ backgroundColor: "purple" }}>
+                    <Text style={{ color: "white" }}>{/* {} - {} */}</Text>
+                  </Pressable>
+                </Block>
+              </View>
             </View>
 
             <View style={{ alignItems: "center", justifyContent: "center" }}>
