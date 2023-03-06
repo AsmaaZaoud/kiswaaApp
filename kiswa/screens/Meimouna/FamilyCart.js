@@ -6,11 +6,20 @@ import {
   Modal,
   SafeAreaView,
   ScrollView,
+  Dimensions,
 } from "react-native";
+import {
+  Fontisto,
+  AntDesign,
+  FontAwesome5,
+  FontAwesome,
+  Entypo,
+  Feather,
+} from "react-native-vector-icons";
+
 import React from "react";
 import { useState, useEffect } from "react";
 import { Block, Checkbox, theme, NavBar, Icon } from "galio-framework";
-import { Feather, AntDesign, Entypo } from "react-native-vector-icons";
 import NumericInput from "react-native-numeric-input";
 import { Dropdown } from "react-native-element-dropdown";
 import {
@@ -28,6 +37,8 @@ import {
   deleteField,
 } from "firebase/firestore";
 import { db } from "../../config";
+const { width } = Dimensions.get("screen");
+
 const FamilyCart = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
@@ -124,382 +135,462 @@ const FamilyCart = ({ route, navigation }) => {
   };
 
   const itemcount = cart.reduce((total, item) => total + item.data.quantity, 0);
-
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.main}>
-        <Block style={styles.hed1}>
-          <Text style={styles.text1}>Cart Items</Text>
-          {/* <Text style={styles.text1}> </Text> */}
-        </Block>
-        {cart.length >= 1 ? (
-          <ScrollView
-            style={styles.scrollView}
-            showsVerticalScrollIndicator={false}
-          >
-            <View>
-              {cart.map((x, i) => (
-                <View key={i}>
-                  <View key={i} style={styles.board1}>
-                    {/* <Text style={styles.ct}>{i + 1}</Text> */}
-                    <Text style={styles.ct}>
-                      {x.data.ageGroup} <Text> </Text>
-                      {x.data.type}
-                    </Text>
-                    <Text style={styles.ct}></Text>
-                  </View>
-                  {/* <View key={i + 2} style={styles.board22}>
+  const renderArticles = () => {
+    return (
+      <SafeAreaView style={{ height: "90%" }}>
+        <View
+          style={{ backgroundColor: "white", width: "100%", height: "100%" }}
+        >
+          <NavBar
+            title="Request Cart"
+            style={{
+              height: "10%",
+              marginBottom: "1%",
+              backgroundColor: "#FFFAFA",
+              borderColor: "lightgray",
+              borderWidth: 1,
+              marginTop: "1%",
+              width: "100%",
+            }}
+            titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
+          />
+          <View style={styles.main}>
+            <Block style={styles.hed1}>
+              <Text style={styles.text1}>Cart Items</Text>
+              {/* <Text style={styles.text1}> </Text> */}
+            </Block>
+            <Text
+              style={{
+                fontSize: 19,
+                fontWeight: "bold",
+                margin: "2%",
+                marginLeft: "5%",
+                padding: "2%",
+              }}
+            >
+              Total:{" "}
+              <Text
+                style={{
+                  fontSize: 17,
+                  fontWeight: "normal",
+                }}
+              >
+                {itemcount} items
+              </Text>
+            </Text>
+            {cart.length >= 1 ? (
+              <ScrollView
+                style={styles.scrollView}
+                showsVerticalScrollIndicator={false}
+              >
+                <View>
+                  {cart.map((x, i) => (
+                    <View key={i}>
+                      <View key={i} style={styles.board1}>
+                        {/* <Text style={styles.ct}>{i + 1}</Text> */}
+                        <Text style={styles.ct}>
+                          {x.data.ageGroup} <Text> </Text>
+                          {x.data.type}
+                        </Text>
+                        <Text style={styles.ct}></Text>
+                      </View>
+                      {/* <View key={i + 2} style={styles.board22}>
                   <Text style={styles.ctt}>Color</Text>
                   <Text style={styles.ctt}>Size</Text>
                   <Text style={styles.ctt}>Quantity</Text>
                 </View> */}
-                  <View key={i + 2} style={styles.board2}>
-                    <Text style={styles.ctt}>{x.data.color}</Text>
-                    <Text style={styles.ctt}>{x.data.size}</Text>
-                    <Text style={styles.ctt}>{x.data.quantity}</Text>
-                    <Text></Text>
-                    <Text></Text>
-                    <Text></Text>
-                    <Text></Text>
-                    <Text></Text>
-                    <Text></Text>
-                    <Text></Text>
-                    <Text></Text>
-                    <Text></Text>
+                      <View key={i + 2} style={styles.board2}>
+                        <Text style={styles.ctt}>{x.data.color}</Text>
+                        <Text style={styles.ctt}>{x.data.size}</Text>
+                        <Text style={styles.ctt}>{x.data.quantity}</Text>
+                        <Text></Text>
+                        <Text></Text>
+                        <Text></Text>
+                        <Text></Text>
+                        <Text></Text>
+                        <Text></Text>
+                        <Text></Text>
+                        <Text></Text>
+                        <Text></Text>
 
-                    <Feather
-                      name="edit"
-                      color="#5b03a7"
-                      size={21}
-                      style={{ margin: "1%" }}
-                      onPress={() => {
-                        setModalVisible(true);
-                        setItemId(x.id);
-                        console.log(x.id);
-                        setAgeGroup(x.data.ageGroup);
-                        setType(x.data.type);
-                        setQuantity(x.data.quantity);
-                        setColor(x.data.color);
-                        setSize(x.data.size);
-                      }}
-                    />
-                    <AntDesign
-                      name="delete"
-                      color="#d80f00"
-                      size={21}
-                      style={{ margin: "1%" }}
-                      onPress={() => {
-                        setModalVisible2(true);
-                        setremoveeidd(x.id);
-                      }}
-                    />
-                  </View>
-                  {/* </View>
+                        <Feather
+                          name="edit"
+                          color="#5b03a7"
+                          size={21}
+                          style={{ margin: "1%" }}
+                          onPress={() => {
+                            setModalVisible(true);
+                            setItemId(x.id);
+                            console.log(x.id);
+                            setAgeGroup(x.data.ageGroup);
+                            setType(x.data.type);
+                            setQuantity(x.data.quantity);
+                            setColor(x.data.color);
+                            setSize(x.data.size);
+                          }}
+                        />
+                        <AntDesign
+                          name="delete"
+                          color="#d80f00"
+                          size={21}
+                          style={{ margin: "1%" }}
+                          onPress={() => {
+                            setModalVisible2(true);
+                            setremoveeidd(x.id);
+                          }}
+                        />
+                      </View>
+                      {/* </View>
               </View> */}
+                    </View>
+                  ))}
                 </View>
-              ))}
-            </View>
-          </ScrollView>
-        ) : null}
+              </ScrollView>
+            ) : null}
 
-        {cart.length >= 1 ? null : (
-          <View style={{ marginTop: "5%", marginLeft: "5%" }}>
-            <Text style={styles.ct}> Your Cart is Empty! </Text>
-            <Text style={styles.ct}> Please add Items </Text>
-          </View>
-        )}
-        <Text></Text>
-        <Text></Text>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              width: "100%",
-              marginTop: "3%",
-              marginLeft: "14%",
-            }}
-          >
-            <View>
-              <Text style={{ fontSize: 19, fontWeight: "bold" }}>Total : </Text>
+            {cart.length >= 1 ? null : (
+              <View style={{ marginTop: "5%", marginLeft: "5%" }}>
+                <Text style={styles.ct}> Your Cart is Empty! </Text>
+                <Text style={styles.ct}> Please add Items </Text>
+              </View>
+            )}
+            <Text></Text>
+            <Text></Text>
 
-              <Text style={{ fontSize: 17, marginLeft: "15%" }}>
-                {itemcount}{" "}
-                {cart.length > 1 || cart.length === 0 ? "items" : "item"}
-              </Text>
-            </View>
-
-            <Pressable
-              onPress={() => navigation.navigate("FamilyRequest", id)}
-              style={{
-                marginTop: "1%",
-                // marginBottom: "10%",
-                backgroundColor: "#842DCE",
-                height: 50,
-                width: "53%",
-                marginLeft: "2%",
-                alignItems: "center",
-                justifyContent: "center",
-                // marginLeft: "20%",
-                borderRadius: 8,
-                padding: 5,
-              }}
-            >
-              <Text
-                style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
-              >
-                {cart.length >= 1 ? "Add More Items" : "Add Items"}
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-        <Text></Text>
-        <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Pressable
-            // onPress={() => (cart.length >= 1 ? closeRequest() : null)}
-            onPress={() =>
-              navigation.navigate("ConfirmFamilyCart", { cartId, id })
-            }
-            style={{
-              // marginBottom: "10%",
-              backgroundColor: cart.length >= 1 ? "#842DCE" : "gray",
-              height: 50,
-              width: "75%",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-              //marginLeft: "10%",
-              borderRadius: 8,
-              padding: 5,
-            }}
-          >
-            <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
-              Submit Request
-            </Text>
-          </Pressable>
-        </View>
-        <Text></Text>
-        <Text></Text>
-        {/* THE edittttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt */}
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View>
-            <View style={styles.modalView}>
-              <Block style={styles.modalblock}>
-                <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                  <Entypo
-                    name="chevron-with-circle-left"
-                    color="#842DCE"
-                    size={40}
-                  />
-                </Pressable>
-                <View>
-                  <Text style={{ color: "gray", textAlign: "right" }}>
-                    Request Items,
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      textAlign: "right",
-                    }}
-                  >
-                    Edit Item Details
-                  </Text>
-                </View>
-              </Block>
-
-              <Block style={styles.modalblock2}>
-                <Text style={styles.modalText}>
-                  {ageGroup}'s {type}
-                </Text>
-                <Block>
-                  <Text
-                    style={{ fontSize: 16, marginBottom: 15, marginTop: 20 }}
-                  >
-                    How Many {type}s?
-                  </Text>
-                  <NumericInput
-                    iconStyle={{
-                      color: "white",
-                      fontWeight: "bold",
-                      fontSize: 20,
-                    }}
-                    minValue={1}
-                    value={quantity}
-                    // initValue={null}
-                    onChange={setQuantity}
-                    rounded
-                    rightButtonBackgroundColor="#DCD0FF"
-                    leftButtonBackgroundColor="#DCD0FF"
-                    totalWidth={280}
-                    totalHeight={40}
-                    iconSize={20}
-                    // step={1.5}
-                  />
-                  <Text
-                    style={{ fontSize: 16, marginBottom: 10, marginTop: 20 }}
-                  >
-                    What Color?
-                  </Text>
-                  <Dropdown
-                    search
-                    // selectedTextStyle={{ fontSize: 30 }}
-                    searchPlaceholder="Search..."
-                    style={styles.dropdown}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    data={colors}
-                    maxHeight={200}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={color}
-                    value={color}
-                    onChange={(item) => {
-                      setColor(item.label);
-                    }}
-                  ></Dropdown>
-                  <Text
-                    style={{ fontSize: 16, marginBottom: 10, marginTop: 20 }}
-                  >
-                    What Size?
-                  </Text>
-                  <View style={styles.modalblock}>
-                    <Pressable
-                      style={[
-                        styles.size,
-                        {
-                          backgroundColor: size == "S" ? "#842DCE" : "#DCD0FF",
-                        },
-                      ]}
-                      onPress={() => setSize("S")}
-                    >
-                      <Text>S</Text>
-                    </Pressable>
-                    <Pressable
-                      style={[
-                        styles.size,
-                        {
-                          backgroundColor: size == "M" ? "#842DCE" : "#DCD0FF",
-                        },
-                      ]}
-                      onPress={() => setSize("M")}
-                    >
-                      <Text>M</Text>
-                    </Pressable>
-                    <Pressable
-                      style={[
-                        styles.size,
-                        {
-                          backgroundColor: size == "L" ? "#842DCE" : "#DCD0FF",
-                        },
-                      ]}
-                      onPress={() => setSize("L")}
-                    >
-                      <Text>L</Text>
-                    </Pressable>
-                    <Pressable
-                      style={[
-                        styles.size,
-                        {
-                          backgroundColor: size == "XL" ? "#842DCE" : "#DCD0FF",
-                        },
-                      ]}
-                      onPress={() => setSize("XL")}
-                    >
-                      <Text>XL</Text>
-                    </Pressable>
-                  </View>
-                </Block>
-                <Pressable
-                  style={[styles.button, styles.buttonClose, { marginTop: 40 }]}
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                    update(itemId);
-                  }}
-                >
-                  <Text style={styles.textStyle}>Update Item</Text>
-                </Pressable>
-              </Block>
-            </View>
-          </View>
-        </Modal>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible2}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible2(!modalVisible2);
-          }}
-        >
-          <View>
-            <View style={styles.modalView2}>
-              <Text style={styles.modalText}>Delete</Text>
-              <Text style={[styles.ct, { color: "black" }]}>
-                Are you sure you want to delete this item?
-              </Text>
-              <Text></Text>
-              <View
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <Pressable
+                onPress={() => navigation.navigate("FamilyRequest", id)}
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  width: "70%",
+                  // marginBottom: "10%",
+                  marginTop: "1%",
+                  backgroundColor: "#4C4AAB",
+                  height: 50,
+                  width: "75%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  //marginLeft: "10%",
+                  borderRadius: 8,
+                  padding: 5,
                 }}
               >
-                <Pressable
-                  style={[
-                    styles.button,
-                    styles.buttonClose,
-                    { backgroundColor: "#808080" },
-                  ]}
-                  onPress={() => setModalVisible2(!modalVisible2)}
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
                 >
-                  <Text style={styles.textStyle}>Cancel</Text>
-                </Pressable>
-
-                <Pressable
-                  style={[
-                    styles.button,
-                    styles.buttonClose,
-                    { backgroundColor: "red" },
-                  ]}
-                  onPress={() => removee()}
-                >
-                  <Text style={styles.textStyle}>Delete</Text>
-                </Pressable>
-              </View>
+                  {cart.length >= 1 ? "Add More Items" : "Add Items"}
+                </Text>
+              </Pressable>
             </View>
+            <Text></Text>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <Pressable
+                // onPress={() => (cart.length >= 1 ? closeRequest() : null)}
+                onPress={() =>
+                  navigation.navigate("ConfirmFamilyCart", { cartId, id })
+                }
+                style={{
+                  // marginBottom: "10%",
+                  backgroundColor: cart.length >= 1 ? "#842DCE" : "gray",
+                  height: 50,
+                  width: "75%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  //marginLeft: "10%",
+                  borderRadius: 8,
+                  padding: 5,
+                }}
+              >
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
+                >
+                  Submit Request
+                </Text>
+              </Pressable>
+            </View>
+            <Text></Text>
+            <Text></Text>
+            {/* THE edittttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt */}
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <View>
+                <View style={styles.modalView}>
+                  <Block style={styles.modalblock}>
+                    <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                      <Entypo
+                        name="chevron-with-circle-left"
+                        color="#842DCE"
+                        size={40}
+                      />
+                    </Pressable>
+                    <View>
+                      <Text style={{ color: "gray", textAlign: "right" }}>
+                        Request Items,
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontWeight: "bold",
+                          textAlign: "right",
+                        }}
+                      >
+                        Edit Item Details
+                      </Text>
+                    </View>
+                  </Block>
+
+                  <Block style={styles.modalblock2}>
+                    <Text style={styles.modalText}>
+                      {ageGroup}'s {type}
+                    </Text>
+                    <Block>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginBottom: 15,
+                          marginTop: 20,
+                        }}
+                      >
+                        How Many {type}s?
+                      </Text>
+                      <NumericInput
+                        iconStyle={{
+                          color: "white",
+                          fontWeight: "bold",
+                          fontSize: 20,
+                        }}
+                        minValue={1}
+                        value={quantity}
+                        // initValue={null}
+                        onChange={setQuantity}
+                        rounded
+                        rightButtonBackgroundColor="#DCD0FF"
+                        leftButtonBackgroundColor="#DCD0FF"
+                        totalWidth={280}
+                        totalHeight={40}
+                        iconSize={20}
+                        // step={1.5}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginBottom: 10,
+                          marginTop: 20,
+                        }}
+                      >
+                        What Color?
+                      </Text>
+                      <Dropdown
+                        search
+                        // selectedTextStyle={{ fontSize: 30 }}
+                        searchPlaceholder="Search..."
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        data={colors}
+                        maxHeight={200}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={color}
+                        value={color}
+                        onChange={(item) => {
+                          setColor(item.label);
+                        }}
+                      ></Dropdown>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginBottom: 10,
+                          marginTop: 20,
+                        }}
+                      >
+                        What Size?
+                      </Text>
+                      <View style={styles.modalblock}>
+                        <Pressable
+                          style={[
+                            styles.size,
+                            {
+                              backgroundColor:
+                                size == "S" ? "#842DCE" : "#DCD0FF",
+                            },
+                          ]}
+                          onPress={() => setSize("S")}
+                        >
+                          <Text>S</Text>
+                        </Pressable>
+                        <Pressable
+                          style={[
+                            styles.size,
+                            {
+                              backgroundColor:
+                                size == "M" ? "#842DCE" : "#DCD0FF",
+                            },
+                          ]}
+                          onPress={() => setSize("M")}
+                        >
+                          <Text>M</Text>
+                        </Pressable>
+                        <Pressable
+                          style={[
+                            styles.size,
+                            {
+                              backgroundColor:
+                                size == "L" ? "#842DCE" : "#DCD0FF",
+                            },
+                          ]}
+                          onPress={() => setSize("L")}
+                        >
+                          <Text>L</Text>
+                        </Pressable>
+                        <Pressable
+                          style={[
+                            styles.size,
+                            {
+                              backgroundColor:
+                                size == "XL" ? "#842DCE" : "#DCD0FF",
+                            },
+                          ]}
+                          onPress={() => setSize("XL")}
+                        >
+                          <Text>XL</Text>
+                        </Pressable>
+                      </View>
+                    </Block>
+                    <Pressable
+                      style={[
+                        styles.button,
+                        styles.buttonClose,
+                        { marginTop: 40 },
+                      ]}
+                      onPress={() => {
+                        setModalVisible(!modalVisible);
+                        update(itemId);
+                      }}
+                    >
+                      <Text style={styles.textStyle}>Update Item</Text>
+                    </Pressable>
+                  </Block>
+                </View>
+              </View>
+            </Modal>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible2}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                setModalVisible2(!modalVisible2);
+              }}
+            >
+              <View>
+                <View style={styles.modalView2}>
+                  <Text style={styles.modalText}>Delete</Text>
+                  <Text style={[styles.ct, { color: "black" }]}>
+                    Are you sure you want to delete this item?
+                  </Text>
+                  <Text></Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      width: "70%",
+                    }}
+                  >
+                    <Pressable
+                      style={[
+                        styles.button,
+                        styles.buttonClose,
+                        { backgroundColor: "#808080" },
+                      ]}
+                      onPress={() => setModalVisible2(!modalVisible2)}
+                    >
+                      <Text style={styles.textStyle}>Cancel</Text>
+                    </Pressable>
+
+                    <Pressable
+                      style={[
+                        styles.button,
+                        styles.buttonClose,
+                        { backgroundColor: "red" },
+                      ]}
+                      onPress={() => removee()}
+                    >
+                      <Text style={styles.textStyle}>Delete</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+            </Modal>
           </View>
-        </Modal>
-      </View>
-    </SafeAreaView>
+        </View>
+      </SafeAreaView>
+    );
+  };
+  return (
+    <Block flex center style={styles.home}>
+      {renderArticles()}
+      <Block
+        style={{
+          height: "10%",
+          backgroundColor: "#FFFAFA",
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          borderColor: "lightgray",
+          borderWidth: 1,
+          marginBottom: "1%",
+          alignItems: "center",
+          // paddingLeft: "1%",
+        }}
+      >
+        <Pressable
+          style={{ width: "14%" }}
+          onPress={() => navigation.navigate("FamilyHome", id)}
+        >
+          <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
+        </Pressable>
+
+        <Pressable
+          style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
+          onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
+        >
+          <FontAwesome5 name="shopping-cart" color="#4C4AAB" size={40} />
+        </Pressable>
+
+        <Pressable
+          style={{ width: "14%" }}
+          onPress={() => navigation.navigate("Onboarding.js")}
+        >
+          <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
+        </Pressable>
+      </Block>
+    </Block>
   );
 };
 
 export default FamilyCart;
 
 const styles = StyleSheet.create({
+  home: {
+    width: width,
+    // backgroundColor: "#490066",
+    height: "100%",
+  },
   main: {
     // backgroundColor: "#F3E8EA",
     backgroundColor: "#fbe5ff",
     margin: "5%",
-    marginTop: "10%",
-    borderColor: "#842DCE",
-    borderWidth: 3,
-    borderRadius: 10,
+    // borderColor: "#842DCE",
+    // borderWidth: 3,
+    // borderRadius: 10,
     height: "82%",
   },
   scrollView: {
@@ -511,14 +602,13 @@ const styles = StyleSheet.create({
   hed1: {
     // backgroundColor: "yellow",
     height: "10%",
-    margin: "10%",
-    padding: "5%",
+    // padding: "5%",
     alignItems: "center",
     justifyContent: "center",
   },
   text1: {
     color: "#842DCE",
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
   },
   board1: {

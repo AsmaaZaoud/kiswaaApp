@@ -14,32 +14,33 @@ import { LinearGradient } from "expo-linear-gradient";
 import { addDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../../config";
-const FamilyFeedback = ({ navigation }) => {
+const FamilyFeedback = ({ route, navigation }) => {
   const [feedback, setfeedback] = useState("");
   const [feedbackText, setFeedbackText] = useState("");
   const [dateCreated, setDateCreated] = useState(new Date());
+  const id = route.params;
 
-  const auth = getAuth();
-  const user = auth.currentUser;
+  // const auth = getAuth();
+  // const user = auth.currentUser;
 
-  console.log(user.email);
+  console.log(id);
   const [FeedbackErro, setFeedbackError] = useState("");
-  const [FeedbackTextErro, setFeedbackTextError] = useState("");
+  // const [FeedbackTextErro, setFeedbackTextError] = useState("");
 
   const addvild = () => {
     if (feedback.length != 0) {
       setFeedbackError("");
     } else {
-      setFeedbackError("Select From the following");
+      setFeedbackError("Select From Above");
     }
 
-    if (feedbackText.length <= 150) {
-      setFeedbackTextError("");
-    } else {
-      setFeedbackTextError("Maximize is 150 characters");
-    }
+    // if (feedbackText.length <= 150) {
+    //   setFeedbackTextError("");
+    // } else {
+    //   setFeedbackTextError("Maximize is 150 characters");
+    // }
 
-    if (feedback.length != 0 && feedbackText.length <= 150) {
+    if (feedback.length != 0) {
       console.log("okay");
       add();
     }
@@ -50,7 +51,7 @@ const FamilyFeedback = ({ navigation }) => {
       comment: feedbackText,
       dateTime: dateCreated.toLocaleDateString(),
       type: "family",
-      user: user.email,
+      user: id,
       dateTime: new Date(),
     })
       .then(() => {
@@ -74,26 +75,6 @@ const FamilyFeedback = ({ navigation }) => {
         alignItems: "center",
       }}
     >
-      <Text
-        style={{
-          marginTop: "3%",
-          marginBottom: "3%",
-          color: "white",
-          fontSize: 24,
-        }}
-      >
-        Feedback
-      </Text>
-      <Image
-        source={require("../../assets/imgs/feedback2.png")}
-        style={{
-          width: "30%",
-          height: "15%",
-          zIndex: 999,
-          marginBottom: "5%",
-        }}
-      ></Image>
-      {/* <Text>feedback</Text> */}
       {/* <Text></Text> */}
       <LinearGradient
         colors={[
@@ -108,7 +89,7 @@ const FamilyFeedback = ({ navigation }) => {
         style={[
           StyleSheet.absoluteFill,
           {
-            height: 390,
+            height: 399,
             flex: 1,
             width: "100%",
             justifyContent: "center",
@@ -117,6 +98,27 @@ const FamilyFeedback = ({ navigation }) => {
           },
         ]}
       />
+      <View style={{ height: "30%" }}>
+        <Image
+          source={require("../../assets/imgs/feedback2.png")}
+          style={{
+            width: "30%",
+            height: "15%",
+            // zIndex: 999,
+            // marginBottom: "5%",
+          }}
+        ></Image>
+
+        <Text
+          style={{
+            color: "white",
+            fontSize: 24,
+            fontWeight: "bold",
+          }}
+        >
+          Feedback
+        </Text>
+      </View>
       <BlurView
         // tint="light"
         intensity={100}
@@ -130,7 +132,6 @@ const FamilyFeedback = ({ navigation }) => {
           //zIndex: 999,
         }}
       >
-        <Text> family feedback</Text>
         {/* <Text></Text>
         <Text></Text>
         <Text></Text> */}
@@ -218,7 +219,7 @@ const FamilyFeedback = ({ navigation }) => {
             ></Image>
           </TouchableOpacity>
         </View>
-        {/* <Text
+        <Text
           style={{
             //textAlign: "center",
             color: "red",
@@ -228,7 +229,7 @@ const FamilyFeedback = ({ navigation }) => {
           }}
         >
           {FeedbackErro}
-        </Text> */}
+        </Text>
         <Text></Text>
         <Text style={{ fontSize: 18, marginBottom: "5%" }}>
           Do you have any thoughts you'd like to share?
@@ -255,7 +256,7 @@ const FamilyFeedback = ({ navigation }) => {
         {/* <Text style={{ fontSize: 15 }}>
           {feedbackText.length == 0 ? "" : feedbackText.length + " Characters"}
         </Text> */}
-        <Text
+        {/* <Text
           style={{
             //textAlign: "center",
             color: "red",
@@ -265,7 +266,7 @@ const FamilyFeedback = ({ navigation }) => {
           }}
         >
           {FeedbackTextErro}
-        </Text>
+        </Text> */}
         <Text></Text>
 
         <View
@@ -287,7 +288,7 @@ const FamilyFeedback = ({ navigation }) => {
               //marginLeft: "10%",
               borderRadius: 8,
             }}
-            onPress={() => navigation.navigate("FamilyHome", user.email)}
+            onPress={() => navigation.navigate("FamilyHome", id)}
           >
             <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
               Cancel

@@ -105,18 +105,18 @@ const FamilyHome = ({ route, navigation }) => {
   };
   const renderArticles = () => {
     return (
-      <View style={{ backgroundColor: "white", width: "100%", height: "91%" }}>
+      <View style={{ backgroundColor: "white", width: "100%", height: "90%" }}>
         <NavBar
           title="Home"
           style={{
-            height: "9%",
+            height: "10%",
             marginBottom: "9%",
             backgroundColor: "#FFFAFA",
             borderColor: "lightgray",
             borderWidth: 1,
-            marginTop: "0.5%",
+            marginTop: "1%",
           }}
-          titleStyle={{ color: "#842DCE", fontSize: 22, fontWeight: "bold" }}
+          titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
         />
         {/* welcome user */}
         <Block style={styles.header1}>
@@ -225,7 +225,7 @@ const FamilyHome = ({ route, navigation }) => {
       {renderArticles()}
       <Block
         style={{
-          height: "9%",
+          height: "10%",
           backgroundColor: "#FFFAFA",
           width: "100%",
           flexDirection: "row",
@@ -239,23 +239,23 @@ const FamilyHome = ({ route, navigation }) => {
       >
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("../Syeda/Onboarding.js")}
+          onPress={() => navigation.navigate("FamilyHome", id)}
         >
           <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
-          onPress={() => navigation.navigate("../Syeda/Onboarding.js")}
+          onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
         >
           <FontAwesome5 name="shopping-cart" color="#4C4AAB" size={40} />
         </Pressable>
 
         <Pressable
-          style={{ width: "14%", backgroundColor: "gray" }}
-          onPress={() => navigation.navigate("../Syeda/Onboarding.js")}
+          style={{ width: "14%" }}
+          onPress={() => navigation.navigate("Onboarding.js")}
         >
-          <FontAwesome name="user-circle-o" color="#4C4AAB" size={40} />
+          <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
         </Pressable>
       </Block>
     </Block>
@@ -293,11 +293,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginLeft: "6%",
+    marginLeft: "7%",
     height: "35%",
     borderRadius: 10,
     // backgroundColor: "gray",
-    width: "88%",
+    width: "84%",
   },
   text: {
     fontSize: 26,
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
     width: 160,
     height: 150,
     marginLeft: "6%",
-    marginTop: "6%",
+    marginTop: "7%",
     backgroundColor: "#EDFDF9",
     justifyContent: "center",
     alignItems: "center",
