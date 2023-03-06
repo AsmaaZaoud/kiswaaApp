@@ -13,7 +13,7 @@ function CustomDrawerContent({
   state,
   ...rest
 }) {
-  const screens = ["Home", "AdminHome", "DriverHome", "DriveProfile", "InventoryClerks", "Donate", "DonorHistory"];
+  const screens = ["Home", "Profile", "Donate", "DonorHistory", "AboutUs"];
   return (
     <Block
       style={styles.container}
@@ -46,10 +46,11 @@ function CustomDrawerContent({
               }}
             />
             <Text color="#8898AA" style={{ marginTop: 16, marginLeft: 8 }}>
-              DOCUMENTATION
+              LEARN MORE ABOUT US
             </Text>
           </Block>
-          <DrawerCustomItem title="Getting Started" navigation={navigation} />
+          
+          <DrawerCustomItem title="About Us" navigation={navigation} />
         </ScrollView>
       </Block>
     </Block>

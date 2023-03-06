@@ -63,12 +63,13 @@ export function normalize(size) {
 
 import { useIsFocused } from "@react-navigation/native";
 
-const CheckOut = ({ route, navigation }) => {
+const AboutUs = ({ route, navigation }) => {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.articles}>
             <Block style={styles.container}>
+                <Text>About</Text>
             </Block>
         </ScrollView>
     )
@@ -81,3 +82,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 })
+
+export default AboutUs;

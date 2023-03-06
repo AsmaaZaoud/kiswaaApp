@@ -120,10 +120,9 @@ const Home = ({ route, navigation }) => {
     })
     //console.log('tempdata: ', temp)
     setItemsArray(temp)
-    console.log('ItemsArray INSIDE', itemsArray)
+    //console.log('ItemsArray INSIDE', itemsArray)
     //return temp
   }
-  console.log('ItemsArray outsideeeee', itemsArray)
 
   useEffect(() => {
     if(isFocused){

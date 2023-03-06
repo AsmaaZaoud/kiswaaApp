@@ -100,6 +100,7 @@ const CheckOut = ({ route, navigation }) => {
     }, [isFocused]);
 
     const donate = async () => {
+        let trackId = Math.floor(Math.random() * 10000);
         //Alert.alert("working")
         const docRef = await addDoc(collection(db, "donorDonation"), {
             phone: phone,
@@ -109,7 +110,7 @@ const CheckOut = ({ route, navigation }) => {
             // amount: route.params.amount,
             timeSlot: route.params.time,
             dateSlot: route.params.date,
-            trackId: Math.floor(Math.random() * 10000)
+            trackId: trackId
         });
         console.log("Document written with ID: ", docRef.id);
 
@@ -118,22 +119,16 @@ const CheckOut = ({ route, navigation }) => {
             const docRef2 = await addDoc(collection(db, "donorDonation", docRef.id, "Items"), {
                 type: item.cloth,
                 quantity: item.amount,
+                trackId: trackId
             });
             console.log("Document written with ID: ", docRef2.id);
         })
-
-        // const subcollectionRef = collection(doc(db, "donorDonation", docRef.id, "Items"));
-
-        // // Add a document to the subcollection
-        // await addDoc(subcollectionRef, {
-        //     type: route.params.type,
-        //     quantity: route.params.amount,
-        // });
 
         navigation.navigate("Feedback")
     }
 
     const done = async () => {
+        let trackId = Math.floor(Math.random() * 10000);
         const docRef = await addDoc(collection(db, "guestDonor"), {
             phone: phone,
             email: email,
@@ -142,7 +137,7 @@ const CheckOut = ({ route, navigation }) => {
             // amount: route.params.amount,
             timeSlot: route.params.time,
             dateSlot: route.params.date,
-            trackId: Math.floor(Math.random() * 10000)
+            trackId: trackId
         });
         console.log("Document written with ID: ", docRef.id);
 
@@ -150,6 +145,7 @@ const CheckOut = ({ route, navigation }) => {
             const docRef2 = await addDoc(collection(db, "guestDonor", docRef.id, "Items"), {
                 type: item.cloth,
                 quantity: item.amount,
+                trackId: trackId
             });
             console.log("Document written with ID: ", docRef2.id);
         })
