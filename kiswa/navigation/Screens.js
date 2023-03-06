@@ -12,7 +12,7 @@ import Elements from "../screens/Elements";
 import Home from "../screens/Syeda/Home";
 import Onboarding from "../screens/Syeda/Onboarding";
 import Pro from "../screens/Pro";
-import Profile from "../screens/Profile";
+// import Profile from "../screens/Syeda/Profile";
 import React from "react";
 import Register from "../screens/Syeda/Register";
 
@@ -21,11 +21,11 @@ import Register from "../screens/Syeda/Register";
 //syeda
 import Donate from "../screens/Syeda/Donate";
 import CheckOut from "../screens/Syeda/CheckOut";
-// import Thankyou from "../screens/Syeda/Thankyou";
 import LoginDonor from "../screens/Syeda/LoginDonor";
 import Feedback from "../screens/Syeda/Feedback";
 import DonorHistory from "../screens/Syeda/DonorHistory";
-import AboutUs from '../screens/Syeda/AboutUs'
+import AboutUs from '../screens/Syeda/AboutUs';
+import Profile from "../screens/Syeda/Profile";
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
@@ -394,7 +394,6 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Donate" component={Donate} />
       <Stack.Screen name="CheckOut" component={CheckOut} />
-      {/* <Stack.Screen name="Thankyou" component={Thankyou} /> */}
       <Stack.Screen name="Feedback" component={Feedback} />
       <Stack.Screen name="DonorHistory" component={DonorHistory} />
       <Stack.Screen name="AboutUs" component={AboutUs} />

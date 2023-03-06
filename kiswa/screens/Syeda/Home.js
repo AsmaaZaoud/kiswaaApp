@@ -48,6 +48,7 @@ const Home = ({ route, navigation }) => {
   // const [ItemsDic, setItemsDic] = useState([])
   const [number, setNumber] = useState()
   const [nickname, setNickname] = useState('')
+  const [image, setImage] = useState("");
     
     console.log('itemsArrayOUTSIDE: ', itemsArray)
     //console.log('itemDic : ', ItemsDic)
@@ -59,6 +60,7 @@ const Home = ({ route, navigation }) => {
     //console.log('shortList: ', shortList)
 
     let uniqueList = shortList.filter((item, index, self) => index === self.findIndex(t => t.type === item.type))
+
     //console.log('uniquelist: ', uniqueList)
   
     // const matchingItems = []
@@ -78,6 +80,20 @@ const Home = ({ route, navigation }) => {
     // console.log("matchingItems: ", matchingItems)  
 
   //shortList2.map((item) => console.log(item.type))
+
+  //get image from database
+  const read = async () => {
+    let user = auth?.currentUser?.email;
+    const docRef = doc(db, "donors", user);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      setImage(docSnap.data().image);
+      console.log("read image:", image)
+    } else {
+      console.log("No such document!");
+    }
+  };
 
   //read from database
 
@@ -129,6 +145,7 @@ const Home = ({ route, navigation }) => {
       if(user !== undefined){
         readDonations()
         readName()
+        read()
       }
     }
   }, [isFocused])
@@ -263,22 +280,27 @@ const Home = ({ route, navigation }) => {
               <Block center>
                 <Image
                   style={styles.avatar}
-                  source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1173/1173817.png' }}>
+                  source={{ uri: image === "" ? 'https://cdn-icons-png.flaticon.com/512/1173/1173817.png' : image}}>
                 </Image>
               </Block>
               <Block center style={{}}>
                 <Text style={{ fontSize: 25, alignSelf: 'center', fontWeight: 'bold' }}>Hello, {nickname === '' ? 'Guest!' : nickname + '!'}</Text>
-                {
+                {/* {
                   user !== undefined ?
                   <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? '' : user}</Text>
                   :
                   null
-                }
+                } */}
 
                 {
                   user !== undefined ?
                   <Block row>
-                  <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>{number} Donations</Text>
+                    {
+                      number === 1 ?
+                      <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>1 Donation</Text>
+                      :
+                      <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>{number} Donations</Text>
+                    }
                   <Image
                   style={{width: 25, height: 25, marginLeft: 12, marginTop: 10}}
                   source = {{uri: 'https://cdn-icons-png.flaticon.com/512/9466/9466004.png'}}
@@ -375,6 +397,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     margin: 10,
+    borderRadius: 30
   },
 
   // lilac button

@@ -42,6 +42,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config";
 
+import { Dropdown } from "react-native-element-dropdown";
 import * as Location from "expo-location";
 import { Alert } from "react-native";
 
@@ -59,6 +60,20 @@ export function normalize(size) {
 
 const Register = ({ navigation }) => {
 
+  const zones = [
+    { label: " All Zones", value: "0" },
+    { label: "Doha", value: "1" },
+    { label: "Al Rayyan", value: "2" },
+    { label: "Rumeilah", value: "3" },
+    { label: "Wadi Al Sail", value: "4" },
+    { label: "Al Daayen", value: "5" },
+    { label: "Umm Salal", value: "6" },
+    { label: "Al Wakra", value: "7" },
+    { label: "Al Khor", value: "8" },
+    { label: "Al Shamal", value: "9" },
+    { label: "Al Shahaniya", value: "10" },
+  ];
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -70,6 +85,9 @@ const Register = ({ navigation }) => {
   const [confirmError, setConfirmError] = useState('');
   const [nameError, setNameError] = useState('');
   const [phoneError, setPhoneError] = useState('');
+
+  const [ZoneError, setZoneError] = useState("");
+  const [zone, setZone] = useState(zones[0].label);
 
   const [location, setLocation] = useState("");
   const [locationError, setLocationError] = useState("");
@@ -96,11 +114,15 @@ const Register = ({ navigation }) => {
   };
 
   const add = async () => {
-    const docRef = await addDoc(collection(db, "donors"), {
+    const docRef = doc(db, "donors", email)
+    
+    await setDoc (docRef, {
       userName: name,
       phone: phone,
       location: location,
       email: email,
+      zone: zone,
+      image: ''
     })
       .then(() => {
         console.log("data submitted");
@@ -108,7 +130,7 @@ const Register = ({ navigation }) => {
       .catch((error) => {
         console.log(error.message);
       });
-    console.log("Document written with ID: ", docRef.id);
+    //console.log("Document written with ID: ", docRef.id);
   }
 
   const getLocation = () => {
@@ -210,6 +232,12 @@ const Register = ({ navigation }) => {
       setLocationError('');
     }
 
+    if (zone !== " All Zones") {
+      setZoneError("");
+    } else {
+      setZoneError("Select Zone");
+    }
+
     if (
       name &&
       phone &&
@@ -217,7 +245,8 @@ const Register = ({ navigation }) => {
       validateEmail &&
       password &&
       validatePassword &&
-      stat === 'granted'
+      stat === 'granted' &&
+      zone !== " All Zones" 
     ) {
       handleRegister()
     }
@@ -365,6 +394,32 @@ const Register = ({ navigation }) => {
 
               </Block>
 
+              <Block width={width * 0.35} style={{ marginBottom: 0 }}>
+                      <Dropdown
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        data={zones}
+                        maxHeight={160}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={zone}
+                        value={zone}
+                        onChange={(item) => {
+                          setZone(item.label);
+                        }}
+                      ></Dropdown>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "red",
+                          fontSize: 12,
+                        }}
+                      >
+                        {ZoneError}
+                      </Text>
+                    </Block>
+
 
               <Block width={width * 0.35}>
                 <Button
@@ -438,6 +493,26 @@ const styles = StyleSheet.create({
   },
   inputIcons: {
     marginRight: 12,
+  },
+  dropdown: {
+    marginBottom: 10,
+    padding: 7,
+    borderRadius: 4,
+    borderColor: argonTheme.COLORS.INPUT_ERROR,
+    height: 44,
+    backgroundColor: "#FFFFFF",
+    shadowColor: argonTheme.COLORS.BLACK,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    shadowOpacity: 0.05,
+    elevation: 2,
+  },
+  placeholderStyle: {
+    fontSize: 14,
+    color: argonTheme.COLORS.HEADER,
+  },
+  selectedTextStyle: {
+    fontSize: 12,
   },
 });
 

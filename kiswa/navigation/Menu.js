@@ -4,6 +4,7 @@ import { Image, ScrollView, StyleSheet } from "react-native";
 import { DrawerItem as DrawerCustomItem } from "../components";
 import Images from "../constants/Images";
 import React from "react";
+import { auth } from '../config'
 
 function CustomDrawerContent({
   drawerPosition,
@@ -13,7 +14,8 @@ function CustomDrawerContent({
   state,
   ...rest
 }) {
-  const screens = ["Home", "Profile", "Donate", "DonorHistory", "AboutUs"];
+  let user = auth?.currentUser?.email;
+  const screens = ["Home", "Donate", "DonorHistory", "AboutUs", user!==undefined? "Profile" : null];
   return (
     <Block
       style={styles.container}
@@ -34,7 +36,7 @@ function CustomDrawerContent({
               />
             );
           })}
-          <Block
+          {/* <Block
             flex
             style={{ marginTop: 24, marginVertical: 8, paddingHorizontal: 8 }}
           >
@@ -48,9 +50,9 @@ function CustomDrawerContent({
             <Text color="#8898AA" style={{ marginTop: 16, marginLeft: 8 }}>
               LEARN MORE ABOUT US
             </Text>
-          </Block>
+          </Block> */}
           
-          <DrawerCustomItem title="About Us" navigation={navigation} />
+          {/* <DrawerCustomItem title="About Us" navigation={navigation} /> */}
         </ScrollView>
       </Block>
     </Block>
