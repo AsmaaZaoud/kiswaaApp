@@ -276,52 +276,6 @@ function Admin(props) {
     </Stack.Navigator>
   );
 }
-function ProfileStack(props) {
-  return (
-    <Stack.Navigator
-      initialRouteName="Profile"
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
-      }}
-    >
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              transparent
-              white
-              title="Profile"
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#FFFFFF" },
-          headerTransparent: true,
-        }}
-      />
-      <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true,
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
 
 function HomeStack(props) {
   return (
@@ -346,6 +300,143 @@ function HomeStack(props) {
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" },
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function DonateStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="Donate"
+        component={Donate}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Donate"
+              search
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" },
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function DonorHistoryStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="DonorHistory"
+        component={DonorHistory}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="DonorHistory"
+              search
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" },
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ProfileStack(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              transparent
+              white
+              title="Profile"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#FFFFFF" },
+          headerTransparent: true,
         }}
       />
       <Stack.Screen
@@ -466,8 +557,23 @@ function AppStack(props) {
           headerShown: false,
         }}
       />
-      {/* Fatima */}
+      {/* syeda */}
       <Drawer.Screen
+        name="Donate"
+        component={DonateStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="DonorHistory"
+        component={DonorHistoryStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      {/* Fatima */}
+      {/* <Drawer.Screen
         name="InventoryClerkHomePage"
         component={InventoryStack}
       // options={{
@@ -501,22 +607,7 @@ function AppStack(props) {
         options={{
           headerShown: false,
         }}
-      />
-      {/* syeda */}
-      <Drawer.Screen
-        name="Donate"
-        component={Donate}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Drawer.Screen
-        name="DonorHistory"
-        component={DonorHistory}
-        options={{
-          headerShown: false,
-        }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }

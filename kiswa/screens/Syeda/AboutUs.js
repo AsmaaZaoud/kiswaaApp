@@ -1,86 +1,99 @@
-import React, { useState, useEffect } from "react";
-
-import {
-    StyleSheet,
-    ImageBackground,
-    Dimensions,
-    StatusBar,
-    KeyboardAvoidingView,
-    TextInput,
-    View,
-    Platform,
-    PixelRatio,
-    Image,
-    TouchableOpacity,
-    SafeAreaView,
-    ScrollView,
-    Alert
-} from "react-native";
-import { Block, Text, theme } from "galio-framework";
-
-import { Button, Icon, Input } from "../../components";
-import { Images, argonTheme } from "../../constants";
-
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../../config";
-
-import {
-    doc,
-    setDoc,
-    addDoc,
-    collection,
-
-    query,
-    where,
-    deleteDoc,
-    updateDoc,
-    deleteField,
-    onSnapshot,
-    getDocs,
-    getDoc,
-    Timestamp,
-
-
-} from "firebase/firestore";
-import { db } from "../../config";
-
-import * as Location from "expo-location";
-
-const { width, height } = Dimensions.get("screen");
-const scale = width / 834;
-
-export function normalize(size) {
-    const newSize = size * scale
-    if (Platform.OS === 'ios') {
-        return Math.round(PixelRatio.roundToNearestPixel(newSize))
-    } else {
-        return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
-    }
-}
-
-import { useIsFocused } from "@react-navigation/native";
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, ScrollView, Animated } from 'react-native';
 
 const AboutUs = ({ route, navigation }) => {
-    return (
-        <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.articles}>
-            <Block style={styles.container}>
-                <Text>About</Text>
-            </Block>
-        </ScrollView>
-    )
+  const [scrollY, setScrollY] = useState(new Animated.Value(0));
+
+  return (
+    <View style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
+        scrollEventThrottle={16}
+      >
+        <View style={styles.content}>
+          <Animated.View
+            style={{
+              opacity: scrollY.interpolate({
+                inputRange: [0, 200],
+                outputRange: [0, 1],
+                extrapolate: 'clamp',
+              }),
+            }}
+          >
+            <Text style={styles.title}>Welcome to React Native!</Text>
+          </Animated.View>
+
+          <Animated.View
+            style={{
+              opacity: scrollY.interpolate({
+                inputRange: [0, 400],
+                outputRange: [0, 1],
+                extrapolate: 'clamp',
+              }),
+            }}
+          >
+            <Image
+              style={styles.image}
+              source={{
+                uri:
+                  'https://reactnative.dev/docs/assets/p_cat2.png',
+              }}
+            />
+          </Animated.View>
+
+          <Animated.View
+            style={{
+              opacity: scrollY.interpolate({
+                inputRange: [0, 600],
+                outputRange: [0, 1],
+                extrapolate: 'clamp',
+              }),
+            }}
+          >
+            <Text style={styles.text}>
+              Edit App.js to change this screen and turn it
+              into your app.
+            </Text>
+          </Animated.View>
+
+          {/* Add more content here */}
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-})
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    padding: 20,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+  },
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+});
 
 export default AboutUs;
