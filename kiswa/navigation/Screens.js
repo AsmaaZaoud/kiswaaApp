@@ -24,6 +24,7 @@ import CheckOut from "../screens/Syeda/CheckOut";
 // import Thankyou from "../screens/Syeda/Thankyou";
 import LoginDonor from "../screens/Syeda/LoginDonor";
 import Feedback from "../screens/Syeda/Feedback";
+import DonorHistory from "../screens/Syeda/DonorHistory";
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
@@ -394,8 +395,9 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="CheckOut" component={CheckOut} />
       {/* <Stack.Screen name="Thankyou" component={Thankyou} /> */}
       <Stack.Screen name="Feedback" component={Feedback} />
-      
-     {/* <Stack.Screen */}
+      <Stack.Screen name="DonorHistory" component={DonorHistory} />
+
+      {/* <Stack.Screen */}
 
       <Stack.Screen
 
@@ -467,16 +469,16 @@ function AppStack(props) {
       <Drawer.Screen
         name="InventoryClerkHomePage"
         component={InventoryStack}
-        // options={{
-        //   headerShown: true,
-        // }}
+      // options={{
+      //   headerShown: true,
+      // }}
       />
       <Drawer.Screen
         name="DriverHome"
         component={DriverStack}
-        // options={{
-        //   headerShown: true,
-        // }}
+      // options={{
+      //   headerShown: true,
+      // }}
       />
       <Drawer.Screen
         name="Account"
@@ -503,6 +505,13 @@ function AppStack(props) {
       <Drawer.Screen
         name="Donate"
         component={Donate}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="DonorHistory"
+        component={DonorHistory}
         options={{
           headerShown: false,
         }}

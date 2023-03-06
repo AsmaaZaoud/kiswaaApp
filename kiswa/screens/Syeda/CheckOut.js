@@ -108,7 +108,8 @@ const CheckOut = ({ route, navigation }) => {
             // type: route.params.type,
             // amount: route.params.amount,
             timeSlot: route.params.time,
-            dateSlot: route.params.date
+            dateSlot: route.params.date,
+            trackId: Math.floor(Math.random() * 10000)
         });
         console.log("Document written with ID: ", docRef.id);
 
@@ -139,7 +140,8 @@ const CheckOut = ({ route, navigation }) => {
             // type: route.params.type,
             // amount: route.params.amount,
             timeSlot: route.params.time,
-            dateSlot: route.params.date
+            dateSlot: route.params.date,
+            trackId: Math.floor(Math.random() * 10000)
         });
         console.log("Document written with ID: ", docRef.id);
 
