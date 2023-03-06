@@ -205,3 +205,28 @@ const styles = StyleSheet.create({
     marginTop: "3%",
   },
 });
+
+{
+  /* <FlatList
+                    style={{ marginLeft: 8 }}
+                    // horizontal
+                    data={WType}
+                    keyExtractor={(item) => {
+                      return item.id;
+                    }}
+                    renderItem={(item) => {
+                      return (
+                        <Pressable
+                          style={[styles.circle]}
+                          onPress={() => {
+                            setModalVisible(true);
+                            setType(item.key);
+                            setAgeGroup(groups[index]);
+                          }}
+                        >
+                          <Text style={styles.ct}>{item.key}</Text>
+                        </Pressable>
+                      );
+                    }}
+                  /> */
+}

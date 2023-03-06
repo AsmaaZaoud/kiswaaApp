@@ -38,15 +38,14 @@ export default function RequestHistoryComp({ itemsid, navigation }) {
 
   return (
     <View>
-      {cart.map((elem) => (
-        <DataTable.Row style={{ textAlign: "center" }}>
-          <DataTable.Cell>{elem.data.ageGroup}</DataTable.Cell>
-          <DataTable.Cell>{elem.data.color}</DataTable.Cell>
-          <DataTable.Cell>{elem.data.quantity}</DataTable.Cell>
+      {cart.map((elem, i) => (
+        <DataTable.Row style={{ textAlign: "center" }} key={i}>
+          <DataTable.Cell style={{}}>{elem.data.quantity}</DataTable.Cell>
+          <DataTable.Cell style={{}}>{elem.data.size}</DataTable.Cell>
+          <DataTable.Cell style={{}}>{elem.data.ageGroup}</DataTable.Cell>
 
-          <DataTable.Cell>{elem.data.size}</DataTable.Cell>
-
-          <DataTable.Cell>{elem.data.type}</DataTable.Cell>
+          <DataTable.Cell style={{}}>{elem.data.color}</DataTable.Cell>
+          <DataTable.Cell style={{}}>{elem.data.type}</DataTable.Cell>
         </DataTable.Row>
       ))}
     </View>

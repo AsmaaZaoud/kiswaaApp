@@ -4,8 +4,18 @@ import {
   View,
   TouchableOpacity,
   Pressable,
+  Button,
+  Dimensions,
 } from "react-native";
 import { useState, useEffect } from "react";
+
+import {
+  Fontisto,
+  AntDesign,
+  FontAwesome5,
+  FontAwesome,
+  Entypo,
+} from "react-native-vector-icons";
 
 import React from "react";
 import { Block, Checkbox, Text, theme, NavBar, Icon } from "galio-framework";
@@ -24,6 +34,8 @@ import {
   deleteField,
 } from "firebase/firestore";
 import { db } from "../../config";
+const { width } = Dimensions.get("screen");
+
 const FamilyHome = ({ route, navigation }) => {
   const id = route.params;
 
@@ -91,119 +103,173 @@ const FamilyHome = ({ route, navigation }) => {
     console.log("Request add with ID: ", docRef.id, "for user ", id);
     setCartId(docRef.id);
   };
-  return (
-    <View style={{ backgroundColor: "white" }}>
-      <NavBar
-        title="Home"
-        style={{
-          height: "8%",
-          borderWidth: 1,
-          marginTop: 20,
-          marginBottom: 20,
-        }}
-      />
-      <Block style={styles.header1}>
-        <Block>
-          <Text style={styles.text}>Welcome</Text>
-          <Text style={styles.textt}>{userName}</Text>
-        </Block>
-        <Block>
-          {/* <Image
+  const renderArticles = () => {
+    return (
+      <View style={{ backgroundColor: "white", width: "100%", height: "91%" }}>
+        <NavBar
+          title="Home"
+          style={{
+            height: "9%",
+            marginBottom: "9%",
+            backgroundColor: "#FFFAFA",
+            borderColor: "lightgray",
+            borderWidth: 1,
+            marginTop: "0.5%",
+          }}
+          titleStyle={{ color: "#842DCE", fontSize: 22, fontWeight: "bold" }}
+        />
+        {/* welcome user */}
+        <Block style={styles.header1}>
+          <Block>
+            <Text style={styles.text}>Welcome</Text>
+            <Text style={styles.textt}>{userName}</Text>
+          </Block>
+          <Block>
+            {/* <Image
             source={require("../../assets/imgs/FamilyUser.png")}
             style={{
               width: 100,
               height: 100,
             }}
           /> */}
-          <Pressable
-            onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
-            // style={{
-            //   marginTop: "20%",
-            //   marginBottom: "10%",
-            //   backgroundColor: "#842DCE",
-            //   height: "18%",
-            //   width: "60%",
-            //   alignItems: "center",
-            //   justifyContent: "center",
-            //   marginLeft: "20%",
-            //   borderRadius: 8,
-            //   padding: 5,
-            // }}
-          >
-            <Image
-              source={require("../../assets/imgs/cart.png")}
-              style={{
-                width: 90,
-                height: 90,
-              }}
-            />
-          </Pressable>
-        </Block>
-      </Block>
-
-      <Block style={styles.header2}>
-        <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
-          Kiswa
-        </Text>
-        <Text style={{ width: "70%", color: "white", fontSize: 15 }}>
-          Creative engineers and data scientists building a world where you can
-          belong anywhere
-        </Text>
-      </Block>
-
-      <Block>
-        <Block style={styles.header3}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("FamilyRequest", id)}
-          >
-            <Block style={styles.box1}>
+            <Pressable
+              onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
+              // style={{
+              //   marginTop: "20%",
+              //   marginBottom: "10%",
+              //   backgroundColor: "#842DCE",
+              //   height: "18%",
+              //   width: "60%",
+              //   alignItems: "center",
+              //   justifyContent: "center",
+              //   marginLeft: "20%",
+              //   borderRadius: 8,
+              //   padding: 5,
+              // }}
+            >
               <Image
-                source={require("../../assets/imgs/requstClothes.png")}
+                source={require("../../assets/imgs/cart.png")}
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 90,
+                  height: 90,
                 }}
-              ></Image>
-              <Text>Request Clothes</Text>
-            </Block>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("RequestHistory", id)}
-          >
-            <Block style={styles.box2}>
-              <Image
-                source={require("../../assets/imgs/rqustHistory.png")}
-                style={{
-                  width: 100,
-                  height: 100,
-                }}
-              ></Image>
-              <Text>Requests History</Text>
-            </Block>
-          </TouchableOpacity>
-        </Block>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("FamilyFeedback", id)}
-        >
-          <Block style={styles.box3}>
-            <Image
-              source={require("../../assets/imgs/feedback.png")}
-              style={{
-                width: 100,
-                height: 100,
-              }}
-            ></Image>
-            <Text>Give Feedback</Text>
+              />
+            </Pressable>
           </Block>
-        </TouchableOpacity>
+        </Block>
+        {/* about kiswa */}
+        <Block style={styles.header2}>
+          <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
+            Kiswa
+          </Text>
+          <Text style={{ width: "70%", color: "white", fontSize: 15 }}>
+            Creative engineers and data scientists building a world where you
+            can belong anywhere
+          </Text>
+        </Block>
+        {/* request and history */}
+        <Block>
+          <Block style={styles.header3}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("FamilyRequest", id)}
+            >
+              <Block style={styles.box1}>
+                <Image
+                  source={require("../../assets/imgs/requstClothes.png")}
+                  style={{
+                    width: 100,
+                    height: 100,
+                  }}
+                ></Image>
+                <Text>Request Clothes</Text>
+              </Block>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("RequestHistory", id)}
+            >
+              <Block style={styles.box2}>
+                <Image
+                  source={require("../../assets/imgs/rqustHistory.png")}
+                  style={{
+                    width: 100,
+                    height: 100,
+                  }}
+                ></Image>
+                <Text>Requests History</Text>
+              </Block>
+            </TouchableOpacity>
+          </Block>
+          {/* feedback */}
+
+          <Block style={styles.box3}>
+            <Pressable
+              onPress={() => navigation.navigate("FamilyFeedback", id)}
+              styles={{ backgroundColor: "gray" }}
+            >
+              <Image
+                source={require("../../assets/imgs/feedback.png")}
+                style={{
+                  width: 100,
+                  height: 100,
+                }}
+              ></Image>
+              <Text>Give Feedback</Text>
+            </Pressable>
+          </Block>
+        </Block>
+      </View>
+    );
+  };
+  return (
+    <Block flex center style={styles.home}>
+      {renderArticles()}
+      <Block
+        style={{
+          height: "9%",
+          backgroundColor: "#FFFAFA",
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          borderColor: "lightgray",
+          borderWidth: 1,
+          marginBottom: "2%",
+          alignItems: "center",
+          // paddingLeft: "1%",
+        }}
+      >
+        <Pressable
+          style={{ width: "14%" }}
+          onPress={() => navigation.navigate("../Syeda/Onboarding.js")}
+        >
+          <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
+        </Pressable>
+
+        <Pressable
+          style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
+          onPress={() => navigation.navigate("../Syeda/Onboarding.js")}
+        >
+          <FontAwesome5 name="shopping-cart" color="#4C4AAB" size={40} />
+        </Pressable>
+
+        <Pressable
+          style={{ width: "14%", backgroundColor: "gray" }}
+          onPress={() => navigation.navigate("../Syeda/Onboarding.js")}
+        >
+          <FontAwesome name="user-circle-o" color="#4C4AAB" size={40} />
+        </Pressable>
       </Block>
-    </View>
+    </Block>
   );
 };
 
 export default FamilyHome;
 
 const styles = StyleSheet.create({
+  home: {
+    width: width,
+    // backgroundColor: "#490066",
+    height: "100%",
+  },
   header1: {
     alignItems: "center",
     flexDirection: "row",

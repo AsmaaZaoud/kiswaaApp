@@ -8,6 +8,9 @@ import {
   Pressable,
   Modal,
   TextInput,
+  ScrollView,
+  SafeAreaView,
+  KeyboardAvoidingView,
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { Images, argonTheme } from "../../constants";
@@ -52,18 +55,34 @@ const FamilyRequest = ({ route, navigation }) => {
   }, [id]);
 
   const data = [
-    { key: "T-shirt" },
-    { key: "Sweater" },
-    { key: "Jacket" },
-    { key: "Coat" },
-    { key: "Jeans" },
-    { key: "socks" },
-    { key: "shorts" },
-    { key: "Tracksuit" },
-    { key: "Vest" },
-    { key: "Pajamas" },
-    { key: "shoes" },
-    { key: "suit" },
+    { label: "Blouse", value: "Blouse" },
+    { label: "Caftan", value: "Caftan" },
+    { label: "Cardigan", value: "Cardigan" },
+    { label: "Cloak", value: "Cloak" },
+    { label: "Coat", value: "Coat" },
+    { label: "Dress", value: "Dress" },
+    { label: "Dungarees", value: "Dungarees" },
+    { label: "Jacket", value: "Jacket" },
+    { label: "Jeans", value: "Jeans" },
+    { label: "Jumper", value: "Jumper" },
+    { label: "Jumpsuit", value: "Jumpsuit" },
+    { label: "Leggings", value: "Leggings" },
+    { label: "Legwarmers", value: "Legwarmers" },
+    { label: "Pants", value: "Pants" },
+    { label: "Playsuit", value: "Playsuit" },
+    { label: "Poncho", value: "Poncho" },
+    { label: "Pajamas", value: "Pajamas" },
+    { label: "Shawl", value: "Shawl" },
+    { label: "Shirt", value: "Shirt" },
+    { label: "Shorts", value: "Shorts" },
+    { label: "Skirt", value: "Skirt" },
+    { label: "Sock", value: "Sock" },
+    { label: "Sweater", value: "Sweater" },
+    { label: "Swimsuit", value: "Swimsuit" },
+    { label: "Tie", value: "Tie" },
+    { label: "Tights", value: "Tights" },
+    { label: "Tracksuit", value: "Tracksuit" },
+    { label: "T-Shirt", value: "T-Shirt" },
   ];
   const WType = [
     { key: "T-shirt" },
@@ -100,7 +119,7 @@ const FamilyRequest = ({ route, navigation }) => {
     { label: "Purple", value: "11" },
   ];
 
-  const [ageGroup, setAgeGroup] = useState("");
+  const [ageGroup, setAgeGroup] = useState(groups[index]);
   const [type, setType] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState(colors[0].label);
@@ -188,345 +207,411 @@ const FamilyRequest = ({ route, navigation }) => {
       });
     // alert("Thank You");
   };
+  // console.log(ageGroup);
 
   return (
-    <View style={{ backgroundColor: modalVisible ? "#F7EEF7" : "white" }}>
-      <NavBar
-        title="Reques Clothes"
-        style={{
-          height: "10%",
-          borderWidth: 1,
-          marginTop: "2%",
-          marginBottom: "2%",
-        }}
-      />
-      <Block style={{ alignItems: "center", marginTop: "3%" }}>
-        <Text style={{ color: "#842DCE", fontSize: 22, fontWeight: "bold" }}>
-          Please choose Catagory
-        </Text>
-      </Block>
-
-      <Block style={{ height: "52%", marginTop: "3%", width: "100%" }}>
-        <Tab
-          style={{ width: "100%" }}
-          value={index}
-          onChange={setIndex}
-          indicatorStyle={{
-            // backgroundColor: "#842DCE",
-            height: 3,
+    <SafeAreaView style={styles.container}>
+      <View style={{ backgroundColor: modalVisible ? "#F7EEF7" : "white" }}>
+        <NavBar
+          title="Reques Clothes"
+          style={{
+            height: "10%",
+            borderWidth: 1,
+            marginTop: "2%",
+            marginBottom: "2%",
           }}
-          //variant="primary"
-          scrollable={true}
-          // iconPosition="top"
-          dense={false}
-        >
-          <Tab.Item title="Men" titleStyle={{ fontSize: 14 }}>
-            <Image
-              source={require("../../assets/imgs/men-icon.png")}
-              style={{
-                width: 88,
-                height: 88,
-              }}
-            />
-            <Text>Men</Text>
-          </Tab.Item>
-          <Tab.Item title="Women" titleStyle={{ fontSize: 12 }}>
-            <Image
-              source={require("../../assets/imgs/women-icon.png")}
-              style={{
-                width: 88,
-                height: 88,
-              }}
-            />
-            <Text>Women</Text>
-          </Tab.Item>
-          <Tab.Item title="Boys" titleStyle={{ fontSize: 12 }}>
-            <Image
-              source={require("../../assets/imgs/boy-icon.png")}
-              style={{
-                width: 88,
-                height: 88,
-              }}
-            />
-            <Text>Boys</Text>
-          </Tab.Item>
-          <Tab.Item title="Girls" titleStyle={{ fontSize: 12 }}>
-            <Image
-              source={require("../../assets/imgs/girl-icon.png")}
-              style={{
-                width: 88,
-                height: 88,
-              }}
-            />
-            <Text>Girls</Text>
-          </Tab.Item>
-        </Tab>
+        />
+        <Block style={{ alignItems: "center" }}>
+          <Text style={{ color: "#842DCE", fontSize: 22, fontWeight: "bold" }}>
+            Please Select Catagory
+          </Text>
+        </Block>
 
-        <TabView value={index} onChange={setIndex} animationType="spring">
-          <TabView.Item
-            style={{
-              width: "100%",
-              height: "100%",
-              // backgroundColor: "lightgray",
+        <Block style={{ height: "56%", marginTop: "3%", width: "100%" }}>
+          <Tab
+            style={{ width: "100%", height: "26%" }}
+            value={index}
+            onChange={(e) => {
+              setIndex(e);
+              setAgeGroup(groups[e]);
+            }}
+            indicatorStyle={{
+              backgroundColor: "#842DCE",
+              height: 3,
+            }}
+            // variant="defualt"
+
+            scrollable={false}
+            // iconPosition="top"
+            dense={true}
+            disableIndicator={true}
+          >
+            <Tab.Item title="Men" titleStyle={{ fontSize: 14 }}>
+              <Image
+                source={require("../../assets/imgs/men-icon.png")}
+                style={{
+                  width: 88,
+                  height: 88,
+                  borderColor: ageGroup == "Men" ? "#842DCE" : "white",
+                  borderWidth: 3,
+                  borderRadius: 43,
+                }}
+              />
+              <Text
+                style={{
+                  color: ageGroup == "Men" ? "#842DCE" : "black",
+                  fontWeight: ageGroup == "Men" ? "bold" : "normal",
+                }}
+              >
+                Men
+              </Text>
+            </Tab.Item>
+            <Tab.Item title="Women" titleStyle={{ fontSize: 12 }}>
+              <Image
+                source={require("../../assets/imgs/women-icon.png")}
+                style={{
+                  width: 88,
+                  height: 88,
+                  borderColor: ageGroup == "Women" ? "#842DCE" : "white",
+                  borderWidth: 3,
+                  borderRadius: 43,
+                }}
+              />
+              <Text
+                style={{
+                  color: ageGroup == "Women" ? "#842DCE" : "black",
+                  fontWeight: ageGroup == "Women" ? "bold" : "normal",
+                }}
+              >
+                Women
+              </Text>
+            </Tab.Item>
+            <Tab.Item title="Boys" titleStyle={{ fontSize: 12 }}>
+              <Image
+                source={require("../../assets/imgs/boy-icon.png")}
+                style={{
+                  width: 88,
+                  height: 88,
+                  borderColor: ageGroup == "Boys" ? "#842DCE" : "white",
+                  borderWidth: 3,
+                  borderRadius: 43,
+                }}
+              />
+              <Text
+                style={{
+                  color: ageGroup == "Boys" ? "#842DCE" : "black",
+                  fontWeight: ageGroup == "Boys" ? "bold" : "normal",
+                }}
+              >
+                Boys
+              </Text>
+            </Tab.Item>
+            <Tab.Item title="Girls" titleStyle={{ fontSize: 12 }}>
+              <Image
+                source={require("../../assets/imgs/girl-icon.png")}
+                style={{
+                  width: 88,
+                  height: 88,
+                  borderColor: ageGroup == "Girls" ? "#842DCE" : "white",
+                  borderWidth: 3,
+                  borderRadius: 43,
+                }}
+              />
+              <Text
+                style={{
+                  color: ageGroup == "Girls" ? "#842DCE" : "black",
+                  fontWeight: ageGroup == "Girls" ? "bold" : "normal",
+                }}
+              >
+                Girls
+              </Text>
+            </Tab.Item>
+          </Tab>
+
+          <TabView value={index} onChange={setIndex} animationType="spring">
+            <TabView.Item
+              style={{
+                width: "100%",
+                height: "100%",
+                // backgroundColor: "lightgray",
+              }}
+            >
+              <View>
+                <Text></Text>
+                <ScrollView>
+                  <View style={styles.board}>
+                    {data.map((x, i) => (
+                      <Pressable
+                        key={i}
+                        style={[styles.circle]}
+                        onPress={() => {
+                          setModalVisible(true);
+                          setType(x.value);
+                          setAgeGroup(groups[index]);
+                        }}
+                      >
+                        <Text style={styles.ct}>{x.value}</Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
+            </TabView.Item>
+            <TabView.Item style={{ width: "100%", height: "100%" }}>
+              <View>
+                <Text></Text>
+                <ScrollView>
+                  <View style={styles.board}>
+                    {data.map((x, i) => (
+                      <Pressable
+                        key={i}
+                        style={[styles.circle]}
+                        onPress={() => {
+                          setModalVisible(true);
+                          setType(x.value);
+                          setAgeGroup(groups[index]);
+                        }}
+                      >
+                        <Text style={styles.ct}>{x.value}</Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
+            </TabView.Item>
+            <TabView.Item style={{ width: "100%", height: "100%" }}>
+              <View>
+                <Text></Text>
+                <ScrollView>
+                  <View style={styles.board}>
+                    {data.map((x, i) => (
+                      <Pressable
+                        key={i}
+                        style={[styles.circle]}
+                        onPress={() => {
+                          setModalVisible(true);
+                          setType(x.value);
+                          setAgeGroup(groups[index]);
+                        }}
+                      >
+                        <Text style={styles.ct}>{x.value}</Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
+            </TabView.Item>
+            <TabView.Item style={{ width: "100%", height: "100%" }}>
+              <View>
+                <Text></Text>
+                <ScrollView>
+                  <View style={styles.board}>
+                    {data.map((x, i) => (
+                      <Pressable
+                        key={i}
+                        style={[styles.circle]}
+                        onPress={() => {
+                          setModalVisible(true);
+                          setType(x.value);
+                          setAgeGroup(groups[index]);
+                        }}
+                      >
+                        <Text style={styles.ct}>{x.value}</Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
+            </TabView.Item>
+          </TabView>
+          {/*............ add item modual................................................... */}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
             }}
           >
-            <View>
-              <Text></Text>
-              <View style={styles.board}>
-                {data.map((x, i) => (
-                  <Pressable
-                    key={i}
-                    style={[styles.circle]}
-                    onPress={() => {
-                      setModalVisible(true);
-                      setType(x.key);
-                      setAgeGroup(groups[index]);
-                    }}
-                  >
-                    <Text style={styles.ct}>{x.key}</Text>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Block style={styles.modalblock}>
+                  <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                    <Entypo
+                      name="chevron-with-circle-left"
+                      color="#842DCE"
+                      size={40}
+                    />
                   </Pressable>
-                ))}
-              </View>
-            </View>
-          </TabView.Item>
-          <TabView.Item
-            style={{
-              width: "100%",
-              height: "100%",
-              // backgroundColor: "lightpink",
-            }}
-          >
-            <View>
-              <View style={styles.board}>
-                {WType.map((x, i) => (
-                  <Pressable
-                    key={i}
-                    style={[styles.circle]}
-                    onPress={() => {
-                      setModalVisible(true);
-                      setType(x.key);
-                      setAgeGroup(groups[index]);
-                    }}
-                  >
-                    <Text style={styles.ct}>{x.key}</Text>
-                  </Pressable>
-                ))}
-              </View>
-            </View>
-          </TabView.Item>
-          <TabView.Item style={{ width: "100%", height: "100%" }}>
-            <View>
-              <Text></Text>
-              <View style={styles.board}>
-                {data.map((x, i) => (
-                  <Pressable
-                    key={i}
-                    style={[styles.circle]}
-                    onPress={() => {
-                      setModalVisible(true);
-                      setType(x.key);
-                      setAgeGroup(groups[index]);
-                    }}
-                  >
-                    <Text style={styles.ct}>{x.key}</Text>
-                  </Pressable>
-                ))}
-              </View>
-            </View>
-          </TabView.Item>
-          <TabView.Item style={{ width: "100%", height: "100%" }}>
-            <View style={{ alignItems: "center" }}>
-              <Text></Text>
-              <View style={styles.board}>
-                {data.map((x, i) => (
-                  <Pressable
-                    key={i}
-                    style={[styles.circle]}
-                    onPress={() => {
-                      setModalVisible(true);
-                      setType(x.key);
-                      setAgeGroup(groups[index]);
-                    }}
-                  >
-                    <Text style={styles.ct}>{x.key}</Text>
-                  </Pressable>
-                ))}
-              </View>
-            </View>
-          </TabView.Item>
-        </TabView>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Block style={styles.modalblock}>
-                <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                  <Entypo
-                    name="chevron-with-circle-left"
-                    color="#842DCE"
-                    size={40}
-                  />
-                </Pressable>
-                <View>
-                  <Text style={{ color: "gray", textAlign: "right" }}>
-                    Request Items,
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      textAlign: "right",
-                    }}
-                  >
-                    Add Item Details
-                  </Text>
-                </View>
-              </Block>
-              <Block style={styles.modalblock2}>
-                <Text style={styles.modalText}>
-                  {ageGroup}'s {type}
-                </Text>
-                <Block>
-                  <Text
-                    style={{ fontSize: 16, marginBottom: 15, marginTop: 20 }}
-                  >
-                    How Many {type}s?
-                  </Text>
-                  <NumericInput
-                    iconStyle={{
-                      color: "white",
-                      fontWeight: "bold",
-                      fontSize: 20,
-                    }}
-                    minValue={1}
-                    value={quantity}
-                    // initValue={null}
-                    onChange={setQuantity}
-                    rounded
-                    rightButtonBackgroundColor="#DCD0FF"
-                    leftButtonBackgroundColor="#DCD0FF"
-                    totalWidth={280}
-                    totalHeight={40}
-                    iconSize={20}
-                    // step={1.5}
-                  />
-                  <Text
-                    style={{ fontSize: 16, marginBottom: 10, marginTop: 20 }}
-                  >
-                    What Color?
-                  </Text>
-                  <Dropdown
-                    search
-                    // selectedTextStyle={{ fontSize: 30 }}
-                    searchPlaceholder="Search..."
-                    style={styles.dropdown}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    data={colors}
-                    maxHeight={200}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={color}
-                    value={color}
-                    onChange={(item) => {
-                      setColor(item.label);
-                    }}
-                  ></Dropdown>
-                  <Text
-                    style={{ fontSize: 16, marginBottom: 10, marginTop: 20 }}
-                  >
-                    What Size?
-                  </Text>
-                  <View style={styles.modalblock}>
-                    <Pressable
-                      style={[
-                        styles.size,
-                        {
-                          backgroundColor: size == "S" ? "#842DCE" : "#DCD0FF",
-                        },
-                      ]}
-                      onPress={() => setSize("S")}
+                  <View>
+                    <Text style={{ color: "gray", textAlign: "right" }}>
+                      Request Items,
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: "bold",
+                        textAlign: "right",
+                      }}
                     >
-                      <Text>S</Text>
-                    </Pressable>
-                    <Pressable
-                      style={[
-                        styles.size,
-                        {
-                          backgroundColor: size == "M" ? "#842DCE" : "#DCD0FF",
-                        },
-                      ]}
-                      onPress={() => setSize("M")}
-                    >
-                      <Text>M</Text>
-                    </Pressable>
-                    <Pressable
-                      style={[
-                        styles.size,
-                        {
-                          backgroundColor: size == "L" ? "#842DCE" : "#DCD0FF",
-                        },
-                      ]}
-                      onPress={() => setSize("L")}
-                    >
-                      <Text>L</Text>
-                    </Pressable>
-                    <Pressable
-                      style={[
-                        styles.size,
-                        {
-                          backgroundColor: size == "XL" ? "#842DCE" : "#DCD0FF",
-                        },
-                      ]}
-                      onPress={() => setSize("XL")}
-                    >
-                      <Text>XL</Text>
-                    </Pressable>
+                      Add Item Details
+                    </Text>
                   </View>
                 </Block>
-                <Pressable
-                  style={[styles.button, styles.buttonClose, { marginTop: 40 }]}
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                    Save();
-                  }}
-                >
-                  <Text style={styles.textStyle}>Add Item</Text>
-                </Pressable>
-              </Block>
+                <Block style={styles.modalblock2}>
+                  <Text style={styles.modalText}>
+                    {ageGroup}'s {type}
+                  </Text>
+                  <Block>
+                    <Text
+                      style={{ fontSize: 16, marginBottom: 15, marginTop: 20 }}
+                    >
+                      How Many {type}s?
+                    </Text>
+                    <NumericInput
+                      iconStyle={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: 20,
+                      }}
+                      minValue={1}
+                      value={quantity}
+                      // initValue={null}
+                      onChange={setQuantity}
+                      rounded
+                      rightButtonBackgroundColor="#DCD0FF"
+                      leftButtonBackgroundColor="#DCD0FF"
+                      totalWidth={280}
+                      totalHeight={40}
+                      iconSize={20}
+                      // step={1.5}
+                    />
+                    <KeyboardAvoidingView>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginBottom: 10,
+                          marginTop: 20,
+                        }}
+                      >
+                        What Color?
+                      </Text>
+                      <Dropdown
+                        search
+                        // selectedTextStyle={{ fontSize: 30 }}
+                        searchPlaceholder="Search..."
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        data={colors}
+                        maxHeight={200}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={color}
+                        value={color}
+                        onChange={(item) => {
+                          setColor(item.label);
+                        }}
+                      ></Dropdown>
+                    </KeyboardAvoidingView>
+                    <Text
+                      style={{ fontSize: 16, marginBottom: 10, marginTop: 20 }}
+                    >
+                      What Size?
+                    </Text>
+                    <View style={styles.modalblock}>
+                      <Pressable
+                        style={[
+                          styles.size,
+                          {
+                            backgroundColor:
+                              size == "S" ? "#842DCE" : "#DCD0FF",
+                          },
+                        ]}
+                        onPress={() => setSize("S")}
+                      >
+                        <Text>S</Text>
+                      </Pressable>
+                      <Pressable
+                        style={[
+                          styles.size,
+                          {
+                            backgroundColor:
+                              size == "M" ? "#842DCE" : "#DCD0FF",
+                          },
+                        ]}
+                        onPress={() => setSize("M")}
+                      >
+                        <Text>M</Text>
+                      </Pressable>
+                      <Pressable
+                        style={[
+                          styles.size,
+                          {
+                            backgroundColor:
+                              size == "L" ? "#842DCE" : "#DCD0FF",
+                          },
+                        ]}
+                        onPress={() => setSize("L")}
+                      >
+                        <Text>L</Text>
+                      </Pressable>
+                      <Pressable
+                        style={[
+                          styles.size,
+                          {
+                            backgroundColor:
+                              size == "XL" ? "#842DCE" : "#DCD0FF",
+                          },
+                        ]}
+                        onPress={() => setSize("XL")}
+                      >
+                        <Text>XL</Text>
+                      </Pressable>
+                    </View>
+                  </Block>
+                  <Pressable
+                    style={[
+                      styles.button,
+                      styles.buttonClose,
+                      { marginTop: 40 },
+                    ]}
+                    onPress={() => {
+                      setModalVisible(!modalVisible);
+                      Save();
+                    }}
+                  >
+                    <Text style={styles.textStyle}>Add Item</Text>
+                  </Pressable>
+                </Block>
+              </View>
             </View>
-          </View>
-        </Modal>
-      </Block>
-      <Block>
-        <Pressable
-          onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
-          style={{
-            marginTop: "20%",
-            marginBottom: "10%",
-            backgroundColor: "#842DCE",
-            height: "18%",
-            width: "60%",
-            alignItems: "center",
-            justifyContent: "center",
-            marginLeft: "20%",
-            borderRadius: 8,
-            padding: 5,
-          }}
-        >
-          <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
-            View Cart
-          </Text>
-        </Pressable>
-      </Block>
-    </View>
+          </Modal>
+        </Block>
+        <Block>
+          <Pressable
+            onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
+            style={{
+              marginTop: "15%",
+              marginBottom: "10%",
+              backgroundColor: "#842DCE",
+              height: "18%",
+              width: "60%",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: "20%",
+              borderRadius: 8,
+              padding: 5,
+            }}
+          >
+            <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
+              View Cart
+            </Text>
+          </Pressable>
+        </Block>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -554,7 +639,8 @@ const styles = StyleSheet.create({
   },
   board: {
     width: "90%",
-    margin: "5%",
+    marginLeft: "5%",
+    height: "100%",
     // borderColor: "white",
     // borderWidth: 5, #FDEEF4
     flexDirection: "row",
