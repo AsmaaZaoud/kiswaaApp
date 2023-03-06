@@ -9,6 +9,7 @@ import {
   Text,
   View,
   Pressable,
+  Linking,
 } from "react-native";
 import { Block, theme } from "galio-framework";
 import {
@@ -43,6 +44,7 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
+
 const DriverHome = (props, { navigation }) => {
   const id = props.email;
   // alert(id);
@@ -83,21 +85,43 @@ const DriverHome = (props, { navigation }) => {
     const q = query(collection(db, "drivers", id.toLowerCase(), "orders"));
     const docs = await getDocs(q);
     // console.log(docs)
-    docs.forEach((doc) => {
+    docs.forEach(async (doc) => {
       let hour = doc.data().dateTime.toDate().getHours();
       let t = doc.data();
       t.time = hour + ":00";
       t.date = doc.data().dateTime.toDate().toLocaleDateString();
+      let a;
+      doc.data().type == "pickup"
+        ? (a = await readUser(doc.data().userId, "donors"))
+        : (a = await readUser(doc.data().userId, "families"));
+      t.userName = a.userName;
+      // t.email = a.email;
+      t.phone = a.phone;
       temp.push(t);
-      // temp.push(doc.data());
-      // console.log(doc.id, " => ", doc.data());
       doc.data().type == "pickup" ? pick.push(t) : deliv.push(t);
+      console.log(t);
     });
     setOrders(temp);
     setPickup(pick);
     setDeliver(deliv);
     setArr(pick);
-    //console.log(drivers);
+    console.log(orders);
+  };
+  let lat = 25.2709954;
+  let long = 51.5324509;
+
+  const readUser = async (id, table) => {
+    const docRef = doc(db, table, id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      // console.log("Document data:", docSnap.data());
+      //  setData(docSnap.data());
+      //  return data
+      // console.log(docSnap.data());
+      return docSnap.data();
+    } else {
+      console.log("No such document!");
+    }
   };
 
   return (
@@ -143,6 +167,11 @@ const DriverHome = (props, { navigation }) => {
                     Email
                   </Text>
                 </View>
+                <View style={{ marginLeft: 10 }}>
+                  <Text style={{ fontSize: normalize(15) }}>{x.userName}</Text>
+                  <Text style={{ fontSize: normalize(15) }}>{x.phone}</Text>
+                  <Text style={{ fontSize: normalize(15) }}>{x.userId}</Text>
+                </View>
               </View>
 
               <View
@@ -175,7 +204,16 @@ const DriverHome = (props, { navigation }) => {
                 </View>
                 <View style={[styles.dataView, { flexDirection: "row" }]}>
                   <Ionicons name="map-outline" size={30} color="#5e1e7f" />
-                  <Text style={styles.dataTitles}>Open Map</Text>
+                  <Text
+                    style={styles.dataTitles}
+                    onPress={() =>
+                      Linking.openURL(
+                        `https://www.google.com/maps/search/?api=1&query=${lat},${long}`
+                      )
+                    }
+                  >
+                    Open Map
+                  </Text>
                 </View>
               </View>
 
@@ -217,6 +255,7 @@ const styles = StyleSheet.create({
   },
   home: {
     marginHorizontal: "10%",
+    height: height,
   },
   card: {
     marginVertical: "2%",

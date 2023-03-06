@@ -134,83 +134,99 @@ const Drivers = ({ navigation }) => {
 
   const renderCards = () => {
     return (
-      <Block>
-        <Block
-          style={[
-            styles.head,
-            { height: height * 0.08, justifyContent: "space-between" },
-          ]}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Text
-              style={{
-                fontSize: deviceType == "mobile" ? 20 : 30,
-                marginLeft: "5%",
-              }}
-            >
-              {flag}
-            </Text>
-          </View>
-        </Block>
-        <DataTable.Header
-          key={1}
+      <Block height={height * 0.8}>
+        {/* <ScrollView> */}
+        <View
           style={{
-            borderWidth: 1,
-            borderColor: "black",
-            width: "95%",
-            marginLeft: "3%",
-            backgroundColor: "#5e1e7f",
+            borderWidth: 2,
+            marginTop: 0,
+            height: height * 0.8,
           }}
         >
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Type
-          </DataTable.Title>
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Location
-          </DataTable.Title>
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Date
-          </DataTable.Title>
+          <ScrollView>
+            {orders.map((item) => (
+              <View style={styles.notificationBox} key={item.type}>
+                <View
+                  style={{
+                    // flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingHorizontal: "2%",
+                    paddingVertical: "1%",
+                  }}
+                >
+                  <Text style={styles.description}>{item.type} </Text>
+                  {/* <Text style={styles.description}>{item.dateTime}</Text> */}
+                </View>
 
-          <DataTable.Title
-            numeric
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Time
-          </DataTable.Title>
-        </DataTable.Header>
-        {orders &&
-          orders.map((x) => (
-            <DataTable.Row
-              key={x.user}
-              style={{
-                width: "95%",
-                height: "12%",
-                marginLeft: "3%",
-                backgroundColor: "#f3e5f5",
-                borderWidth: 1,
-              }}
-            >
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.type}
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.location}
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.date}
-              </DataTable.Cell>
-              <DataTable.Cell numeric textStyle={{ fontSize: normalize(25) }}>
-                {x.time}
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
+                <View
+                  style={{
+                    borderWidth: 0.6,
+                    width: width * 0.8,
+                    marginBottom: "1%",
+                    // borderWidth: 1,
+                  }}
+                ></View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    margin: "5%",
+                    marginTop: "2%",
+                    // borderWidth: 1,
+                    marginBottom: "1%",
+                  }}
+                >
+                  {item.type == "pickup" ? (
+                    <Image
+                      style={styles.icon}
+                      source={require("../../assets/imgs/pick.png")}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.icon}
+                      source={require("../../assets/imgs/deliv.png")}
+                    />
+                  )}
+
+                  <View
+                    style={{
+                      width: "67%",
+                      // borderWidth: 1,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        //   width: "50%",
+                        // borderWidth: 1,
+                        padding: "1%",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {/* <MaterialIcons name="location-pin" size={25} />
+                        <Text style={styles.description}>{item.location}</Text>
+                        <Text style={styles.description}>{item.location}</Text> */}
+                      <Text style={styles.description}>{item.location}</Text>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        width: "75%",
+                        // borderWidth: 1,
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {/* <MaterialIcons name="date-range" size={25} /> */}
+                      {/* <Text style={styles.description}>
+                          {item.date} -{item.time}
+                        </Text> */}
+                    </View>
+                  </View>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
       </Block>
     );
   };
@@ -475,18 +491,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     justifyContent: "center",
   },
-  notificationList: {
-    marginTop: 20,
-    padding: 10,
-  },
-  notificationBox: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 5,
-    backgroundColor: "#FFFFFF",
-    flexDirection: "row",
-    borderRadius: 10,
-  },
+
   image: {
     width: 45,
     height: 45,
@@ -515,6 +520,35 @@ const styles = StyleSheet.create({
     // borderWidth:2,
     fontSize: normalize(20),
     textAlign: "right",
+  },
+  notificationList: {
+    // marginTop: "1%",
+    // padding: "3%",
+    borderWidth: 1,
+    backgroundColor: "white",
+    flexDirection: "row",
+  },
+  notificationBox: {
+    width: width * 0.8,
+    // padding: "5%",
+    // paddingTop: "1%",
+    // marginTop: "1%",
+    marginBottom: "3%",
+    marginHorizontal: "5%",
+    backgroundColor: "#F1EEFF",
+    // flexDirection: "row",
+    borderRadius: "15%",
+    borderWidth: 0.3,
+  },
+  icon: {
+    width: 70,
+    height: 70,
+  },
+  description: {
+    fontSize: normalize(20),
+    // color: "#3498db",
+    marginLeft: "3%",
+    // textAlign: "center",
   },
 });
 

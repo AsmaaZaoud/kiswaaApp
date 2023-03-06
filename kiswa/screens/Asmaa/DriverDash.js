@@ -149,9 +149,9 @@ const DriverDash = ({ route, navigation }) => {
             backgroundColor: "white",
           }}
         >
-          <FontAwesome
+          <Feather
             color={index == 1 ? "#5e1e7f" : "black"}
-            name="map-o"
+            name="list"
             size={deviceType == "mobile" ? 40 : 45}
           />
           {/* <Text style={{ fontSize: normalize(19) }}>Donors</Text> */}

@@ -75,14 +75,14 @@ const Donors = ({ navigation }) => {
   };
   const [flag, setFlag] = useState(false);
 
-  const [requests, setRequests] = useState([]);
+  const [donations, setDonations] = useState([]);
   //  let user = "Wsd@ass.com"
   const readOne = async (user) => {
     setHover(user);
     let temp = [];
     const q = query(
-      collection(db, "familyRequests"),
-      where("familyID", "==", user)
+      collection(db, "donorDonation"),
+      where("email", "==", user)
     );
     const docs = await getDocs(q);
     // console.log(docs)
@@ -95,7 +95,7 @@ const Donors = ({ navigation }) => {
       console.log(doc.id, " => ", t);
       // console.log(t);
     });
-    setRequests(temp);
+    setDonations(temp);
 
     // setAllorderss(temp)
     //console.log(drivers);
@@ -104,79 +104,93 @@ const Donors = ({ navigation }) => {
 
   const renderCards = () => {
     return (
-      <Block>
-        <Block
-          style={[
-            styles.head,
-            { height: height * 0.08, justifyContent: "space-between" },
-          ]}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Text
-              style={{
-                fontSize: deviceType == "mobile" ? 20 : 30,
-                marginLeft: "5%",
-              }}
-            >
-              {flag}
-            </Text>
-          </View>
-        </Block>
-        <DataTable.Header
-          key={1}
-          style={{
-            borderWidth: 1,
-            borderColor: "black",
-            width: "90%",
-            marginLeft: "3%",
-            backgroundColor: "#5e1e7f",
-          }}
-        >
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Cart
-          </DataTable.Title>
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Status
-          </DataTable.Title>
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Email
-          </DataTable.Title>
-
-          {/* <DataTable.Title numeric textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Time</DataTable.Title> */}
-        </DataTable.Header>
-        <View height={height * 0.15}>
-          <ScrollView>
-            {requests &&
-              requests.map((x) => (
-                <DataTable.Row
-                  key={x.user}
+      <Block height={height * 0.6}>
+        {/* <ScrollView> */}
+        <View style={{ flexDirection: "row" }}>
+          {/* <ScrollView horizontal> */}
+          {donations &&
+            donations.map((item) => (
+              <View style={styles.notificationBox} key={item.type}>
+                <View
                   style={{
-                    width: "90%",
-                    height: "12%",
-                    marginLeft: "3%",
-                    backgroundColor: "#f3e5f5",
-                    borderWidth: 1,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingHorizontal: "2%",
+                    paddingVertical: "1%",
                   }}
                 >
-                  <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                    {x.cart}
-                  </DataTable.Cell>
-                  <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                    {x.status}
-                  </DataTable.Cell>
-                  <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                    {x.familyID}
-                  </DataTable.Cell>
-                  {/* <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.time}</DataTable.Cell> */}
-                </DataTable.Row>
-              ))}
-          </ScrollView>
+                  <Text style={styles.description}>{item.status} </Text>
+                  {/* <Text style={styles.description}>{item.dateTime}</Text> */}
+                </View>
+
+                <View
+                  style={{
+                    borderWidth: 0.6,
+                    width: width * 0.4,
+                    marginBottom: "1%",
+                    // borderWidth: 1,
+                  }}
+                ></View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    margin: "5%",
+                    marginTop: "2%",
+                    // borderWidth: 1,
+                    marginBottom: "1%",
+                  }}
+                >
+                  {item.status == "pending" ? (
+                    <Image
+                      style={styles.icon}
+                      source={require("../../assets/Asmaa/pendingDon.png")}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.icon}
+                      source={require("../../assets/Asmaa/picked.png")}
+                    />
+                  )}
+
+                  <View
+                    style={{
+                      width: "67%",
+                      // borderWidth: 1,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        //   width: "50%",
+                        // borderWidth: 1,
+                        padding: "1%",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {/* <MaterialIcons name="location-pin" size={25} />
+                        <Text style={styles.description}>{item.location}</Text>
+                        <Text style={styles.description}>{item.location}</Text> */}
+                      <Text style={styles.description}>{item.comment}</Text>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        width: "75%",
+                        // borderWidth: 1,
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {/* <MaterialIcons name="date-range" size={25} /> */}
+                      {/* <Text style={styles.description}>
+                          {item.date} -{item.time}
+                        </Text> */}
+                    </View>
+                  </View>
+                </View>
+              </View>
+            ))}
+          {/* </ScrollView> */}
         </View>
       </Block>
     );
@@ -260,7 +274,7 @@ const Donors = ({ navigation }) => {
                 }}
               >
                 <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                  {x.firstName}
+                  {x.userName}
                 </DataTable.Cell>
                 <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
                   {x.email}
@@ -273,14 +287,14 @@ const Donors = ({ navigation }) => {
         </ScrollView>
       </View>
 
-      {flag && requests.length == 0 ? (
+      {flag && donations.length == 0 ? (
         <View
           style={{
-            width: width * 0.5,
-            height: height * 0.2,
+            width: width * 0.9,
+            // height: height * 0.5,
             // borderWidth: 2,
             justifyContent: "center",
-            margin: "25%",
+            marginTop: "6%",
             alignContent: "center",
             textAlign: "center",
           }}
@@ -292,10 +306,10 @@ const Donors = ({ navigation }) => {
               color: "#5e1e7f",
             }}
           >
-            No Donations yet
+            No Donations Yet
           </Text>
         </View>
-      ) : flag && requests.length != 0 ? (
+      ) : flag && donations.length != 0 ? (
         renderCards()
       ) : null}
     </DataTable>
@@ -399,6 +413,35 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   rowData: { color: "black", fontSize: width * 0.04 },
+  notificationList: {
+    marginTop: "1%",
+    // padding: "3%",
+    // borderWidth: 1,
+    backgroundColor: "white",
+    flexDirection: "row",
+  },
+  notificationBox: {
+    width: width * 0.4,
+    // padding: "5%",
+    // paddingTop: "1%",
+    marginTop: "2%",
+    marginBottom: "3%",
+    marginLeft: "8%",
+    backgroundColor: "#F1EEFF",
+    // flexDirection: "row",
+    borderRadius: "15%",
+    borderWidth: 0.3,
+  },
+  icon: {
+    width: 70,
+    height: 70,
+  },
+  description: {
+    fontSize: normalize(20),
+    // color: "#3498db",
+    marginLeft: "3%",
+    // textAlign: "center",
+  },
 });
 
 export default Donors;

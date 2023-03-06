@@ -43,7 +43,6 @@ const Feedback = (props, { navigation }) => {
       //   let hour = doc.data().dateTime.getHours();
       let t = doc.data();
       t.id = doc.id;
-
       //   t.time = hour + ":00";
       // t.date = doc.data().dateTime.toDate().toLocaleDateString();
       //   doc.data().status == "done" ? temp.push(t) : null;
@@ -76,7 +75,7 @@ const Feedback = (props, { navigation }) => {
 
   return (
     <Block middle style={{ backgroundColor: "white" }}>
-      <Block style={styles.registerContainer}>
+      <Block>
         <Block>
           <Text style={styles.title}>Feedback</Text>
 

@@ -13,9 +13,18 @@ import {
   FlatList,
   TouchableOpacity,
   Table,
+  Platform,
+  PixelRatio,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-
+import {
+  ClothTypeData as ClothTypeData,
+  SizeData as SizeData,
+  ColorData as ColorData,
+  GenderData as GenderData,
+  QualityData as QualityData,
+  AgeCategory as AgeCategory,
+} from "../../components/Fatima/Data";
 import {
   BarChart,
   PieChart,
@@ -45,15 +54,25 @@ import { Card, Header } from "../../components";
 
 import { Icon, Feather, FontAwesome } from "react-native-vector-icons";
 import ArButton from "../../components/Button";
-import { normalize } from "@rneui/themed";
+// import { normalize } from "@rneui/themed";
+import { Dropdown } from "react-native-element-dropdown";
 
 const { width, height } = Dimensions.get("screen");
-
+const scale = width / 830;
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
 const InventoryTable = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     readAllWhere();
@@ -114,10 +133,60 @@ const InventoryTable = ({ navigation }) => {
               ID
             </DataTable.Title>
             <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Type
+              <Dropdown
+                autoScroll
+                style={[
+                  styles.smallInput,
+                  // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
+                ]}
+                placeholderStyle={{
+                  fontSize: normalize(16),
+                  textAlign: "left",
+                }}
+                selectedTextStyle={{ fontSize: normalize(10) }}
+                inputSearchStyle={styles.inputSearchStyle}
+                data={ClothTypeData}
+                labelField="label"
+                valueField="value"
+                id="value"
+                maxHeight={400}
+                search
+                searchPlaceholder="Search..."
+                animated={false}
+                // value={type}
+                placeholder={"Type"}
+                onChange={(item) => {
+                  // setType(item.value);
+                  setOpen(true);
+                }}
+              />
             </DataTable.Title>
             <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Size
+              <Dropdown
+                style={[
+                  styles.smallInput,
+                  // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
+                ]}
+                placeholderStyle={{
+                  fontSize: normalize(16),
+                  textAlign: "left",
+                }}
+                selectedTextStyle={{ fontSize: normalize(10) }}
+                inputSearchStyle={styles.inputSearchStyle}
+                data={SizeData}
+                labelField="label"
+                valueField="value"
+                maxHeight={200}
+                id="value"
+                search
+                searchPlaceholder="Search..."
+                animated={false}
+                // value={size}
+                placeholder={"Size"}
+                onChange={(item) => {
+                  // setSize(item.value);
+                }}
+              />
             </DataTable.Title>
             <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
               Color
@@ -182,6 +251,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginLeft: 20,
     textAlign: "left",
+  },
+  smallInput: {
+    width: width * 0.2,
+    // borderWidth: 2,
+    fontSize: normalize(20),
+    // textAlign: "right",
   },
   formContent: {
     flexDirection: "row",

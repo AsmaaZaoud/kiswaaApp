@@ -79,15 +79,15 @@ const Inventory = ({ navigation }) => {
   };
 
   const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ["Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday"],
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43],
+        data: [12, 14, 13, 17, 20, 14],
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
         strokeWidth: 2, // optional
       },
     ],
-    legend: ["Rainy Days"], // optional
+    legend: ["Donation Days"], // optional
   };
 
   return (
@@ -247,12 +247,30 @@ const Inventory = ({ navigation }) => {
           />
         </View>
       </View>
-      <View style={{ marginTop: "45%", marginHorizontal: "10%" }}>
+
+      <View
+        style={{
+          marginTop: "42%",
+          marginHorizontal: "5%",
+          borderWidth: 1,
+          height: height * 0.36,
+          borderRadius: "15%",
+        }}
+      >
+        <Text style={{ fontSize: normalize(23), marginLeft: "3%" }}>
+          Donation days
+        </Text>
+        <View
+          style={{
+            borderWidth: 1,
+            width: "100%",
+          }}
+        ></View>
         <LineChart
           flex
           data={data}
-          width={width * 0.6}
-          height={220}
+          width={width * 0.89}
+          height={height * 0.28}
           chartConfig={{
             backgroundColor: "#1cc910",
             backgroundGradientFrom: "#eff3ff",
@@ -260,7 +278,8 @@ const Inventory = ({ navigation }) => {
             decimalPlaces: 2,
             color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
             style: {
-              borderRadius: 16,
+              // borderRadius: 16,
+              // borderWidth: ,
             },
           }}
         />

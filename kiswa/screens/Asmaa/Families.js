@@ -126,87 +126,88 @@ const Families = ({ navigation }) => {
         {/* <ScrollView> */}
         <View style={{ flexDirection: "row" }}>
           {/* <ScrollView horizontal> */}
-          {requests.map((item) => (
-            <View style={styles.notificationBox} key={item.type}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingHorizontal: "2%",
-                  paddingVertical: "1%",
-                }}
-              >
-                <Text style={styles.description}>{item.status} </Text>
-                {/* <Text style={styles.description}>{item.dateTime}</Text> */}
-              </View>
-
-              <View
-                style={{
-                  borderWidth: 0.6,
-                  width: width * 0.4,
-                  marginBottom: "1%",
-                  // borderWidth: 1,
-                }}
-              ></View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  margin: "5%",
-                  marginTop: "2%",
-                  // borderWidth: 1,
-                  marginBottom: "1%",
-                }}
-              >
-                {item.type == "donor" ? (
-                  <Image
-                    style={styles.icon}
-                    source={require("../../assets/Asmaa/donorFeedback.png")}
-                  />
-                ) : (
-                  <Image
-                    style={styles.icon}
-                    source={require("../../assets/Asmaa/familyFeedback.png")}
-                  />
-                )}
+          {requests &&
+            requests.map((item) => (
+              <View style={styles.notificationBox} key={item.type}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingHorizontal: "2%",
+                    paddingVertical: "1%",
+                  }}
+                >
+                  <Text style={styles.description}>{item.status} </Text>
+                  {/* <Text style={styles.description}>{item.dateTime}</Text> */}
+                </View>
 
                 <View
                   style={{
-                    width: "67%",
+                    borderWidth: 0.6,
+                    width: width * 0.4,
+                    marginBottom: "1%",
                     // borderWidth: 1,
                   }}
+                ></View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    margin: "5%",
+                    marginTop: "2%",
+                    // borderWidth: 1,
+                    marginBottom: "1%",
+                  }}
                 >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      //   width: "50%",
-                      // borderWidth: 1,
-                      padding: "1%",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    {/* <MaterialIcons name="location-pin" size={25} />
-                        <Text style={styles.description}>{item.location}</Text>
-                        <Text style={styles.description}>{item.location}</Text> */}
-                    <Text style={styles.description}>{item.comment}</Text>
-                  </View>
+                  {item.status == "pending" ? (
+                    <Image
+                      style={styles.icon}
+                      source={require("../../assets/Asmaa/pending.png")}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.icon}
+                      source={require("../../assets/Asmaa/fullfied.png")}
+                    />
+                  )}
 
                   <View
                     style={{
-                      flexDirection: "row",
-                      width: "75%",
+                      width: "67%",
                       // borderWidth: 1,
-                      justifyContent: "space-between",
                     }}
                   >
-                    {/* <MaterialIcons name="date-range" size={25} /> */}
-                    {/* <Text style={styles.description}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        //   width: "50%",
+                        // borderWidth: 1,
+                        padding: "1%",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {/* <MaterialIcons name="location-pin" size={25} />
+                        <Text style={styles.description}>{item.location}</Text>
+                        <Text style={styles.description}>{item.location}</Text> */}
+                      <Text style={styles.description}>{item.status}</Text>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        width: "75%",
+                        // borderWidth: 1,
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {/* <MaterialIcons name="date-range" size={25} /> */}
+                      {/* <Text style={styles.description}>
                           {item.date} -{item.time}
                         </Text> */}
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-          ))}
+            ))}
           {/* </ScrollView> */}
         </View>
       </Block>
@@ -307,11 +308,11 @@ const Families = ({ navigation }) => {
       {flag && requests.length == 0 ? (
         <View
           style={{
-            width: width * 0.5,
+            width: width * 0.9,
             // height: height * 0.5,
             // borderWidth: 2,
             justifyContent: "center",
-            // margin: "25%",
+            marginTop: "6%",
             alignContent: "center",
             textAlign: "center",
           }}
@@ -439,8 +440,8 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
   },
   icon: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
   },
   description: {
     fontSize: normalize(20),
