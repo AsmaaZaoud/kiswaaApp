@@ -46,16 +46,16 @@ const Home = ({ route, navigation }) => {
   const [itemsArray, setItemsArray] = useState([])
   const [ItemsDic, setItemsDic] = useState([])
     
-    console.log('itemsArray: ', itemsArray)
-    console.log('itemDic : ', ItemsDic)
+    //####console.log('itemsArray: ', itemsArray)
+    //####console.log('itemDic : ', ItemsDic)
 
     itemsArray.map((item) => ItemsDic.push({ type: item.data.type, quantity: item.data.quantity }))
 
-    let shortList = ItemsDic.slice(0, 8)
-    console.log('shortList: ', shortList)
+    let shortList = ItemsDic.slice(0, 10)
+    //####console.log('shortList: ', shortList)
 
     let uniqueList = shortList.filter((item, index, self) => index === self.findIndex(t => t.type === item.type))
-    console.log('uniquelist: ', uniqueList)
+    //####console.log('uniquelist: ', uniqueList)
   
     // const matchingItems = []
     
@@ -76,6 +76,25 @@ const Home = ({ route, navigation }) => {
   //shortList2.map((item) => console.log(item.type))
 
   //read from database
+
+  let counter = 0;
+  const [number, setNumber] = useState()
+
+  const readDonations = async () => {
+    const q = query(collection(db, "donorDonation"), where("email", "==", user));
+    const docs = await getDocs(q);
+    // let counter = 0
+    docs.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    counter += 1
+    //setCounter(counter)
+    console.log(doc.id, " => ", doc.data());
+    });
+    setNumber(counter)
+    console.log("counter: ", counter)
+   } 
+
+
   //readAllWhere 
   const readAllWhere = async () => {
     const q = query(collection(db, "familyRequests"), where("status", "==", "pending"));
@@ -96,11 +115,24 @@ const Home = ({ route, navigation }) => {
     })
   }
 
+  
   useEffect(() => {
     if (isFocused) {
-      readAllWhere();
+        readAllWhere() 
     }
   }, [isFocused]);
+
+  {
+    user !== undefined ?
+    useEffect(() => {
+      if(isFocused){
+      readDonations()
+      readName()
+      }
+    }, [isFocused])
+    :
+    null
+  }
 
   const getCartItems = async (cartId) => {
     const docRef = collection(db, "familyRequests", cartId, "Items");
@@ -112,7 +144,7 @@ const Home = ({ route, navigation }) => {
         data: doc.data()
       })
     })
-    console.log('tempdata: ', temp)
+    // ####console.log('tempdata: ', temp)
     setItemsArray(temp)
     //getList()
     return temp
@@ -125,17 +157,17 @@ const Home = ({ route, navigation }) => {
     const docs = await getDocs(q);
     docs.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+      //####console.log(doc.id, " => ", doc.data());
       setNickname(doc.data().userName)
     });
   }
 
 
-  useEffect(() => {
-    if (isFocused) {
-      readName();
-    }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     readName();
+  //   }
+  // }, [isFocused]);
 
   //sign out
 
@@ -265,8 +297,22 @@ const Home = ({ route, navigation }) => {
                   :
                   null
                 }
+
+                {
+                  user !== undefined ?
+                  <Block row>
+                  <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>{number} Donations</Text>
+                  <Image
+                  style={{width: 25, height: 25, marginLeft: 12, marginTop: 10}}
+                  source = {{uri: 'https://cdn-icons-png.flaticon.com/512/9466/9466004.png'}}
+                  ></Image>
+                  </Block>
+                  :
+                  <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
+                }
+
                 {/* <Text style={{ fontSize: 15, alignSelf: 'center' }}>{user === undefined ? '' : user}</Text> */}
-                <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
+                {/* <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text> */}
                 {/* <Text style={{  fontWeight: 'bold', alignSelf: 'center' }}>Let's share goodness!</Text> */}
               </Block>
               {/* </Block> */}

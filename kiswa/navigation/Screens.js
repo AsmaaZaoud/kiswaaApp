@@ -499,6 +499,14 @@ function AppStack(props) {
           headerShown: false,
         }}
       />
+      {/* syeda */}
+      <Drawer.Screen
+        name="Donate"
+        component={Donate}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Drawer.Navigator>
   );
 }

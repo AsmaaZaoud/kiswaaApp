@@ -41,8 +41,15 @@ import { db } from "../../config";
 const { width, height } = Dimensions.get("screen");
 
 const LoginDonor = ({ navigation }) => {
+
+  const [error, setError] = useState();
+
   const [email, setEmail] = useState();
+  //const [emailError, setEmailError] = useState()
+
   const [password, setPassword] = useState();
+  const [passwordError, setPasswordError] = useState();
+
   const [signedIn, setSignedIn] = useState(false);
 
   // const reformat = (doc) => {
@@ -59,6 +66,22 @@ const LoginDonor = ({ navigation }) => {
         navigation.navigate('Home')
       })
       .catch((error) => {
+        if (error.message === 'Firebase: Error (auth/missing-email).'){
+          setError("Please enter your email id.")
+          setPasswordError('')
+        }
+        if (error.message === 'Firebase: Error (auth/internal-error).'){
+          setError("Incorrect email or no password.")
+          setPasswordError('')
+        }
+        if (error.message === 'Firebase: Error (auth/wrong-password).'){
+          setError("")
+          setPasswordError("Wrong password.")
+        }
+        if (error.message === 'Firebase: Error (auth/user-not-found).'){
+          setError('This email is not registered. Sign up first.')
+          setPasswordError('')
+        }
         console.log(error.message);
         setSignedIn(false)
       })
@@ -83,12 +106,15 @@ const LoginDonor = ({ navigation }) => {
                   behavior="padding"
                   enabled
                 >
+                  <Text style={{color: 'red'}}>{error}</Text>
                   <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                     <Input
                       borderless
                       placeholder="Email"
                       value={email}
                       onChangeText={setEmail}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
                       iconContent={
                         <Icon
                           size={16}
@@ -100,6 +126,8 @@ const LoginDonor = ({ navigation }) => {
                       }
                     />
                   </Block>
+
+                  <Text style={{color: 'red'}}>{passwordError}</Text>
                   <Block width={width * 0.8}>
                     <Input
                       password

@@ -100,7 +100,7 @@ const CheckOut = ({ route, navigation }) => {
     }, [isFocused]);
 
     const donate = async () => {
-        Alert.alert("working")
+        //Alert.alert("working")
         const docRef = await addDoc(collection(db, "donorDonation"), {
             phone: phone,
             email: email,
@@ -136,12 +136,20 @@ const CheckOut = ({ route, navigation }) => {
             phone: phone,
             email: email,
             location: location,
-            type: route.params.type,
-            amount: route.params.amount,
+            // type: route.params.type,
+            // amount: route.params.amount,
             timeSlot: route.params.time,
             dateSlot: route.params.date
         });
         console.log("Document written with ID: ", docRef.id);
+
+        confirm.map(async (item) => {
+            const docRef2 = await addDoc(collection(db, "donorDonation", docRef.id, "Items"), {
+                type: item.cloth,
+                quantity: item.amount,
+            });
+            console.log("Document written with ID: ", docRef2.id);
+        })
 
         navigation.navigate("Feedback")
     }
@@ -173,7 +181,6 @@ const CheckOut = ({ route, navigation }) => {
                 return;
             }
             else {
-
                 console.log('permitted')
                 Alert.alert("Your location has been recorded.")
             }
