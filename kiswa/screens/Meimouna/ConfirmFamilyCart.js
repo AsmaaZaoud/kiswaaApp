@@ -460,7 +460,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
 
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("Onboarding.js")}
+          onPress={() => navigation.navigate("FamilyProfile.js", id)}
         >
           <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
         </Pressable>

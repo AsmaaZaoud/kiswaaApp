@@ -99,6 +99,19 @@ export default function FamilyProfile({ route, navigation }) {
     };
     getPermissions();
   };
+  const [phoneError, setPhoneError] = useState("");
+  const validation = async () => {
+    if (phonenum.length === 8) {
+      setPhoneError("");
+    } else {
+      setPhoneError("Number is not valid");
+    }
+
+    if (phonenum.length === 8) {
+      console.log("okay");
+      update();
+    }
+  };
   return (
     <View style={{ flex: 1, backgroundColor: "#842DCE" }}>
       <View style={styles.header}>
@@ -241,6 +254,15 @@ export default function FamilyProfile({ route, navigation }) {
                   value={phonenum}
                   onChangeText={(text) => setPhoneNum(text)}
                 />
+                <Text
+                  style={{
+                    // textAlign: "center",
+                    color: "red",
+                    fontSize: 14,
+                  }}
+                >
+                  {phoneError}
+                </Text>
 
                 <Text></Text>
                 <TextInput
@@ -281,7 +303,7 @@ export default function FamilyProfile({ route, navigation }) {
 
               <Pressable
                 style={[styles.button, styles.buttonClose, { marginTop: 40 }]}
-                onPress={() => update()}
+                onPress={() => validation()}
               >
                 <Text style={styles.textStyle}>Save</Text>
               </Pressable>

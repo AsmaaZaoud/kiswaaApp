@@ -35,6 +35,7 @@ import FamilyFeedback from "../screens/Meimouna/FamilyFeedback";
 import FeedbackConf from "../screens/Meimouna/FeedbackConf";
 import RequestHistory from "../screens/Meimouna/RequestHistory";
 import RequestHistoryComp from "../screens/Meimouna/RequestHistoryComp";
+import FamilyProfile from "../screens/Meimouna/FamilyProfile";
 //drivers
 import Drivers from "../screens/Asmaa/Drivers";
 import AdminHome from "../screens/Asmaa/AdminHome";
@@ -387,6 +388,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="FeedbackConf" component={FeedbackConf} />
       <Stack.Screen name="RequestHistory" component={RequestHistory} />
       <Stack.Screen name="RequestHistoryComp" component={RequestHistoryComp} />
+      <Stack.Screen name="FamilyProfile" component={FamilyProfile} />
     </Stack.Navigator>
   );
 }
