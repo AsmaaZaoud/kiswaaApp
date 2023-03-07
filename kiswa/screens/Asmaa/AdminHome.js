@@ -147,6 +147,7 @@ const AdminHome = ({ navigation }) => {
 
       <Block style={{ backgroundColor: "white", flexDirection: "colum" }}>
         <Tab
+          // scrollable={false}
           value={index}
           onChange={setIndex}
           indicatorStyle={{
