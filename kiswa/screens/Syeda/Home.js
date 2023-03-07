@@ -19,7 +19,18 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config";
 
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
+const scale = width / 834;
+export function normalize(size) {
+ 
+  const newSize = size * scale 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
+
 import { auth } from '../../config';
 import { object } from 'prop-types';
 
