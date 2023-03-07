@@ -41,11 +41,66 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   // const [userinforr, setUserinforr] = useState([]);
   const { cartId, id } = route.params;
 
-  const [flag1, setFlag1] = useState(0);
-  const [flag2, setFlag2] = useState(0);
-  const [flag3, setFlag3] = useState(0);
+  //........dates............................
+
+  //todays date
+  const currentDate = new Date();
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1; // add 1 to get the correct month (0-indexed)
+  const year = currentDate.getFullYear();
+
+  // Format the date as a string
+  const dateString = `${day}/${month}/${year}`;
+  console.log("date string: ", dateString);
+
+  const first2 = new Date();
+  first2.setDate(currentDate.getDate() + 3);
+  console.log("first2", first2);
+  const first2day = first2.getDate();
+  const first2month = first2.getMonth() + 1; // add 1 to get the correct month (0-indexed)
+  const first2year = first2.getFullYear();
+  const first2date = `${first2day}/${first2month}/${first2year}`;
+  console.log("first2date: ", first2date);
+
+  console.log("currentdate: ", currentDate);
+
+  const sec1 = new Date();
+  sec1.setDate(currentDate.getDate() + 4);
+  const sec1day = sec1.getDate();
+  const sec1month = sec1.getMonth() + 1;
+  const sec1year = sec1.getFullYear();
+  const sec1date = `${sec1day}/${sec1month}/${sec1year}`;
+  console.log("sec1date: ", sec1date);
+
+  const sec2 = new Date();
+  sec2.setDate(currentDate.getDate() + 6);
+  const sec2day = sec2.getDate();
+  const sec2month = sec2.getMonth() + 1;
+  const sec2year = sec2.getFullYear();
+  const sec2date = `${sec2day}/${sec2month}/${sec2year}`;
+  console.log("sec2date: ", sec2date);
+
+  const third1 = new Date();
+  third1.setDate(currentDate.getDate() + 7);
+  const third1day = third1.getDate();
+  const third1month = third1.getMonth() + 1;
+  const third1year = third1.getFullYear();
+  const third1date = `${third1day}/${third1month}/${third1year}`;
+  console.log("third1date: ", third1date);
+
+  const third2 = new Date();
+  third2.setDate(currentDate.getDate() + 9);
+  const third2day = third2.getDate();
+  const third2month = third2.getMonth() + 1;
+  const third2year = third2.getFullYear();
+  const third2date = `${third2day}/${third2month}/${third2year}`;
+  console.log("third2date: ", third2date);
+
   const [time, setTime] = useState("");
-  const [date, setTdate] = useState("");
+  const [date, setDate] = useState("");
+
+  const [timeError, setTimeError] = useState("");
+  const [dateError, setDateError] = useState("");
 
   // const [theUser, setTheUser] = useState([]);
   const [zone, setZone] = useState("");
@@ -94,23 +149,35 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   // console.log(theUser.phone);
 
   const closeRequest = async () => {
-    const docRef = doc(db, "familyRequests", cartId);
+    if (date == "") {
+      setDateError("please select date!");
+      breack;
+    }
 
-    await setDoc(
-      docRef,
-      {
-        cart: "closed",
-        dateTime: new Date(),
-      },
-      { merge: true }
-    )
-      .then(() => {
-        console.log("data submitted");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-    navigation.navigate("FamilyHome", id);
+    if (time == "") {
+      setTimeError("please select time!");
+      breack;
+    } else {
+      const docRef = doc(db, "familyRequests", cartId);
+
+      await setDoc(
+        docRef,
+        {
+          cart: "closed",
+          dateTime: new Date(),
+          delivaryTime: time,
+          delivaryDate: date,
+        },
+        { merge: true }
+      )
+        .then(() => {
+          console.log("data submitted");
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+      navigation.navigate("FamilyHome", id);
+    }
   };
   const renderArticles = () => {
     return (
@@ -194,8 +261,10 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               style={{
                 width: "90%",
                 height: "50%",
-                borderWidth: 1,
+                // borderWidth: 1,
                 marginLeft: "5%",
+                marginTop: "5%",
+                // backgroundColor: "gray",
               }}
             >
               {/* <Text>Delivery Time</Text>
@@ -203,68 +272,124 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               {/* <Text>you need to inster it in the db</Text> */}
               <View>
                 <Text style={{ fontSize: 20, marginLeft: 15 }}>
-                  Select -up time interval:
+                  Select delivary time:
                 </Text>
 
                 <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
-                  {/* {} */}
+                  {timeError}
                 </Text>
                 <Block
-                  style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    height: "15%",
+                    marginBottom: "5%",
+                    marginLeft: 15,
+                  }}
                 >
                   <Pressable
                     onPress={() => setTime("8AM - 12PM")}
                     style={{
-                      backgroundColor: flag1 === 0 ? "purple" : "green",
+                      backgroundColor:
+                        time == "8AM - 12PM" ? "#4C4AAB" : "purple",
+                      margin: "1%",
+                      height: "85%",
+                      width: "30%",
+                      justifyContent: "center",
                     }}
                   >
-                    <Text>8AM - 12PM</Text>
+                    <Text style={{ color: "white", textAlign: "center" }}>
+                      8AM - 12PM
+                    </Text>
                   </Pressable>
                   <Pressable
                     onPress={() => setTime("12PM - 6PM")}
                     style={{
-                      backgroundColor: flag2 === 0 ? "purple" : "green",
+                      backgroundColor:
+                        time == "12PM - 6PM" ? "#4C4AAB" : "purple",
+                      margin: "1%",
+                      height: "85%",
+                      width: "30%",
+                      justifyContent: "center",
                     }}
                   >
-                    <Text>12PM - 6PM</Text>
+                    <Text style={{ color: "white", textAlign: "center" }}>
+                      12PM - 6PM
+                    </Text>
                   </Pressable>
                   <Pressable
                     onPress={() => setTime("6PM - 10PM")}
                     style={{
-                      backgroundColor: flag3 === 0 ? "purple" : "green",
+                      backgroundColor:
+                        time == "6PM - 10PM" ? "#4C4AAB" : "purple",
+                      margin: "1%",
+                      height: "85%",
+                      width: "30%",
+                      justifyContent: "center",
                     }}
                   >
-                    <Text>6PM - 10PM</Text>
+                    <Text style={{ color: "white", textAlign: "center" }}>
+                      6PM - 10PM
+                    </Text>
                   </Pressable>
                 </Block>
 
                 <Text style={{ fontSize: 20, marginLeft: 15 }}>
-                  Select pick-up date interval:
+                  Select delivary date:
                 </Text>
                 <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
-                  {}
+                  {dateError}
                 </Text>
                 <Block
-                  style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}
+                  style={{ width: "70%", marginLeft: "15%", height: "55%" }}
                 >
                   <Pressable
-                    onPress={{}}
+                    onPress={() => setDate(`${dateString} - ${first2date}`)}
                     style={{
-                      backgroundColor: "purple",
+                      backgroundColor:
+                        date == `${dateString} - ${first2date}`
+                          ? "#4C4AAB"
+                          : "purple",
+                      margin: "2%",
+                      height: "25%",
+                      justifyContent: "center",
                     }}
                   >
-                    <Text style={{ color: "white" }}>{/* {} - {} */}</Text>
+                    <Text style={{ color: "white", textAlign: "center" }}>
+                      {dateString} - {first2date}
+                    </Text>
                   </Pressable>
                   <Pressable
-                    onPress={{}}
+                    onPress={() => setDate(`${sec1date} - ${sec2date}`)}
                     style={{
-                      backgroundColor: "purple",
+                      backgroundColor:
+                        date == `${sec1date} - ${sec2date}`
+                          ? "#4C4AAB"
+                          : "purple",
+                      margin: "2%",
+                      height: "25%",
+                      justifyContent: "center",
                     }}
                   >
-                    <Text style={{ color: "white" }}>{/* {} - {} */}</Text>
+                    <Text style={{ color: "white", textAlign: "center" }}>
+                      {sec1date} - {sec2date}
+                    </Text>
                   </Pressable>
-                  <Pressable onPress={{}} style={{ backgroundColor: "purple" }}>
-                    <Text style={{ color: "white" }}>{/* {} - {} */}</Text>
+                  <Pressable
+                    onPress={() => setDate(`${third1date} - ${third2date}`)}
+                    style={{
+                      backgroundColor:
+                        date == `${third1date} - ${third2date}`
+                          ? "#4C4AAB"
+                          : "purple",
+                      margin: "2%",
+                      height: "25%",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text style={{ color: "white", textAlign: "center" }}>
+                      {third1date} - {third2date}
+                    </Text>
                   </Pressable>
                 </Block>
               </View>
