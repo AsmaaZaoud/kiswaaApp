@@ -77,6 +77,7 @@ const Login = ({ navigation }) => {
 
   const [error, setError] = useState({ satus: false, key: null, msg: "" });
   const handleLogin = () => {
+    console.log(error.msg);
     if (email == null || email == "" || !email.includes("@"))
       setError({
         satus: true,
@@ -96,12 +97,16 @@ const Login = ({ navigation }) => {
           setError({ satus: false, key: null, msg: "" });
         })
         .catch((error) => {
-          console.log(error.code);
-          console.log(error.message);
+          // console.log(error.code);
+          // console.log(error.message);
           setError({ satus: true, key: "db", msg: error.message });
           error.code == "auth/user-not-found"
-            ? setError({ satus: true, key: "db", msg: "Check your email" })
-            : setError({ satus: true, key: "db", msg: error.message });
+            ? setError({
+                satus: true,
+                key: "user-not-found",
+                msg: "Check your email/password",
+              })
+            : null;
         });
     }
   };
@@ -145,7 +150,7 @@ const Login = ({ navigation }) => {
                       }
                     />
                     {error.key == "email" && error.satus && (
-                      <Text style={{ paddingLeft: "13%" }} color="red">
+                      <Text style={{ paddingLeft: "13%" }} color="red" bold>
                         {error.msg}
                       </Text>
                     )}
@@ -168,11 +173,21 @@ const Login = ({ navigation }) => {
                       }
                     />
                     {error.key == "pass" && error.satus && (
-                      <Text style={{ paddingLeft: "13%" }} color="red">
+                      <Text style={{ paddingLeft: "13%" }} color="red" bold>
                         {error.msg}
                       </Text>
                     )}
                     {error.key == "db" && error.satus && (
+                      <Text style={{ paddingLeft: "13%" }} color="red" bold>
+                        {error.msg}
+                      </Text>
+                    )}
+                    {error.key == "user-not-found" && error.satus && (
+                      <Text style={{ paddingLeft: "13%" }} color="red" bold>
+                        {error.msg}
+                      </Text>
+                    )}
+                    {error.key == "email" && error.satus && (
                       <Text style={{ paddingLeft: "13%" }} color="red" bold>
                         {error.msg}
                       </Text>
