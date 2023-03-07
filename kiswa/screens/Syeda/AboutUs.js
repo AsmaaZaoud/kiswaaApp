@@ -1,69 +1,103 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from 'react';
 import {
-    StyleSheet,
-    ImageBackground,
-    Dimensions,
-    StatusBar,
-    KeyboardAvoidingView,
-    TextInput,
-    View,
-    Platform,
-    PixelRatio,
-    Image,
+    Animated,
     ScrollView,
-    TouchableOpacity,
-} from "react-native";
-import { Block, Checkbox, Text, theme, Button } from "galio-framework";
-import { Dropdown } from "react-native-element-dropdown";
-
-const { width, height } = Dimensions.get('screen');
-const scale = width / 428;
-export function normalize(size) {
-
-    const newSize = size * scale
-    if (Platform.OS === 'ios') {
-        return Math.round(PixelRatio.roundToNearestPixel(newSize))
-    } else {
-        return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
-    }
+    View,
+    Image,
+    StyleSheet,
+    Dimensions,
+    ImageBackground
 }
+    from 'react-native';
 
+import { Block, Text, theme } from "galio-framework";
 
-const AboutUs = ({ route, navigation }) => {
+const { width, height } = Dimensions.get("screen");
+
+const AboutUs = () => {
+    const [fadeAnim] = useState(new Animated.Value(1));
+
+    const handleScroll = event => {
+        const { y } = event.nativeEvent.contentOffset;
+
+        // Calculate the opacity based on the scroll position
+        const opacity = Math.max(0, 1 - y / 100);
+
+        // Update the opacity of the Animated.View
+        Animated.timing(fadeAnim, {
+            toValue: opacity,
+            duration: 1000,
+            useNativeDriver: true,
+        }).start();
+    };
+
     return (
-        <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.articles}>
+        <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
+            <Animated.View style={{ opacity: fadeAnim }}>
+                <ImageBackground
+                    source={{ uri: 'https://i.pinimg.com/564x/85/9d/f0/859df063fd05efcd1f022cbdb6983e3a.jpg' }}
+                    style={{ width: width * 1, height: height * 0.3 }}
+                >
+                    <Block style={styles.textBG}>
+                        <Text bold size={50} color="#331054">About Kiswa</Text>
+                    </Block>
+                </ImageBackground>
+
+                <Block style={styles.container}>
+                    <Text></Text>
+                </Block>
+
+            </Animated.View>
+
             <Block style={styles.container}>
-            <Text bold size={40} color="#32325D">Welcome to Kiswa!</Text>
-            <Text style={{marginBottom: 20}}></Text>
+                <Text style={{
+                    fontSize: 25,
+                    marginHorizontal: 20
+                }}>
+                    Kiswa is a free platform on which you can either choose to become a donor and donate clothes
+                    or a receiver and receive clothes.
+                </Text>
+                <View style={{ margin: 30 }}></View>
+
                 <Image
-                style={styles.image}
-                source={{uri: 'https://www.maxpixel.net/static/photo/2x/Green-Enormous-Aesthetic-Tree-Log-Leaves-4557948.jpg'}}
+                    style={styles.image}
+                    source={{ uri: 'https://www.maxpixel.net/static/photo/2x/Green-Enormous-Aesthetic-Tree-Log-Leaves-4557948.jpg' }}
                 ></Image>
                 <Text bold size={30} color="#32325D">You help the environment!</Text>
-                <Text size={15} style={{alignSelf: 'center', margin: 15}}>
-                We collect clothes in any state of condition. Whether they be brand new or worn out, we accept them! 
-                We send them to recycling and upcycling projects in Qatar, 
-                that helps give new life to old clothes.
-                The environmental consequences of this waste are devastating: Artificial fibres such as polyester take anywhere from 20 to 200 years to break down, which is extremely harmful to our environment.
-                We at Kiswa, want to take an initiative towards reducing the carbon footprint and help save the environment, but, we can't do this without you!
+                <Text style={{
+                    fontSize: 18,
+                    marginHorizontal: 20
+                }}>
+                    Artificial fibres such as polyester take anywhere from 20 to 200 years to break down, which is extremely 
+                    harmful to our environment.
+                    We collect clothes in any state of condition. Whether they be brand new or worn out, we accept them!
+                    We send them to recycling and upcycling projects in Qatar, that helps give new life to old clothes.
+                    We at Kiswa, want to take an initiative towards reducing the carbon footprint and help save the environment.
                 </Text>
+
+                <View style={{ margin: 30 }}></View>
 
                 <Image
                 style={styles.image}
                 source={{uri: 'https://borgenproject.org/wp-content/uploads/Qatar-migrant-labour.jpg'}}
                 ></Image>
                 <Text bold size={30} color="#32325D">You help the people!</Text>
-                <Text size={15} style={{alignSelf: 'center', margin: 15}}>
+                <Text style={{fontSize: 18,
+                    marginHorizontal: 20}}>
                     Whether it may be being able to give clothes to children, an outfit to a person, or even warm clothes during the chilly weather, 
-                    you are helping so many people in Qatar that are deprived of necessary resources. We at Kiswa, want to take an initiative and help change the lives of people, but, we can't do this without you!
+                    you are helping so many people in Qatar that are deprived of necessary resources. We at Kiswa, want to take an initiative and help change the lives of people, 
+                    but, we can't do this without you!
                 </Text>
+
+                <View style={{ margin: 30 }}></View>
+
+
             </Block>
+
+
         </ScrollView>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -71,9 +105,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    textBG: {
+        position: 'absolute',
+        bottom: -20, // adjust this value as needed to control the overlap
+        height: 100,
+        alignSelf: 'center',
+        // borderWidth: 1,
+        // borderColor: 'red',
+        borderRadius: 30,
+        backgroundColor: 'white',
+        padding: 15,
+    },
     image: {
         width: width * 0.9,
-        height: height * 0.2,
+        height: height * 0.5,
         borderRadius: 20,
     }
 })

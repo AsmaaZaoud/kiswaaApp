@@ -350,7 +350,6 @@ const Profile = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   profile: {
     marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
-    // marginBottom: -HeaderHeight * 2,
     flex: 1
   },
   profileContainer: {
