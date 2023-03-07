@@ -218,6 +218,10 @@ const Dashboard = () => {
     });
     setItems(temp);
   };
+  const data = {
+    labels: ["Swim", "Bike", "Run"], // optional
+    data: [0.4, 0.6, 0.8],
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: "white" }}>
@@ -328,6 +332,24 @@ const Dashboard = () => {
             flexDirection: "row",
           }}
         >
+          {/* <ProgressChart
+            data={data}
+            width={width * 0.5}
+            height={220}
+            strokeWidth={16}
+            radius={32}
+            chartConfig={{
+              backgroundColor: "#1cc910",
+              backgroundGradientFrom: "#eff3ff",
+              backgroundGradientTo: "#efefef",
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+            }}
+            hideLegend={false}
+          /> */}
           <View style={styles.status}>
             <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
               Orders
