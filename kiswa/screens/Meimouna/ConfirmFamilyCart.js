@@ -45,6 +45,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   const [flag2, setFlag2] = useState(0);
   const [flag3, setFlag3] = useState(0);
   const [time, setTime] = useState("");
+  const [date, setTdate] = useState("");
 
   // const [theUser, setTheUser] = useState([]);
   const [zone, setZone] = useState("");
@@ -212,7 +213,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}
                 >
                   <Pressable
-                    onPress={{}}
+                    onPress={() => setTime("8AM - 12PM")}
                     style={{
                       backgroundColor: flag1 === 0 ? "purple" : "green",
                     }}
@@ -220,7 +221,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                     <Text>8AM - 12PM</Text>
                   </Pressable>
                   <Pressable
-                    onPress={{}}
+                    onPress={() => setTime("12PM - 6PM")}
                     style={{
                       backgroundColor: flag2 === 0 ? "purple" : "green",
                     }}
@@ -228,7 +229,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                     <Text>12PM - 6PM</Text>
                   </Pressable>
                   <Pressable
-                    onPress={{}}
+                    onPress={() => setTime("6PM - 10PM")}
                     style={{
                       backgroundColor: flag3 === 0 ? "purple" : "green",
                     }}
