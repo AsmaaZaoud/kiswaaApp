@@ -9,6 +9,7 @@ import {
   PixelRatio,
   SafeAreaView,
 } from "react-native";
+
 import React, { useEffect, useState } from "react";
 import {
   BarChart,
@@ -17,6 +18,7 @@ import {
   LineChart,
   ProgressChart,
 } from "react-native-chart-kit";
+import CircularProgress from "react-native-circular-progress-indicator";
 //FireBase
 import { auth } from "../../config";
 
@@ -45,6 +47,8 @@ export function normalize(size) {
 const Dashboard = () => {
   const [deviceType, setDeviceType] = useState("");
   const [khor, setKhor] = useState([]);
+  const [value, setValue] = useState(0);
+
   const zones = [];
   const z = [
     { name: "Doha", count: 0 },
@@ -227,129 +231,193 @@ const Dashboard = () => {
     <SafeAreaView style={{ backgroundColor: "white" }}>
       <View style={styles.container}>
         {/* <Text style={styles.title}>Dashboard</Text> */}
-        {/* <ScrollView
+        <ScrollView
           horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={1}
-          width="100%"
-        > */}
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.statistics}>
-            <Text
-              style={{
-                fontSize: normalize(30),
-                marginLeft: "7%",
-                borderBottomWidth: 2,
-                borderBottomColor: "black",
-              }}
-            >
-              Statistics
-            </Text>
-            <View
-              style={{
-                borderWidth: 1,
-              }}
-            ></View>
-            <View style={styles.blockss}>
-              {stat.map((x) => (
-                <View key={x.title} style={styles.block}>
-                  <View style={styles.imgBlock}>
-                    <Image
-                      source={x.img}
-                      style={{ width: 150, height: 50 }}
-                      width={"90%"}
-                      height={"90%"}
-                    />
-                  </View>
-                  <View style={styles.text}>
-                    <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
-                    <Text></Text>
+          showsHorizontalScrollIndicator={true}
+          indicatorStyle={{ height: 30, borderWidth: 1 }}
+          invertStickyHeaders
+          alwaysBounceHorizontal={true}
+          automaticallyAdjustsScrollIndicatorInsets={true}
+          // scrollEventThrottle={1}
+          // width="100%"
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              width: width * 3,
+              height: height * 0.4,
+            }}
+          >
+            <View style={styles.statistics}>
+              <Text
+                style={{
+                  fontSize: normalize(30),
+                  marginLeft: "7%",
+                  borderBottomWidth: 2,
+                  borderBottomColor: "black",
+                }}
+              >
+                Statistics
+              </Text>
+              <View
+                style={{
+                  borderWidth: 1,
+                }}
+              ></View>
+              <View style={styles.blockss}>
+                {stat.map((x) => (
+                  <View key={x.title} style={styles.block}>
+                    <View style={styles.imgBlock}>
+                      <Image
+                        source={x.img}
+                        style={{ width: 150, height: 50 }}
+                        width={"90%"}
+                        height={"90%"}
+                      />
+                    </View>
+                    <View style={styles.text}>
+                      <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
+                      <Text></Text>
 
-                    <Text style={{ fontSize: normalize(19) }}>
-                      {x.data == "requests"
-                        ? requests.length
-                        : x.data == "donations"
-                        ? donations.length
-                        : x.data == "items"
-                        ? items.length
-                        : feedback.length}
-                    </Text>
+                      <Text style={{ fontSize: normalize(19) }}>
+                        {x.data == "requests"
+                          ? requests.length
+                          : x.data == "donations"
+                          ? donations.length
+                          : x.data == "items"
+                          ? items.length
+                          : feedback.length}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              ))}
+                ))}
+              </View>
+            </View>
+
+            <View style={styles.statistics}>
+              <Text
+                style={{
+                  fontSize: normalize(30),
+                  marginLeft: "7%",
+                  borderBottomWidth: 2,
+                  borderBottomColor: "black",
+                }}
+              >
+                Users
+              </Text>
+              <View
+                style={{
+                  borderWidth: 1,
+                }}
+              ></View>
+              <View style={styles.blockss}>
+                {userStat.map((x) => (
+                  <View style={styles.block}>
+                    <View style={styles.imgBlock}>
+                      <Image
+                        source={x.img}
+                        style={{ width: 150, height: 50 }}
+                        width={"90%"}
+                        height={"90%"}
+                      />
+                    </View>
+                    <View style={styles.text}>
+                      <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
+                      <Text></Text>
+
+                      <Text style={{ fontSize: normalize(19) }}>
+                        {x.data == "requests"
+                          ? requests.length
+                          : x.data == "donations"
+                          ? donations.length
+                          : x.data == "items"
+                          ? items.length
+                          : feedback.length}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </View>
+            <View style={styles.statistics}>
+              <Text
+                style={{
+                  fontSize: normalize(30),
+                  marginLeft: "7%",
+                  borderBottomWidth: 2,
+                  borderBottomColor: "black",
+                }}
+              >
+                Users
+              </Text>
+              <View
+                style={{
+                  borderWidth: 1,
+                }}
+              ></View>
+              <View style={styles.blockss}>
+                {userStat.map((x) => (
+                  <View style={styles.block}>
+                    <View style={styles.imgBlock}>
+                      <Image
+                        source={x.img}
+                        style={{ width: 150, height: 50 }}
+                        width={"90%"}
+                        height={"90%"}
+                      />
+                    </View>
+                    <View style={styles.text}>
+                      <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
+                      <Text></Text>
+
+                      <Text style={{ fontSize: normalize(19) }}>
+                        {x.data == "requests"
+                          ? requests.length
+                          : x.data == "donations"
+                          ? donations.length
+                          : x.data == "items"
+                          ? items.length
+                          : feedback.length}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
             </View>
           </View>
-          <View style={styles.statistics}>
-            <Text
-              style={{
-                fontSize: normalize(30),
-                marginLeft: "7%",
-                borderBottomWidth: 2,
-                borderBottomColor: "black",
-              }}
-            >
-              Users
-            </Text>
-            <View
-              style={{
-                borderWidth: 1,
-              }}
-            ></View>
-            <View style={styles.blockss}>
-              {userStat.map((x) => (
-                <View style={styles.block}>
-                  <View style={styles.imgBlock}>
-                    <Image
-                      source={x.img}
-                      style={{ width: 150, height: 50 }}
-                      width={"90%"}
-                      height={"90%"}
-                    />
-                  </View>
-                  <View style={styles.text}>
-                    <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
-                    <Text></Text>
-
-                    <Text style={{ fontSize: normalize(19) }}>
-                      {x.data == "requests"
-                        ? requests.length
-                        : x.data == "donations"
-                        ? donations.length
-                        : x.data == "items"
-                        ? items.length
-                        : feedback.length}
-                    </Text>
-                  </View>
-                </View>
-              ))}
-            </View>
-          </View>
-        </View>
-        {/* </ScrollView> */}
+        </ScrollView>
 
         <View
           style={{
             flexDirection: "row",
           }}
         >
-          {/* <ProgressChart
-            data={data}
-            width={width * 0.5}
-            height={220}
-            strokeWidth={16}
-            radius={32}
-            chartConfig={{
-              backgroundColor: "#1cc910",
-              backgroundGradientFrom: "#eff3ff",
-              backgroundGradientTo: "#efefef",
-              decimalPlaces: 2,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              style: {
-                borderRadius: 16,
-              },
-            }}
-            hideLegend={false}
-          /> */}
+          <View style={styles.status}>
+            <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
+              Todays Orders
+            </Text>
+            <View
+              style={{
+                borderWidth: 1,
+                width: "100%",
+              }}
+            ></View>
+            <View style={{ padding: "5%" }}>
+              <CircularProgress
+                radius={90}
+                value={(3 / 6) * 100}
+                textColor="222"
+                fontSize={20}
+                valueSuffix={"%"}
+                inActiveStrokeColor={"#2ecc71"}
+                inActiveStrokeOpacity={0.2}
+                inActiveStrokeWidth={6}
+                duration={1000}
+                onAnimationComplete={() => setValue(50)}
+              />
+            </View>
+          </View>
+
           <View style={styles.status}>
             <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
               Orders

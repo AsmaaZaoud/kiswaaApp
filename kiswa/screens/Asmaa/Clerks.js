@@ -161,15 +161,16 @@ const Clerks = ({ navigation }) => {
                 Workers
               </Text>
             </View>
+
             <Button
-              L
-              color="primary"
-              style={{ width: "25%", height: "50%" }}
+              // color="#6a1b9a"
+              color="#5AA15A"
+              style={{ width: "20%", marginLeft: "50%" }}
               onPress={() => navigation.navigate("AddClerk")}
             >
               <Text
                 style={{
-                  fontSize: deviceType == "mobile" ? 18 : 26,
+                  fontSize: deviceType == "mobile" ? 19 : 24,
                   color: "#FFF",
                 }}
               >

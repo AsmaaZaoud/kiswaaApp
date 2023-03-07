@@ -104,94 +104,109 @@ const Donors = ({ navigation }) => {
 
   const renderCards = () => {
     return (
-      <Block height={height * 0.6}>
-        {/* <ScrollView> */}
-        <View style={{ flexDirection: "row" }}>
-          {/* <ScrollView horizontal> */}
-          {donations &&
-            donations.map((item) => (
-              <View style={styles.notificationBox} key={item.type}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    paddingHorizontal: "2%",
-                    paddingVertical: "1%",
-                  }}
-                >
-                  <Text style={styles.description}>{item.status} </Text>
-                  {/* <Text style={styles.description}>{item.dateTime}</Text> */}
-                </View>
-
-                <View
-                  style={{
-                    borderWidth: 0.6,
-                    width: width * 0.4,
-                    marginBottom: "1%",
-                    // borderWidth: 1,
-                  }}
-                ></View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    margin: "5%",
-                    marginTop: "2%",
-                    // borderWidth: 1,
-                    marginBottom: "1%",
-                  }}
-                >
-                  {item.status == "pending" ? (
-                    <Image
-                      style={styles.icon}
-                      source={require("../../assets/Asmaa/pendingDon.png")}
-                    />
-                  ) : (
-                    <Image
-                      style={styles.icon}
-                      source={require("../../assets/Asmaa/picked.png")}
-                    />
-                  )}
+      <Block
+        // height={height * 0.6}
+        style={{ borderWidth: 1, height: height * 0.6, marginTop: "5%" }}
+      >
+        <ScrollView>
+          <Text
+            style={{
+              fontSize: deviceType == "mobile" ? 20 : 30,
+              marginLeft: "5%",
+              marginTop: "3%",
+            }}
+          >
+            Donations
+          </Text>
+          <View
+            style={{ flexDirection: "row", flexWrap: "wrap", width: width }}
+          >
+            {/* <ScrollView> */}
+            {donations &&
+              donations.map((item) => (
+                <View style={styles.notificationBox} key={item.type}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: "2%",
+                      paddingVertical: "1%",
+                    }}
+                  >
+                    <Text style={styles.description}>{item.status} </Text>
+                    {/* <Text style={styles.description}>{item.dateTime}</Text> */}
+                  </View>
 
                   <View
                     style={{
-                      width: "67%",
+                      borderWidth: 0.6,
+                      width: width * 0.4,
+                      marginBottom: "1%",
                       // borderWidth: 1,
                     }}
+                  ></View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      margin: "5%",
+                      marginTop: "2%",
+                      // borderWidth: 1,
+                      marginBottom: "1%",
+                    }}
                   >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        //   width: "50%",
-                        // borderWidth: 1,
-                        padding: "1%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      {/* <MaterialIcons name="location-pin" size={25} />
-                        <Text style={styles.description}>{item.location}</Text>
-                        <Text style={styles.description}>{item.location}</Text> */}
-                      <Text style={styles.description}>{item.comment}</Text>
-                    </View>
+                    {item.status == "pending" ? (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/Asmaa/pendingDon.png")}
+                      />
+                    ) : (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/Asmaa/picked.png")}
+                      />
+                    )}
 
                     <View
                       style={{
-                        flexDirection: "row",
-                        width: "75%",
+                        width: "67%",
                         // borderWidth: 1,
-                        justifyContent: "space-between",
                       }}
                     >
-                      {/* <MaterialIcons name="date-range" size={25} /> */}
-                      {/* <Text style={styles.description}>
+                      <View
+                        style={{
+                          // flexDirection: "row",
+                          width: "120%",
+                          // borderWidth: 1,
+                          padding: "1%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        {/* <MaterialIcons name="location-pin" size={25} />
+                        <Text style={styles.description}>{item.location}</Text>
+                        <Text style={styles.description}>{item.location}</Text> */}
+                        <Text style={styles.description}>{item.dateSlot}</Text>
+                        <Text style={styles.description}>{item.timeSlot}</Text>
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          width: "75%",
+                          // borderWidth: 1,
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        {/* <MaterialIcons name="date-range" size={25} /> */}
+                        {/* <Text style={styles.description}>
                           {item.date} -{item.time}
                         </Text> */}
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-            ))}
-          {/* </ScrollView> */}
-        </View>
+              ))}
+          </View>
+        </ScrollView>
       </Block>
     );
   };

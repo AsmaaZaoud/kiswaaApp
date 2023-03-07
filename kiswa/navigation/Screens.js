@@ -54,6 +54,7 @@ import Donors from "../screens/Asmaa/Donors";
 
 //Families
 import Families from "../screens/Asmaa/Families";
+import Dashboard from "../screens/Asmaa/Dashboard";
 
 const { width } = Dimensions.get("screen");
 
@@ -365,33 +366,24 @@ export default function OnboardingStack(props) {
         component={Onboarding}
         option={{ headerTransparent: true }}
       />
-
       <Stack.Screen name="App" component={AppStack} />
-
       {/* /********* Syeda**********/}
-
       <Stack.Screen name="Register" component={Register} />
-
       {/* <Stack.Screen */}
-
       {/* /********* Fatima - Clerk **********/}
       <Stack.Screen
         name="InventoryClerkHomePage"
         component={InventoryClerkHomePage}
       />
       <Stack.Screen name="AdminHome" component={AdminHome} />
-
       {/* /********* Asmaa - Admin **********/}
-
       {/* <Stack.Screen name="AdminHome" component={AdminHome} /> */}
       <Stack.Screen name="AddClerk" component={AddClerk} />
       <Stack.Screen name="Clerks" component={Clerks} />
       <Stack.Screen name="Inventory" component={Inventory} />
       <Stack.Screen name="FamiliesCards" component={FamiliesCards} />
       <Stack.Screen name="InventoryTable" component={InventoryTable} />
-
       {/* /********* Asmaa - Driver **********/}
-
       <Stack.Screen name="DriverHome" component={DriverHome} />
       <Stack.Screen name="AddDriver" component={AddDriver} />
       <Stack.Screen name="DriveProfile" component={DriveProfile} />
@@ -403,14 +395,12 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="Feedback" component={Feedback} />
 
       {/* /*********  LogIn **********/}
-
       <Stack.Screen name="Login" component={Login} />
-
       {/* /*********  Meimouna - Family **********/}
-
       <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
       <Stack.Screen name="FamilyHome" component={FamilyHome} />
       <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
+      <Stack.Screen name="Dashboard" component={Dashboard} />
     </Stack.Navigator>
   );
 }

@@ -18,8 +18,9 @@ import {
   Table,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { DataTable, Searchbar } from "react-native-paper";
 
-import { DataTable } from "react-native-paper";
+// import { DataTable } from "react-native-paper";
 import { Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
 
@@ -114,7 +115,6 @@ const Drivers = ({ navigation }) => {
       // console.log(t);
     });
     setOrders(temp);
-
     // setAllorderss(temp)
     //console.log(drivers);
     setFlag(true);
@@ -132,18 +132,54 @@ const Drivers = ({ navigation }) => {
       });
   };
 
+  // >>>>>>>>>>>>>> Search functions <<<<<<<<<<<<<<
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+    if (value.length === 0) {
+      setDrivers(allDrivers);
+    }
+
+    const filteredData = allDrivers.filter((item) =>
+      item.fname.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filteredData.length === 0) {
+      setDrivers([]);
+    } else {
+      setDrivers(filteredData);
+    }
+  };
+
   const renderCards = () => {
     return (
-      <Block height={height * 0.8}>
+      <Block style={{ borderWidth: 0, height: height }}>
         {/* <ScrollView> */}
-        <View
+        {/* <View
           style={{
-            borderWidth: 2,
+            // borderWidth: 2,
             marginTop: 0,
             height: height * 0.8,
           }}
-        >
-          <ScrollView>
+        > */}
+        <ScrollView>
+          <Text
+            style={{
+              fontSize: deviceType == "mobile" ? 20 : 30,
+              marginLeft: "5%",
+              // marginTop: "3%",
+            }}
+          >
+            Orders
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              width: width,
+            }}
+          >
             {orders.map((item) => (
               <View style={styles.notificationBox} key={item.type}>
                 <View
@@ -161,7 +197,7 @@ const Drivers = ({ navigation }) => {
                 <View
                   style={{
                     borderWidth: 0.6,
-                    width: width * 0.8,
+                    width: width * 0.4,
                     marginBottom: "1%",
                     // borderWidth: 1,
                   }}
@@ -225,8 +261,9 @@ const Drivers = ({ navigation }) => {
                 </View>
               </View>
             ))}
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
+        {/* </View> */}
       </Block>
     );
   };
@@ -257,7 +294,11 @@ const Drivers = ({ navigation }) => {
           <Block
             style={[
               styles.head,
-              { height: height * 0.08, justifyContent: "space-between" },
+              {
+                height: height * 0.08,
+                justifyContent: "space-between",
+                // borderWidth: 1,
+              },
             ]}
           >
             <View style={{ flexDirection: "row" }}>
@@ -274,21 +315,35 @@ const Drivers = ({ navigation }) => {
                 Driverss
               </Text>
             </View>
-            <Button
-              // color="#6a1b9a"
-              color="#5AA15A"
-              style={{ width: "25%", height: "50%" }}
-              onPress={() => navigation.navigate("AddDriver")}
-            >
-              <Text
+            <View style={{ flexDirection: "row" }}>
+              <Searchbar
+                placeholder="Search"
+                onChangeText={handleSearch}
+                value={searchQuery}
                 style={{
-                  fontSize: deviceType == "mobile" ? 18 : 26,
-                  color: "#FFF",
+                  width: width * 0.34,
+                  borderRadius: "10%",
+                  height: "77%",
+                  marginTop: "2%",
                 }}
+                autoCorrect={false}
+              />
+              <Button
+                // color="#6a1b9a"
+                color="#5AA15A"
+                style={{ width: "20%" }}
+                onPress={() => navigation.navigate("AddDriver")}
               >
-                Add
-              </Text>
-            </Button>
+                <Text
+                  style={{
+                    fontSize: deviceType == "mobile" ? 19 : 24,
+                    color: "#FFF",
+                  }}
+                >
+                  Add
+                </Text>
+              </Button>
+            </View>
           </Block>
 
           <DataTable.Header
@@ -299,27 +354,38 @@ const Drivers = ({ navigation }) => {
               borderColor: "black",
               width: "90%",
               marginLeft: "3%",
-              backgroundColor: "white",
+              backgroundColor: "#4b0095",
+              borderWidth: 1,
             }}
           >
-            <DataTable.Title textStyle={{ fontSize: normalize(25) }}>
+            <DataTable.Title
+              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
+            >
               Name
             </DataTable.Title>
 
-            <DataTable.Title textStyle={{ fontSize: normalize(25) }}>
+            <DataTable.Title
+              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
+            >
               Phone
             </DataTable.Title>
             {/* <DataTable.Title  textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title> */}
             {/* <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title> */}
-            <DataTable.Title numeric textStyle={{ fontSize: normalize(25) }}>
+            <DataTable.Title
+              numeric
+              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
+            >
               Zone
             </DataTable.Title>
-            <DataTable.Title numeric textStyle={{ fontSize: normalize(25) }}>
+            <DataTable.Title
+              numeric
+              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
+            >
               Delete
             </DataTable.Title>
           </DataTable.Header>
 
-          <View height={flag ? height * 0.2 : height * 0.5}>
+          <View height={flag ? height * 0.16 : height * 0.5}>
             <ScrollView>
               {drivers &&
                 drivers.map((x, i) => (
@@ -366,27 +432,16 @@ const Drivers = ({ navigation }) => {
                       <Pressable
                         onPress={() => deleteDriver(x.email)}
                         style={{
-                          borderColor: "#F8694C",
-                          borderWidth: 1,
-                          backgroundColor: "#F8694C",
-                          borderRadius: "5%",
+                          paddingLeft: "70%",
                         }}
                       >
-                        <Text
-                          style={{
-                            fontSize: normalize(25),
-                            width: normalize(100),
-                            color: "blac",
-                            textAlign: "center",
-                          }}
-                        >
-                          X
-                        </Text>
+                        <AntDesign name="delete" size={30} color="red" />
                       </Pressable>
                     </DataTable.Cell>
                   </DataTable.Row>
                 ))}
             </ScrollView>
+            <View style={{ width: width }}></View>
           </View>
 
           {flag && orders.length == 0 ? (
@@ -397,6 +452,7 @@ const Drivers = ({ navigation }) => {
                 // borderWidth: 2,
                 justifyContent: "center",
                 margin: "25%",
+                marginTop: "6%",
                 alignContent: "center",
                 textAlign: "center",
               }}
@@ -439,10 +495,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: "1%",
     marginTop: "3%",
-    width: "90%",
+    width: "100%",
     marginLeft: "3%",
     alignItems: "center",
-    // borderWidth:2,
+    // borderWidth: 2,
     justifyContent: "space-between",
   },
   title: {
@@ -529,20 +585,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   notificationBox: {
-    width: width * 0.8,
+    width: width * 0.4,
     // padding: "5%",
     // paddingTop: "1%",
-    // marginTop: "1%",
+    marginTop: "2%",
     marginBottom: "3%",
-    marginHorizontal: "5%",
+    marginLeft: "4%",
     backgroundColor: "#F1EEFF",
     // flexDirection: "row",
     borderRadius: "15%",
     borderWidth: 0.3,
   },
   icon: {
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
   },
   description: {
     fontSize: normalize(20),

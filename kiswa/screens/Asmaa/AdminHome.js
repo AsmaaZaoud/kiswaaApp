@@ -147,7 +147,7 @@ const AdminHome = ({ navigation }) => {
 
       <Block style={{ backgroundColor: "white", flexDirection: "colum" }}>
         <Tab
-          // scrollable={false}
+          // scrollable={true}
           value={index}
           onChange={setIndex}
           indicatorStyle={{
@@ -156,6 +156,7 @@ const AdminHome = ({ navigation }) => {
           }}
         >
           <Tab.Item
+            // scrollable={true}
             onChange={setIndex}
             value={0}
             title="Men"
@@ -172,6 +173,7 @@ const AdminHome = ({ navigation }) => {
             <Text style={{ fontSize: normalize(19) }}>Home</Text>
           </Tab.Item>
           <Tab.Item
+            scrollable={true}
             onChange={setIndex}
             value={1}
             title="Women"
@@ -188,6 +190,7 @@ const AdminHome = ({ navigation }) => {
             <Text style={{ fontSize: normalize(19) }}>Users</Text>
           </Tab.Item>
           <Tab.Item
+            scrollable={false}
             onChange={setIndex}
             value={2}
             title="Boys"
@@ -204,6 +207,7 @@ const AdminHome = ({ navigation }) => {
             <Text style={{ fontSize: normalize(19) }}>Workers</Text>
           </Tab.Item>
           <Tab.Item
+            scrollable={false}
             onChange={setIndex}
             value={3}
             title="Girls"
@@ -222,15 +226,15 @@ const AdminHome = ({ navigation }) => {
         </Tab>
         {/* </Block> */}
 
-        <TabView value={index} onChange={setIndex} animationType="spring">
+        <TabView scrollable={true} value={index} onChange={setIndex}>
           {/*--------- Dashboard -------------*/}
-          <TabView.Item style={styles.comp}>
+          <TabView.Item scrollable={true} style={styles.comp}>
             {/* <Text style={{fontSize: normalize(25)}}>Dashboard</Text> */}
             <Dashboard />
           </TabView.Item>
 
           {/*--------- Families -------------*/}
-          <TabView.Item style={styles.comp}>
+          <TabView.Item scrollable={true} style={styles.comp}>
             <View style={styles.board}>
               <View
                 style={{
@@ -272,8 +276,13 @@ const AdminHome = ({ navigation }) => {
             </View>
           </TabView.Item>
           {/*--------- Drivers -------------*/}
-          <TabView.Item style={styles.comp}>
+          <TabView.Item scrollable={true} style={styles.comp}>
             <View style={styles.board}>
+              {users == "drivers" ? (
+                <Drivers navigation={navigation} />
+              ) : (
+                <Clerks navigation={navigation} />
+              )}
               <View
                 style={{
                   width: width * 0.5,
@@ -281,7 +290,7 @@ const AdminHome = ({ navigation }) => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   marginHorizontal: "6%",
-                  marginTop: "5%",
+                  marginTop: "90%",
                 }}
               >
                 <Button onPress={() => setUsers("drivers")}>
@@ -295,16 +304,11 @@ const AdminHome = ({ navigation }) => {
                   </Text>
                 </Button>
               </View>
-              {users == "drivers" ? (
-                <Drivers navigation={navigation} />
-              ) : (
-                <Clerks navigation={navigation} />
-              )}
             </View>
           </TabView.Item>
 
           {/*--------- Donors -------------*/}
-          <TabView.Item style={styles.comp}>
+          <TabView.Item scrollable={true} style={styles.comp}>
             <View style={styles.board}>
               <View
                 style={{

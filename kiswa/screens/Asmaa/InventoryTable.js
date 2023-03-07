@@ -32,7 +32,7 @@ import {
   LineChart,
   ProgressChart,
 } from "react-native-chart-kit";
-import { DataTable } from "react-native-paper";
+import { DataTable, Searchbar } from "react-native-paper";
 import { Button } from "galio-framework";
 
 //FireBase
@@ -79,6 +79,26 @@ const InventoryTable = ({ navigation }) => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
 
+  // >>>>>>>>>>>>>> Search functions <<<<<<<<<<<<<<
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+    if (value.length === 0) {
+      setInventory(allinventory);
+    }
+
+    const filteredData = allinventory.filter((item) =>
+      item.type.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filteredData.length === 0) {
+      setInventory(allinventory);
+    } else {
+      setInventory(filteredData);
+    }
+  };
+
   const [inventory, setInventory] = useState([]);
   const [allinventory, setAllInventory] = useState([]);
   const [blouse, setBlouse] = useState([]);
@@ -116,23 +136,38 @@ const InventoryTable = ({ navigation }) => {
               { height: height * 0.08, justifyContent: "space-between" },
             ]}
           >
-            <View style={{ flexDirection: "row" }}>
-              <Feather name="box" size={deviceType == "mobile" ? 30 : 45} />
-              <Text
-                style={{
-                  fontSize: deviceType == "mobile" ? 20 : 30,
-                  marginLeft: "5%",
-                }}
-              >
-                Inventory
-              </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: width * 0.86,
+              }}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <Feather name="box" size={deviceType == "mobile" ? 30 : 45} />
+                <Text
+                  style={{
+                    fontSize: deviceType == "mobile" ? 20 : 30,
+                    marginLeft: "5%",
+                  }}
+                >
+                  Inventory
+                </Text>
+              </View>
+              <Searchbar
+                placeholder="Search"
+                onChangeText={handleSearch}
+                value={searchQuery}
+                style={{ width: width * 0.4, borderRadius: "19%" }}
+                autoCorrect={false}
+              />
             </View>
           </Block>
-          <DataTable.Header>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              ID
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
+          <DataTable.Header
+            style={{ borderWidth: 0.8, backgroundColor: "#4b0095" }}
+          >
+            <DataTable.Title textStyle={styles.title}>ID</DataTable.Title>
+            <DataTable.Title textStyle={styles.title}>
               <Dropdown
                 autoScroll
                 style={[
@@ -140,10 +175,12 @@ const InventoryTable = ({ navigation }) => {
                   // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
                 ]}
                 placeholderStyle={{
-                  fontSize: normalize(16),
+                  fontSize: normalize(20),
                   textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
                 }}
-                selectedTextStyle={{ fontSize: normalize(10) }}
+                selectedTextStyle={styles.title}
                 inputSearchStyle={styles.inputSearchStyle}
                 data={ClothTypeData}
                 labelField="label"
@@ -161,17 +198,19 @@ const InventoryTable = ({ navigation }) => {
                 }}
               />
             </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
+            <DataTable.Title textStyle={styles.title}>
               <Dropdown
                 style={[
                   styles.smallInput,
                   // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
                 ]}
                 placeholderStyle={{
-                  fontSize: normalize(16),
+                  fontSize: normalize(20),
                   textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
                 }}
-                selectedTextStyle={{ fontSize: normalize(10) }}
+                selectedTextStyle={{ fontSize: normalize(20) }}
                 inputSearchStyle={styles.inputSearchStyle}
                 data={SizeData}
                 labelField="label"
@@ -188,36 +227,72 @@ const InventoryTable = ({ navigation }) => {
                 }}
               />
             </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Color
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Gender
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Age
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
-              Quality
-            </DataTable.Title>
-            <DataTable.Title textStyle={{ fontSize: normalize(15) }}>
+            <DataTable.Title textStyle={styles.title}>Color</DataTable.Title>
+            <DataTable.Title textStyle={styles.title}>Gender</DataTable.Title>
+            <DataTable.Title textStyle={styles.title}>Age</DataTable.Title>
+            <DataTable.Title textStyle={styles.title}>Quality</DataTable.Title>
+            <DataTable.Title textStyle={styles.title}>
               Available
             </DataTable.Title>
           </DataTable.Header>
-          {inventory.map((i, x) => (
-            <DataTable.Row style={{ height: "1%" }}>
-              <DataTable.Cell id={i.id}>{x + 1}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.age}</DataTable.Cell>
-              <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
-              <DataTable.Cell>
-                {i.available == true ? "Available" : "Not-Available"}
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
+          <View
+            style={{
+              height: height * 0.445,
+              borderWidth: 0.4,
+            }}
+          >
+            <ScrollView>
+              {inventory.map((i, x) => (
+                <DataTable.Row style={{ height: "1%", borderWidth: 0.5 }}>
+                  <DataTable.Cell
+                    id={i.id}
+                    textStyle={{ fontSize: normalize(18) }}
+                  >
+                    {x + 1}
+                  </DataTable.Cell>
+                  <DataTable.Cell
+                    id={i.id}
+                    textStyle={{ fontSize: normalize(18) }}
+                  >
+                    {i.type}
+                  </DataTable.Cell>
+                  <DataTable.Cell
+                    id={i.id}
+                    textStyle={{ fontSize: normalize(18) }}
+                  >
+                    {i.size}
+                  </DataTable.Cell>
+                  <DataTable.Cell
+                    id={i.id}
+                    textStyle={{ fontSize: normalize(18) }}
+                  >
+                    {i.color}
+                  </DataTable.Cell>
+                  <DataTable.Cell
+                    id={i.id}
+                    textStyle={{ fontSize: normalize(18) }}
+                  >
+                    {i.gender}
+                  </DataTable.Cell>
+                  <DataTable.Cell
+                    id={i.id}
+                    textStyle={{ fontSize: normalize(18) }}
+                  >
+                    {i.age}
+                  </DataTable.Cell>
+                  <DataTable.Cell
+                    id={i.id}
+                    textStyle={{ fontSize: normalize(18) }}
+                  >
+                    {i.quality}
+                  </DataTable.Cell>
+                  <DataTable.Cell textStyle={{ fontSize: normalize(18) }}>
+                    {i.available == true ? "Available" : "Not-Available"}
+                  </DataTable.Cell>
+                </DataTable.Row>
+              ))}
+            </ScrollView>
+          </View>
         </DataTable>
       </View>
     </Block>
@@ -248,14 +323,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   title: {
-    fontSize: 30,
-    marginLeft: 20,
-    textAlign: "left",
+    fontSize: normalize(20),
+    color: "white",
+    fontWeight: "bold",
   },
   smallInput: {
     width: width * 0.2,
     // borderWidth: 2,
-    fontSize: normalize(20),
+    fontSize: normalize(30),
     // textAlign: "right",
   },
   formContent: {
