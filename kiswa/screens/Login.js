@@ -64,11 +64,6 @@ const Login = ({ navigation }) => {
     const familySnap = await getDoc(family);
     const donorSnap = await getDoc(donor);
 
-    console.log("11111", driverSnap.exists());
-    console.log("2222", clerkSnap.exists());
-    console.log("33333", familySnap.exists());
-    console.log("4444", donorSnap.exists());
-
     if (driverSnap.exists()) {
       navigation.navigate("DriverHome");
     } else if (clerkSnap.exists()) {

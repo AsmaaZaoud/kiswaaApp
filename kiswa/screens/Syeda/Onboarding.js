@@ -22,8 +22,6 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
-import argonTheme from "../../constants/Theme";
-import Images from "../../constants/Images";
 
 const Onboarding = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
