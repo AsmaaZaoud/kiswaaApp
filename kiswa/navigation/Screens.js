@@ -20,6 +20,7 @@ import Login from "../screens/Login";
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
+import InventoryClerkProfile from "../screens/Fatima/InventoryClerkProfile";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -147,29 +148,6 @@ function ArticlesStack(props) {
   );
 }
 
-// Fatima
-function InventoryStack(props) {
-  return (
-    <Stack.Navigator
-      initialRouteName="InventoryClerkHomePage"
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
-      }}
-    >
-      <Stack.Screen
-        name="InventoryClerkHomePage"
-        component={InventoryClerkHomePage}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header title="Home Page" navigation={navigation} scene={scene} />
-          ),
-          //   cardStyle: { backgroundColor: "#F8F9FE" },
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
 function AdminStack(props) {
   return (
     <Stack.Navigator
@@ -211,48 +189,6 @@ function DriverStack(props) {
   );
 }
 
-//Asmaa
-// function AdminStack(props) {
-//   return (
-//     <Stack.Navigator
-//       initialRouteName="AdminHome"
-//       screenOptions={{
-//         mode: "card",
-//         headerShown: "screen",
-//       }}
-//     >
-//       <Stack.Screen
-//         name="AdminHome"
-//         component={AdminHome}
-//         option={{
-//           title: "AdminHome",
-//           headerStyle: {
-//             backgroundColor: "darkblue",
-//           },
-//           headerTintColor: "white",
-//           headerTitleStyle: {
-//             fontWeight: "bold",
-//           },
-//         }}
-//       />
-
-//       <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
-
-//       <Stack.Screen
-//         name="AddClerk"
-//         component={AddClerk}
-//         options={{ title: "AddClerk" }}
-//       />
-
-//       <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
-
-//       <Stack.Screen name="Donors" component={Donors} />
-//       <Stack.Screen name="Families" component={Families} />
-//       <Stack.Screen name="Clerks" component={Clerks} />
-//       <Stack.Screen name="Inventory" component={Inventory} />
-//     </Stack.Navigator>
-//   );
-// }
 function ProfileStack(props) {
   return (
     <Stack.Navigator
@@ -346,6 +282,7 @@ function HomeStack(props) {
   );
 }
 
+// stack for all
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator
@@ -362,40 +299,37 @@ export default function OnboardingStack(props) {
 
       <Stack.Screen name="App" component={AppStack} />
 
-      {/* /********* Syeda**********/}
-
-      <Stack.Screen name="Register" component={Register} />
-
-      {/* <Stack.Screen */}
-
-      {/* /********* Fatima - Clerk **********/}
+      {/* /********* Fatima**********/}
+      {/* inventory clerk home page */}
       <Stack.Screen
         name="InventoryClerkHomePage"
         component={InventoryClerkHomePage}
       />
-      <Stack.Screen name="AdminHome" component={AdminHome} />
-
-      {/* /********* Asmaa - Admin **********/}
+      {/* inventory clerk profile */}
+      <Stack.Screen
+        name="InventoryClerkProfile"
+        component={InventoryClerkProfile}
+      />
 
       {/* <Stack.Screen name="AdminHome" component={AdminHome} /> */}
       <Stack.Screen name="AddClerk" component={AddClerk} />
       <Stack.Screen name="Clerks" component={Clerks} />
       <Stack.Screen name="Inventory" component={Inventory} />
 
+      {/* /********* Asmaa - Admin **********/}
+      <Stack.Screen name="AdminHome" component={AdminHome} />
       {/* /********* Asmaa - Driver **********/}
-
       <Stack.Screen name="DriverHome" component={DriverHome} />
       <Stack.Screen name="AddDriver" component={AddDriver} />
       <Stack.Screen name="DriveProfile" component={DriveProfile} />
       <Stack.Screen name="Donors" component={Donors} />
       <Stack.Screen name="Families" component={Families} />
 
-      {/* /*********  LogIn **********/}
-
+      {/* /*********  Login - Register **********/}
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
 
       {/* /*********  Meimouna - Family **********/}
-
       <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
       <Stack.Screen name="FamilyHome" component={FamilyHome} />
       <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
@@ -448,14 +382,7 @@ function AppStack(props) {
           headerShown: false,
         }}
       />
-      {/* Fatima */}
-      <Drawer.Screen
-        name="InventoryClerkHomePage"
-        component={InventoryStack}
-        // options={{
-        //   headerShown: true,
-        // }}
-      />
+
       <Drawer.Screen
         name="DriverHome"
         component={DriverStack}
