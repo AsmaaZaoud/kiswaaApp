@@ -24,8 +24,8 @@ import CheckOut from "../screens/Syeda/CheckOut";
 import LoginDonor from "../screens/Syeda/LoginDonor";
 import Feedback from "../screens/Syeda/Feedback";
 import DonorHistory from "../screens/Syeda/DonorHistory";
-import AboutUs from '../screens/Syeda/AboutUs';
 import Profile from "../screens/Syeda/Profile";
+import AboutUs from "../screens/Syeda/AboutUs";
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
@@ -460,6 +460,51 @@ function ProfileStack(props) {
   );
 }
 
+function AboutUsStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="AboutUs"
+        component={AboutUs}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="AboutUs"
+              search
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" },
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator
@@ -568,6 +613,13 @@ function AppStack(props) {
       <Drawer.Screen
         name="DonorHistory"
         component={DonorHistoryStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+            <Drawer.Screen
+        name="AboutUs"
+        component={AboutUsStack}
         options={{
           headerShown: false,
         }}

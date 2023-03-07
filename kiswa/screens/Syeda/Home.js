@@ -22,8 +22,8 @@ import { db } from "../../config";
 const { width, height } = Dimensions.get('screen');
 const scale = width / 834;
 export function normalize(size) {
- 
-  const newSize = size * scale 
+
+  const newSize = size * scale
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize))
   } else {
@@ -41,7 +41,7 @@ import { useIsFocused } from "@react-navigation/native";
 const Home = ({ route, navigation }) => {
 
   let user = auth?.currentUser?.email;
-  console.log("user: ", user)  
+  console.log("user: ", user)
 
   const isFocused = useIsFocused();
 
@@ -54,41 +54,41 @@ const Home = ({ route, navigation }) => {
     { "quantity": 1, "type": "Tops" }
   ]
 
-  
+
   const [itemsArray, setItemsArray] = useState([])
   // const [ItemsDic, setItemsDic] = useState([])
   const [number, setNumber] = useState()
   const [nickname, setNickname] = useState('')
   const [image, setImage] = useState("");
-    
-    console.log('itemsArrayOUTSIDE: ', itemsArray)
-    //console.log('itemDic : ', ItemsDic)
 
-    let ItemsDic = []
-    itemsArray.map((item) => ItemsDic.push({ type: item.data.type, quantity: item.data.quantity }))
+  console.log('itemsArrayOUTSIDE: ', itemsArray)
+  //console.log('itemDic : ', ItemsDic)
 
-    let shortList = ItemsDic.slice(0, 10)
-    //console.log('shortList: ', shortList)
+  let ItemsDic = []
+  itemsArray.map((item) => ItemsDic.push({ type: item.data.type, quantity: item.data.quantity }))
 
-    let uniqueList = shortList.filter((item, index, self) => index === self.findIndex(t => t.type === item.type))
+  let shortList = ItemsDic.slice(0, 10)
+  //console.log('shortList: ', shortList)
 
-    //console.log('uniquelist: ', uniqueList)
-  
-    // const matchingItems = []
-    
-    // uniqueList.forEach((item) => {
-    //   console.log('itemuniqList => ', item)
-    //   ClothTypeData.forEach((clothing) => {
-    //     if (clothing.label === item.type) {
-    //       matchingItems.push({
-    //         type: item.type,
-    //         quantity: item.quantity,
-    //         uri: clothing.uri,
-    //       });
-    //     }
-    //   });
-    // });
-    // console.log("matchingItems: ", matchingItems)  
+  let uniqueList = shortList.filter((item, index, self) => index === self.findIndex(t => t.type === item.type))
+
+  //console.log('uniquelist: ', uniqueList)
+
+  // const matchingItems = []
+
+  // uniqueList.forEach((item) => {
+  //   console.log('itemuniqList => ', item)
+  //   ClothTypeData.forEach((clothing) => {
+  //     if (clothing.label === item.type) {
+  //       matchingItems.push({
+  //         type: item.type,
+  //         quantity: item.quantity,
+  //         uri: clothing.uri,
+  //       });
+  //     }
+  //   });
+  // });
+  // console.log("matchingItems: ", matchingItems)  
 
   //shortList2.map((item) => console.log(item.type))
 
@@ -109,33 +109,34 @@ const Home = ({ route, navigation }) => {
   //read from database
 
   useEffect(() => {
-    if (isFocused) {
-        readAllWhere() 
-    }
-  }, [isFocused]);
+    console.log("use...");
+    readAllWhere()
+  }, []);
 
-  
+
   //readAllWhere 
   const readAllWhere = async () => {
+    console.log("cart...");
     const q = query(collection(db, "familyRequests"), where("status", "==", "pending"));
     const docs = await getDocs(q);
     docs.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log('readAllWhere => ' , doc.id, " => ", doc.data());
+      console.log('readAllWhere => ', doc.id, " => ", doc.data());
     });
 
     let temp = [];
 
-    docs.forEach((doc) => {
+    docs.forEach(async (doc) => {
       temp.push({
         id: doc.id,
         data: doc.data(),
-        items: getCartItems(doc.id)
+        items: await getCartItems(doc.id)
       })
     })
   }
 
   const getCartItems = async (cartId) => {
+    console.log(cartId);
     const docRef = collection(db, "familyRequests", cartId, "Items");
     const docSnap = await getDocs(docRef);
     let temp = []
@@ -145,15 +146,15 @@ const Home = ({ route, navigation }) => {
         data: doc.data()
       })
     })
-    //console.log('tempdata: ', temp)
+    console.log('tempdata: ', temp)
     setItemsArray(temp)
     //console.log('ItemsArray INSIDE', itemsArray)
     //return temp
   }
 
   useEffect(() => {
-    if(isFocused){
-      if(user !== undefined){
+    if (isFocused) {
+      if (user !== undefined) {
         readDonations()
         readName()
         read()
@@ -168,16 +169,16 @@ const Home = ({ route, navigation }) => {
     const docs = await getDocs(q);
     // let counter = 0
     docs.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    counter += 1
-    //setCounter(counter)
-    console.log("readDonations => " ,doc.id, " => ", doc.data());
+      // doc.data() is never undefined for query doc snapshots
+      counter += 1
+      //setCounter(counter)
+      console.log("readDonations => ", doc.id, " => ", doc.data());
     });
     setNumber(counter)
     //console.log("counter: ", counter)
-   } 
+  }
 
-   const readName = async () => {
+  const readName = async () => {
     const q = query(collection(db, "donors"), where("email", "==", user));
     const docs = await getDocs(q);
     docs.forEach((doc) => {
@@ -258,29 +259,28 @@ const Home = ({ route, navigation }) => {
 
               {
                 user === undefined ?
-
-                  <Block style={{ justifyContent: 'flex-end', marginRight: '-80%' }}>
-                    <TouchableOpacity onPress={() => navigation.navigate("LoginDonor")}>
-                      <Image
-                        style={{ width: 30, height: 30, marginLeft: '45%' }}
-                        source={{
-                          uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
-                        }}
-                      />
-                      <Text style={{ marginLeft: '35%' }}>Log In/ Sign Up</Text>
-                    </TouchableOpacity>
-                  </Block>
+                    <Block style={styles.sign}>
+                      <TouchableOpacity onPress={() => navigation.navigate("LoginDonor")}>
+                        <Image
+                          style={{ width: 30, height: 30, alignSelf: 'flex-end' }}
+                          source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
+                          }}
+                        />
+                        <Text>Log In/ Sign Up</Text>
+                      </TouchableOpacity>
+                    </Block>
                   :
 
-                  <Block style={{ justifyContent: 'flex-end', marginRight: '-80%' }}>
+                  <Block style={styles.sign}>
                     <TouchableOpacity onPress={onSignOut}>
                       <Image
-                        style={{ width: 30, height: 30, marginLeft: '45%' }}
+                        style={{ width: 30, height: 30, alignSelf: 'flex-end' }}
                         source={{
                           uri: 'https://cdn-icons-png.flaticon.com/512/3033/3033143.png',
                         }}
                       />
-                      <Text style={{ marginLeft: '41%' }}>Sign Out</Text>
+                      <Text>Sign Out</Text>
                     </TouchableOpacity>
                   </Block>
               }
@@ -291,7 +291,7 @@ const Home = ({ route, navigation }) => {
               <Block center>
                 <Image
                   style={styles.avatar}
-                  source={{ uri: image === "" ? 'https://cdn-icons-png.flaticon.com/512/1173/1173817.png' : image}}>
+                  source={{ uri: image === "" ? 'https://cdn-icons-png.flaticon.com/512/1173/1173817.png' : image }}>
                 </Image>
               </Block>
               <Block center style={{}}>
@@ -305,20 +305,20 @@ const Home = ({ route, navigation }) => {
 
                 {
                   user !== undefined ?
-                  <Block row>
-                    {
-                      number === 1 ?
-                      <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>1 Donation</Text>
-                      :
-                      <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>{number} Donations</Text>
-                    }
-                  <Image
-                  style={{width: 25, height: 25, marginLeft: 12, marginTop: 10}}
-                  source = {{uri: 'https://cdn-icons-png.flaticon.com/512/9466/9466004.png'}}
-                  ></Image>
-                  </Block>
-                  :
-                  <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
+                    <Block row>
+                      {
+                        number === 1 ?
+                          <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>1 Donation</Text>
+                          :
+                          <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>{number} Donations</Text>
+                      }
+                      <Image
+                        style={{ width: 25, height: 25, marginLeft: 12, marginTop: 10 }}
+                        source={{ uri: 'https://cdn-icons-png.flaticon.com/512/9466/9466004.png' }}
+                      ></Image>
+                    </Block>
+                    :
+                    <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
                 }
 
               </Block>
@@ -327,7 +327,7 @@ const Home = ({ route, navigation }) => {
 
             {/* animated opening text */}
             <Animated.View style={{ transform: [{ translateY: animatedValue }] }}>
-              <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
+              <Text style={{ fontSize: 24, fontWeight: 'bold', alignSelf: 'center' }}>
                 Creating a better world, one donation at a time.
               </Text>
             </Animated.View>
@@ -340,10 +340,10 @@ const Home = ({ route, navigation }) => {
 
             {/* requests */}
             {
-              uniqueList.map((item, index) => {
+              itemsArray.map((item, index) => {
                 return (
                   <View key={index}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Donate', {type: item.type, quantity: item.quantity, uri: ClothTypeData.find((object) => object.label === item.type).uri})}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Donate', { type: item.type, quantity: item.quantity, uri: ClothTypeData.find((object) => object.label === item.type).uri })}>
                       <LilacCard
                         //imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
                         title={item.type}
@@ -398,9 +398,10 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
   header: {
-    width: width,
+    width: width * 0.95,
     height: 230,
     backgroundColor: '#F1ECFF',
+    alignSelf: 'center'
     // borderWidth: 1,
     // borderColor: 'red'
   },
@@ -429,6 +430,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
+  sign: {
+    justifyContent: 'flex-end',
+    // borderColor: 'green',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    // borderWidth: 1,
+    width: width * 0.2,
+    alignSelf: 'flex-end',
+    marginRight: 10
+  }
 });
 
 export default Home;

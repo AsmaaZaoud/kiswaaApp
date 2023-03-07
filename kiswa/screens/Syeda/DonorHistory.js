@@ -109,9 +109,8 @@ const DonorHistory = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ margin: 60 }}></View>
 
-      <Text variant="headlineLarge" style={{ marginVertical: 20 }}>
+      <Text variant="headlineLarge">
         Donation History
       </Text>
 

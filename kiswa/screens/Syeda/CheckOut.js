@@ -263,15 +263,15 @@ const CheckOut = ({ route, navigation }) => {
                                         source={{ uri: 'https://cdn-icons-png.flaticon.com/512/54/54623.png' }}
                                     ></Image>
                                 </TouchableOpacity>
-                                <Text style={{ alignSelf: 'center', fontSize: normalize(70), marginLeft: 30 }}>Checkout</Text>
                             </Block>
+                            <Text style={{ alignSelf: 'center', fontSize: 40, fontWeight: 'bold'}}>Checkout</Text>
 
                             <Block style={{ marginTop: '10%' }}></Block>
 
                             <Block style={{ marginLeft: '5%' }}>
-                                <Text style={{ fontSize: normalize(60), alignSelf: 'center', borderBottomWidth: 1, borderColor: 'black', marginBottom: 20 }}>Donation Summary</Text>
-                                <Text style={{ fontSize: normalize(40) }}>Pick Up Time Interval: {route.params.time}</Text>
-                                <Text style={{ fontSize: normalize(40) }}>Pick Up Date Interval: {route.params.date}</Text>
+                                <Text style={{ fontSize: 30, alignSelf: 'center', borderBottomWidth: 1, borderColor: 'black', marginBottom: 20, textDecorationLine: 'underline' }}>Donation Summary</Text>
+                                <Text style={{ fontSize: 25 }}>Pick Up Time Interval: {route.params.time}</Text>
+                                <Text style={{ fontSize: 25 }}>Pick Up Date Interval: {route.params.date}</Text>
                                 <Block style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                     {
                                         route.params.itemsArray.map((item, index) =>

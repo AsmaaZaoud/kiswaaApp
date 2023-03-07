@@ -15,7 +15,7 @@ function CustomDrawerContent({
   ...rest
 }) {
   let user = auth?.currentUser?.email;
-  const screens = ["Home", "Donate", "DonorHistory", user!==undefined? "Profile" : null];
+  const screens = ["Home", "Donate", "DonorHistory", "AboutUs", user!==undefined? "Profile" : null];
   return (
     <Block
       style={styles.container}

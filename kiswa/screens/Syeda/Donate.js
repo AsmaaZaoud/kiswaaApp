@@ -17,6 +17,18 @@ import {
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
 
+const { width , height} = Dimensions.get('screen');
+ const scale = width / 428;
+export function normalize(size) {
+ 
+  const newSize = size * scale 
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
+
 const Donate = ({ route, navigation }) => {
 
     useEffect(() => {
@@ -415,7 +427,7 @@ const Donate = ({ route, navigation }) => {
                 <Button onPress={checkColor3} style={{ backgroundColor: check3 === 0 ? 'purple' : 'green' }}><Text style={{ color: 'white' }}>{third1date} - {third2date}</Text></Button>
             </Block>
 
-            <TouchableOpacity style={styles.button} onPress={() => error()}>
+            <TouchableOpacity style={styles.button}onPress={() => error()}>
                     <Text style={styles.buttonText}>Donate</Text>
                 </TouchableOpacity>
         </ScrollView>
@@ -466,8 +478,8 @@ const styles = StyleSheet.create({
         //borderRadius: 10
     },
     Image: {
-        width: '100%',
-        height: 400,
+        width: width * 1,
+        height: height * 0.5,
         //borderRadius: 10,
         overflow: 'hidden',
         alignSelf: 'center'
@@ -482,7 +494,7 @@ const styles = StyleSheet.create({
         width: '70%',
         alignItems: 'center',
         alignSelf: 'center',
-        marginTop: 30
+        marginVertical: 30,
     },
     buttonText: {
         fontSize: 20,

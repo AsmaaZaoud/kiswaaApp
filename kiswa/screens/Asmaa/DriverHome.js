@@ -7,6 +7,8 @@ import { auth } from "../../config";
 import { doc, query, getDocs, getDoc,addDoc ,collection} from "firebase/firestore";
 import { db } from "../../config";
 import { signOut } from "firebase/auth";
+
+
 const { width , height} = Dimensions.get('screen');
  const scale = width / 428;
 export function normalize(size) {
