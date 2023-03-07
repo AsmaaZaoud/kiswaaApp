@@ -148,36 +148,43 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   // setTheUser(userinforr.find((elem) => elem.id === id));
   // console.log(theUser.phone);
 
-  const closeRequest = async () => {
+  const validation = async () => {
     if (date == "") {
       setDateError("please select date!");
-      breack;
+    } else {
+      setDateError("");
     }
-
     if (time == "") {
       setTimeError("please select time!");
-      breack;
     } else {
-      const docRef = doc(db, "familyRequests", cartId);
-
-      await setDoc(
-        docRef,
-        {
-          cart: "closed",
-          dateTime: new Date(),
-          delivaryTime: time,
-          delivaryDate: date,
-        },
-        { merge: true }
-      )
-        .then(() => {
-          console.log("data submitted");
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-      navigation.navigate("FamilyHome", id);
+      setTimeError("");
     }
+    if (time.length != 0 && date.length != 0) {
+      closeRequest();
+    } else {
+      console.log("not validated");
+    }
+  };
+
+  const closeRequest = async () => {
+    const docRef = doc(db, "familyRequests", cartId);
+
+    await setDoc(
+      docRef,
+      {
+        cart: "closed",
+        dateSlot: date,
+        timeSlot: time,
+      },
+      { merge: true }
+    )
+      .then(() => {
+        console.log("data submitted");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    navigation.navigate("FamilyHome", id);
   };
   const renderArticles = () => {
     return (
@@ -210,26 +217,34 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
 
             <View
               style={{
-                width: "100%",
+                width: "80%",
+                // backgroundColor: "red",
+                height: "20%",
+                marginLeft: "9%",
+                // justifyContent: "center",
+                // alignItems: "center",
+                borderBottomWidth: 1,
               }}
             >
               <View
                 style={{
-                  width: "95%",
+                  width: "70%",
                   flexDirection: "row",
-                  marginLeft: "11%",
+                  // backgroundColor: "gray",
+                  height: "30%",
                 }}
               >
                 <Entypo name="location" color="#842DCE" size={34} />
                 <Text style={{ marginLeft: "5%", fontSize: 19 }}>{zone}</Text>
               </View>
               {/* <Text style={{ fontSize: 18, marginLeft: "20%" }}>{zone}</Text> */}
-              <Text></Text>
+
               <View
                 style={{
-                  width: "95%",
+                  width: "70%",
                   flexDirection: "row",
-                  marginLeft: "11%",
+                  // backgroundColor: "pink",
+                  height: "30%",
                 }}
               >
                 <Entypo name="phone" color="#842DCE" size={32} />
@@ -239,12 +254,13 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               </View>
 
               {/* <Text style={{ fontSize: 18, marginLeft: "20%" }}>{phone}</Text> */}
-              <Text></Text>
+
               <View
                 style={{
-                  width: "95%",
+                  width: "70%",
                   flexDirection: "row",
-                  marginLeft: "11%",
+                  // backgroundColor: "yellow",
+                  height: "30%",
                 }}
               >
                 <Entypo name="email" color="#842DCE" size={29} />
@@ -252,11 +268,8 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               </View>
               {/* <Text style={{ fontSize: 18, marginLeft: "20%" }}>{theUser}</Text> */}
             </View>
-            <Text></Text>
-            {/* <Text style={{ margin: "5%", fontSize: 19, marginTop: "1%" }}>
-            <Entypo name="calendar" color="#842DCE" size={32} /> Select Which
-            data and time interval for pick-up of donation:
-          </Text> */}
+            {/* <Text></Text> */}
+
             <View
               style={{
                 width: "90%",
@@ -264,143 +277,150 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                 // borderWidth: 1,
                 marginLeft: "5%",
                 marginTop: "5%",
-                // backgroundColor: "gray",
+                // backgroundColor: "yellow",
+                padding: "1%",
               }}
             >
-              {/* <Text>Delivery Time</Text>
-              <Text>Delivery Date</Text> */}
-              {/* <Text>you need to inster it in the db</Text> */}
-              <View>
-                <Text style={{ fontSize: 20, marginLeft: 15 }}>
-                  Select delivary time:
-                </Text>
-
+              <Text style={{ fontSize: 20, marginLeft: 15 }}>
+                Select delivary time:
+              </Text>
+              {timeError !== "" ? (
                 <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
                   {timeError}
                 </Text>
-                <Block
+              ) : null}
+
+              <Block
+                style={{
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  height: "15%",
+                  marginBottom: "5%",
+                  marginTop: "3%",
+                  marginLeft: 15,
+                  width: "100%",
+                }}
+              >
+                <Pressable
+                  onPress={() => setTime("8AM - 12PM")}
                   style={{
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    height: "15%",
-                    marginBottom: "5%",
-                    marginLeft: 15,
+                    backgroundColor:
+                      time == "8AM - 12PM" ? "#4C4AAB" : "purple",
+                    margin: "2%",
+                    height: "85%",
+                    width: "29%",
+                    justifyContent: "center",
                   }}
                 >
-                  <Pressable
-                    onPress={() => setTime("8AM - 12PM")}
-                    style={{
-                      backgroundColor:
-                        time == "8AM - 12PM" ? "#4C4AAB" : "purple",
-                      margin: "1%",
-                      height: "85%",
-                      width: "30%",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: "white", textAlign: "center" }}>
-                      8AM - 12PM
-                    </Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => setTime("12PM - 6PM")}
-                    style={{
-                      backgroundColor:
-                        time == "12PM - 6PM" ? "#4C4AAB" : "purple",
-                      margin: "1%",
-                      height: "85%",
-                      width: "30%",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: "white", textAlign: "center" }}>
-                      12PM - 6PM
-                    </Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => setTime("6PM - 10PM")}
-                    style={{
-                      backgroundColor:
-                        time == "6PM - 10PM" ? "#4C4AAB" : "purple",
-                      margin: "1%",
-                      height: "85%",
-                      width: "30%",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: "white", textAlign: "center" }}>
-                      6PM - 10PM
-                    </Text>
-                  </Pressable>
-                </Block>
+                  <Text style={{ color: "white", textAlign: "center" }}>
+                    8AM - 12PM
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => setTime("12PM - 6PM")}
+                  style={{
+                    backgroundColor:
+                      time == "12PM - 6PM" ? "#4C4AAB" : "purple",
+                    margin: "2%",
+                    height: "85%",
+                    width: "29%",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ color: "white", textAlign: "center" }}>
+                    12PM - 6PM
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => setTime("6PM - 10PM")}
+                  style={{
+                    backgroundColor:
+                      time == "6PM - 10PM" ? "#4C4AAB" : "purple",
+                    margin: "2%",
+                    height: "85%",
+                    width: "30%",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ color: "white", textAlign: "center" }}>
+                    6PM - 10PM
+                  </Text>
+                </Pressable>
+              </Block>
 
-                <Text style={{ fontSize: 20, marginLeft: 15 }}>
-                  Select delivary date:
-                </Text>
+              <Text style={{ fontSize: 20, marginLeft: 15 }}>
+                Select delivary date:
+              </Text>
+              {timeError !== "" ? (
                 <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
                   {dateError}
                 </Text>
-                <Block
-                  style={{ width: "70%", marginLeft: "15%", height: "55%" }}
+              ) : null}
+              <Block
+                style={{
+                  width: "70%",
+                  marginLeft: "15%",
+                  height: "55%",
+                  marginTop: "2%",
+                }}
+              >
+                <Pressable
+                  onPress={() => setDate(`${dateString} - ${first2date}`)}
+                  style={{
+                    backgroundColor:
+                      date == `${dateString} - ${first2date}`
+                        ? "#4C4AAB"
+                        : "purple",
+                    margin: "2%",
+                    height: "25%",
+                    justifyContent: "center",
+                  }}
                 >
-                  <Pressable
-                    onPress={() => setDate(`${dateString} - ${first2date}`)}
-                    style={{
-                      backgroundColor:
-                        date == `${dateString} - ${first2date}`
-                          ? "#4C4AAB"
-                          : "purple",
-                      margin: "2%",
-                      height: "25%",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: "white", textAlign: "center" }}>
-                      {dateString} - {first2date}
-                    </Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => setDate(`${sec1date} - ${sec2date}`)}
-                    style={{
-                      backgroundColor:
-                        date == `${sec1date} - ${sec2date}`
-                          ? "#4C4AAB"
-                          : "purple",
-                      margin: "2%",
-                      height: "25%",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: "white", textAlign: "center" }}>
-                      {sec1date} - {sec2date}
-                    </Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => setDate(`${third1date} - ${third2date}`)}
-                    style={{
-                      backgroundColor:
-                        date == `${third1date} - ${third2date}`
-                          ? "#4C4AAB"
-                          : "purple",
-                      margin: "2%",
-                      height: "25%",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: "white", textAlign: "center" }}>
-                      {third1date} - {third2date}
-                    </Text>
-                  </Pressable>
-                </Block>
-              </View>
+                  <Text style={{ color: "white", textAlign: "center" }}>
+                    {dateString} - {first2date}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => setDate(`${sec1date} - ${sec2date}`)}
+                  style={{
+                    backgroundColor:
+                      date == `${sec1date} - ${sec2date}`
+                        ? "#4C4AAB"
+                        : "purple",
+                    margin: "2%",
+                    height: "25%",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ color: "white", textAlign: "center" }}>
+                    {sec1date} - {sec2date}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => setDate(`${third1date} - ${third2date}`)}
+                  style={{
+                    backgroundColor:
+                      date == `${third1date} - ${third2date}`
+                        ? "#4C4AAB"
+                        : "purple",
+                    margin: "2%",
+                    height: "25%",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ color: "white", textAlign: "center" }}>
+                    {third1date} - {third2date}
+                  </Text>
+                </Pressable>
+              </Block>
             </View>
 
             <View style={{ alignItems: "center", justifyContent: "center" }}>
               <Pressable
-                onPress={() => closeRequest()}
+                onPress={() => validation()}
                 style={{
                   marginBottom: "5%",
-                  marginTop: "5%",
+                  marginTop: "8%",
                   backgroundColor: "#4C4AAB",
                   height: 50,
                   width: "75%",
@@ -460,7 +480,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
 
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("FamilyProfile.js", id)}
+          onPress={() => navigation.navigate("FamilyProfile", id)}
         >
           <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
         </Pressable>

@@ -21,7 +21,7 @@ import { Badge, Button } from "react-native-paper";
 import { Block } from "galio-framework";
 import * as Location from "expo-location";
 export default function FamilyProfile({ route, navigation }) {
-  const { id } = route.params;
+  const id = route.params;
   const [userinforr, setUserinforr] = useState([]);
   console.log(id);
 
