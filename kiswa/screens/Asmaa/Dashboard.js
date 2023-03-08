@@ -33,6 +33,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../config";
+import { Block } from "galio-framework";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 830;
@@ -223,399 +224,386 @@ const Dashboard = () => {
     setItems(temp);
   };
   const data = {
-    labels: ["Swim", "Bike", "Run"], // optional
-    data: [0.4, 0.6, 0.8],
+    labels: ["Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday"],
+    datasets: [
+      {
+        data: [12, 10, 10, 20, 30, 18],
+
+        color: (opacity = 3) => `rgba(233, 162, 134, ${opacity})`, // optional
+        strokeWidth: 4, // optional
+      },
+      {
+        data: [10, 5, 11, 7, 9, 4],
+
+        color: (opacity = 3) => `rgba(181, 136, 237, ${opacity})`, // optional
+        strokeWidth: 4, // optional
+      },
+    ],
+    legend: ["Donations", "Requests"], // optional
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white" }}>
-      <View style={styles.container}>
-        {/* <Text style={styles.title}>Dashboard</Text> */}
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={true}
-          indicatorStyle={{ height: 30, borderWidth: 1 }}
-          invertStickyHeaders
-          alwaysBounceHorizontal={true}
-          automaticallyAdjustsScrollIndicatorInsets={true}
-          // scrollEventThrottle={1}
-          // width="100%"
-        >
+    <SafeAreaView style={{ backgroundColor: "white", height: 1000 }}>
+      <ScrollView
+        style={{ backgroundColor: "white" }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.container}>
           <View
             style={{
-              flexDirection: "row",
-              width: width * 3,
-              height: height * 0.4,
+              width: width,
+              height: 40,
+              backgroundColor: "#F5BD9A",
             }}
           >
-            <View style={styles.statistics}>
-              <Text
-                style={{
-                  fontSize: normalize(30),
-                  marginLeft: "7%",
-                  borderBottomWidth: 2,
-                  borderBottomColor: "black",
-                }}
-              >
-                Statistics
-              </Text>
-              <View
-                style={{
-                  borderWidth: 1,
-                }}
-              ></View>
-              <View style={styles.blockss}>
-                {stat.map((x) => (
-                  <View key={x.title} style={styles.block}>
-                    <View style={styles.imgBlock}>
-                      <Image
-                        source={x.img}
-                        style={{ width: 150, height: 50 }}
-                        width={"90%"}
-                        height={"90%"}
-                      />
-                    </View>
-                    <View style={styles.text}>
-                      <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
-                      <Text></Text>
-
-                      <Text style={{ fontSize: normalize(19) }}>
-                        {x.data == "requests"
-                          ? requests.length
-                          : x.data == "donations"
-                          ? donations.length
-                          : x.data == "items"
-                          ? items.length
-                          : feedback.length}
-                      </Text>
-                    </View>
-                  </View>
-                ))}
-              </View>
-            </View>
-
-            <View style={styles.statistics}>
-              <Text
-                style={{
-                  fontSize: normalize(30),
-                  marginLeft: "7%",
-                  borderBottomWidth: 2,
-                  borderBottomColor: "black",
-                }}
-              >
-                Users
-              </Text>
-              <View
-                style={{
-                  borderWidth: 1,
-                }}
-              ></View>
-              <View style={styles.blockss}>
-                {userStat.map((x) => (
-                  <View style={styles.block}>
-                    <View style={styles.imgBlock}>
-                      <Image
-                        source={x.img}
-                        style={{ width: 150, height: 50 }}
-                        width={"90%"}
-                        height={"90%"}
-                      />
-                    </View>
-                    <View style={styles.text}>
-                      <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
-                      <Text></Text>
-
-                      <Text style={{ fontSize: normalize(19) }}>
-                        {x.data == "requests"
-                          ? requests.length
-                          : x.data == "donations"
-                          ? donations.length
-                          : x.data == "items"
-                          ? items.length
-                          : feedback.length}
-                      </Text>
-                    </View>
-                  </View>
-                ))}
-              </View>
-            </View>
-            <View style={styles.statistics}>
-              <Text
-                style={{
-                  fontSize: normalize(30),
-                  marginLeft: "7%",
-                  borderBottomWidth: 2,
-                  borderBottomColor: "black",
-                }}
-              >
-                Users
-              </Text>
-              <View
-                style={{
-                  borderWidth: 1,
-                }}
-              ></View>
-              <View style={styles.blockss}>
-                {userStat.map((x) => (
-                  <View style={styles.block}>
-                    <View style={styles.imgBlock}>
-                      <Image
-                        source={x.img}
-                        style={{ width: 150, height: 50 }}
-                        width={"90%"}
-                        height={"90%"}
-                      />
-                    </View>
-                    <View style={styles.text}>
-                      <Text style={{ fontSize: normalize(20) }}>{x.title}</Text>
-                      <Text></Text>
-
-                      <Text style={{ fontSize: normalize(19) }}>
-                        {x.data == "requests"
-                          ? requests.length
-                          : x.data == "donations"
-                          ? donations.length
-                          : x.data == "items"
-                          ? items.length
-                          : feedback.length}
-                      </Text>
-                    </View>
-                  </View>
-                ))}
-              </View>
-            </View>
-          </View>
-        </ScrollView>
-
-        <View
-          style={{
-            flexDirection: "row",
-          }}
-        >
-          <View style={styles.status}>
-            <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-              Todays Orders
-            </Text>
-            <View
-              style={{
-                borderWidth: 1,
-                width: "100%",
-              }}
-            ></View>
-            <View style={{ padding: "5%" }}>
-              <CircularProgress
-                radius={90}
-                value={(3 / 6) * 100}
-                textColor="222"
-                fontSize={20}
-                valueSuffix={"%"}
-                inActiveStrokeColor={"#2ecc71"}
-                inActiveStrokeOpacity={0.2}
-                inActiveStrokeWidth={6}
-                duration={1000}
-                onAnimationComplete={() => setValue(50)}
-              />
-            </View>
+            <Text style={styles.title}>Dashboard</Text>
           </View>
 
-          <View style={styles.status}>
-            <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-              Orders
-            </Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
             <View
               style={{
-                borderWidth: 1,
-                width: "100%",
+                flexDirection: "row",
+                width: width * 3,
+                height: height * 0.34,
               }}
-            ></View>
-            <PieChart
-              data={[
-                {
-                  name: "Pending",
-                  population: requests.filter(
-                    (item) => item.status === "pending"
-                  ).length,
-                  color: "#F5717F",
-                  legendFontColor: "#7F7F7F",
-                  legendFontSize: 15,
-                },
-                {
-                  name: "Fullfied",
-                  population: requests.filter(
-                    (item) => item.status === "fullfied"
-                  ).length,
-                  color: "#abcdFF",
-                  legendFontColor: "#7F7F7F",
-                  legendFontSize: 15,
-                },
-              ]}
-              width={width * 0.5}
-              height={height * 0.19}
-              chartConfig={{
-                backgroundColor: "#1cc910",
-                backgroundGradientFrom: "#eff3ff",
-                backgroundGradientTo: "#efefef",
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              style={
-                {
-                  // marginVertical: 8,
-                  // borderRadius: 20,
-                }
-              }
-              accessor="population"
-              backgroundColor="transparent"
-              paddingLeft="15"
-              absolute //for the absolute number remove if you want percentage
-            />
-          </View>
-          {/* <View style={styles.status}>
-            <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-              Requests & Donors
-            </Text>
-            <View
-              style={{
-                borderWidth: 1,
-                width: "100%",
-              }}
-            ></View>
-            <PieChart
-              data={[
-                {
-                  name: "Requests",
-                  population: requests.length,
-                  color: "#673ab7",
-                  legendFontColor: "#7F7F7F",
-                  legendFontSize: 15,
-                },
-                {
-                  name: "Donations",
-                  population: donations.length,
-                  color: "#f3e5f5",
-                  legendFontColor: "#7F7F7F",
-                  legendFontSize: 15,
-                },
-              ]}
-              width={width * 0.5}
-              height={height * 0.19}
-              chartConfig={{
-                backgroundColor: "#1cc910",
-                backgroundGradientFrom: "#eff3ff",
-                backgroundGradientTo: "#efefef",
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              style={{
-                marginVertical: 8,
+            >
+              <View style={styles.statistics}>
+                <Text
+                  style={{
+                    fontSize: normalize(30),
+                    marginLeft: "7%",
+                    borderBottomWidth: 2,
+                    borderBottomColor: "black",
+                  }}
+                >
+                  Statistics
+                </Text>
+                <View
+                  style={{
+                    borderWidth: 1,
+                  }}
+                ></View>
+                <View style={styles.blockss}>
+                  {stat.map((x) => (
+                    <View key={x.title} style={styles.block}>
+                      <View style={styles.imgBlock}>
+                        <Image
+                          source={x.img}
+                          style={{ width: 150, height: 50 }}
+                          width={"90%"}
+                          height={"90%"}
+                        />
+                      </View>
+                      <View style={styles.text}>
+                        <Text style={{ fontSize: normalize(20) }}>
+                          {x.title}
+                        </Text>
+                        <Text></Text>
+
+                        <Text style={{ fontSize: normalize(19) }}>
+                          {x.data == "requests"
+                            ? requests.length
+                            : x.data == "donations"
+                            ? donations.length
+                            : x.data == "items"
+                            ? items.length
+                            : feedback.length}
+                        </Text>
+                      </View>
+                    </View>
+                  ))}
+                </View>
+              </View>
+
+              <View style={styles.statistics}>
+                <Text
+                  style={{
+                    fontSize: normalize(30),
+                    marginLeft: "7%",
+                    borderBottomWidth: 2,
+                    borderBottomColor: "black",
+                  }}
+                >
+                  Users
+                </Text>
+                <View
+                  style={{
+                    borderWidth: 1,
+                  }}
+                ></View>
+                <View style={styles.blockss}>
+                  {userStat.map((x) => (
+                    <View style={styles.block}>
+                      <View style={styles.imgBlock}>
+                        <Image
+                          source={x.img}
+                          style={{ width: 150, height: 50 }}
+                          width={"90%"}
+                          height={"90%"}
+                        />
+                      </View>
+                      <View style={styles.text}>
+                        <Text style={{ fontSize: normalize(20) }}>
+                          {x.title}
+                        </Text>
+                        <Text></Text>
+
+                        <Text style={{ fontSize: normalize(19) }}>
+                          {x.data == "requests"
+                            ? requests.length
+                            : x.data == "donations"
+                            ? donations.length
+                            : x.data == "items"
+                            ? items.length
+                            : feedback.length}
+                        </Text>
+                      </View>
+                    </View>
+                  ))}
+                </View>
+              </View>
+
+              <View style={styles.statistics}>
+                <Text
+                  style={{
+                    fontSize: normalize(30),
+                    marginLeft: "7%",
+                    borderBottomWidth: 2,
+                    borderBottomColor: "black",
+                  }}
+                >
+                  Users
+                </Text>
+                <View
+                  style={{
+                    borderWidth: 1,
+                  }}
+                ></View>
+                <View style={styles.blockss}>
+                  {userStat.map((x) => (
+                    <View style={styles.block}>
+                      <View style={styles.imgBlock}>
+                        <Image
+                          source={x.img}
+                          style={{ width: 150, height: 50 }}
+                          width={"90%"}
+                          height={"90%"}
+                        />
+                      </View>
+                      <View style={styles.text}>
+                        <Text style={{ fontSize: normalize(20) }}>
+                          {x.title}
+                        </Text>
+                        <Text></Text>
+
+                        <Text style={{ fontSize: normalize(19) }}>
+                          {x.data == "requests"
+                            ? requests.length
+                            : x.data == "donations"
+                            ? donations.length
+                            : x.data == "items"
+                            ? items.length
+                            : feedback.length}
+                        </Text>
+                      </View>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+
+          <LineChart
+            data={data}
+            width={width * 1.1}
+            height={330}
+            verticalLabelRotation={0}
+            chartConfig={{
+              backgroundColor: "#ccc",
+              backgroundGradientFrom: "#fff",
+              backgroundGradientTo: "#fff",
+              decimalPlaces: 0,
+              color: (opacity = 0) => `rgba(100, 102,101 , ${opacity})`,
+              style: {
                 borderRadius: 16,
-              }}
-              accessor="population"
-              backgroundColor="transparent"
-              paddingLeft="15"
-              absolute //for the absolute number remove if you want percentage
-            />
-          </View> */}
-          <View style={styles.status}>
-            <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-              Top Zones
-            </Text>
-            <View
-              style={{
-                borderWidth: 1,
-                width: "100%",
-              }}
-            ></View>
-            <PieChart
-              data={[
-                {
-                  name: "Doha",
-                  population: families.filter((item) => item.zone === "Doha")
-                    .length,
-                  color: "#AFC3E7",
-                  legendFontColor: "#7F7F7F",
-                  legendFontSize: 15,
-                },
-                {
-                  name: "Al Rayyan",
-                  population: families.filter(
-                    (item) => item.zone === "Al Rayyan"
-                  ).length,
-                  color: "#ECEC91",
-                  legendFontColor: "#7F7F7F",
-                  legendFontSize: 15,
-                },
-                {
-                  name: "Al Wakra",
-                  population: families.filter(
-                    (item) => item.zone === "Al Wakra"
-                  ).length,
-                  color: "#FCB077",
-                  legendFontColor: "#7F7F7F",
-                  legendFontSize: 15,
-                },
-              ]}
-              width={width * 0.5}
-              height={height * 0.19}
-              chartConfig={{
-                backgroundColor: "#1cc910",
-                backgroundGradientFrom: "#eff3ff",
-                backgroundGradientTo: "#efefef",
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-              style={
-                {
-                  // marginVertical: 8,
-                  // borderRadius: 20,
-                }
-              }
-              accessor="population"
-              backgroundColor="transparent"
-              paddingLeft="15"
-              absolute //for the absolute number remove if you want percentage
-            />
-          </View>
-        </View>
-
-        {/* <BarChart
-          data={{
-            labels: ["Total In Come", "Profit"],
-            datasets: [
-              {
-                data: [totalBooking, totalProfit],
+                margin: "1%",
               },
-            ],
-          }}
-          width={Dimensions.get("window").width - 16} // from react-native
-          height={220}
-          //yAxisLabel={"QR"}
-          chartConfig={{
-            backgroundColor: "#ECA3F5",
-            backgroundGradientFrom: "#eff3ff",
-            backgroundGradientTo: "#efefef",
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-          }}
-          bezier
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        /> */}
-      </View>
+            }}
+            bezier
+          />
+
+          <View
+            style={{
+              width: width,
+              height: 40,
+              backgroundColor: "#F5BD9A",
+            }}
+          >
+            <Text style={styles.title}>Orders</Text>
+          </View>
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={true}
+            scrollEventThrottle={1}
+            // width="100%"
+          >
+            <Block
+              style={{
+                flexDirection: "row",
+                width: width * 3,
+                height: height * 0.4,
+              }}
+            >
+              <View style={styles.status}>
+                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
+                  Achived Orders
+                </Text>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    width: "100%",
+                  }}
+                ></View>
+                <View style={{ padding: "5%" }}>
+                  <CircularProgress
+                    radius={90}
+                    value={(3 / 6) * 100}
+                    textColor="222"
+                    fontSize={20}
+                    valueSuffix={"%"}
+                    inActiveStrokeColor={"#2ecc71"}
+                    inActiveStrokeOpacity={0.2}
+                    inActiveStrokeWidth={6}
+                    duration={1000}
+                    onAnimationComplete={() => setValue(50)}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.status}>
+                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
+                  Orders
+                </Text>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    width: "100%",
+                  }}
+                ></View>
+                <PieChart
+                  data={[
+                    {
+                      name: "Pending",
+                      population: requests.filter(
+                        (item) => item.status === "pending"
+                      ).length,
+                      color: "#F5717F",
+                      legendFontColor: "#7F7F7F",
+                      legendFontSize: 15,
+                    },
+                    {
+                      name: "Fullfied",
+                      population: requests.filter(
+                        (item) => item.status === "fullfied"
+                      ).length,
+                      color: "#abcdFF",
+                      legendFontColor: "#7F7F7F",
+                      legendFontSize: 15,
+                    },
+                  ]}
+                  width={width * 0.5}
+                  height={height * 0.19}
+                  chartConfig={{
+                    backgroundColor: "#1cc910",
+                    backgroundGradientFrom: "#eff3ff",
+                    backgroundGradientTo: "#efefef",
+                    decimalPlaces: 2,
+                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    style: {
+                      borderRadius: 16,
+                    },
+                  }}
+                  style={
+                    {
+                      // marginVertical: 8,
+                      // borderRadius: 20,
+                    }
+                  }
+                  accessor="population"
+                  backgroundColor="transparent"
+                  paddingLeft="15"
+                  absolute //for the absolute number remove if you want percentage
+                />
+              </View>
+
+              <View style={styles.status}>
+                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
+                  Top Zones
+                </Text>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    width: "100%",
+                  }}
+                ></View>
+                <PieChart
+                  data={[
+                    {
+                      name: "Doha",
+                      population: families.filter(
+                        (item) => item.zone === "Doha"
+                      ).length,
+                      color: "#AFC3E7",
+                      legendFontColor: "#7F7F7F",
+                      legendFontSize: 15,
+                    },
+                    {
+                      name: "Al Rayyan",
+                      population: families.filter(
+                        (item) => item.zone === "Al Rayyan"
+                      ).length,
+                      color: "#ECEC91",
+                      legendFontColor: "#7F7F7F",
+                      legendFontSize: 15,
+                    },
+                    {
+                      name: "Al Wakra",
+                      population: families.filter(
+                        (item) => item.zone === "Al Wakra"
+                      ).length,
+                      color: "#FCB077",
+                      legendFontColor: "#7F7F7F",
+                      legendFontSize: 15,
+                    },
+                  ]}
+                  width={width * 0.5}
+                  height={height * 0.19}
+                  chartConfig={{
+                    backgroundColor: "#1cc910",
+                    backgroundGradientFrom: "#eff3ff",
+                    backgroundGradientTo: "#efefef",
+                    decimalPlaces: 2,
+                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    style: {
+                      borderRadius: 16,
+                    },
+                  }}
+                  style={
+                    {
+                      // marginVertical: 8,
+                      // borderRadius: 20,
+                    }
+                  }
+                  accessor="population"
+                  backgroundColor="transparent"
+                  paddingLeft="15"
+                  absolute //for the absolute number remove if you want percentage
+                />
+              </View>
+            </Block>
+          </ScrollView>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -624,18 +612,24 @@ export default Dashboard;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: "3%",
+    paddingVertical: "2%",
+    // height: height * 1.2,
   },
   scrollView: {
     marginTop: 7,
     paddingHorizontal: 7,
     borderWidth: 3,
   },
+  title: {
+    fontSize: normalize(30),
+    marginLeft: "3%",
+    textAlign: "left",
+  },
   statistics: {
     borderWidth: 1,
     width: width * 0.7,
     height: height * 0.28,
-    margin: "2%",
+    margin: "1%",
     borderRadius: "10%",
     paddingBottom: "2%",
   },
@@ -668,13 +662,13 @@ const styles = StyleSheet.create({
 
   status: {
     width: width * 0.6,
-    // height: height * 0.25,
+    height: height * 0.25,
     borderWidth: 1,
     borderRadius: "20%",
     // padding: "1%",
     // flexDirection: "row",
     flexWrap: "wrap",
-    marginVertical: "3%",
-    margin: "2%",
+    marginVertical: "1%",
+    margin: "1%",
   },
 });

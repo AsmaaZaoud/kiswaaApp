@@ -83,7 +83,7 @@ const Inventory = ({ navigation }) => {
     datasets: [
       {
         data: [12, 14, 13, 17, 20, 14],
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        color: (opacity = 1) => `rgba(121, 203, 128, ${opacity})`, // optional
         strokeWidth: 2, // optional
       },
     ],

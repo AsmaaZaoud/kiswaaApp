@@ -226,7 +226,13 @@ const AdminHome = ({ navigation }) => {
         </Tab>
         {/* </Block> */}
 
-        <TabView scrollable={true} value={index} onChange={setIndex}>
+        <TabView
+          disableSwipe
+          scrollable={true}
+          disableTransition
+          value={index}
+          onChange={setIndex}
+        >
           {/*--------- Dashboard -------------*/}
           <TabView.Item scrollable={true} style={styles.comp}>
             {/* <Text style={{fontSize: normalize(25)}}>Dashboard</Text> */}
@@ -276,7 +282,7 @@ const AdminHome = ({ navigation }) => {
             </View>
           </TabView.Item>
           {/*--------- Drivers -------------*/}
-          <TabView.Item scrollable={true} style={styles.comp}>
+          <TabView.Item disableTransition style={styles.comp}>
             <View style={styles.board}>
               {users == "drivers" ? (
                 <Drivers navigation={navigation} />
@@ -308,7 +314,7 @@ const AdminHome = ({ navigation }) => {
           </TabView.Item>
 
           {/*--------- Donors -------------*/}
-          <TabView.Item scrollable={true} style={styles.comp}>
+          <TabView.Item disableTransition style={styles.comp}>
             <View style={styles.board}>
               <View
                 style={{
