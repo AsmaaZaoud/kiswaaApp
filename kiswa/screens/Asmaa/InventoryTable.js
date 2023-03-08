@@ -119,7 +119,7 @@ const InventoryTable = ({ navigation }) => {
     );
 
     if (filteredData.length === 0) {
-      setInventory(allinventory);
+      setInventory([]);
     } else {
       setInventory(filteredData);
     }
@@ -207,7 +207,7 @@ const InventoryTable = ({ navigation }) => {
             </View>
           </Block>
           <DataTable.Header
-            style={{ borderWidth: 0.8, backgroundColor: "#4b0095" }}
+            style={{ borderWidth: 0, backgroundColor: "#4b0095" }}
           >
             <DataTable.Title textStyle={styles.title}>ID</DataTable.Title>
             <DataTable.Title textStyle={styles.title}>
@@ -453,60 +453,61 @@ const InventoryTable = ({ navigation }) => {
           </DataTable.Header>
           <View
             style={{
-              height: height * 0.445,
-              borderWidth: 0.4,
+              height: height * 0.5,
+              borderWidth: 0,
             }}
           >
             <ScrollView>
-              {inventory.map((i, x) => (
-                <DataTable.Row style={{ height: "1%", borderWidth: 0.5 }}>
-                  <DataTable.Cell
-                    id={i.id}
-                    textStyle={{ fontSize: normalize(18) }}
-                  >
-                    {x + 1}
-                  </DataTable.Cell>
-                  <DataTable.Cell
-                    id={i.id}
-                    textStyle={{ fontSize: normalize(18) }}
-                  >
-                    {i.type}
-                  </DataTable.Cell>
-                  <DataTable.Cell
-                    id={i.id}
-                    textStyle={{ fontSize: normalize(18) }}
-                  >
-                    {i.size}
-                  </DataTable.Cell>
-                  <DataTable.Cell
-                    id={i.id}
-                    textStyle={{ fontSize: normalize(18) }}
-                  >
-                    {i.color}
-                  </DataTable.Cell>
-                  <DataTable.Cell
-                    id={i.id}
-                    textStyle={{ fontSize: normalize(18) }}
-                  >
-                    {i.gender}
-                  </DataTable.Cell>
-                  <DataTable.Cell
-                    id={i.id}
-                    textStyle={{ fontSize: normalize(18) }}
-                  >
-                    {i.age}
-                  </DataTable.Cell>
-                  <DataTable.Cell
-                    id={i.id}
-                    textStyle={{ fontSize: normalize(18) }}
-                  >
-                    {i.quality}
-                  </DataTable.Cell>
-                  <DataTable.Cell textStyle={{ fontSize: normalize(18) }}>
-                    {i.available == true ? "Available" : "Not-Available"}
-                  </DataTable.Cell>
-                </DataTable.Row>
-              ))}
+              {inventory &&
+                inventory.map((i, x) => (
+                  <DataTable.Row style={{ height: "1%", borderWidth: 0.5 }}>
+                    <DataTable.Cell
+                      id={i.id}
+                      textStyle={{ fontSize: normalize(18) }}
+                    >
+                      {x + 1}
+                    </DataTable.Cell>
+                    <DataTable.Cell
+                      id={i.id}
+                      textStyle={{ fontSize: normalize(18) }}
+                    >
+                      {i.type}
+                    </DataTable.Cell>
+                    <DataTable.Cell
+                      id={i.id}
+                      textStyle={{ fontSize: normalize(18) }}
+                    >
+                      {i.size}
+                    </DataTable.Cell>
+                    <DataTable.Cell
+                      id={i.id}
+                      textStyle={{ fontSize: normalize(18) }}
+                    >
+                      {i.color}
+                    </DataTable.Cell>
+                    <DataTable.Cell
+                      id={i.id}
+                      textStyle={{ fontSize: normalize(18) }}
+                    >
+                      {i.gender}
+                    </DataTable.Cell>
+                    <DataTable.Cell
+                      id={i.id}
+                      textStyle={{ fontSize: normalize(18) }}
+                    >
+                      {i.age}
+                    </DataTable.Cell>
+                    <DataTable.Cell
+                      id={i.id}
+                      textStyle={{ fontSize: normalize(18) }}
+                    >
+                      {i.quality}
+                    </DataTable.Cell>
+                    <DataTable.Cell textStyle={{ fontSize: normalize(18) }}>
+                      {i.available == true ? "Available" : "Not-Available"}
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                ))}
             </ScrollView>
           </View>
         </DataTable>

@@ -321,9 +321,10 @@ const Drivers = ({ navigation }) => {
                 onChangeText={handleSearch}
                 value={searchQuery}
                 style={{
-                  width: width * 0.34,
+                  width: width * 0.33,
                   borderRadius: "10%",
-                  height: "77%",
+                  height:
+                    deviceType == "mobile" ? height * 0.039 : height * 0.043,
                   marginTop: "2%",
                 }}
                 autoCorrect={false}
@@ -331,12 +332,12 @@ const Drivers = ({ navigation }) => {
               <Button
                 // color="#6a1b9a"
                 color="#5AA15A"
-                style={{ width: "20%" }}
+                style={{ width: "20%", height: height * 0.033 }}
                 onPress={() => navigation.navigate("AddDriver")}
               >
                 <Text
                   style={{
-                    fontSize: deviceType == "mobile" ? 19 : 24,
+                    fontSize: deviceType == "mobile" ? 15 : 24,
                     color: "#FFF",
                   }}
                 >
@@ -435,7 +436,11 @@ const Drivers = ({ navigation }) => {
                           paddingLeft: "70%",
                         }}
                       >
-                        <AntDesign name="delete" size={30} color="red" />
+                        <AntDesign
+                          name="delete"
+                          size={normalize(37)}
+                          color="red"
+                        />
                       </Pressable>
                     </DataTable.Cell>
                   </DataTable.Row>
@@ -572,7 +577,7 @@ const styles = StyleSheet.create({
   },
 
   smallInput: {
-    width: width * 0.2,
+    width: width * 0.24,
     // borderWidth:2,
     fontSize: normalize(20),
     textAlign: "right",

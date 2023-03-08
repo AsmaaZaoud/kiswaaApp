@@ -53,6 +53,7 @@ const Donors = ({ navigation }) => {
 
   useEffect(() => {
     setFlag(false);
+    // console.log(width);
     readAllWhere();
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
@@ -140,7 +141,7 @@ const Donors = ({ navigation }) => {
                   <View
                     style={{
                       borderWidth: 0.6,
-                      width: width * 0.4,
+                      width: width > 550 ? width * 0.4 : width * 0.8,
                       marginBottom: "1%",
                       // borderWidth: 1,
                     }}
@@ -436,14 +437,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 10,
   },
-  notificationBox: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 5,
-    backgroundColor: "#FFFFFF",
-    flexDirection: "row",
-    borderRadius: 10,
-  },
+  // notificationBox: {
+  //   paddingTop: 10,
+  //   paddingBottom: 10,
+  //   marginTop: 5,
+  //   backgroundColor: "#FFFFFF",
+  //   flexDirection: "row",
+  //   borderRadius: 10,
+  // },
   image: {
     width: 45,
     height: 45,
@@ -471,12 +472,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   notificationBox: {
-    width: width * 0.4,
+    width: width > 550 ? width * 0.43 : width * 0.8,
     // padding: "5%",
     // paddingTop: "1%",
     marginTop: "2%",
     marginBottom: "3%",
-    marginLeft: "8%",
+    marginLeft: width > 550 ? "3%" : "8%",
+    // marginHorizontal: width < 550 ? "5%" : 0,
     backgroundColor: "#F1EEFF",
     // flexDirection: "row",
     borderRadius: "15%",
@@ -487,7 +489,7 @@ const styles = StyleSheet.create({
     height: 70,
   },
   description: {
-    fontSize: normalize(20),
+    fontSize: width > 500 ? normalize(20) : normalize(26),
     // color: "#3498db",
     marginLeft: "3%",
     // textAlign: "center",

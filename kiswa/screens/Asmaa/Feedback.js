@@ -75,7 +75,7 @@ const Feedback = (props, { navigation }) => {
   };
 
   return (
-    <SafeAreaView height={800}>
+    <SafeAreaView height={deviceType == "mobile" ? 600 : 800}>
       <Block middle style={{ backgroundColor: "white" }}>
         <Block>
           <Block>
@@ -171,7 +171,11 @@ const Feedback = (props, { navigation }) => {
                           marginLeft: "16%",
                         }}
                       >
-                        <AntDesign name="delete" size={40} color="red" />
+                        <AntDesign
+                          name="delete"
+                          size={normalize(46)}
+                          color="red"
+                        />
                       </Pressable>
                     </View>
                   </View>
@@ -220,11 +224,11 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
   },
   icon: {
-    width: 70,
-    height: 70,
+    width: normalize(80),
+    height: normalize(80),
   },
   description: {
-    fontSize: normalize(20),
+    fontSize: width > 500 ? normalize(20) : normalize(28),
     // color: "#3498db",
     marginLeft: "3%",
     // textAlign: "center",

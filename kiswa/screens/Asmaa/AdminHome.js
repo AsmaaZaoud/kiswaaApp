@@ -73,71 +73,25 @@ const AdminHome = ({ route, navigation }) => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, [invType]);
 
-  const navbar = [
-    {
-      name: "Dashboard",
-      color: "#e1ddf0",
-      icon: require("../../assets/imgs/Dashboard.png"),
-    },
-    {
-      name: "Drivers",
-      color: "#e1ddf0",
-      icon: require("../../assets/imgs/Drivers.png"),
-    },
-    {
-      name: "Inventory",
-      color: "#e1ddf0",
-      icon: require("../../assets/imgs/Inventory.png"),
-    },
-    {
-      name: "Donors",
-      color: "#e1ddf0",
-      icon: require("../../assets/imgs/Donors.png"),
-    },
-    {
-      name: "Families",
-      color: "#e1ddf0",
-      icon: require("../../assets/imgs/Families.png"),
-    },
-    {
-      name: "Clerk",
-      color: "#e1ddf0",
-      icon: require("../../assets/imgs/Clerk.png"),
-    },
-  ];
-  const [color, setColor] = useState("#e1ddf0");
-  const [page, setPage] = useState("Dashboard");
-
   const onSignOut = () => {
     signOut(auth)
       .then(() => navigation.navigate("Login"))
       .catch((error) => console.log("Error logging out: ", error));
   };
 
-  const [index, setIndex] = React.useState(0);
-  const groups = { 0: "Men", 1: "Women", 2: "Boys", 3: "Girls" };
+  const [index, setIndex] = useState(0);
 
-  const [ageGroup, setAgeGroup] = useState("");
-  const [type, setType] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  // const [color, setColor] = useState(colors[0].label);
-  const [size, setSize] = useState("S");
-
-  // console.log(ageGroup, type, quantity, color, size);
-  console.log(index);
   return (
     <View style={{ backgroundColor: "#4B0095" }}>
       <View style={styles.top}>
         <Image
           source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
-          style={{ width: 120, height: 40 }}
-          width={width * 0.33}
-          height={height * 0.08}
+          style={{ width: normalize(230), height: normalize(80) }}
         />
         <Pressable onPress={onSignOut}>
           <MaterialCommunityIcons
             name="logout"
-            size={deviceType == "mobile" ? 30 : 50}
+            size={normalize(50)}
             color="white"
             style={{ marginVertical: "2%", marginTop: "28%" }}
           />
@@ -360,8 +314,8 @@ const AdminHome = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   top: {
-    marginTop: "2%",
-    //borderBottomWidth:0.5,
+    marginTop: width > 500 ? "1%" : "6%",
+    // borderBottomWidth: 5,
     padding: "3%",
     flexDirection: "row",
     justifyContent: "space-between",
