@@ -40,6 +40,10 @@ import { set } from "react-native-reanimated";
 const { width, height } = Dimensions.get("screen");
 
 const Login = ({ navigation }) => {
+  const [deviceType, setDeviceType] = useState("");
+  useEffect(() => {
+    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
+  }, []);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userr, setUserr] = useState("");
@@ -74,20 +78,70 @@ const Login = ({ navigation }) => {
       navigation.navigate("App");
     }
   };
-
+  const EmailErrorStyle = () => {
+    if (deviceType == "mobile" && error.key == "email") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "email") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile" && error.key == "email&pass") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "email&pass") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile" && error.key == "db") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "db") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile") {
+      return styles.inputsSmall;
+    } else if (deviceType == "ipad") {
+      return styles.inputsLarge;
+    }
+  };
+  const PasswordErrorStyle = () => {
+    if (deviceType == "mobile" && error.key == "pass") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "pass") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile" && error.key == "email&pass") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "email&pass") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile" && error.key == "db") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "db") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile") {
+      return styles.inputsSmall;
+    } else if (deviceType == "ipad") {
+      return styles.inputsLarge;
+    }
+  };
   const [error, setError] = useState({ satus: false, key: null, msg: "" });
   const handleLogin = () => {
-    if (email == null || email == "" || !email.includes("@"))
+    if (
+      (email == null || email == "") &&
+      (password == null || password == "")
+      //    ||
+      // error.msg == "Firebase: Error (auth/wrong-password)."
+    )
+      setError({
+        satus: true,
+        key: "email&pass",
+        msg: "Please Enter a Valid Email & Password",
+      });
+    // else if (error.msg == "auth/wrong-password") {
+    // }
+    else if (!email.includes("@"))
       setError({
         satus: true,
         key: "email",
-        msg: "please Enter a valid email",
+        msg: "Please Enter a Valid Email",
       });
     else if (password == null || password == "")
       setError({
         satus: true,
         key: "pass",
-        msg: "please Enter a valid password",
+        msg: "Please Enter Password",
       });
     else {
       signInWithEmailAndPassword(auth, email, password)
@@ -99,9 +153,7 @@ const Login = ({ navigation }) => {
           console.log(error.code);
           console.log(error.message);
           setError({ satus: true, key: "db", msg: error.message });
-          error.code == "auth/user-not-found"
-            ? setError({ satus: true, key: "db", msg: "Check your email" })
-            : setError({ satus: true, key: "db", msg: error.message });
+          // setError({ satus: true, key: "db", msg: error.message });
         });
     }
   };
@@ -114,12 +166,20 @@ const Login = ({ navigation }) => {
         style={{ width, height, zIndex: 1 }}
       >
         <Block safe flex middle>
-          <Block style={styles.registerContainer}>
+          <Block
+            style={
+              deviceType == "mobile"
+                ? styles.registerContainer
+                : styles.registerContainerLarge
+            }
+          >
             <Block flex style={{ marginTop: "10%" }}>
               <Block flex={0.17} middle>
                 <Image
                   source={require("../assets/Fatima/BlackLogo-noBackground.png")}
-                  style={styles.logo}
+                  style={
+                    deviceType == "mobile" ? styles.logoSmall : styles.logoLarge
+                  }
                 />
               </Block>
               <Block flex center style={{ marginTop: "40%" }}>
@@ -133,6 +193,7 @@ const Login = ({ navigation }) => {
                       borderless
                       placeholder="Email"
                       value={email}
+                      style={EmailErrorStyle()}
                       onChangeText={setEmail}
                       iconContent={
                         <Icon
@@ -144,11 +205,6 @@ const Login = ({ navigation }) => {
                         />
                       }
                     />
-                    {error.key == "email" && error.satus && (
-                      <Text style={{ paddingLeft: "13%" }} color="red">
-                        {error.msg}
-                      </Text>
-                    )}
                   </Block>
                   <Block width={width * 0.8}>
                     <Input
@@ -156,6 +212,7 @@ const Login = ({ navigation }) => {
                       borderless
                       placeholder="Password"
                       value={password}
+                      style={PasswordErrorStyle()}
                       onChangeText={setPassword}
                       iconContent={
                         <Icon
@@ -167,22 +224,28 @@ const Login = ({ navigation }) => {
                         />
                       }
                     />
+                    {error.key == "email&pass" && error.satus && (
+                      <Text style={styles.errorMessage}>{error.msg}</Text>
+                    )}
                     {error.key == "pass" && error.satus && (
-                      <Text style={{ paddingLeft: "13%" }} color="red">
-                        {error.msg}
-                      </Text>
+                      <Text style={styles.errorMessage}>{error.msg}</Text>
                     )}
                     {error.key == "db" && error.satus && (
-                      <Text style={{ paddingLeft: "13%" }} color="red" bold>
-                        {error.msg}
-                      </Text>
+                      <Text style={styles.errorMessage}>{error.msg}</Text>
+                    )}
+                    {error.key == "email" && error.satus && (
+                      <Text style={styles.errorMessage}>{error.msg}</Text>
                     )}
                   </Block>
 
                   <Block middle>
                     <Button
                       color="primary"
-                      style={styles.login}
+                      style={
+                        deviceType == "mobile"
+                          ? styles.loginSmall
+                          : styles.loginLarge
+                      }
                       onPress={handleLogin}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
@@ -191,7 +254,11 @@ const Login = ({ navigation }) => {
                     </Button>
                     <Button
                       color={"#F0936F"}
-                      style={styles.signUp}
+                      style={
+                        deviceType == "mobile"
+                          ? styles.signUpSmall
+                          : styles.signUpLarge
+                      }
                       onPress={() => navigation.navigate("RegisterFamily")}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
@@ -210,15 +277,23 @@ const Login = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  logo: {
-    width: width - theme.SIZES.BASE * 25,
-    height: theme.SIZES.BASE * 60,
+  logoLarge: {
+    width: width - theme.SIZES.BASE,
+    height: theme.SIZES.BASE * 9,
     position: "relative",
     resizeMode: "contain",
+    marginTop: "35%",
+  },
+  logoSmall: {
+    width: width - theme.SIZES.BASE,
+    height: theme.SIZES.BASE * 6,
+    position: "relative",
+    resizeMode: "contain",
+    marginTop: "35%",
   },
   registerContainer: {
     width: width * 0.9,
-    height: height * 0.875,
+    height: height * 0.7,
     backgroundColor: "#F4F5F7",
     borderRadius: 6,
     shadowColor: argonTheme.COLORS.BLACK,
@@ -230,16 +305,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     elevation: 1,
     overflow: "hidden",
+    justifyContent: "center",
   },
-  socialConnect: {
-    backgroundColor: argonTheme.COLORS.WHITE,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: "#8898AA",
-  },
-  socialButtons: {
-    width: 120,
-    height: 40,
-    backgroundColor: "#fff",
+  registerContainerLarge: {
+    width: width * 0.7,
+    height: height * 0.7,
+    backgroundColor: "#F4F5F7",
+    borderRadius: 6,
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
@@ -248,12 +320,15 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOpacity: 0.1,
     elevation: 1,
+    overflow: "hidden",
+    justifyContent: "center",
   },
-  socialTextButtons: {
-    color: argonTheme.COLORS.PRIMARY,
-    fontWeight: "800",
-    fontSize: 14,
+  inputsLarge: {
+    width: "70%",
+    alignSelf: "Center",
+    marginLeft: "16%",
   },
+  inputsSmall: {},
   inputIcons: {
     marginRight: 12,
   },
@@ -262,15 +337,33 @@ const styles = StyleSheet.create({
     paddingTop: 13,
     paddingBottom: 30,
   },
-  login: {
-    width: width * 0.5,
+  loginLarge: {
+    width: width * 0.3,
     marginTop: 25,
     backgroundColor: "#E49D81",
   },
-  signUp: {
-    width: width * 0.5,
+  signUpLarge: {
+    width: width * 0.3,
     marginTop: 25,
     backgroundColor: "#F0936F",
+  },
+  loginSmall: {
+    marginTop: 25,
+    backgroundColor: "#E49D81",
+  },
+  signUpSmall: {
+    marginTop: 25,
+    backgroundColor: "#F0936F",
+  },
+  errorMessage: {
+    alignSelf: "center",
+    fontWeight: "bold",
+    paddingTop: "4%",
+    color: "red",
+  },
+  errorBorder: {
+    borderColor: "red",
+    borderWidth: 1,
   },
 });
 
