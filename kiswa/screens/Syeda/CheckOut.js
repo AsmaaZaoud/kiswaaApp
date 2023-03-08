@@ -110,19 +110,20 @@ const CheckOut = ({ route, navigation }) => {
             // amount: route.params.amount,
             timeSlot: route.params.time,
             dateSlot: route.params.date,
-            trackId: trackId
+            trackId: trackId,
+            donationArray: confirm
         });
         console.log("Document written with ID: ", docRef.id);
 
-        confirm.map(async (item) => {
-            console.log(docRef.id)
-            const docRef2 = await addDoc(collection(db, "donorDonation", docRef.id, "Items"), {
-                type: item.cloth,
-                quantity: item.amount,
-                trackId: trackId
-            });
-            console.log("Document written with ID: ", docRef2.id);
-        })
+        // confirm.map(async (item) => {
+        //     console.log(docRef.id)
+        //     const docRef2 = await addDoc(collection(db, "donorDonation", docRef.id, "Items"), {
+        //         type: item.cloth,
+        //         quantity: item.amount,
+        //         trackId: trackId
+        //     });
+        //     console.log("Document written with ID: ", docRef2.id);
+        // })
 
         navigation.navigate("Feedback")
     }
@@ -137,18 +138,19 @@ const CheckOut = ({ route, navigation }) => {
             // amount: route.params.amount,
             timeSlot: route.params.time,
             dateSlot: route.params.date,
-            trackId: trackId
+            trackId: trackId,
+            donationArray: confirm
         });
         console.log("Document written with ID: ", docRef.id);
 
-        confirm.map(async (item) => {
-            const docRef2 = await addDoc(collection(db, "guestDonor", docRef.id, "Items"), {
-                type: item.cloth,
-                quantity: item.amount,
-                trackId: trackId
-            });
-            console.log("Document written with ID: ", docRef2.id);
-        })
+        // confirm.map(async (item) => {
+        //     const docRef2 = await addDoc(collection(db, "guestDonor", docRef.id, "Items"), {
+        //         type: item.cloth,
+        //         quantity: item.amount,
+        //         trackId: trackId
+        //     });
+        //     console.log("Document written with ID: ", docRef2.id);
+        // })
 
         navigation.navigate("Feedback")
     }
@@ -269,9 +271,9 @@ const CheckOut = ({ route, navigation }) => {
                             <Block style={{ marginTop: '10%' }}></Block>
 
                             <Block style={{ marginLeft: '5%' }}>
-                                <Text style={{ fontSize: 30, alignSelf: 'center', borderBottomWidth: 1, borderColor: 'black', marginBottom: 20, textDecorationLine: 'underline' }}>Donation Summary</Text>
-                                <Text style={{ fontSize: 25 }}>Pick Up Time Interval: {route.params.time}</Text>
-                                <Text style={{ fontSize: 25 }}>Pick Up Date Interval: {route.params.date}</Text>
+                                <Text style={{ fontSize: 30, alignSelf: 'center', marginBottom: 20, textDecorationLine: 'underline' }}>Donation Summary</Text>
+                                <Text style={{ fontSize: 20 }}>Pick Up Time Interval: {route.params.time}</Text>
+                                <Text style={{ fontSize: 20 }}>Pick Up Date Interval: {route.params.date}</Text>
                                 <Block style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                     {
                                         route.params.itemsArray.map((item, index) =>

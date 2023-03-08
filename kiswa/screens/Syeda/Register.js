@@ -9,7 +9,11 @@ import {
   TextInput,
   View,
   Platform,
-  PixelRatio
+  PixelRatio,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
+  ScrollView
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -115,8 +119,8 @@ const Register = ({ navigation }) => {
 
   const add = async () => {
     const docRef = doc(db, "donors", email)
-    
-    await setDoc (docRef, {
+
+    await setDoc(docRef, {
       userName: name,
       phone: phone,
       location: location,
@@ -246,7 +250,7 @@ const Register = ({ navigation }) => {
       password &&
       validatePassword &&
       stat === 'granted' &&
-      zone !== " All Zones" 
+      zone !== " All Zones"
     ) {
       handleRegister()
     }
@@ -264,175 +268,186 @@ const Register = ({ navigation }) => {
 
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.articles}>
 
-            <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.goBack()}>Go Back</Text>
-            <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: normalize(50) }}>Register as Donor</Text>
-            <View style={styles.container}>
+              <TouchableOpacity onPress={() => navigation.navigate('LoginDonor')}>
+                <Image
+                  style={styles.backButton}
+                  source={{ uri: 'https://cdn-icons-png.flaticon.com/512/54/54623.png' }}
+                ></Image>
+              </TouchableOpacity>
+              {/* <View style={{marginBottom: 50}}></View> */}
+              <Image source={require('../../Images/purple_transparent.png')} style={{ width: 250, height: 200, justifyContent: 'flex-start', alignSelf: 'center', }} />
+              {/* <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: 25 }}>Register as Donor</Text> */}
+              <View style={styles.container}>
 
-              <Text style={styles.error}>{nameError}</Text>
+                <Text style={styles.error}>{nameError}</Text>
 
-              <Block width={width * 0.8} >
-                <Input
-                  borderless
-                  value={name}
-                  onChangeText={setName}
-                  autoCapitalize='words'
-                  placeholder="Nickname"
-                  iconContent={
-                    <Icon
-                      size={16}
-                      color={argonTheme.COLORS.ICON}
-                      name="hat-3"
-                      family="ArgonExtra"
-                      style={styles.inputIcons}
-                    />
-                  }
-                />
-              </Block>
+                <Block width={width * 0.8} >
+                  <Input
+                    borderless
+                    value={name}
+                    onChangeText={setName}
+                    autoCapitalize='words'
+                    placeholder="Nickname"
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="hat-3"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                </Block>
 
-              <Text style={styles.error}>{phoneError}</Text>
-              <Block width={width * 0.8} >
-                <Input
-                  borderless
-                  value={phone}
-                  onChangeText={setPhone}
-                  keyboardType="numeric"
-                  maxLength={8}
-                  placeholder="Phone Number"
-                  iconContent={
-                    <Icon
-                      size={16}
-                      color={argonTheme.COLORS.ICON}
-                      name="phone"
-                      family="Entypo"
-                      style={styles.inputIcons}
-                    />
-                  }
-                />
-              </Block>
+                <Text style={styles.error}>{phoneError}</Text>
+                <Block width={width * 0.8} >
+                  <Input
+                    borderless
+                    value={phone}
+                    onChangeText={setPhone}
+                    keyboardType="numeric"
+                    maxLength={8}
+                    placeholder="Phone Number"
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="phone"
+                        family="Entypo"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                </Block>
 
-              <Text style={styles.error}>{emailError}</Text>
-              <Block width={width * 0.8} >
-                <Input
-                  borderless
-                  placeholder="Email"
-                  value={email}
-                  onChangeText={setEmail}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  iconContent={
-                    <Icon
-                      size={16}
-                      color={argonTheme.COLORS.ICON}
-                      name="email"
-                      family="Entypo"
-                      style={styles.inputIcons}
-                    />
-                  }
-                />
-              </Block>
+                <Text style={styles.error}>{emailError}</Text>
+                <Block width={width * 0.8} >
+                  <Input
+                    borderless
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="email"
+                        family="Entypo"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                </Block>
 
-              <Text style={styles.error}>{passError}</Text>
-              <Block width={width * 0.8} >
-                <Input
-                  borderless
-                  placeholder="Password"
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry
-                  iconContent={
-                    <Icon
-                      size={16}
-                      color={argonTheme.COLORS.ICON}
-                      name="lock-open"
-                      family="Entypo"
-                      style={styles.inputIcons}
-                    />
-                  }
-                />
-              </Block>
+                <Text style={styles.error}>{passError}</Text>
+                <Block width={width * 0.8} >
+                  <Input
+                    borderless
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="lock-open"
+                        family="Entypo"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                </Block>
 
-              <Text style={styles.error}>{confirmError}</Text>
-              <Block width={width * 0.8} >
-                <Input
-                  borderless
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                secureTextEntry
-                  iconContent={
-                    <Icon
-                      size={16}
-                      color={argonTheme.COLORS.ICON}
-                      name="lock"
-                      family="Entypo"
-                      style={styles.inputIcons}
-                    />
-                  }
-                />
-              </Block>
+                <Text style={styles.error}>{confirmError}</Text>
+                <Block width={width * 0.8} >
+                  <Input
+                    borderless
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    secureTextEntry
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="lock"
+                        family="Entypo"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                </Block>
 
-              <Text
-                style={{
-                  textAlign: "center",
-                  color: "red",
-                  fontSize: normalize(19),
-                }}
-              >
-                {locationError}
-              </Text>
-              <Block width={width * 0.35}>
-                <Button
-                  color={stat !== "granted" ? "default" : "primary"}
-                  style={styles.createButton}
-                  onPress={getLocation}
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: "red",
+                    fontSize: normalize(19),
+                  }}
                 >
-                  <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                    Get Location
+                  {locationError}
+                </Text>
+                <Block width={width * 0.35}>
+                  <Button
+                    color={stat !== "granted" ? "default" : "primary"}
+                    style={styles.createButton}
+                    onPress={getLocation}
+                  >
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                      Get Location
+                    </Text>
+                  </Button>
+
+                </Block>
+
+                <Block width={width * 0.35} style={{ marginBottom: 0 }}>
+                  <Dropdown
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    data={zones}
+                    maxHeight={160}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={zone}
+                    value={zone}
+                    onChange={(item) => {
+                      setZone(item.label);
+                    }}
+                  ></Dropdown>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
+                    }}
+                  >
+                    {ZoneError}
                   </Text>
-                </Button>
-
-              </Block>
-
-              <Block width={width * 0.35} style={{ marginBottom: 0 }}>
-                      <Dropdown
-                        style={styles.dropdown}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        data={zones}
-                        maxHeight={160}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={zone}
-                        value={zone}
-                        onChange={(item) => {
-                          setZone(item.label);
-                        }}
-                      ></Dropdown>
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          color: "red",
-                          fontSize: 12,
-                        }}
-                      >
-                        {ZoneError}
-                      </Text>
-                    </Block>
+                </Block>
 
 
-              <Block width={width * 0.35}>
-                <Button
-                  style={styles.createButton}
-                  onPress={validation}
-                >
-                  <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                    Register
-                  </Text>
-                </Button>
-              </Block>
+                <Block width={width * 0.35}>
+                  <Button
+                    style={styles.createButton}
+                    onPress={validation}
+                  >
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                      Register
+                    </Text>
+                  </Button>
+                </Block>
 
-            </View>
+              </View>
+            </ScrollView>
           </Block>
         </Block>
       </ImageBackground>
@@ -513,6 +528,16 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 12,
+  },
+  backButton: {
+    width: 50,
+    height: 50,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    margin: 20,
+    position: 'absolute',
+    top: 0,
+    left: 0
   },
 });
 

@@ -6,6 +6,7 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   Image,
+  TouchableOpacity
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -97,8 +98,14 @@ const LoginDonor = ({ navigation }) => {
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <Block flex>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+              <Image
+                style={styles.backButton}
+                source={{ uri: 'https://cdn-icons-png.flaticon.com/512/54/54623.png' }}
+              ></Image>
+            </TouchableOpacity>
               <Block flex={0.17} middle>
-                <Image source={Images.Logo} />
+                <Image source={require('../../Images/purple_transparent.png')} style={{width: 250, height: 200}}/>
               </Block>
               <Block flex center>
                 <KeyboardAvoidingView
@@ -229,6 +236,16 @@ const styles = StyleSheet.create({
     width: width * 0.5,
     marginTop: 25,
   },
+  backButton: {
+    width: 50,
+    height: 50,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    margin: 20,
+    position: 'absolute', 
+    top: 0, 
+    left: 0
+},
 });
 
 export default LoginDonor;
