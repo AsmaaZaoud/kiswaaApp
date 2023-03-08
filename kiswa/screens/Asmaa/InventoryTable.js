@@ -15,6 +15,7 @@ import {
   Table,
   Platform,
   PixelRatio,
+  Pressable,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
@@ -52,7 +53,12 @@ import { Images, argonTheme, articles } from "../../constants";
 
 import { Card, Header } from "../../components";
 
-import { Icon, Feather, FontAwesome } from "react-native-vector-icons";
+import {
+  Icon,
+  Feather,
+  FontAwesome,
+  Octicons,
+} from "react-native-vector-icons";
 import ArButton from "../../components/Button";
 // import { normalize } from "@rneui/themed";
 import { Dropdown } from "react-native-element-dropdown";
@@ -73,12 +79,32 @@ const cardWidth = width - theme.SIZES.BASE * 2;
 const InventoryTable = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
   const [open, setOpen] = useState(false);
+  const [type, setType] = useState("");
+  const [size, setSize] = useState("");
+  const [quality, setQuality] = useState("");
+  const [color, setColor] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [inventory, setInventory] = useState([]);
+  const [allinventory, setAllInventory] = useState([]);
 
   useEffect(() => {
     readAllWhere();
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
 
+  // >>>>>>>>>>>>>> Read functions <<<<<<<<<<<<<<
+  const readAllWhere = async () => {
+    let temp = [];
+    const q = query(collection(db, "inventory"));
+    const docs = await getDocs(q);
+    // console.log(docs)
+    docs.forEach((doc) => {
+      temp.push(doc.data());
+    });
+    setInventory(temp);
+    setAllInventory(temp);
+  };
   // >>>>>>>>>>>>>> Search functions <<<<<<<<<<<<<<
   const [searchQuery, setSearchQuery] = React.useState("");
 
@@ -99,31 +125,29 @@ const InventoryTable = ({ navigation }) => {
     }
   };
 
-  const [inventory, setInventory] = useState([]);
-  const [allinventory, setAllInventory] = useState([]);
-  const [blouse, setBlouse] = useState([]);
+  // >>>>>>>>>>>>>> Filter functions <<<<<<<<<<<<<<
+  const [filterd, setFilterd] = useState([]);
+  const select = (name, type) => {
+    var all;
+    // filterd.length == 0 ? (all = [...allinventory]) : (all = [...filterd]);
+    if (type == "type") {
+      var filteredData = allinventory.filter((item) => item.type == name);
+    } else if (type == "size") {
+      var filteredData = allinventory.filter((item) => item.size == name);
+    } else if (type == "color") {
+      var filteredData = allinventory.filter((item) => item.color == name);
+    } else if (type == "gender") {
+      var filteredData = allinventory.filter((item) => item.gender == name);
+    } else if (type == "age") {
+      var filteredData = allinventory.filter((item) => item.age == name);
+    } else if (type == "available") {
+      var filteredData = allinventory.filter((item) => item.available == name);
+    } else if (type == "quality") {
+      var filteredData = allinventory.filter((item) => item.quality == name);
+    }
 
-  const readAllWhere = async () => {
-    let temp = [];
-    const q = query(collection(db, "inventory"));
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      console.log(doc.id, " => ", doc.data());
-    });
-    setInventory(temp);
-    setAllInventory(temp);
-    console.log(inventory);
-  };
-
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 99, 43],
-      },
-    ],
+    setInventory(filteredData);
+    setFilterd(filteredData);
   };
 
   return (
@@ -141,6 +165,7 @@ const InventoryTable = ({ navigation }) => {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 width: width * 0.86,
+                // borderWidth: 1,
               }}
             >
               <View style={{ flexDirection: "row" }}>
@@ -154,13 +179,31 @@ const InventoryTable = ({ navigation }) => {
                   Inventory
                 </Text>
               </View>
-              <Searchbar
-                placeholder="Search"
-                onChangeText={handleSearch}
-                value={searchQuery}
-                style={{ width: width * 0.4, borderRadius: "19%" }}
-                autoCorrect={false}
-              />
+              <View style={{ flexDirection: "row" }}>
+                <Searchbar
+                  placeholder="Search"
+                  onChangeText={handleSearch}
+                  value={searchQuery}
+                  fontSize={deviceType == "mobile" ? 17 : normalize(25)}
+                  style={{
+                    fontSize: 50,
+                    width: normalize(300),
+                    height: deviceType == "mobile" ? 45 : 50,
+                    borderRadius: "19%",
+                    marginRight: "3%",
+                  }}
+                  autoCorrect={false}
+                />
+                <Pressable
+                  onPress={() => navigation.navigate("AdminHome", "graph")}
+                >
+                  <Octicons
+                    name="graph"
+                    size={deviceType == "mobile" ? 40 : 45}
+                    style={{ marginTop: deviceType == "mobile" ? "5%" : "2%" }}
+                  />
+                </Pressable>
+              </View>
             </View>
           </Block>
           <DataTable.Header
@@ -193,7 +236,7 @@ const InventoryTable = ({ navigation }) => {
                 // value={type}
                 placeholder={"Type"}
                 onChange={(item) => {
-                  // setType(item.value);
+                  select(item.value, "type");
                   setOpen(true);
                 }}
               />
@@ -210,7 +253,12 @@ const InventoryTable = ({ navigation }) => {
                   color: "white",
                   fontWeight: "bold",
                 }}
-                selectedTextStyle={{ fontSize: normalize(20) }}
+                selectedTextStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
                 inputSearchStyle={styles.inputSearchStyle}
                 data={SizeData}
                 labelField="label"
@@ -223,16 +271,184 @@ const InventoryTable = ({ navigation }) => {
                 // value={size}
                 placeholder={"Size"}
                 onChange={(item) => {
-                  // setSize(item.value);
+                  select(item.value, "size");
+                  // setOpen(true);
                 }}
               />
             </DataTable.Title>
-            <DataTable.Title textStyle={styles.title}>Color</DataTable.Title>
-            <DataTable.Title textStyle={styles.title}>Gender</DataTable.Title>
-            <DataTable.Title textStyle={styles.title}>Age</DataTable.Title>
-            <DataTable.Title textStyle={styles.title}>Quality</DataTable.Title>
             <DataTable.Title textStyle={styles.title}>
-              Available
+              <Dropdown
+                style={[
+                  styles.smallInput,
+                  // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
+                ]}
+                placeholderStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                selectedTextStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                inputSearchStyle={styles.inputSearchStyle}
+                data={ColorData}
+                labelField="label"
+                valueField="value"
+                maxHeight={200}
+                id="value"
+                search
+                searchPlaceholder="Search..."
+                animated={false}
+                // value={size}
+                placeholder={"Color"}
+                onChange={(item) => {
+                  select(item.value, "color");
+                  // setOpen(true);
+                }}
+              />
+            </DataTable.Title>
+            <DataTable.Title textStyle={styles.title}>
+              <Dropdown
+                style={[
+                  styles.smallInput,
+                  // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
+                ]}
+                placeholderStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                selectedTextStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                inputSearchStyle={styles.inputSearchStyle}
+                data={GenderData}
+                labelField="label"
+                valueField="value"
+                maxHeight={200}
+                id="value"
+                search
+                searchPlaceholder="Search..."
+                animated={false}
+                // value={size}
+                placeholder={"Gender"}
+                onChange={(item) => {
+                  select(item.value, "gender");
+                  // setOpen(true);
+                }}
+              />
+            </DataTable.Title>
+            <DataTable.Title textStyle={styles.title}>
+              <Dropdown
+                style={[
+                  styles.smallInput,
+                  // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
+                ]}
+                placeholderStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                selectedTextStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                inputSearchStyle={styles.inputSearchStyle}
+                data={AgeCategory}
+                labelField="label"
+                valueField="value"
+                maxHeight={200}
+                id="value"
+                search
+                searchPlaceholder="Search..."
+                animated={false}
+                // value={size}
+                placeholder={"age"}
+                onChange={(item) => {
+                  select(item.value, "age");
+                  // setOpen(true);
+                }}
+              />
+            </DataTable.Title>
+            <DataTable.Title textStyle={styles.title}>
+              <Dropdown
+                autoScroll
+                style={[
+                  styles.smallInput,
+                  // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
+                ]}
+                placeholderStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                selectedTextStyle={styles.title}
+                inputSearchStyle={styles.inputSearchStyle}
+                data={QualityData}
+                labelField="label"
+                valueField="value"
+                id="value"
+                maxHeight={400}
+                search
+                searchPlaceholder="Search..."
+                animated={false}
+                // value={type}
+                placeholder={"Quality"}
+                onChange={(item) => {
+                  select(item.value, "quality");
+                  setOpen(true);
+                }}
+              />
+            </DataTable.Title>
+            <DataTable.Title textStyle={styles.title}>
+              <Dropdown
+                style={[
+                  styles.smallInput,
+                  // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
+                ]}
+                placeholderStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                selectedTextStyle={{
+                  fontSize: normalize(20),
+                  textAlign: "left",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+                inputSearchStyle={styles.inputSearchStyle}
+                data={[
+                  { label: "Available", value: true },
+                  { label: "Not-Available", value: false },
+                ]}
+                labelField="label"
+                valueField="value"
+                maxHeight={200}
+                id="value"
+                search
+                searchPlaceholder="Search..."
+                animated={false}
+                // value={size}
+                placeholder={"Available"}
+                onChange={(item) => {
+                  select(item.value, "available");
+                  // setOpen(true);
+                }}
+              />
             </DataTable.Title>
           </DataTable.Header>
           <View

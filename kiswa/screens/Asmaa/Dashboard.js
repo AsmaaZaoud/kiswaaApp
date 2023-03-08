@@ -91,22 +91,22 @@ const Dashboard = () => {
     {
       title: "Donors",
       data: "donors",
-      img: require("../../assets/imgs/donor.png"),
+      img: require("../../assets/Asmaa/donor2.png"),
     },
     {
       title: "Drivers",
       data: "drivers",
-      img: require("../../assets/imgs/family.png"),
+      img: require("../../assets/Asmaa/driver.png"),
     },
     {
       title: "Families",
       data: "families",
-      img: require("../../assets/imgs/family.png"),
+      img: require("../../assets/Asmaa/family(6).png"),
     },
     {
       title: "Workers",
       data: "workers",
-      img: require("../../assets/imgs/feedback.png"),
+      img: require("../../assets/Asmaa/worker.png"),
     },
   ];
   useEffect(() => {
@@ -243,7 +243,12 @@ const Dashboard = () => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white", height: 1000 }}>
+    <SafeAreaView
+      style={{
+        backgroundColor: "white",
+        height: deviceType == "mobile" ? 800 : 1000,
+      }}
+    >
       <ScrollView
         style={{ backgroundColor: "white" }}
         showsVerticalScrollIndicator={false}
@@ -252,7 +257,7 @@ const Dashboard = () => {
           <View
             style={{
               width: width,
-              height: 40,
+              height: height * 0.033,
               backgroundColor: "#F5BD9A",
             }}
           >
@@ -263,11 +268,19 @@ const Dashboard = () => {
             <View
               style={{
                 flexDirection: "row",
-                width: width * 3,
-                height: height * 0.34,
+                width: width * 2,
+                height: deviceType == "mobile" ? height * 0.24 : height * 0.32,
               }}
             >
-              <View style={styles.statistics}>
+              <View
+                style={[
+                  styles.statistics,
+                  {
+                    height:
+                      deviceType == "mobile" ? height * 0.2 : height * 0.27,
+                  },
+                ]}
+              >
                 <Text
                   style={{
                     fontSize: normalize(30),
@@ -300,7 +313,7 @@ const Dashboard = () => {
                         </Text>
                         <Text></Text>
 
-                        <Text style={{ fontSize: normalize(19) }}>
+                        <Text style={{ fontSize: normalize(25) }}>
                           {x.data == "requests"
                             ? requests.length
                             : x.data == "donations"
@@ -315,7 +328,15 @@ const Dashboard = () => {
                 </View>
               </View>
 
-              <View style={styles.statistics}>
+              <View
+                style={[
+                  styles.statistics,
+                  {
+                    height:
+                      deviceType == "mobile" ? height * 0.2 : height * 0.27,
+                  },
+                ]}
+              >
                 <Text
                   style={{
                     fontSize: normalize(30),
@@ -348,55 +369,7 @@ const Dashboard = () => {
                         </Text>
                         <Text></Text>
 
-                        <Text style={{ fontSize: normalize(19) }}>
-                          {x.data == "requests"
-                            ? requests.length
-                            : x.data == "donations"
-                            ? donations.length
-                            : x.data == "items"
-                            ? items.length
-                            : feedback.length}
-                        </Text>
-                      </View>
-                    </View>
-                  ))}
-                </View>
-              </View>
-
-              <View style={styles.statistics}>
-                <Text
-                  style={{
-                    fontSize: normalize(30),
-                    marginLeft: "7%",
-                    borderBottomWidth: 2,
-                    borderBottomColor: "black",
-                  }}
-                >
-                  Users
-                </Text>
-                <View
-                  style={{
-                    borderWidth: 1,
-                  }}
-                ></View>
-                <View style={styles.blockss}>
-                  {userStat.map((x) => (
-                    <View style={styles.block}>
-                      <View style={styles.imgBlock}>
-                        <Image
-                          source={x.img}
-                          style={{ width: 150, height: 50 }}
-                          width={"90%"}
-                          height={"90%"}
-                        />
-                      </View>
-                      <View style={styles.text}>
-                        <Text style={{ fontSize: normalize(20) }}>
-                          {x.title}
-                        </Text>
-                        <Text></Text>
-
-                        <Text style={{ fontSize: normalize(19) }}>
+                        <Text style={{ fontSize: normalize(25) }}>
                           {x.data == "requests"
                             ? requests.length
                             : x.data == "donations"
@@ -416,7 +389,7 @@ const Dashboard = () => {
           <LineChart
             data={data}
             width={width * 1.1}
-            height={330}
+            height={height * 0.25}
             verticalLabelRotation={0}
             chartConfig={{
               backgroundColor: "#ccc",
@@ -425,8 +398,8 @@ const Dashboard = () => {
               decimalPlaces: 0,
               color: (opacity = 0) => `rgba(100, 102,101 , ${opacity})`,
               style: {
-                borderRadius: 16,
-                margin: "1%",
+                // borderRadius: 16,
+                // margin: "1%",
               },
             }}
             bezier
@@ -454,7 +427,12 @@ const Dashboard = () => {
                 height: height * 0.4,
               }}
             >
-              <View style={styles.status}>
+              <View
+                style={[
+                  styles.status,
+                  { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
+                ]}
+              >
                 <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
                   Achived Orders
                 </Text>
@@ -464,12 +442,12 @@ const Dashboard = () => {
                     width: "100%",
                   }}
                 ></View>
-                <View style={{ padding: "5%" }}>
+                <View style={{ padding: "6%", flexDirection: "row" }}>
                   <CircularProgress
-                    radius={90}
+                    radius={deviceType == "mobile" ? 85 : 100}
                     value={(3 / 6) * 100}
                     textColor="222"
-                    fontSize={20}
+                    fontSize={30}
                     valueSuffix={"%"}
                     inActiveStrokeColor={"#2ecc71"}
                     inActiveStrokeOpacity={0.2}
@@ -477,10 +455,16 @@ const Dashboard = () => {
                     duration={1000}
                     onAnimationComplete={() => setValue(50)}
                   />
+
+                  <Text>3/6</Text>
                 </View>
               </View>
-
-              <View style={styles.status}>
+              <View
+                style={[
+                  styles.status,
+                  { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
+                ]}
+              >
                 <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
                   Orders
                 </Text>
@@ -511,8 +495,8 @@ const Dashboard = () => {
                       legendFontSize: 15,
                     },
                   ]}
-                  width={width * 0.5}
-                  height={height * 0.19}
+                  width={deviceType == "mobile" ? width * 0.8 : width * 0.5}
+                  height={height * 0.2}
                   chartConfig={{
                     backgroundColor: "#1cc910",
                     backgroundGradientFrom: "#eff3ff",
@@ -531,12 +515,16 @@ const Dashboard = () => {
                   }
                   accessor="population"
                   backgroundColor="transparent"
-                  paddingLeft="15"
+                  paddingLeft="30"
                   absolute //for the absolute number remove if you want percentage
                 />
               </View>
-
-              <View style={styles.status}>
+              <View
+                style={[
+                  styles.status,
+                  { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
+                ]}
+              >
                 <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
                   Top Zones
                 </Text>
@@ -576,8 +564,8 @@ const Dashboard = () => {
                       legendFontSize: 15,
                     },
                   ]}
-                  width={width * 0.5}
-                  height={height * 0.19}
+                  width={deviceType == "mobile" ? width * 0.8 : width * 0.5}
+                  height={height * 0.2}
                   chartConfig={{
                     backgroundColor: "#1cc910",
                     backgroundGradientFrom: "#eff3ff",
@@ -596,7 +584,7 @@ const Dashboard = () => {
                   }
                   accessor="population"
                   backgroundColor="transparent"
-                  paddingLeft="15"
+                  paddingLeft="30"
                   absolute //for the absolute number remove if you want percentage
                 />
               </View>
@@ -628,13 +616,13 @@ const styles = StyleSheet.create({
   statistics: {
     borderWidth: 1,
     width: width * 0.7,
-    height: height * 0.28,
+    height: height * 0.27,
     margin: "1%",
     borderRadius: "10%",
-    paddingBottom: "2%",
+    paddingBottom: 0,
   },
   blockss: {
-    padding: "2%",
+    // padding: "2%",
     flexDirection: "row",
     flexWrap: "wrap",
     margin: "1%",
@@ -642,12 +630,12 @@ const styles = StyleSheet.create({
   block: {
     width: "46%",
     borderWidth: 1,
-    height: "60%",
+    height: "55%",
     margin: "2%",
     justifyContent: "space-between",
     flexDirection: "row",
-    borderBottomEndRadius: "15%",
-    borderTopEndRadius: "15%",
+    // borderBottomEndRadius: "15%",
+    // borderTopEndRadius: "15%",
   },
   imgBlock: {
     width: "40%",
@@ -661,7 +649,7 @@ const styles = StyleSheet.create({
   },
 
   status: {
-    width: width * 0.6,
+    // width: width * 0.5,
     height: height * 0.25,
     borderWidth: 1,
     borderRadius: "20%",

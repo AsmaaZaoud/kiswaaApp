@@ -61,13 +61,17 @@ export function normalize(size) {
   }
 }
 
-const AdminHome = ({ navigation }) => {
+const AdminHome = ({ route, navigation }) => {
+  const invType = route.params;
+  // console.log(p);
   const [deviceType, setDeviceType] = useState("");
-  const [users, setUsers] = useState("");
+  const [users, setUsers] = useState("graph");
+  const [inv, setInv] = useState("graph");
 
   useEffect(() => {
+    invType ? setInv(invType) : null;
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-  }, []);
+  }, [invType]);
 
   const navbar = [
     {
@@ -316,7 +320,7 @@ const AdminHome = ({ navigation }) => {
           {/*--------- Donors -------------*/}
           <TabView.Item disableTransition style={styles.comp}>
             <View style={styles.board}>
-              <View
+              {/* <View
                 style={{
                   width: width * 0.5,
                   // borderWidth: 2,
@@ -336,9 +340,11 @@ const AdminHome = ({ navigation }) => {
                     Table
                   </Text>
                 </Button>
-              </View>
-              {users == "graph" ? (
-                <Inventory navigation={navigation} />
+              </View> */}
+              {invType == "graph" ? (
+                <View>
+                  <Inventory navigation={navigation} />
+                </View>
               ) : (
                 <InventoryTable navigation={navigation} />
               )}

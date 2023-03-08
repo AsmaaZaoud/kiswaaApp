@@ -71,7 +71,7 @@ const Families = ({ navigation }) => {
     });
     setFamilies(temp);
     setAllFamilies(temp);
-    console.log(allFamilies);
+    // console.log("alll", allFamilies);
   };
   const [flag, setFlag] = useState(false);
 
@@ -106,7 +106,7 @@ const Families = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (value) => {
-    console.log(value);
+    console.log("familiesss", allFamilies);
     setSearchQuery(value);
     if (value.length === 0) {
       setFamilies(allFamilies);
@@ -114,12 +114,12 @@ const Families = ({ navigation }) => {
 
     const filteredData = allFamilies.filter(
       (item) =>
-        console.log(item) &&
+        item.userName &&
         item.userName.toLowerCase().includes(value.toLowerCase())
     );
 
     if (filteredData.length === 0) {
-      setFamilies([]);
+      setFamilies(allFamilies);
     } else {
       setFamilies(filteredData);
     }
