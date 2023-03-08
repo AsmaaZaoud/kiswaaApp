@@ -556,6 +556,3 @@ const styles = StyleSheet.create({
 })
 
 export default Donate;
-
-// we dont inlcude size, condition, etc here
-// just quantity and type
