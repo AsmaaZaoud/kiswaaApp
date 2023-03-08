@@ -17,7 +17,7 @@ import {
   TouchableOpacity,
   Table,
 } from "react-native";
-import { DataTable } from "react-native-paper";
+import { DataTable, Searchbar } from "react-native-paper";
 import { Button } from "galio-framework";
 
 //FireBase
@@ -67,61 +67,13 @@ const categories = [
 const Clerks = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
 
-  const data = [
-    {
-      id: 1,
-      icon: "https://bootdey.com/img/Content/avatar/avatar1.png",
-      description: "Rajo ",
-    },
-    {
-      id: 2,
-      icon: "https://bootdey.com/img/Content/avatar/avatar2.png",
-      description: "User 2",
-    },
-    {
-      id: 3,
-      icon: "https://bootdey.com/img/Content/avatar/avatar3.png",
-      description: "User 3",
-    },
-    {
-      id: 4,
-      icon: "https://bootdey.com/img/Content/avatar/avatar4.png",
-      description: "User 4",
-    },
-    {
-      id: 5,
-      icon: "https://bootdey.com/img/Content/avatar/avatar5.png",
-      description: "User 5",
-    },
-    {
-      id: 6,
-      icon: "https://bootdey.com/img/Content/avatar/avatar6.png",
-      description: "User 6",
-    },
-    {
-      id: 7,
-      icon: "https://bootdey.com/img/Content/avatar/avatar1.png",
-      description: "User 7",
-    },
-    {
-      id: 8,
-      icon: "https://bootdey.com/img/Content/avatar/avatar2.png",
-      description: "User 8",
-    },
-    {
-      id: 9,
-      icon: "https://bootdey.com/img/Content/avatar/avatar3.png",
-      description: "User 9",
-    },
-  ];
-
   useEffect(() => {
     readAllWhere();
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
 
-  const [drivers, setDrivers] = useState([]);
-  const [allDrivers, setAllDrivers] = useState([]);
+  const [clerk, setClerk] = useState([]);
+  const [allClerk, setAllClerk] = useState([]);
 
   const readAllWhere = async () => {
     let temp = [];
@@ -132,9 +84,31 @@ const Clerks = ({ navigation }) => {
       temp.push(doc.data());
       //console.log(doc.id, " => ", doc.data());
     });
-    setDrivers(temp);
-    setAllDrivers(temp);
-    //console.log(drivers);
+    setClerk(temp);
+    setAllClerk(temp);
+    //console.log(clerk);
+  };
+
+  // >>>>>>>>>>>>>> Search functions <<<<<<<<<<<<<<
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const handleSearch = (value) => {
+    console.log("clerk", allClerk);
+    setSearchQuery(value);
+    if (value.length === 0) {
+      setClerk(allClerk);
+    }
+
+    const filteredData = allClerk.filter(
+      (item) =>
+        item.fname && item.fname.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filteredData.length === 0) {
+      setClerk([]);
+    } else {
+      setClerk(filteredData);
+    }
   };
 
   return (
@@ -144,7 +118,11 @@ const Clerks = ({ navigation }) => {
           <Block
             style={[
               styles.head,
-              { height: height * 0.08, justifyContent: "space-between" },
+              {
+                height: height * 0.08,
+                justifyContent: "space-between",
+                // borderWidth: 1,
+              },
             ]}
           >
             <View style={{ flexDirection: "row" }}>
@@ -161,22 +139,35 @@ const Clerks = ({ navigation }) => {
                 Workers
               </Text>
             </View>
-
-            <Button
-              // color="#6a1b9a"
-              color="#5AA15A"
-              style={{ width: "20%", marginLeft: "50%" }}
-              onPress={() => navigation.navigate("AddClerk")}
-            >
-              <Text
+            <View style={{ flexDirection: "row" }}>
+              <Searchbar
+                placeholder="Search"
+                onChangeText={handleSearch}
+                value={searchQuery}
                 style={{
-                  fontSize: deviceType == "mobile" ? 19 : 24,
-                  color: "#FFF",
+                  width: width * 0.34,
+                  borderRadius: "10%",
+                  height: "77%",
+                  marginTop: "2%",
                 }}
+                autoCorrect={false}
+              />
+              <Button
+                // color="#6a1b9a"
+                color="#5AA15A"
+                style={{ width: "20%" }}
+                onPress={() => navigation.navigate("AddClerk")}
               >
-                Add
-              </Text>
-            </Button>
+                <Text
+                  style={{
+                    fontSize: deviceType == "mobile" ? 19 : 24,
+                    color: "#FFF",
+                  }}
+                >
+                  Add
+                </Text>
+              </Button>
+            </View>
           </Block>
 
           <DataTable.Header
@@ -215,8 +206,8 @@ const Clerks = ({ navigation }) => {
               Phone
             </DataTable.Title>
           </DataTable.Header>
-          {drivers &&
-            drivers.map((x) => (
+          {clerk &&
+            clerk.map((x) => (
               <DataTable.Row
                 key={x.email}
                 style={{
@@ -260,10 +251,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: "1%",
     marginTop: "3%",
-    width: "90%",
+    width: "100%",
     marginLeft: "3%",
     alignItems: "center",
-    // borderWidth:2,
+    // borderWidth: 2,
     justifyContent: "space-between",
   },
   title: {

@@ -203,7 +203,7 @@ function AdminStack(props) {
 function DriverStack(props) {
   return (
     <Stack.Navigator initialRouteName="DriverHome">
-      <Stack.Screen name="Drivers" component={Drivers} />
+      {/* <Stack.Screen name="Drivers" component={Drivers} /> */}
       <Stack.Screen name="DriverHome" component={DriverHome} />
 
       <Stack.Screen
@@ -393,6 +393,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="DriverDash" component={DriverDash} />
       <Stack.Screen name="DriverMap" component={DriverMap} />
       <Stack.Screen name="Feedback" component={Feedback} />
+      <Stack.Screen name="Drivers" component={Drivers} />
 
       {/* /*********  LogIn **********/}
       <Stack.Screen name="Login" component={Login} />

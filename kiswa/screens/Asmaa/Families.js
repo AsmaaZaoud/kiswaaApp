@@ -119,7 +119,7 @@ const Families = ({ navigation }) => {
     );
 
     if (filteredData.length === 0) {
-      setFamilies(allFamilies);
+      setFamilies([]);
     } else {
       setFamilies(filteredData);
     }

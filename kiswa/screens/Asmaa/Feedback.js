@@ -8,6 +8,7 @@ import {
   FlatList,
   PixelRatio,
   Platform,
+  SafeAreaView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Feather, MaterialIcons, AntDesign } from "react-native-vector-icons";
@@ -74,111 +75,113 @@ const Feedback = (props, { navigation }) => {
   };
 
   return (
-    <Block middle style={{ backgroundColor: "white" }}>
-      <Block>
+    <SafeAreaView height={800}>
+      <Block middle style={{ backgroundColor: "white" }}>
         <Block>
-          <Text style={styles.title}>Feedback</Text>
+          <Block>
+            <Text style={styles.title}>Feedback</Text>
 
-          <FlatList
-            style={styles.notificationList}
-            enableEmptySections={true}
-            data={feedback}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
-              return (
-                <View style={styles.notificationBox} key={item.type}>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      paddingHorizontal: "2%",
-                      paddingVertical: "1%",
-                    }}
-                  >
-                    <Text style={styles.description}>{item.user} </Text>
-                    <Text style={styles.description}>{item.dateTime}</Text>
-                  </View>
-
-                  <View
-                    style={{
-                      borderWidth: 0.6,
-                      width: width * 0.9,
-                      marginBottom: "1%",
-                      // borderWidth: 1,
-                    }}
-                  ></View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      margin: "5%",
-                      marginTop: "2%",
-                      // borderWidth: 1,
-                      marginBottom: "1%",
-                    }}
-                  >
-                    {item.type == "donor" ? (
-                      <Image
-                        style={styles.icon}
-                        source={require("../../assets/Asmaa/donorFeedback.png")}
-                      />
-                    ) : (
-                      <Image
-                        style={styles.icon}
-                        source={require("../../assets/Asmaa/familyFeedback.png")}
-                      />
-                    )}
+            <FlatList
+              style={styles.notificationList}
+              enableEmptySections={true}
+              data={feedback}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => {
+                return (
+                  <View style={styles.notificationBox} key={item.type}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        paddingHorizontal: "2%",
+                        paddingVertical: "1%",
+                      }}
+                    >
+                      <Text style={styles.description}>{item.user} </Text>
+                      <Text style={styles.description}>{item.dateTime}</Text>
+                    </View>
 
                     <View
                       style={{
-                        width: "67%",
+                        borderWidth: 0.6,
+                        width: width * 0.9,
+                        marginBottom: "1%",
                         // borderWidth: 1,
                       }}
+                    ></View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        margin: "5%",
+                        marginTop: "2%",
+                        // borderWidth: 1,
+                        marginBottom: "1%",
+                      }}
                     >
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          //   width: "50%",
-                          // borderWidth: 1,
-                          padding: "1%",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {/* <MaterialIcons name="location-pin" size={25} />
-                        <Text style={styles.description}>{item.location}</Text>
-                        <Text style={styles.description}>{item.location}</Text> */}
-                        <Text style={styles.description}>{item.comment}</Text>
-                      </View>
+                      {item.type == "donor" ? (
+                        <Image
+                          style={styles.icon}
+                          source={require("../../assets/Asmaa/donorFeedback.png")}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.icon}
+                          source={require("../../assets/Asmaa/familyFeedback.png")}
+                        />
+                      )}
 
                       <View
                         style={{
-                          flexDirection: "row",
-                          width: "75%",
+                          width: "67%",
                           // borderWidth: 1,
-                          justifyContent: "space-between",
                         }}
                       >
-                        {/* <MaterialIcons name="date-range" size={25} /> */}
-                        {/* <Text style={styles.description}>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            //   width: "50%",
+                            // borderWidth: 1,
+                            padding: "1%",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {/* <MaterialIcons name="location-pin" size={25} />
+                        <Text style={styles.description}>{item.location}</Text>
+                        <Text style={styles.description}>{item.location}</Text> */}
+                          <Text style={styles.description}>{item.comment}</Text>
+                        </View>
+
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            width: "75%",
+                            // borderWidth: 1,
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {/* <MaterialIcons name="date-range" size={25} /> */}
+                          {/* <Text style={styles.description}>
                           {item.date} -{item.time}
                         </Text> */}
+                        </View>
                       </View>
+                      <Pressable
+                        onPress={() => deleteFeedBack(item.id)}
+                        style={{
+                          marginLeft: "16%",
+                        }}
+                      >
+                        <AntDesign name="delete" size={40} color="red" />
+                      </Pressable>
                     </View>
-                    <Pressable
-                      onPress={() => deleteFeedBack(item.id)}
-                      style={{
-                        marginLeft: "16%",
-                      }}
-                    >
-                      <AntDesign name="delete" size={40} color="red" />
-                    </Pressable>
                   </View>
-                </View>
-              );
-            }}
-          />
+                );
+              }}
+            />
+          </Block>
         </Block>
       </Block>
-    </Block>
+    </SafeAreaView>
   );
 };
 

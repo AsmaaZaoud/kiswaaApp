@@ -139,7 +139,7 @@ const Inventory = ({ navigation }) => {
                   marginTop: "3.9%",
                 }}
               >
-                Total items = 50
+                Total items ={inventory.length}
               </Text>
             </View>
             <Pressable
@@ -162,73 +162,6 @@ const Inventory = ({ navigation }) => {
                 width: width * 3,
               }}
             >
-              <View
-                style={[
-                  styles.status,
-                  { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
-                ]}
-              >
-                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-                  Ages
-                </Text>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: "100%",
-                  }}
-                ></View>
-                <PieChart
-                  data={[
-                    {
-                      name: "Kids",
-                      population: inventory.filter(
-                        (item) => item.age === "Kids"
-                      ).length,
-                      color: "#F7A17F",
-                      legendFontColor: "#7F7F7F",
-                      legendFontSize: 15,
-                    },
-                    {
-                      name: "Men",
-                      population: inventory.filter((item) => item.age === "men")
-                        .length,
-                      color: "#D7C3F0",
-                      legendFontColor: "#7F7F7F",
-                      legendFontSize: 15,
-                    },
-                    {
-                      name: "Women",
-                      population: inventory.filter(
-                        (item) => item.age === "women"
-                      ).length,
-                      color: "#F7C3F0",
-                      legendFontColor: "#727F7F",
-                      legendFontSize: 15,
-                    },
-                  ]}
-                  width={deviceType == "mobile" ? width * 0.8 : width * 0.5}
-                  height={height * 0.2}
-                  chartConfig={{
-                    backgroundColor: "#1cc910",
-                    backgroundGradientFrom: "#eff3ff",
-                    backgroundGradientTo: "#efefef",
-                    // decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                    style: {
-                      // borderRadius: 16,
-                      color: "red",
-                    },
-                  }}
-                  style={{
-                    marginVertical: 8,
-                    borderRadius: 16,
-                  }}
-                  accessor="population"
-                  backgroundColor="transparent"
-                  paddingLeft="30"
-                  absolute //for the absolute number remove if you want percentage
-                />
-              </View>
               <View
                 style={[
                   styles.status,
@@ -296,6 +229,73 @@ const Inventory = ({ navigation }) => {
                   absolute //for the absolute number remove if you want percentage
                 />
               </View>
+              <View
+                style={[
+                  styles.status,
+                  { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
+                ]}
+              >
+                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
+                  Ages
+                </Text>
+                <View
+                  style={{
+                    borderWidth: 1,
+                    width: "100%",
+                  }}
+                ></View>
+                <PieChart
+                  data={[
+                    {
+                      name: "Kids",
+                      population: inventory.filter(
+                        (item) => item.age === "Kids"
+                      ).length,
+                      color: "#F7A17F",
+                      legendFontColor: "#7F7F7F",
+                      legendFontSize: 15,
+                    },
+                    {
+                      name: "Men",
+                      population: inventory.filter((item) => item.age === "men")
+                        .length,
+                      color: "#D7C3F0",
+                      legendFontColor: "#7F7F7F",
+                      legendFontSize: 15,
+                    },
+                    {
+                      name: "Women",
+                      population: inventory.filter(
+                        (item) => item.age === "women"
+                      ).length,
+                      color: "#F7C3F0",
+                      legendFontColor: "#727F7F",
+                      legendFontSize: 15,
+                    },
+                  ]}
+                  width={deviceType == "mobile" ? width * 0.8 : width * 0.5}
+                  height={height * 0.2}
+                  chartConfig={{
+                    backgroundColor: "#1cc910",
+                    backgroundGradientFrom: "#eff3ff",
+                    backgroundGradientTo: "#efefef",
+                    // decimalPlaces: 2,
+                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    style: {
+                      // borderRadius: 16,
+                      color: "red",
+                    },
+                  }}
+                  style={{
+                    marginVertical: 8,
+                    borderRadius: 16,
+                  }}
+                  accessor="population"
+                  backgroundColor="transparent"
+                  paddingLeft="30"
+                  absolute //for the absolute number remove if you want percentage
+                />
+              </View>
 
               <View
                 style={[
@@ -319,7 +319,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "T-Shirt"
                       ).length,
-                      color: "#F7A17F",
+                      color: "#A8F7D8",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -328,7 +328,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Blouse"
                       ).length,
-                      color: "#D7C3F0",
+                      color: "#E6A8F7",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -337,7 +337,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Pajamas"
                       ).length,
-                      color: "#F7C3F0",
+                      color: "#A7D4F7",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -346,7 +346,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Abaya"
                       ).length,
-                      color: "#F7C3F0",
+                      color: "#F7BDA8",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -355,7 +355,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Jacket"
                       ).length,
-                      color: "#F7C3F0",
+                      color: "#F3F7A8",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -364,7 +364,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Leggings"
                       ).length,
-                      color: "#F7C3F0",
+                      color: "#F56464",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -373,7 +373,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Pants / Trousers"
                       ).length,
-                      color: "#F7C3F0",
+                      color: "#F7A8A8",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },

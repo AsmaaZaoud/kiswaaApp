@@ -17,7 +17,7 @@ import {
   TouchableOpacity,
   Table,
 } from "react-native";
-import { DataTable } from "react-native-paper";
+import { DataTable, Searchbar } from "react-native-paper";
 import { Button } from "galio-framework";
 
 //FireBase
@@ -57,8 +57,8 @@ const Donors = ({ navigation }) => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
 
-  const [drivers, setDrivers] = useState([]);
-  const [allDrivers, setAllDrivers] = useState([]);
+  const [donors, setDonors] = useState([]);
+  const [alldonors, setAllDonors] = useState([]);
 
   const readAllWhere = async () => {
     let temp = [];
@@ -69,9 +69,9 @@ const Donors = ({ navigation }) => {
       temp.push(doc.data());
       //console.log(doc.id, " => ", doc.data());
     });
-    setDrivers(temp);
-    setAllDrivers(temp);
-    //console.log(drivers);
+    setDonors(temp);
+    setAllDonors(temp);
+    //console.log(donors);
   };
   const [flag, setFlag] = useState(false);
 
@@ -98,7 +98,7 @@ const Donors = ({ navigation }) => {
     setDonations(temp);
 
     // setAllorderss(temp)
-    //console.log(drivers);
+    //console.log(donors);
     setFlag(true);
   };
 
@@ -124,7 +124,7 @@ const Donors = ({ navigation }) => {
             {/* <ScrollView> */}
             {donations &&
               donations.map((item) => (
-                <View style={styles.notificationBox} key={item.type}>
+                <View style={styles.notificationBox} key={item.trackId}>
                   <View
                     style={{
                       flexDirection: "row",
@@ -211,6 +211,29 @@ const Donors = ({ navigation }) => {
     );
   };
 
+  // >>>>>>>>>>>>>> Search functions <<<<<<<<<<<<<<
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (value) => {
+    console.log("donors", alldonors);
+    setSearchQuery(value);
+    if (value.length === 0) {
+      setDonors(alldonors);
+    }
+
+    const filteredData = alldonors.filter(
+      (item) =>
+        item.userName &&
+        item.userName.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filteredData.length === 0) {
+      setDonors([]);
+    } else {
+      setDonors(filteredData);
+    }
+  };
+
   return (
     <DataTable style={{ height: 100 }}>
       <Block
@@ -230,6 +253,18 @@ const Donors = ({ navigation }) => {
             Donors
           </Text>
         </View>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={handleSearch}
+          value={searchQuery}
+          style={{
+            width: width * 0.38,
+            borderRadius: "10%",
+            height: "77%",
+            marginTop: "2%",
+          }}
+          autoCorrect={false}
+        />
         {/* <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}>
                       
                       <Text style={{fontSize:deviceType=="mobile" ?18: 26, color:"#FFF"}}>Add</Text> 
@@ -276,8 +311,8 @@ const Donors = ({ navigation }) => {
       </DataTable.Header>
       <View height={flag ? height * 0.2 : height * 0.5}>
         <ScrollView>
-          {drivers &&
-            drivers.map((x) => (
+          {donors &&
+            donors.map((x) => (
               <DataTable.Row
                 key={x.email}
                 onPress={() => readOne(x.email)}

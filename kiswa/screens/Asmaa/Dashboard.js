@@ -354,7 +354,7 @@ const Dashboard = () => {
                 ></View>
                 <View style={styles.blockss}>
                   {userStat.map((x) => (
-                    <View style={styles.block}>
+                    <View style={styles.block} key={x.title}>
                       <View style={styles.imgBlock}>
                         <Image
                           source={x.img}
