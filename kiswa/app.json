@@ -8,8 +8,8 @@
     "version": "1.7.1",
     "orientation": "portrait",
     "splash": {
-      "image": "./assets/Fatima/SplashPage2.png",
-      "resizeMode": "stretch",
+      "image": "./assets/Fatima/SplashPage4.gif",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {

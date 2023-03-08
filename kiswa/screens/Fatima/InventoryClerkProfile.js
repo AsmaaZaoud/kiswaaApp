@@ -66,6 +66,7 @@ const InventoryClerkProfile = ({ navigation }) => {
   // update data ------------------------
   const update = async () => {
     setEditFlag(false);
+    hidePicker();
     await updateImage();
     console.log(Fname, Lname, phone, dob);
     const docRef = doc(db, "inventoryWorkers", user);
@@ -518,14 +519,7 @@ const InventoryClerkProfile = ({ navigation }) => {
                             padding: "1%",
                             marginTop: "5%",
                           }}
-                        >
-                          <Pressable onPress={hidePicker}>
-                            <Text style={{ fontSize: 18 }}>Cancel</Text>
-                          </Pressable>
-                          <Pressable onPress={hidePicker}>
-                            <Text style={{ fontSize: 18 }}>Confirm</Text>
-                          </Pressable>
-                        </View>
+                        ></View>
                       )}
                       {isPickerShow && (
                         <DateTimePicker
@@ -557,20 +551,19 @@ const InventoryClerkProfile = ({ navigation }) => {
                     }}
                   >
                     {editFlag ? (
-                      <Pressable
-                        mode="contained"
-                        color={Theme.COLORS.SUCCESS}
-                        style={[styles.CancelButton]}
-                        onPress={() => setEditFlag(false)}
-                      >
-                        <Text style={styles.ButtonText}>Cancel</Text>
-                      </Pressable>
-                    ) : null}
-
-                    {editFlag ? (
-                      <Pressable style={styles.DoneButton} onPress={update}>
-                        <Text style={styles.ButtonText}>Save</Text>
-                      </Pressable>
+                      <View style={{ flexDirection: "row" }}>
+                        <Pressable
+                          mode="contained"
+                          color={Theme.COLORS.SUCCESS}
+                          style={[styles.CancelButton]}
+                          onPress={() => setEditFlag(false)}
+                        >
+                          <Text style={styles.ButtonText}>Cancel</Text>
+                        </Pressable>
+                        <Pressable style={styles.DoneButton} onPress={update}>
+                          <Text style={styles.ButtonText}>Save</Text>
+                        </Pressable>
+                      </View>
                     ) : (
                       <View style={{ flexDirection: "row" }}>
                         <Pressable
@@ -583,7 +576,6 @@ const InventoryClerkProfile = ({ navigation }) => {
                           <Text style={styles.ButtonText}>Cancel</Text>
                         </Pressable>
                         <Pressable
-                          // mode="contained"
                           style={styles.EditButton}
                           onPress={() => setEditFlag(!editFlag)}
                         >
@@ -629,7 +621,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#EBEBEB",
     color: "#878083",
-    borderRadius: "10%",
+    borderRadius: 10,
     padding: "5%",
     fontSize: normalize(18),
   },
@@ -669,6 +661,7 @@ const styles = StyleSheet.create({
     borderRadius: "12%",
     borderWidth: 0.3,
     backgroundColor: "#EBEBEB",
+    fontSize: 26,
   },
   pickedDate: {
     fontSize: normalize(18),
@@ -679,7 +672,7 @@ const styles = StyleSheet.create({
   },
   // This only works on iOS
   datePicker: {
-    width: width * 0.8,
+    width: width * 0.4,
     height: height * 0.2,
     display: "flex",
     justifyContent: "center",

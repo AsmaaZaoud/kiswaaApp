@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     marginTop: "30%",
   },
   imagesIpad: {
-    width: width - theme.SIZES.BASE * 30,
+    width: width - theme.SIZES.BASE * 50,
     height: theme.SIZES.BASE * 18,
     resizeMode: "contain",
     marginTop: "40%",
