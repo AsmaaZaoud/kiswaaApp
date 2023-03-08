@@ -65,7 +65,7 @@ const FamilyCart = ({ route, navigation }) => {
 
   const [itemId, setItemId] = useState("");
   const { cartId, id } = route.params;
-  console.log(itemId);
+  console.log(cartId);
   // console.log("idd..", id);
   const [cart, setCart] = useState([]);
   useEffect(() => {
@@ -91,6 +91,7 @@ const FamilyCart = ({ route, navigation }) => {
 
   console.log(cart);
 
+  // .............ubpdate........
   const update = async (upId) => {
     console.log("---------------------");
     console.log(upId);

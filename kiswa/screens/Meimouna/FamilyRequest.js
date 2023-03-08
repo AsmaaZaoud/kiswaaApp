@@ -52,7 +52,7 @@ const FamilyRequest = ({ route, navigation }) => {
 
   useEffect(() => {
     getCart();
-    console.log(index);
+    // console.log(index);
   }, [id]);
 
   const data = [
@@ -79,29 +79,11 @@ const FamilyRequest = ({ route, navigation }) => {
     { label: "Skirt", value: "Skirt" },
     { label: "Sock", value: "Sock" },
     { label: "Sweater", value: "Sweater" },
-    { label: "Swimsuit", value: "Swimsuit" },
     { label: "Tie", value: "Tie" },
     { label: "Tights", value: "Tights" },
+    { label: "Tops", value: "Tops" },
     { label: "Tracksuit", value: "Tracksuit" },
     { label: "T-Shirt", value: "T-Shirt" },
-  ];
-  const WType = [
-    { key: "T-shirt" },
-    { key: "Sweater" },
-    { key: "Jacket" },
-    { key: "Coat" },
-    { key: "Jeans" },
-    { key: "socks" },
-    { key: "shorts" },
-    { key: "Tracksuit" },
-    { key: "Vest" },
-    { key: "Pajamas" },
-    { key: "shoes" },
-    { key: "dress" },
-    { key: "heels" },
-    { key: "scarf" },
-    { key: "blouse" },
-    { key: "suit" },
   ];
 
   // { label: " All Colors", value: "0" },
@@ -140,7 +122,6 @@ const FamilyRequest = ({ route, navigation }) => {
   //   });
   // };
   const [cartId, setCartId] = useState("");
-
   const getCart = async () => {
     console.log(id);
     console.log("cartt..");

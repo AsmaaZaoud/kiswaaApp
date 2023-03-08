@@ -43,6 +43,9 @@ const FamilyHome = ({ route, navigation }) => {
   const [userName, setUserName] = useState("");
   useEffect(() => {
     getFamily();
+  }, [id]);
+
+  useEffect(() => {
     getCart();
   }, [id]);
 
@@ -65,7 +68,7 @@ const FamilyHome = ({ route, navigation }) => {
 
   const getCart = async () => {
     console.log(id);
-    console.log("cartt..");
+    console.log("in cartt..");
     const q = query(
       collection(db, "familyRequests"),
       where("familyID", "==", id),
@@ -86,7 +89,7 @@ const FamilyHome = ({ route, navigation }) => {
     if (temp.length > 0) {
       console.log(temp);
       setCartId(temp[0].id);
-      console.log(cartId);
+      console.log("carttID..", temp[0].id);
     } else {
       console.log("no open cart");
       // console.log(cartId);
@@ -103,6 +106,8 @@ const FamilyHome = ({ route, navigation }) => {
     console.log("Request add with ID: ", docRef.id, "for user ", id);
     setCartId(docRef.id);
   };
+
+  console.log(cartId);
   const renderArticles = () => {
     return (
       <View style={{ backgroundColor: "white", width: "100%", height: "90%" }}>
