@@ -26,12 +26,8 @@ const FamilyFeedback = ({ route, navigation }) => {
   const [dateCreated, setDateCreated] = useState(new Date());
   const id = route.params;
 
-  // const auth = getAuth();
-  // const user = auth.currentUser;
-
   console.log(id);
   const [FeedbackErro, setFeedbackError] = useState("");
-  // const [FeedbackTextErro, setFeedbackTextError] = useState("");
 
   const addvild = () => {
     if (feedback.length != 0) {
@@ -39,13 +35,6 @@ const FamilyFeedback = ({ route, navigation }) => {
     } else {
       setFeedbackError("Select From Above");
     }
-
-    // if (feedbackText.length <= 150) {
-    //   setFeedbackTextError("");
-    // } else {
-    //   setFeedbackTextError("Maximize is 150 characters");
-    // }
-
     if (feedback.length != 0) {
       console.log("okay");
       add();
@@ -58,7 +47,7 @@ const FamilyFeedback = ({ route, navigation }) => {
       dateTime: dateCreated.toLocaleDateString(),
       type: "family",
       user: id,
-      dateTime: new Date(),
+      // dateTime: new Date(),
     })
       .then(() => {
         console.log("feedback added");

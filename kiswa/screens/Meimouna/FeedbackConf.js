@@ -18,11 +18,11 @@ import { db } from "../../config";
 const FeedbackConf = ({ route, navigation }) => {
   const { mood, id } = route.params;
   console.log(mood);
-  const [feedback, setfeedback] = useState("");
-  const [feedbackText, setFeedbackText] = useState("");
-  const [dateCreated, setDateCreated] = useState(new Date());
-  console.log(feedbackText);
-  console.log(feedback);
+  // const [feedback, setfeedback] = useState("");
+  // const [feedbackText, setFeedbackText] = useState("");
+  // const [dateCreated, setDateCreated] = useState(new Date());
+  // console.log(feedbackText);
+  // console.log(feedback);
   const auth = getAuth();
   const user = auth.currentUser;
 

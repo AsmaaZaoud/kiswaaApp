@@ -241,7 +241,7 @@ const FamilyRequest = ({ route, navigation }) => {
             >
               <Tab.Item title="Adults" titleStyle={{ fontSize: 14 }}>
                 <Image
-                  source={require("../../assets/imgs/adults.png")}
+                  source={require("../../assets/imgs/adults2-removebg-preview.png")}
                   style={{
                     width: 88,
                     height: 88,
@@ -261,10 +261,10 @@ const FamilyRequest = ({ route, navigation }) => {
               </Tab.Item>
               <Tab.Item title="Teenagers" titleStyle={{ fontSize: 12 }}>
                 <Image
-                  source={require("../../assets/imgs/teenagers.png")}
+                  source={require("../../assets/imgs/teens.png")}
                   style={{
                     width: 88,
-                    height: 88,
+                    height: 90,
                     borderColor: ageGroup == "Teenagers" ? "#842DCE" : "white",
                     borderWidth: 3,
                     borderRadius: 43,
@@ -281,7 +281,7 @@ const FamilyRequest = ({ route, navigation }) => {
               </Tab.Item>
               <Tab.Item title="Kids" titleStyle={{ fontSize: 12 }}>
                 <Image
-                  source={require("../../assets/imgs/girl-icon.png")}
+                  source={require("../../assets/imgs/kids1.png")}
                   style={{
                     width: 88,
                     height: 88,
