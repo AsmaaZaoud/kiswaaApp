@@ -35,12 +35,15 @@ import {
   deleteField,
 } from "firebase/firestore";
 import { db } from "../../config";
+import { set } from "react-native-reanimated";
+import { async } from "@firebase/util";
 const { width } = Dimensions.get("screen");
 
 const ConfirmFamilyCart = ({ route, navigation }) => {
   // const [userinforr, setUserinforr] = useState([]);
-  const { cartId, id } = route.params;
-
+  const { items, cartId, id } = route.params;
+  console.log(cartId);
+  console.log(items);
   //........dates............................
 
   //todays date
@@ -108,6 +111,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   const [theUser, setTheUser] = useState("");
   useEffect(() => {
     getFamily();
+    console.log(cartId);
   }, [id]);
 
   const getFamily = async () => {
@@ -125,9 +129,9 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   };
   // ..... invantory DB.............
   const [IDs, setIDs] = useState([]);
-  const [items, setItems] = useState([]);
+  const [itemsArray, setItemsArray] = useState([]);
   const reformat = (doc) => {
-    for (let i = 1; i <= items.length; i++) {
+    for (let i = 1; i <= itemsArray.length; i++) {
       IDs.includes(i) ? null : IDs.push(i);
     }
 
@@ -137,13 +141,64 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   useEffect(() => {
     const listenAll = () => {
       onSnapshot(collection(db, "inventory"), (snap) =>
-        setItems(snap.docs.map(reformat))
+        setItemsArray(snap.docs.map(reformat))
       );
     };
     listenAll();
     console.log("ids..", IDs);
   }, []);
-  console.log(items);
+  // console.log(itemsArray);
+
+  // const [available2, setAvailable2] = useState(true);
+
+  const [available, setAvailable] = useState(true);
+  useEffect(() => {
+    items.forEach(async (x) => {
+      await checkAvailable(x);
+    });
+  }, [items, itemsArray, available]);
+
+  //items => cart items, itemsArray=> inventory items
+
+  const checkAvailable = async (x) => {
+    console.log("first..", available);
+    const myavait = itemsArray.filter((item) => {
+      return (
+        item.type == x.type &&
+        item.color == x.color &&
+        item.age == x.ageGroup &&
+        item.gender == x.gender &&
+        item.size == x.size
+      );
+    });
+    console.log("my1... ", myavait);
+    if (myavait.length == 0) {
+      console.log("empty...");
+      console.log(myavait.length);
+      setAvailable(false);
+    } else {
+      setAvailable(true);
+    }
+    console.log("my... ", myavait);
+  };
+
+  console.log(available);
+
+  // const checkAvailable2 = (x) => {
+  //   console.log("sec");
+  //   console.log("sec", x);
+  //   itemsArray.forEach((item) => {
+  //     if (item.type == x.type && item.color == x.color && item.size == x.size) {
+  //       console.log("inven..", item.type);
+  //       console.log("yess match!");
+  //       setAvailable(true);
+  //     }
+  //   });
+  // };
+
+  // console.log(available);
+
+  // console.log(items);
   // useEffect(() => {
   //   userinfo();
   // }, [id]);
@@ -195,6 +250,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
         cart: "closed",
         dateSlot: date,
         timeSlot: time,
+        status: available ? "fullfied" : "pending",
       },
       { merge: true }
     )

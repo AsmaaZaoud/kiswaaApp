@@ -72,6 +72,9 @@ const FamilyCart = ({ route, navigation }) => {
     getCartItems();
   }, [cartId]);
 
+  // const items = [];
+  const [items, setItems] = useState([]);
+
   const getCartItems = async () => {
     console.log(cartId);
     const collectionRef = collection(db, "familyRequests", cartId, "Items");
@@ -84,12 +87,14 @@ const FamilyCart = ({ route, navigation }) => {
           data: doc.data(),
         }))
       );
-      console.log(cart);
+      setItems(querySnapshot.docs.map((doc) => doc.data()));
+      // console.log(cart);
     });
     return () => unsubscribe();
   };
 
   console.log(cart);
+  console.log("it..", items);
 
   // .............ubpdate........
   const update = async (upId) => {
@@ -287,7 +292,11 @@ const FamilyCart = ({ route, navigation }) => {
               <Pressable
                 // onPress={() => (cart.length >= 1 ? closeRequest() : null)}
                 onPress={() =>
-                  navigation.navigate("ConfirmFamilyCart", { cartId, id })
+                  navigation.navigate("ConfirmFamilyCart", {
+                    items,
+                    cartId,
+                    id,
+                  })
                 }
                 style={{
                   // marginBottom: "10%",

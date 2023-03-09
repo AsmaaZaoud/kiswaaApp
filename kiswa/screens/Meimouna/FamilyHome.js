@@ -103,7 +103,7 @@ const FamilyHome = ({ route, navigation }) => {
       status: "pending",
     });
 
-    console.log("Request add with ID: ", docRef.id, "for user ", id);
+    console.log("NewCart add with ID: ", docRef.id, "for user ", id);
     setCartId(docRef.id);
   };
 

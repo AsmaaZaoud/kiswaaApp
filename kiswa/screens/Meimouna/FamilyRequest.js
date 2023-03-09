@@ -48,7 +48,7 @@ const { width } = Dimensions.get("screen");
 const FamilyRequest = ({ route, navigation }) => {
   const id = route.params;
   const [index, setIndex] = React.useState(0);
-  const groups = { 0: "Men", 1: "Women", 2: "Boys", 3: "Girls" };
+  const groups = { 0: "Adults", 1: "Teenagers", 2: "Kids", 3: "Baby" };
 
   useEffect(() => {
     getCart();
@@ -107,6 +107,7 @@ const FamilyRequest = ({ route, navigation }) => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState(colors[0].label);
   const [size, setSize] = useState("S");
+  const [gender, setGender] = useState("Male");
 
   // console.log(ageGroup, type, quantity, color, size);
 
@@ -172,6 +173,7 @@ const FamilyRequest = ({ route, navigation }) => {
         quantity: quantity,
         color: color,
         size: size,
+        gender: gender,
       }
     )
       .then(() => {
@@ -237,84 +239,84 @@ const FamilyRequest = ({ route, navigation }) => {
               dense={true}
               disableIndicator={true}
             >
-              <Tab.Item title="Men" titleStyle={{ fontSize: 14 }}>
+              <Tab.Item title="Adults" titleStyle={{ fontSize: 14 }}>
                 <Image
                   source={require("../../assets/imgs/men-icon.png")}
                   style={{
                     width: 88,
                     height: 88,
-                    borderColor: ageGroup == "Men" ? "#842DCE" : "white",
+                    borderColor: ageGroup == "Adults" ? "#842DCE" : "white",
                     borderWidth: 3,
                     borderRadius: 43,
                   }}
                 />
                 <Text
                   style={{
-                    color: ageGroup == "Men" ? "#842DCE" : "black",
-                    fontWeight: ageGroup == "Men" ? "bold" : "normal",
+                    color: ageGroup == "Adults" ? "#842DCE" : "black",
+                    fontWeight: ageGroup == "Adults" ? "bold" : "normal",
                   }}
                 >
-                  Men
+                  Adults
                 </Text>
               </Tab.Item>
-              <Tab.Item title="Women" titleStyle={{ fontSize: 12 }}>
+              <Tab.Item title="Teenagers" titleStyle={{ fontSize: 12 }}>
                 <Image
                   source={require("../../assets/imgs/women-icon.png")}
                   style={{
                     width: 88,
                     height: 88,
-                    borderColor: ageGroup == "Women" ? "#842DCE" : "white",
+                    borderColor: ageGroup == "Teenagers" ? "#842DCE" : "white",
                     borderWidth: 3,
                     borderRadius: 43,
                   }}
                 />
                 <Text
                   style={{
-                    color: ageGroup == "Women" ? "#842DCE" : "black",
-                    fontWeight: ageGroup == "Women" ? "bold" : "normal",
+                    color: ageGroup == "Teenagers" ? "#842DCE" : "black",
+                    fontWeight: ageGroup == "Teenagers" ? "bold" : "normal",
                   }}
                 >
-                  Women
+                  Teenagers
                 </Text>
               </Tab.Item>
-              <Tab.Item title="Boys" titleStyle={{ fontSize: 12 }}>
+              <Tab.Item title="Kids" titleStyle={{ fontSize: 12 }}>
                 <Image
                   source={require("../../assets/imgs/boy-icon.png")}
                   style={{
                     width: 88,
                     height: 88,
-                    borderColor: ageGroup == "Boys" ? "#842DCE" : "white",
+                    borderColor: ageGroup == "Kids" ? "#842DCE" : "white",
                     borderWidth: 3,
                     borderRadius: 43,
                   }}
                 />
                 <Text
                   style={{
-                    color: ageGroup == "Boys" ? "#842DCE" : "black",
-                    fontWeight: ageGroup == "Boys" ? "bold" : "normal",
+                    color: ageGroup == "Kids" ? "#842DCE" : "black",
+                    fontWeight: ageGroup == "Kids" ? "bold" : "normal",
                   }}
                 >
-                  Boys
+                  Kids
                 </Text>
               </Tab.Item>
-              <Tab.Item title="Girls" titleStyle={{ fontSize: 12 }}>
+              <Tab.Item title="Baby" titleStyle={{ fontSize: 12 }}>
                 <Image
                   source={require("../../assets/imgs/girl-icon.png")}
                   style={{
                     width: 88,
                     height: 88,
-                    borderColor: ageGroup == "Girls" ? "#842DCE" : "white",
+                    borderColor: ageGroup == "Baby" ? "#842DCE" : "white",
                     borderWidth: 3,
                     borderRadius: 43,
                   }}
                 />
                 <Text
                   style={{
-                    color: ageGroup == "Girls" ? "#842DCE" : "black",
-                    fontWeight: ageGroup == "Girls" ? "bold" : "normal",
+                    color: ageGroup == "Baby" ? "#842DCE" : "black",
+                    fontWeight: ageGroup == "Baby" ? "bold" : "normal",
                   }}
                 >
-                  Girls
+                  Babys
                 </Text>
               </Tab.Item>
             </Tab>
@@ -458,8 +460,43 @@ const FamilyRequest = ({ route, navigation }) => {
                       <Text
                         style={{
                           fontSize: 16,
-                          marginBottom: 15,
-                          marginTop: 20,
+                          marginBottom: "3%",
+                          marginTop: "3%",
+                        }}
+                      >
+                        What Gender?
+                      </Text>
+                      <View style={styles.modalblocksize1}>
+                        <Pressable
+                          style={[
+                            styles.size,
+                            {
+                              backgroundColor:
+                                gender == "Male" ? "#842DCE" : "#DCD0FF",
+                            },
+                          ]}
+                          onPress={() => setGender("Male")}
+                        >
+                          <Text>M</Text>
+                        </Pressable>
+                        <Pressable
+                          style={[
+                            styles.size,
+                            {
+                              backgroundColor:
+                                gender == "Female" ? "#842DCE" : "#DCD0FF",
+                            },
+                          ]}
+                          onPress={() => setGender("Female")}
+                        >
+                          <Text>F</Text>
+                        </Pressable>
+                      </View>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginBottom: "3%",
+                          marginTop: "3%",
                         }}
                       >
                         How Many {type}s?
@@ -486,16 +523,16 @@ const FamilyRequest = ({ route, navigation }) => {
                         <Text
                           style={{
                             fontSize: 16,
-                            marginBottom: 10,
-                            marginTop: 20,
+                            marginBottom: "3%",
+                            marginTop: "7%",
                           }}
                         >
                           What Color?
                         </Text>
                         <Dropdown
-                          search
+                          // search
                           // selectedTextStyle={{ fontSize: 30 }}
-                          searchPlaceholder="Search..."
+                          // searchPlaceholder="Search..."
                           style={styles.dropdown}
                           placeholderStyle={styles.placeholderStyle}
                           selectedTextStyle={styles.selectedTextStyle}
@@ -513,13 +550,13 @@ const FamilyRequest = ({ route, navigation }) => {
                       <Text
                         style={{
                           fontSize: 16,
-                          marginBottom: 10,
-                          marginTop: 20,
+                          marginBottom: "3%",
+                          marginTop: "3%",
                         }}
                       >
                         What Size?
                       </Text>
-                      <View style={styles.modalblock}>
+                      <View style={styles.modalblocksize}>
                         <Pressable
                           style={[
                             styles.size,
@@ -727,7 +764,7 @@ const styles = StyleSheet.create({
     height: 680,
     backgroundColor: "white",
     borderRadius: 15,
-    padding: 35,
+    padding: "5%",
     alignItems: "center",
     shadowColor: "#842DCE",
     // shadowOffset: {
@@ -758,7 +795,7 @@ const styles = StyleSheet.create({
     padding: "2%",
   },
   modalText: {
-    marginBottom: 18,
+    marginBottom: "3%",
     textAlign: "center",
     fontSize: 25,
     fontWeight: "bold",
@@ -773,18 +810,36 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10,
-    marginBottom: 20,
+    // marginTop: "1%",
+    marginBottom: "4%",
     width: "100%",
     // backgroundColor: "lightgray",
   },
-  modalblock2: {
-    marginTop: 10,
-    marginBottom: 40,
+  modalblocksize: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // marginTop: "1%",
+    // marginBottom: "4%",
     width: "100%",
     // backgroundColor: "lightgray",
-    paddingTop: 20,
-    padding: 10,
+  },
+  modalblocksize1: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // marginTop: "1%",
+    marginBottom: "3%",
+    width: "48%",
+    // backgroundColor: "lightgray",
+  },
+  modalblock2: {
+    // marginTop: "1%",
+    marginBottom: "1%",
+    width: "90%",
+    // backgroundColor: "lightgray",
+    // paddingTop: 20,
+    // padding: 10,
   },
   input: {
     borderColor: "lightgray",
