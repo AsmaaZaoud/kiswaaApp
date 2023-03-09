@@ -72,7 +72,21 @@ const CheckOut = ({ route, navigation }) => {
     const [location, setLocation] = useState('');
 
     let confirm = route.params.itemsArray
-    console.log("confirm: ", confirm)
+    console.log("confirmCheckout: ", confirm)
+
+    const [emailError, setEmailError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
+
+    const [locationError, setLocationError] = useState("");
+
+    const [signedIn, setSignedIn] = useState(false);
+    const [flag, setflag] = useState(0);
+
+    const [stat, setStat] = useState("denied");
+
+    let user = auth?.currentUser?.email;
+
+    console.log('user logged in: ', user)
 
     const readName = async () => {
         let user = auth?.currentUser?.email;
@@ -111,7 +125,7 @@ const CheckOut = ({ route, navigation }) => {
             timeSlot: route.params.time,
             dateSlot: route.params.date,
             trackId: trackId,
-            donationArray: confirm
+            donatedItems: confirm
         });
         console.log("Document written with ID: ", docRef.id);
 
@@ -139,7 +153,7 @@ const CheckOut = ({ route, navigation }) => {
             timeSlot: route.params.time,
             dateSlot: route.params.date,
             trackId: trackId,
-            donationArray: confirm
+            donatedItems: confirm
         });
         console.log("Document written with ID: ", docRef.id);
 
@@ -154,20 +168,6 @@ const CheckOut = ({ route, navigation }) => {
 
         navigation.navigate("Feedback")
     }
-
-    const [emailError, setEmailError] = useState('');
-    const [phoneError, setPhoneError] = useState('');
-
-    const [locationError, setLocationError] = useState("");
-
-    const [signedIn, setSignedIn] = useState(false);
-    const [flag, setflag] = useState(0);
-
-    const [stat, setStat] = useState("denied");
-
-    let user = auth?.currentUser?.email;
-
-    console.log('user logged in: ', user)
 
 
     const getLocation = () => {

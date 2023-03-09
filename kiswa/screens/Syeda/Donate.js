@@ -150,6 +150,7 @@ const Donate = ({ route, navigation }) => {
     const [timeError, setTimeError] = useState('')
 
     const [confirm, setConfirm] = useState([])
+    console.log("confirm OUTSIFE: ", confirm)
 
     const error = () => {
         if(confirm.length > 0){
