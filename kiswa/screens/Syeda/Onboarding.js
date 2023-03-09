@@ -37,7 +37,7 @@ const Onboarding = ({ navigation }) => {
         source={require("../../assets/Fatima/background.png")}
         style={{ width, height, zIndex: 1 }}
       >
-        <TouchableOpacity onPress={() => navigation.replace("AdminHome")}>
+        <TouchableOpacity onPress={() => navigation.replace("Login")}>
           <Text
             style={{
               marginTop: "17%",

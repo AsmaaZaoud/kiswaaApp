@@ -50,6 +50,8 @@ const DriverHistory = (props, { navigation }) => {
       //   doc.data().type == "pickup" ? pick.push(t) : deliv.push(t);
     });
     setOrders(temp);
+    setOrders(temp);
+
     // setArr(temp);
     console.log(orders);
   };
@@ -94,99 +96,104 @@ const DriverHistory = (props, { navigation }) => {
       <Block style={styles.registerContainer}>
         <Block flex>
           <Text style={styles.title}>Orders History</Text>
-
-          <FlatList
-            style={styles.notificationList}
-            enableEmptySections={true}
-            data={orders}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
-              return (
-                <View style={styles.notificationBox} key={item.type}>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      paddingHorizontal: "2%",
-                      paddingVertical: "1%",
-                    }}
-                  >
-                    <Text style={styles.description}>Order# </Text>
-                    <Text style={styles.description}>2FE5DF3</Text>
-                  </View>
-
-                  <View
-                    style={{
-                      borderWidth: 0.6,
-                      width: width * 0.9,
-                      marginBottom: "4%",
-                    }}
-                  ></View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      margin: "5%",
-                      marginTop: "1%",
-                    }}
-                  >
-                    {item.type == "pickup" ? (
-                      <Image
-                        style={styles.icon}
-                        source={require("../../assets/imgs/pick.png")}
-                      />
-                    ) : (
-                      <Image
-                        style={styles.icon}
-                        source={require("../../assets/imgs/deliv.png")}
-                      />
-                    )}
+          {orders.length > 0 ? (
+            <FlatList
+              style={styles.notificationList}
+              enableEmptySections={true}
+              data={orders}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => {
+                return (
+                  <View style={styles.notificationBox} key={item.type}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        paddingHorizontal: "2%",
+                        paddingVertical: "1%",
+                      }}
+                    >
+                      <Text style={styles.description}>Order# </Text>
+                      <Text style={styles.description}>2FE5DF3</Text>
+                    </View>
 
                     <View
                       style={{
-                        width: "67%",
+                        borderWidth: 0.6,
+                        width: width * 0.9,
+                        marginBottom: "4%",
+                      }}
+                    ></View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        margin: "5%",
+                        marginTop: "1%",
                       }}
                     >
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          width: "50%",
-                          // borderWidth: 1,
-                          padding: "1%",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <MaterialIcons name="location-pin" size={25} />
-                        <Text style={styles.description}>{item.location}</Text>
-                      </View>
+                      {item.type == "pickup" ? (
+                        <Image
+                          style={styles.icon}
+                          source={require("../../assets/imgs/pick.png")}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.icon}
+                          source={require("../../assets/imgs/deliv.png")}
+                        />
+                      )}
 
                       <View
                         style={{
-                          flexDirection: "row",
-                          width: "75%",
-                          // borderWidth: 1,
-                          justifyContent: "space-between",
+                          width: "67%",
                         }}
                       >
-                        <MaterialIcons name="date-range" size={25} />
-                        <Text style={styles.description}>
-                          {item.date} -{item.time}
-                        </Text>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            width: "50%",
+                            // borderWidth: 1,
+                            padding: "1%",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <MaterialIcons name="location-pin" size={25} />
+                          <Text style={styles.description}>
+                            {item.location}
+                          </Text>
+                        </View>
+
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            width: "75%",
+                            // borderWidth: 1,
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <MaterialIcons name="date-range" size={25} />
+                          <Text style={styles.description}>
+                            {item.date} -{item.time}
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: "flex-start",
+                          alignContent: "flex-end",
+                          marginLeft: "7%",
+                        }}
+                      >
+                        <MaterialIcons name="done" size={45} color="green" />
                       </View>
                     </View>
-                    <View
-                      style={{
-                        justifyContent: "flex-start",
-                        alignContent: "flex-end",
-                        marginLeft: "7%",
-                      }}
-                    >
-                      <MaterialIcons name="done" size={45} color="green" />
-                    </View>
                   </View>
-                </View>
-              );
-            }}
-          />
+                );
+              }}
+            />
+          ) : (
+            <Text style={styles.noOrder}>No orders yet</Text>
+          )}
         </Block>
       </Block>
     </Block>
@@ -207,6 +214,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: normalize(25),
     marginTop: "5%",
+    marginLeft: "5%",
+  },
+  noOrder: {
+    fontSize: normalize(25),
+    marginTop: "50%",
     marginLeft: "5%",
   },
   container: {

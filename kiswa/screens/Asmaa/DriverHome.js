@@ -52,6 +52,7 @@ const DriverHome = (props, { navigation }) => {
   const [type, setType] = useState("pick");
   const [arr, setArr] = useState([]);
   useEffect(() => {
+    // alert(id);
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
     readOrders();
     setArr(pickup);
@@ -76,15 +77,20 @@ const DriverHome = (props, { navigation }) => {
   const [orders, setOrders] = useState([]);
   const [pickup, setPickup] = useState([]);
   const [deliver, setDeliver] = useState([]);
+  const [data, setData] = useState();
 
-  let user = "sam@mail.com";
+  // let user = "sam@mail.com";
   const readOrders = async () => {
     let temp = [];
     let pick = [];
     let deliv = [];
-    const q = query(collection(db, "drivers", id.toLowerCase(), "orders"));
+    console.log(id.toLowerCase());
+
+    const q = query(collection(db, "drivers", "sim@mail.com", "orders"));
+    console.log("qqqq", q);
+
     const docs = await getDocs(q);
-    // console.log(docs)
+    console.log("docs", docs);
     docs.forEach(async (doc) => {
       let hour = doc.data().dateTime.toDate().getHours();
       let t = doc.data();
@@ -115,8 +121,8 @@ const DriverHome = (props, { navigation }) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       // console.log("Document data:", docSnap.data());
-      //  setData(docSnap.data());
-      //  return data
+      // setData(docSnap.data());
+      // return data;
       // console.log(docSnap.data());
       return docSnap.data();
     } else {

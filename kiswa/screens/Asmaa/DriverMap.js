@@ -9,11 +9,13 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { Entypo } from "react-native-vector-icons";
+import { auth, db } from "../../config";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 // import { Block } from "galio-framework";
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -25,7 +27,22 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
-const DriverMap = () => {
+const DriverMap = (props) => {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let id = auth?.currentUser?.email;
   let lat = 25.2709954;
   let long = 51.5324509;
   const data = [
@@ -35,6 +52,83 @@ const DriverMap = () => {
     { id: 8, day: 8, type: "deliver", month: "Jan" },
     { id: 3, day: 3, type: "pickup", month: "Aug" },
   ];
+  const [arr, setArr] = useState([]);
+  const [deviceType, setDeviceType] = useState("");
+  const [today, setToday] = useState(new Date());
+  const [todayFormat, setTodayFormat] = useState("");
+
+  useEffect(() => {
+    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
+    makeDate();
+    // makeDate(today);
+    console.log(new Date(today));
+    // readOrders();
+  }, []);
+  const [orders, setOrders] = useState([]);
+  // const [orders2, setOrders2] = useState([]);
+
+  const readOrders = async () => {
+    let temp = [];
+
+    const q = query(collection(db, "drivers", "sim@mail.com", "orders"));
+    const docs = await getDocs(q);
+    docs.forEach(async (doc) => {
+      let hour = doc.data().dateTime.toDate().getHours();
+      console.log(doc.data().dateTime.toDate());
+      let t = doc.data();
+      t.time = hour + ":00";
+      t.dateTime = doc.data().dateTime.toDate();
+      t.date = doc.data().dateTime.toDate().toLocaleDateString();
+      let a;
+      doc.data().type == "pickup"
+        ? (a = await readUser(doc.data().userId, "donors"))
+        : (a = await readUser(doc.data().userId, "families"));
+      t.userName = a.userName;
+      t.phone = a.phone;
+
+      temp.push(t);
+      console.log("each", temp);
+      setOrders(temp);
+    });
+    sortTime();
+  };
+
+  const sortTime = () => {
+    let temp = [...orders];
+    console.log("sorttttt", temp);
+    temp.sort((a, b) => {
+      const timeA = a.time;
+      const timeB = b.time;
+      return timeA - timeB;
+    });
+    setOrders(temp);
+
+    console.log("afterrr", orders);
+  };
+
+  const readUser = async (id, table) => {
+    const docRef = doc(db, table, id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      // console.log("Document data:", docSnap.data());
+      // setData(docSnap.data());
+      // return data;
+      // console.log(docSnap.data());
+      return docSnap.data();
+    } else {
+      console.log("No such document!");
+    }
+  };
+
+  const makeDate = () => {
+    var newD = new Date();
+    var day = newD.getDay();
+    var month = monthNames[newD.getMonth()];
+    var year = newD.getFullYear();
+    var date = `${day}-${month}-${year}`;
+    setToday(date);
+    console.log(date);
+  };
 
   return (
     <View style={{ width: width, height: height }}>
@@ -51,61 +145,65 @@ const DriverMap = () => {
               fontWeight: "bold",
             }}
           >
-            06-Mar-2023
+            {today}
           </Text>
-          <FlatList
-            scrollEnabled={false}
-            enableEmptySections={true}
-            style={styles.eventList}
-            data={data}
-            keyExtractor={(item) => {
-              return item.id;
-            }}
-            renderItem={({ item }) => {
-              return (
-                <TouchableOpacity
-                // onPress={() => showAlert("row")}
-                >
-                  <View style={styles.eventBox}>
-                    <View style={styles.eventDate}>
-                      <View>
-                        <Entypo name="dot-single" size={30} />
-                        <View
-                          style={{
-                            marginHorizontal: 15,
-                            borderWidth: 1,
-                            width: 2,
-                            height: 60,
-                          }}
-                        ></View>
-                      </View>
-                      <Text style={styles.eventDay}>12:00 PM</Text>
+          {orders ? (
+            <FlatList
+              scrollEnabled={false}
+              enableEmptySections={true}
+              style={styles.eventList}
+              data={orders}
+              keyExtractor={(item) => {
+                return item.id;
+              }}
+              renderItem={({ item }) => {
+                return (
+                  <TouchableOpacity
+                  // onPress={() => showAlert("row")}
+                  >
+                    <View style={styles.eventBox}>
+                      <View style={styles.eventDate}>
+                        <View>
+                          <Entypo name="dot-single" size={30} />
+                          <View
+                            style={{
+                              marginHorizontal: 15,
+                              borderWidth: 1,
+                              width: 2,
+                              height: 60,
+                            }}
+                          ></View>
+                        </View>
+                        <Text style={styles.eventDay}>{item.time} PM</Text>
 
-                      {/* <Text style={styles.eventMonth}>{item.month}</Text> */}
-                    </View>
-                    <View style={styles.eventContent}>
-                      {item.type == "pickup" ? (
-                        <Image
-                          style={styles.icon}
-                          source={require("../../assets/imgs/pick.png")}
-                        />
-                      ) : (
-                        <Image
-                          style={styles.icon}
-                          source={require("../../assets/imgs/deliv.png")}
-                        />
-                      )}
-                      {/* <Text style={styles.eventTime}>10:00 am - 10:45 am</Text> */}
-                      <View style={{ marginLeft: "4%" }}>
-                        <Text style={styles.userName}>Alkhor</Text>
-                        <Text style={styles.description}>Ahmad - street 9</Text>
+                        {/* <Text style={styles.eventMonth}>{item.month}</Text> */}
+                      </View>
+                      <View style={styles.eventContent}>
+                        {item.type == "pickup" ? (
+                          <Image
+                            style={styles.icon}
+                            source={require("../../assets/imgs/pick.png")}
+                          />
+                        ) : (
+                          <Image
+                            style={styles.icon}
+                            source={require("../../assets/imgs/deliv.png")}
+                          />
+                        )}
+                        {/* <Text style={styles.eventTime}>10:00 am - 10:45 am</Text> */}
+                        <View style={{ marginLeft: "4%" }}>
+                          <Text style={styles.userName}>{item.location}</Text>
+                          <Text style={styles.description}>
+                            {item.userName} 66006600
+                          </Text>
+                        </View>
                       </View>
                     </View>
-                  </View>
-                </TouchableOpacity>
-              );
-            }}
-          />
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          ) : null}
           <Text
             style={{
               fontSize: 20,
