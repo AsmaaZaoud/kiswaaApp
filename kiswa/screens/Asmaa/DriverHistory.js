@@ -44,7 +44,7 @@ const DriverHistory = (props, { navigation }) => {
       let t = doc.data();
       t.time = hour + ":00";
       t.date = doc.data().dateTime.toDate().toLocaleDateString();
-      doc.data().status == "done" ? temp.push(t) : null;
+      doc.data().status == "fullfied" ? temp.push(t) : null;
       // temp.push(doc.data());
       console.log(doc.id, " => ", doc.data());
       //   doc.data().type == "pickup" ? pick.push(t) : deliv.push(t);

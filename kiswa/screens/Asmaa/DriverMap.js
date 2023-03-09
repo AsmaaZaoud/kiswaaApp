@@ -4,6 +4,7 @@ import {
   Linking,
   PixelRatio,
   Platform,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -27,45 +28,16 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
-const DriverMap = (props) => {
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+const DriverMap = () => {
   let id = auth?.currentUser?.email;
   let lat = 25.2709954;
   let long = 51.5324509;
-  const data = [
-    { id: 1, day: 1, type: "pickup", month: "Sep" },
-    { id: 9, day: 9, type: "deliver", month: "May" },
-    { id: 2, day: 2, type: "pickup", month: "Jan" },
-    { id: 8, day: 8, type: "deliver", month: "Jan" },
-    { id: 3, day: 3, type: "pickup", month: "Aug" },
-  ];
-  const [arr, setArr] = useState([]);
-  const [deviceType, setDeviceType] = useState("");
-  const [today, setToday] = useState(new Date());
-  const [todayFormat, setTodayFormat] = useState("");
 
-  useEffect(() => {
-    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-    makeDate();
-    // makeDate(today);
-    console.log(new Date(today));
-    // readOrders();
-  }, []);
+  const [today, setToday] = useState();
+  const [tomorrow, setTomorrow] = useState();
+
   const [orders, setOrders] = useState([]);
-  // const [orders2, setOrders2] = useState([]);
+  const [ordersTomo, setOrdersTomo] = useState([]);
 
   const readOrders = async () => {
     let temp = [];
@@ -76,8 +48,10 @@ const DriverMap = (props) => {
       let hour = doc.data().dateTime.toDate().getHours();
       console.log(doc.data().dateTime.toDate());
       let t = doc.data();
+
       t.time = hour + ":00";
       t.dateTime = doc.data().dateTime.toDate();
+
       t.date = doc.data().dateTime.toDate().toLocaleDateString();
       let a;
       doc.data().type == "pickup"
@@ -85,25 +59,55 @@ const DriverMap = (props) => {
         : (a = await readUser(doc.data().userId, "families"));
       t.userName = a.userName;
       t.phone = a.phone;
+      t.dateTime.toDateString() == today ? temp.push(t) : null;
 
-      temp.push(t);
-      console.log("each", temp);
+      setOrders(temp);
       setOrders(temp);
     });
-    sortTime();
+
+    console.log("22", ordersTomo);
+    // sortTime();
+  };
+  const readOrdersTomo = async () => {
+    let temp2 = [];
+
+    const q = query(collection(db, "drivers", "sim@mail.com", "orders"));
+    const docs = await getDocs(q);
+    docs.forEach(async (doc) => {
+      let hour = doc.data().dateTime.toDate().getHours();
+      console.log(doc.data().dateTime.toDate());
+      let t = doc.data();
+
+      t.time = hour + ":00";
+      t.dateTime = doc.data().dateTime.toDate();
+
+      t.date = doc.data().dateTime.toDate().toLocaleDateString();
+      let a;
+      doc.data().type == "pickup"
+        ? (a = await readUser(doc.data().userId, "donors"))
+        : (a = await readUser(doc.data().userId, "families"));
+      t.userName = a.userName;
+      t.phone = a.phone;
+      t.dateTime.toDateString() == tomorrow ? temp2.push(t) : null;
+
+      setOrdersTomo(temp2);
+      setOrdersTomo(temp2);
+    });
+
+    console.log("22", ordersTomo);
+    // sortTime();
   };
 
   const sortTime = () => {
     let temp = [...orders];
-    console.log("sorttttt", temp);
     temp.sort((a, b) => {
       const timeA = a.time;
       const timeB = b.time;
-      return timeA - timeB;
+      return timeB - timeA;
     });
-    setOrders(temp);
 
-    console.log("afterrr", orders);
+    setOrders(temp);
+    // console.log("afterrr", orders);
   };
 
   const readUser = async (id, table) => {
@@ -122,21 +126,33 @@ const DriverMap = (props) => {
 
   const makeDate = () => {
     var newD = new Date();
-    var day = newD.getDay();
-    var month = monthNames[newD.getMonth()];
-    var year = newD.getFullYear();
-    var date = `${day}-${month}-${year}`;
-    setToday(date);
-    console.log(date);
+    var tom = new Date(newD);
+
+    tom.setDate(tom.getDate() + 1);
+
+    newD.setDate(newD.getDate());
+
+    setToday(newD.toDateString());
+    setTomorrow(tom.toDateString());
+    // console.log(tom.toDateString());
   };
 
+  useEffect(() => {
+    makeDate();
+    readOrders();
+    readOrdersTomo();
+  }, [2]);
+
+  useEffect(() => {
+    makeDate();
+    readOrders();
+    readOrdersTomo();
+  }, []);
+
   return (
-    <View style={{ width: width, height: height }}>
+    <SafeAreaView style={{ width: width, height: 700 }}>
       <View style={styles.container}>
         <ScrollView>
-          {/* <Text style={{ fontSize: 40, marginHorizontal: 20, marginTop: 10 }}>
-          To do List
-        </Text> */}
           <Text
             style={{
               fontSize: 20,
@@ -145,130 +161,119 @@ const DriverMap = (props) => {
               fontWeight: "bold",
             }}
           >
-            {today}
+            {today && today}
           </Text>
-          {orders ? (
-            <FlatList
-              scrollEnabled={false}
-              enableEmptySections={true}
-              style={styles.eventList}
-              data={orders}
-              keyExtractor={(item) => {
-                return item.id;
-              }}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity
-                  // onPress={() => showAlert("row")}
-                  >
-                    <View style={styles.eventBox}>
-                      <View style={styles.eventDate}>
-                        <View>
-                          <Entypo name="dot-single" size={30} />
-                          <View
-                            style={{
-                              marginHorizontal: 15,
-                              borderWidth: 1,
-                              width: 2,
-                              height: 60,
-                            }}
-                          ></View>
-                        </View>
-                        <Text style={styles.eventDay}>{item.time} PM</Text>
-
-                        {/* <Text style={styles.eventMonth}>{item.month}</Text> */}
-                      </View>
-                      <View style={styles.eventContent}>
-                        {item.type == "pickup" ? (
-                          <Image
-                            style={styles.icon}
-                            source={require("../../assets/imgs/pick.png")}
-                          />
-                        ) : (
-                          <Image
-                            style={styles.icon}
-                            source={require("../../assets/imgs/deliv.png")}
-                          />
-                        )}
-                        {/* <Text style={styles.eventTime}>10:00 am - 10:45 am</Text> */}
-                        <View style={{ marginLeft: "4%" }}>
-                          <Text style={styles.userName}>{item.location}</Text>
-                          <Text style={styles.description}>
-                            {item.userName} 66006600
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          ) : null}
-          <Text
-            style={{
-              fontSize: 20,
-              marginHorizontal: 13,
-              marginTop: 20,
-              fontWeight: "bold",
-            }}
-          >
-            07-Mar-2023
-          </Text>
-          <FlatList
-            enableEmptySections={true}
-            style={styles.eventList}
-            data={data}
-            keyExtractor={(item) => {
-              return item.id;
-            }}
-            renderItem={({ item }) => {
-              return (
-                <TouchableOpacity
+          {orders.length > 0 ? (
+            orders.map((item) => (
+              <TouchableOpacity
+                key={item.id}
                 // onPress={() => showAlert("row")}
-                >
-                  <View style={styles.eventBox}>
-                    <View style={styles.eventDate}>
-                      <View>
-                        <Entypo name="dot-single" size={30} />
-                        <View
-                          style={{
-                            marginHorizontal: 15,
-                            borderWidth: 1,
-                            width: 2,
-                            height: 60,
-                          }}
-                        ></View>
-                      </View>
-                      <Text style={styles.eventDay}>12:00 PM</Text>
-
-                      {/* <Text style={styles.eventMonth}>{item.month}</Text> */}
+              >
+                <View style={styles.eventBox}>
+                  <View style={styles.eventDate}>
+                    <View>
+                      <Entypo name="dot-single" size={30} />
+                      <View
+                        style={{
+                          marginHorizontal: 15,
+                          borderWidth: 1,
+                          width: 2,
+                          height: 60,
+                        }}
+                      ></View>
                     </View>
-                    <View style={styles.eventContent}>
-                      {item.type == "pickup" ? (
-                        <Image
-                          style={styles.icon}
-                          source={require("../../assets/imgs/pick.png")}
-                        />
-                      ) : (
-                        <Image
-                          style={styles.icon}
-                          source={require("../../assets/imgs/deliv.png")}
-                        />
-                      )}
-                      {/* <Text style={styles.eventTime}>10:00 am - 10:45 am</Text> */}
-                      <View style={{ marginLeft: "4%" }}>
-                        <Text style={styles.userName}>Alkhor</Text>
-                        <Text style={styles.description}>Ahmad - street 9</Text>
-                      </View>
+                    <Text style={styles.eventDay}>{item.time} PM</Text>
+
+                    {/* <Text style={styles.eventMonth}>{item.month}</Text> */}
+                  </View>
+                  <View style={styles.eventContent}>
+                    {item.type == "pickup" ? (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/imgs/pick.png")}
+                      />
+                    ) : (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/imgs/deliv.png")}
+                      />
+                    )}
+                    {/* <Text style={styles.eventTime}>10:00 am - 10:45 am</Text> */}
+                    <View style={{ marginLeft: "4%" }}>
+                      <Text style={styles.userName}>{item.location}</Text>
+                      <Text style={styles.description}>
+                        {item.userName} 66006600
+                      </Text>
                     </View>
                   </View>
-                </TouchableOpacity>
-              );
+                </View>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text style={styles.noOrder}>Done! 😊</Text>
+          )}
+          <Text
+            style={{
+              fontSize: 20,
+              marginHorizontal: 13,
+              marginTop: 20,
+              fontWeight: "bold",
             }}
-          />
+          >
+            {tomorrow && tomorrow}
+          </Text>
+          {ordersTomo.length > 0 ? (
+            ordersTomo.map((item) => (
+              <TouchableOpacity
+                key={item.id}
+                // onPress={() => showAlert("row")}
+              >
+                <View style={styles.eventBox}>
+                  <View style={styles.eventDate}>
+                    <View>
+                      <Entypo name="dot-single" size={30} />
+                      <View
+                        style={{
+                          marginHorizontal: 15,
+                          borderWidth: 1,
+                          width: 2,
+                          height: 60,
+                        }}
+                      ></View>
+                    </View>
+                    <Text style={styles.eventDay}>{item.time} PM</Text>
+
+                    {/* <Text style={styles.eventMonth}>{item.month}</Text> */}
+                  </View>
+                  <View style={styles.eventContent}>
+                    {item.type == "pickup" ? (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/imgs/pick.png")}
+                      />
+                    ) : (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/imgs/deliv.png")}
+                      />
+                    )}
+                    {/* <Text style={styles.eventTime}>10:00 am - 10:45 am</Text> */}
+                    <View style={{ marginLeft: "4%" }}>
+                      <Text style={styles.userName}>{item.location}</Text>
+                      <Text style={styles.description}>
+                        {item.userName} 66006600
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text style={styles.noOrder}>Done! 😊</Text>
+          )}
         </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -277,7 +282,12 @@ export default DriverMap;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F1EFFF",
-    // height: height,
+    height: height,
+  },
+  noOrder: {
+    fontSize: normalize(25),
+    marginTop: "20%",
+    marginLeft: "15%",
   },
   eventList: {
     // marginTop: 10,

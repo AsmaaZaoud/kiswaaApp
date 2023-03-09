@@ -43,6 +43,8 @@ import FamiliesCards from "../screens/Asmaa/FamiliesCards";
 import InventoryTable from "../screens/Asmaa/InventoryTable";
 import DriverMap from "../screens/Asmaa/DriverMap";
 import Feedback from "../screens/Asmaa/Feedback";
+import OrderDetails from "../screens/Asmaa/OrderDetails";
+
 //invent
 import InventoryClerks from "../screens/Asmaa/InventoryClerks";
 import AddClerk from "../screens/Asmaa/AddClerk";
@@ -394,6 +396,16 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="DriverMap" component={DriverMap} />
       <Stack.Screen name="Feedback" component={Feedback} />
       <Stack.Screen name="Drivers" component={Drivers} />
+      <Stack.Screen
+        name="OrderDetails"
+        component={OrderDetails}
+        options={{
+          headerShown: true,
+          title: "",
+          headerBackTitle: "Back",
+          headerTintColor: "#5e1e7f",
+        }}
+      />
 
       {/* /*********  LogIn **********/}
       <Stack.Screen name="Login" component={Login} />
