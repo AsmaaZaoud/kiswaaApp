@@ -210,7 +210,7 @@ const FamilyRequest = ({ route, navigation }) => {
               backgroundColor: "#FFFAFA",
               borderColor: "lightgray",
               borderWidth: 1,
-              marginTop: "1%",
+              // marginTop: "1%",
             }}
             titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
           />
@@ -241,7 +241,7 @@ const FamilyRequest = ({ route, navigation }) => {
             >
               <Tab.Item title="Adults" titleStyle={{ fontSize: 14 }}>
                 <Image
-                  source={require("../../assets/imgs/men-icon.png")}
+                  source={require("../../assets/imgs/adults.png")}
                   style={{
                     width: 88,
                     height: 88,
@@ -261,7 +261,7 @@ const FamilyRequest = ({ route, navigation }) => {
               </Tab.Item>
               <Tab.Item title="Teenagers" titleStyle={{ fontSize: 12 }}>
                 <Image
-                  source={require("../../assets/imgs/women-icon.png")}
+                  source={require("../../assets/imgs/teenagers.png")}
                   style={{
                     width: 88,
                     height: 88,
@@ -281,7 +281,7 @@ const FamilyRequest = ({ route, navigation }) => {
               </Tab.Item>
               <Tab.Item title="Kids" titleStyle={{ fontSize: 12 }}>
                 <Image
-                  source={require("../../assets/imgs/boy-icon.png")}
+                  source={require("../../assets/imgs/girl-icon.png")}
                   style={{
                     width: 88,
                     height: 88,
@@ -301,7 +301,7 @@ const FamilyRequest = ({ route, navigation }) => {
               </Tab.Item>
               <Tab.Item title="Baby" titleStyle={{ fontSize: 12 }}>
                 <Image
-                  source={require("../../assets/imgs/girl-icon.png")}
+                  source={require("../../assets/imgs/baby.png")}
                   style={{
                     width: 88,
                     height: 88,
@@ -664,28 +664,28 @@ const FamilyRequest = ({ route, navigation }) => {
           justifyContent: "space-evenly",
           borderColor: "lightgray",
           borderWidth: 1,
-          marginBottom: "2%",
+          // marginBottom: "2%",
           alignItems: "center",
           // paddingLeft: "1%",
         }}
       >
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("FamilyHome", id)}
+          onPress={() => navigation.replace("FamilyHome", id)}
         >
           <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
-          onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
+          onPress={() => navigation.replace("FamilyCart", { cartId, id })}
         >
           <FontAwesome5 name="shopping-cart" color="#4C4AAB" size={40} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("FamilyProfile", id)}
+          onPress={() => navigation.replace("FamilyProfile", id)}
         >
           <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
         </Pressable>
@@ -760,8 +760,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 15,
-    marginTop: 50,
-    height: 680,
+    marginTop: "25%",
+    height: "80%",
     backgroundColor: "white",
     borderRadius: 15,
     padding: "5%",

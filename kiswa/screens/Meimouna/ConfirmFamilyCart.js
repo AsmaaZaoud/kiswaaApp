@@ -17,6 +17,7 @@ import {
   AntDesign,
   FontAwesome5,
   Entypo,
+  Feather,
 } from "react-native-vector-icons";
 import NumericInput from "react-native-numeric-input";
 import { getAuth } from "firebase/auth";
@@ -542,21 +543,21 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
       >
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("FamilyHome", id)}
+          onPress={() => navigation.replace("FamilyHome", id)}
         >
           <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
-          onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
+          onPress={() => navigation.replace("FamilyRequest", id)}
         >
-          <FontAwesome5 name="shopping-cart" color="#4C4AAB" size={40} />
+          <Feather name="plus-circle" color="#4C4AAB" size={50} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("FamilyProfile", id)}
+          onPress={() => navigation.replace("FamilyProfile", id)}
         >
           <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
         </Pressable>

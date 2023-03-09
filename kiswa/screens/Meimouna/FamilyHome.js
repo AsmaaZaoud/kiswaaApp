@@ -53,10 +53,10 @@ const FamilyHome = ({ route, navigation }) => {
     console.log(id);
     const docRef = doc(db, "families", id);
     const docSnap = await getDoc(docRef);
+    // let temp = [];
 
     if (docSnap.exists()) {
       //console.log("Document data:", docSnap.data());
-      //   let temp = [];
       setUserName(docSnap.data().userName);
       //   setNanny(temp);
       console.log(userName);
@@ -115,11 +115,11 @@ const FamilyHome = ({ route, navigation }) => {
           title="Home"
           style={{
             height: "10%",
-            marginBottom: "9%",
+            marginBottom: "8%",
             backgroundColor: "#FFFAFA",
             borderColor: "lightgray",
             borderWidth: 1,
-            marginTop: "1%",
+            // marginTop: "8%",
           }}
           titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
         />
@@ -137,29 +137,20 @@ const FamilyHome = ({ route, navigation }) => {
               height: 100,
             }}
           /> */}
-            <Pressable
-              onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
-              // style={{
-              //   marginTop: "20%",
-              //   marginBottom: "10%",
-              //   backgroundColor: "#842DCE",
-              //   height: "18%",
-              //   width: "60%",
-              //   alignItems: "center",
-              //   justifyContent: "center",
-              //   marginLeft: "20%",
-              //   borderRadius: 8,
-              //   padding: 5,
-              // }}
-            >
-              <Image
-                source={require("../../assets/imgs/cart.png")}
-                style={{
-                  width: 90,
-                  height: 90,
-                }}
-              />
-            </Pressable>
+
+            <Image
+              style={{
+                width: 90,
+                height: 90,
+                tintColor: "#4C4AAB",
+                borderWidth: 3,
+                borderColor: "#4C4AAB",
+                borderRadius: 20,
+              }}
+              source={{
+                uri: "https://cdn-icons-png.flaticon.com/512/2904/2904889.png",
+              }}
+            ></Image>
           </Block>
         </Block>
         {/* about kiswa */}
@@ -280,19 +271,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginLeft: "6%",
-    marginBottom: 10,
-    width: "88%",
+    marginBottom: "10%",
+    width: "80%",
   },
   header2: {
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-around",
-    marginLeft: "5%",
+    marginLeft: "6%",
     height: "15%",
     backgroundColor: "#4C4AAB",
     borderRadius: 10,
-    width: "90%",
-    marginBottom: "5%",
+    width: "86%",
+    marginBottom: "8%",
   },
   header3: {
     alignItems: "center",
@@ -321,7 +312,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 8,
     borderColor: "lightgray",
-    borderWidth: 1,
+    borderWidth: 2,
   },
   box2: {
     width: 160,
@@ -331,18 +322,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 8,
     borderColor: "lightgray",
-    borderWidth: 1,
+    borderWidth: 2,
   },
   box3: {
     width: 160,
     height: 150,
-    marginLeft: "6%",
+    marginLeft: "7%",
     marginTop: "7%",
     backgroundColor: "#EDFDF9",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
     borderColor: "lightgray",
-    borderWidth: 1,
+    borderWidth: 2,
   },
 });

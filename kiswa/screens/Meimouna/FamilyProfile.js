@@ -1,9 +1,24 @@
-import { View, Text, Pressable, StyleSheet, Modal } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  Modal,
+  Dimensions,
+} from "react-native";
 import React from "react";
 import { Avatar } from "@rneui/themed";
-import { Entypo } from "react-native-vector-icons";
+import {
+  Fontisto,
+  AntDesign,
+  FontAwesome5,
+  FontAwesome,
+  Entypo,
+  Feather,
+} from "react-native-vector-icons";
 import { TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
+import { Checkbox, theme, NavBar, Icon } from "galio-framework";
 import {
   doc,
   setDoc,
@@ -15,15 +30,18 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
+import { signOut } from "firebase/auth";
 import { db, auth } from "../../config";
 import { useEffect, useState } from "react";
 import { Badge, Button } from "react-native-paper";
 import { Block } from "galio-framework";
 import * as Location from "expo-location";
+const { width } = Dimensions.get("screen");
+
 export default function FamilyProfile({ route, navigation }) {
   const id = route.params;
-  const [userinforr, setUserinforr] = useState([]);
-  console.log(id);
+  // const [userinforr, setUserinforr] = useState([]);
+  console.log("id..", id);
 
   const [phonenum, setPhoneNum] = useState("");
   const [userName, setUserName] = useState("");
@@ -43,8 +61,8 @@ export default function FamilyProfile({ route, navigation }) {
       setPhoneNum(docSnap.data().phone);
       setZone(docSnap.data().zone);
       setUserName(docSnap.data().userName);
-      setLat(docSnap.data().location.coords.latitude);
-      setLog(docSnap.data().location.coords.longitude);
+      // setLat(docSnap.data().location.coords.latitude);
+      // setLog(docSnap.data().location.coords.longitude);
     } else {
       console.log("No such document!");
     }
@@ -112,222 +130,345 @@ export default function FamilyProfile({ route, navigation }) {
       update();
     }
   };
-  return (
-    <View style={{ flex: 1, backgroundColor: "#842DCE" }}>
-      <View style={styles.header}>
-        <Text></Text>
-        <View style={styles.headerContent}>
-          <Avatar
-            rounded
-            size="xlarge"
-            style={styles.avatar}
-            source={require("../../assets/imgs/FamilyUser.png")}
-          >
-            <Avatar.Accessory
-              size={30}
-              onPress={() => {
-                setModalVisible(true);
-              }}
-            />
-          </Avatar>
-          <Button title="Edit" />
-        </View>
-      </View>
-      {/* <Text></Text> */}
-      <Text></Text>
-      <View style={styles.body}>
-        <Text></Text>
-        <Text style={styles.username}>{id}</Text>
-        <Text></Text>
-        <View
-          style={{
-            width: "100%",
-            marginLeft: "5%",
-            padding: "5%",
-          }}
-        >
-          <View
-            style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
-          >
-            <Entypo name="user" color="#842DCE" size={29} />
-            <Text style={{ margin: "7%", fontSize: 19, marginTop: "1%" }}>
-              User Name
-            </Text>
-          </View>
-          <Text style={{ fontSize: 18, marginLeft: "20%" }}>{userName}</Text>
-          <Text style={{ color: "#842DCE" }}>
-            _____________________________________________
-          </Text>
-          <Text></Text>
-          <View
-            style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
-          >
-            <Entypo name="location" color="#842DCE" size={34} />
-            <Text style={{ margin: "6%", fontSize: 19, marginTop: "1%" }}>
-              Family Zone
-            </Text>
-          </View>
-          <Text style={{ fontSize: 18, marginLeft: "20%" }}>{zone}</Text>
 
-          <Text style={{ color: "#842DCE" }}>
-            _____________________________________________
-          </Text>
-          <Text></Text>
-          <View
-            style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
-          >
-            <Entypo name="old-mobile" color="#842DCE" size={32} />
-            <Text style={{ margin: "7%", fontSize: 19, marginTop: "1%" }}>
-              Phone Number
-            </Text>
-          </View>
-
-          <Text style={{ fontSize: 18, marginLeft: "20%" }}>{phonenum}</Text>
-
-          <Text style={{ color: "#842DCE" }}>
-            _____________________________________________
-          </Text>
-          <Text></Text>
-          <View
-            style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
-          >
-            <Entypo name="location-pin" color="#842DCE" size={34} />
-            <Text style={{ margin: "7%", fontSize: 19, marginTop: "1%" }}>
-              Location
-            </Text>
-          </View>
-          <Text style={{ fontSize: 18, marginLeft: "20%" }}>
-            Latitude: {lat}
-          </Text>
-          <Text></Text>
-          <Text style={{ fontSize: 18, marginLeft: "20%" }}>
-            Longitude: {log}
-          </Text>
-          <Text></Text>
-          <Text></Text>
-        </View>
-      </View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
+  const onSignOut = () => {
+    signOut(auth)
+      .then(() => navigation.navigate("Onboarding"))
+      .catch((error) => console.log("Error logging out: ", error));
+  };
+  const renderArticles = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#fbe5ff",
+          height: "90%",
+          marginTop: "5%",
         }}
       >
-        <View>
-          <View style={styles.modalView}>
-            <Block style={styles.modalblock}>
-              <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                <Entypo
-                  name="chevron-with-circle-left"
-                  color="#842DCE"
-                  size={40}
-                />
-              </Pressable>
-              <View>
-                <Text style={{ color: "gray", textAlign: "right" }}>
-                  Profile,
-                </Text>
+        <View style={{ width: "100%", height: "100%" }}>
+          <View style={styles.header}>
+            <NavBar
+              title="Profile"
+              right={
+                <View style={{ marginRight: "8%" }}>
+                  <Entypo
+                    name="log-out"
+                    color="#4C4AAB"
+                    size={30}
+                    onPress={() => onSignOut()}
+                    style={{ marginLeft: "25%" }}
+                  />
+                  <Text
+                    style={{
+                      color: "#4C4AAB",
+                      fontSize: 14,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Sign Out
+                  </Text>
+                </View>
+              }
+              style={{
+                height: "30%",
+                marginBottom: "2%",
+                backgroundColor: "#FFFAFA",
+                borderColor: "lightgray",
+                borderWidth: 1,
+                // marginTop: "1%",
+                width: "100%",
+              }}
+              titleStyle={{
+                color: "#4C4AAB",
+                fontSize: 24,
+                fontWeight: "bold",
+              }}
+            />
+
+            <View style={styles.headerContent}>
+              <Avatar
+                rounded
+                size="xlarge"
+                style={styles.avatar}
+                source={require("../../assets/imgs/FamilyUser.png")}
+              ></Avatar>
+              {/* <Button title="Edit" /> */}
+              <Pressable
+                onPress={() => {
+                  setModalVisible(true);
+                }}
+                style={{ marginTop: "2%" }}
+              >
                 <Text
                   style={{
                     fontSize: 18,
+                    color: "#842DCE",
                     fontWeight: "bold",
-                    textAlign: "right",
+                    marginRight: "7%",
                   }}
                 >
-                  Edit Details
+                  Edit Profile
+                </Text>
+                <Avatar.Accessory size={25} />
+              </Pressable>
+            </View>
+          </View>
+          <View style={styles.body}>
+            <Text></Text>
+            <Text style={styles.username}>{id}</Text>
+            <Text></Text>
+            <View
+              style={{
+                width: "100%",
+                marginLeft: "5%",
+                padding: "5%",
+              }}
+            >
+              <View
+                style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
+              >
+                <Entypo name="user" color="#842DCE" size={29} />
+                <Text
+                  style={{ marginLeft: "7%", fontSize: 20, marginTop: "1%" }}
+                >
+                  Name:{"  "}
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      marginLeft: "20%",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {userName}
+                  </Text>
                 </Text>
               </View>
-            </Block>
-
-            <Block style={styles.modalblock2}>
-              <Text style={styles.modalText}>{id}</Text>
               <Text></Text>
-              <Block>
-                {/* <Text style={{ fontSize: 16, marginBottom: 10, marginTop: 20 }}>
-                  What Color?
-                </Text> */}
-                <TextInput
-                  label="Phone Number"
-                  value={phonenum}
-                  onChangeText={(text) => setPhoneNum(text)}
-                />
-                <Text
-                  style={{
-                    // textAlign: "center",
-                    color: "red",
-                    fontSize: 14,
-                  }}
-                >
-                  {phoneError}
-                </Text>
-
-                <Text></Text>
-                <TextInput
-                  label="User Name"
-                  value={userName}
-                  onChangeText={(userName) => setUserName(userName)}
-                />
-
-                <Text></Text>
-
-                <Dropdown
-                  style={styles.dropdown}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  data={zones}
-                  maxHeight={160}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={zone}
-                  value={zone}
-                  onChange={(item) => {
-                    setZone(item.label);
-                  }}
-                ></Dropdown>
-                <Text></Text>
-                <Button
-                  // color={stat !== "granted" ? "default" : "primary"}
-                  style={styles.createButton}
-                  onPress={() => {
-                    getLocation();
-                  }}
-                >
-                  <Text bold size={20} color="white">
-                    New Location
-                  </Text>
-                </Button>
-              </Block>
-
-              <Pressable
-                style={[styles.button, styles.buttonClose, { marginTop: 40 }]}
-                onPress={() => validation()}
+              <Text style={{ color: "#842DCE", marginLeft: "5%" }}>
+                _________________________________________
+              </Text>
+              <Text></Text>
+              <View
+                style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Text style={styles.textStyle}>Save</Text>
-              </Pressable>
-            </Block>
+                <Entypo name="location" color="#842DCE" size={29} />
+                <Text style={{ margin: "7%", fontSize: 20, marginTop: "1%" }}>
+                  Zone:{"  "}
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      marginLeft: "20%",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {zone}
+                  </Text>
+                </Text>
+              </View>
+              <Text style={{ color: "#842DCE", marginLeft: "5%" }}>
+                _________________________________________
+              </Text>
+              <Text></Text>
+              <View
+                style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
+              >
+                <Entypo name="old-mobile" color="#842DCE" size={29} />
+                <Text style={{ margin: "7%", fontSize: 20, marginTop: "1%" }}>
+                  Number:{"  "}
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      marginLeft: "20%",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {phonenum}
+                  </Text>
+                </Text>
+              </View>
+
+              <Text style={{ color: "#842DCE", marginLeft: "5%" }}>
+                _________________________________________
+              </Text>
+              <Text></Text>
+            </View>
           </View>
         </View>
-      </Modal>
-    </View>
+
+        {/* ......edit profile...... */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View>
+            <View style={styles.modalView}>
+              <Block style={styles.modalblock}>
+                <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                  <Entypo
+                    name="chevron-with-circle-left"
+                    color="#842DCE"
+                    size={40}
+                  />
+                </Pressable>
+                <View>
+                  <Text style={{ color: "gray", textAlign: "right" }}>
+                    Profile,
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      textAlign: "right",
+                    }}
+                  >
+                    Edit Details
+                  </Text>
+                </View>
+              </Block>
+
+              <Block style={styles.modalblock2}>
+                <Text style={styles.modalText}>{id}</Text>
+                <Text></Text>
+                <Block>
+                  {/* <Text style={{ fontSize: 16, marginBottom: 10, marginTop: 20 }}>
+                  What Color?
+                </Text> */}
+                  <TextInput
+                    label="Phone Number"
+                    value={phonenum}
+                    onChangeText={(text) => setPhoneNum(text)}
+                  />
+                  <Text
+                    style={{
+                      // textAlign: "center",
+                      color: "red",
+                      fontSize: 14,
+                    }}
+                  >
+                    {phoneError}
+                  </Text>
+
+                  <Text></Text>
+                  <TextInput
+                    label="User Name"
+                    value={userName}
+                    onChangeText={(userName) => setUserName(userName)}
+                  />
+
+                  <Text></Text>
+
+                  <Dropdown
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    data={zones}
+                    maxHeight={160}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={zone}
+                    value={zone}
+                    onChange={(item) => {
+                      setZone(item.label);
+                    }}
+                  ></Dropdown>
+                  <Text></Text>
+                  <Button
+                    // color={stat !== "granted" ? "default" : "primary"}
+                    style={styles.createButton}
+                    onPress={() => {
+                      getLocation();
+                    }}
+                  >
+                    <Text bold size={20} color="white">
+                      New Location
+                    </Text>
+                  </Button>
+                </Block>
+
+                <Pressable
+                  style={[styles.button, styles.buttonClose, { marginTop: 40 }]}
+                  onPress={() => validation()}
+                >
+                  <Text style={styles.textStyle}>Save</Text>
+                </Pressable>
+              </Block>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    );
+  };
+  return (
+    <Block flex center style={styles.home}>
+      {renderArticles()}
+      <Block
+        style={{
+          height: "10%",
+          backgroundColor: "#FFFAFA",
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          borderColor: "lightgray",
+          borderWidth: 1,
+          marginBottom: "1%",
+          marginTop: "2%",
+          alignItems: "center",
+          // paddingLeft: "1%",
+        }}
+      >
+        <Pressable
+          style={{ width: "14%" }}
+          onPress={() => navigation.replace("FamilyHome", id)}
+        >
+          <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
+        </Pressable>
+
+        <Pressable
+          style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
+          onPress={() => navigation.replace("FamilyRequest", id)}
+        >
+          <Feather name="plus-circle" color="#4C4AAB" size={50} />
+        </Pressable>
+
+        <Pressable
+          style={{ width: "14%" }}
+          onPress={() => navigation.replace("FamilyProfile", id)}
+        >
+          <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
+        </Pressable>
+      </Block>
+    </Block>
   );
 }
 
 const styles = StyleSheet.create({
+  home: {
+    width: width,
+    // backgroundColor: "#490066",
+    height: "100%",
+  },
   header: {
-    height: 200,
+    height: "40%",
+    backgroundColor: "#fbe5ff",
+    marginBottom: "1%",
   },
   headerContent: {
-    padding: 30,
+    // padding: 30,
     alignItems: "center",
+    height: "69%",
+    // backgroundColor: "gray",
   },
   avatar: {
     width: 130,
     height: 130,
     borderRadius: 63,
-    borderWidth: 2,
+    // borderWidth: 2,
     borderColor: "#fbe5ff",
     marginBottom: 10,
   },
@@ -357,7 +498,7 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "white",
     borderRadius: 60,
-    height: "80%",
+    height: "65%",
     paddingTop: "2%",
   },
   box: {
@@ -375,7 +516,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   username: {
-    color: "grey",
+    // color: "#842DCE",
     fontSize: 22,
     alignSelf: "center",
     //marginLeft: 10,

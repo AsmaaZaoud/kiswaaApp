@@ -29,6 +29,7 @@ import {
   AntDesign,
   FontAwesome5,
   Entypo,
+  Feather,
 } from "react-native-vector-icons";
 import { DataTable } from "react-native-paper";
 import { db } from "../../config";
@@ -125,9 +126,7 @@ export default function RequestHistory({ route, navigation }) {
                   <Text style={{ marginBottom: 10 }}> {elem.familyID}</Text>
                   {/* elem.nameoftheattrbiteinDB.toDate().toDateString() */}
                   {/* <Text style={{ marginBottom: 10 }}>Mon Oct 31 2022</Text> */}
-                  <Text style={{ marginBottom: 10 }}>
-                    {elem.dateTime.toDate().toDateString()}
-                  </Text>
+                  <Text style={{ marginBottom: 10 }}>{elem.dateSlot}</Text>
                 </View>
 
                 <DataTable>
@@ -209,9 +208,9 @@ export default function RequestHistory({ route, navigation }) {
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
-          onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
+          onPress={() => navigation.navigate("FamilyRequest", id)}
         >
-          <FontAwesome5 name="shopping-cart" color="#4C4AAB" size={40} />
+          <Feather name="plus-circle" color="#4C4AAB" size={50} />
         </Pressable>
 
         <Pressable

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
+import { Checkbox, theme, NavBar, Icon } from "galio-framework";
 import React from "react";
 import { useState, useEffect } from "react";
 import { BlurView } from "expo-blur";
@@ -15,7 +16,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../../config";
 const FeedbackConf = ({ route, navigation }) => {
-  const mood = route.params.mood;
+  const { mood, id } = route.params;
   console.log(mood);
   const [feedback, setfeedback] = useState("");
   const [feedbackText, setFeedbackText] = useState("");
@@ -29,37 +30,58 @@ const FeedbackConf = ({ route, navigation }) => {
     <View
       style={{
         flex: 1,
-        justifyContent: "center",
+        //justifyContent: "center",
         alignItems: "center",
+        height: "100%",
+        // marginTop: "5%",
       }}
     >
+      <NavBar
+        title="Feedback Confirm"
+        style={{
+          height: "10%",
+          // marginBottom: "1%",
+          backgroundColor: "#FFFAFA",
+          borderColor: "lightgray",
+          borderWidth: 1,
+          // marginTop: "1%",
+          width: "100%",
+          zIndex: 999,
+        }}
+        titleStyle={{
+          color: "#4C4AAB",
+          fontSize: 22,
+          fontWeight: "bold",
+        }}
+      />
+      <Text></Text>
+      <Text></Text>
+      <Text></Text>
+
       <Image
         source={require("../../assets/imgs/checked-removebg-preview.png")}
         style={{
-          width: "31%",
-          height: "15%",
+          width: "33%",
+          height: "15.3%",
           zIndex: 999,
-          marginBottom: "5%",
+          // marginBottom: "5%",
+          // zIndex: 999,
+          // marginBottom: "5%",
           backgroundColor: "white",
           borderRadius: 70,
         }}
       ></Image>
       <Text></Text>
-      {/* <Text></Text> */}
       <LinearGradient
         colors={[
           "rgba(222,190,299,1)",
           "rgba(222,190,299,1)",
           "rgba(222,190,299,1)",
-          "rgba(222,190,299,1)",
-          "rgba(222,190,299,1)",
-          "rgba(222,190,299,1)",
-          "transparent",
         ]}
         style={[
           StyleSheet.absoluteFill,
           {
-            height: 390,
+            height: 485,
             flex: 1,
             width: "100%",
             justifyContent: "center",
@@ -72,12 +94,12 @@ const FeedbackConf = ({ route, navigation }) => {
         // tint="light"
         intensity={100}
         style={{
-          width: "90%",
-          height: "70%",
+          width: 350,
+          height: 400,
           borderWidth: 2,
           borderColor: "#fff",
           padding: 20,
-          borderRadius: 25,
+          //borderRadius: 25,
           //zIndex: 999,
         }}
       >
@@ -111,9 +133,6 @@ const FeedbackConf = ({ route, navigation }) => {
         ) : null}
 
         <Text></Text>
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
 
         <View
           style={{
@@ -137,13 +156,45 @@ const FeedbackConf = ({ route, navigation }) => {
               //marginLeft: "10%",
               borderRadius: 8,
             }}
-            onPress={() => navigation.navigate("FamilyFeedback")}
+            onPress={() => navigation.replace("FamilyFeedback", id)}
           >
             <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
               More Feedback
             </Text>
           </Pressable>
         </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            marginTop: "5%",
+          }}
+        >
+          <Pressable
+            style={{
+              // marginBottom: "10%",
+              backgroundColor: "green",
+              height: 50,
+              width: "70%",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              //marginLeft: "10%",
+              borderRadius: 8,
+            }}
+            onPress={() => navigation.replace("FamilyHome", id)}
+          >
+            <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
+              Home Page
+            </Text>
+          </Pressable>
+        </View>
+        <Text></Text>
         <Text></Text>
         <Text></Text>
       </BlurView>
