@@ -169,7 +169,6 @@ const Donate = ({ route, navigation }) => {
             }
             if(time !== '' && date !== ''){
                 navigation.navigate("CheckOut", { itemsArray: confirm, time: time, date: date })
-                handleDonatePress()
             }
         }
         else{
@@ -204,9 +203,9 @@ const Donate = ({ route, navigation }) => {
             }
             if (cloth !== '' && cloth !== undefined && amount !== '' && time !== '' && date !== '') {
                 navigation.navigate("CheckOut", { itemsArray: confirm, time: time, date: date })
-                handleDonatePress()
             }
         }
+        handleDonatePress()
     }
 
     const handleDonatePress = () => {
@@ -217,6 +216,12 @@ const Donate = ({ route, navigation }) => {
         setDate("")
         setConfirm([])
         setFlag(0)
+        setCheck1(0)
+        setCheck2(0)
+        setCheck3(0)
+        setFlag1(0)
+        setFlag2(0)
+        setFlag3(0)
     };
 
     //dates

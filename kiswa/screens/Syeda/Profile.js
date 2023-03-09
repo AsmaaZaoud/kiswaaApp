@@ -129,9 +129,11 @@ const Profile = ({ route, navigation }) => {
       setZone(doc.data().zone)
       setEmail(doc.data().email)
       setPhone(doc.data().phone)
+      setLocation(doc.data().location)
     });
   }
 
+  //count no. of donations
   let counter = 0;
 
   const readDonations = async () => {
@@ -172,16 +174,16 @@ const Profile = ({ route, navigation }) => {
   };
 
   const update = async () => {
-    Alert.alert("You new information has been recorded.")
     let user = auth?.currentUser?.email;
     const docRef = doc(db, "donors", user);
     await setDoc(docRef, { email: email, location: location, phone: phone, userName: nickname, zone: zone }, { merge: true })
       .then(() => {
         console.log("data updated");
+        Alert.alert("You new information has been recorded.")
         //navigation.navigate("PersonalInfo");
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log('ERROR: ', error.message);
       });
   }
 
