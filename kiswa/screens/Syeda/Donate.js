@@ -31,7 +31,6 @@ export function normalize(size) {
 
 const Donate = ({ route, navigation }) => {
 
-
     useEffect(() => {
         if (route.params && route.params.type && route.params.quantity && route.params.uri) { 
             setCloth(route.params.type)
@@ -75,7 +74,7 @@ const Donate = ({ route, navigation }) => {
         { label: "Blouse", value: "Blouse", icon: 'https://cdn-icons-png.flaticon.com/512/8323/8323136.png', uri: 'https://i.pinimg.com/564x/d9/1b/87/d91b87a86b9924cdce26b631bd3a968e.jpg' },
         { label: "Caftan", value: "Caftan", icon: 'https://cdn-icons-png.flaticon.com/512/5238/5238311.png', uri: 'https://i.etsystatic.com/31945487/r/il/2aadec/3870275767/il_fullxfull.3870275767_od8t.jpg' },
         { label: "Cardigan", value: "Cardigan", icon: 'https://cdn-icons-png.flaticon.com/128/3345/3345635.png', uri: 'https://i.pinimg.com/564x/a5/84/9d/a5849d187e57e693c6d765436893030a.jpg' },
-        { label: "Cloak", value: "Cloak", icon: "https://cdn-icons-png.flaticon.com/512/5102/5102093.png", uri: "https://i.pinimg.com/564x/16/ab/81/16ab812be83fa017cc2addff0df54854.jpg" },
+        { label: "Cloak", value: "Cloak", icon: "https://cdn-icons-png.flaticon.com/512/5102/5102093.png", uri: "https://i.pinimg.com/564x/67/db/97/67db97f356fc31a34f7cc01df7b8ea64.jpg" },
         { label: "Coat", value: "Coat", icon: 'https://cdn-icons-png.flaticon.com/128/7157/7157441.png', uri: 'https://i.pinimg.com/564x/f6/73/7d/f6737d49a2571e063cd811812c3a922c.jpg' },
         { label: "Dress", value: "Dress", icon: 'https://cdn-icons-png.flaticon.com/128/9833/9833994.png', uri: 'https://i.pinimg.com/564x/a9/1b/cb/a91bcb63b4c31333a9402f74200a36a3.jpg' },
         { label: "Dungarees", value: "Dungarees", icon: 'https://cdn-icons-png.flaticon.com/128/2161/2161057.png', uri: 'https://i.ytimg.com/vi/soPPAhMPHtY/maxresdefault.jpg' },
@@ -170,10 +169,11 @@ const Donate = ({ route, navigation }) => {
             }
             if(time !== '' && date !== ''){
                 navigation.navigate("CheckOut", { itemsArray: confirm, time: time, date: date })
+                handleDonatePress()
             }
         }
         else{
-            if (cloth === '') {
+            if (cloth === '' || cloth === undefined) {
                 setDropError('Please select a clothing item')
                 return
             }
@@ -202,11 +202,22 @@ const Donate = ({ route, navigation }) => {
             else {
                 setDateError('')
             }
-            if (cloth !== '' && amount !== '' && time !== '' && date !== '') {
+            if (cloth !== '' && cloth !== undefined && amount !== '' && time !== '' && date !== '') {
                 navigation.navigate("CheckOut", { itemsArray: confirm, time: time, date: date })
+                handleDonatePress()
             }
         }
     }
+
+    const handleDonatePress = () => {
+        setCloth("");
+        setItemURI('https://cdn-icons-png.flaticon.com/128/6834/6834320.png');
+        setAmount("")
+        setTime("")
+        setDate("")
+        setConfirm([])
+        setFlag(0)
+    };
 
     //dates
 
@@ -293,7 +304,7 @@ const Donate = ({ route, navigation }) => {
 
     const add = (cloth, amount) => {
 
-        if (cloth === '') {
+        if (cloth === '' || cloth === undefined) {
             setDropError('Please select a clothing item')
             return
         }
@@ -311,7 +322,7 @@ const Donate = ({ route, navigation }) => {
         console.log("ADD AMOUNT => ", amount)
         console.log("ADD ICON => ", ClothTypeData.find((object) => object.label === cloth).icon)
 
-        if (cloth !== '' && amount !== '') {
+        if ((cloth !== '' || cloth !== undefined) && amount !== '') {
             setFlag(1)
             setConfirm([...confirm, { cloth: cloth, amount: amount, icon: ClothTypeData.find((object) => object.label === cloth).icon }])
             console.log("confirm array: ", confirm)
@@ -323,7 +334,7 @@ const Donate = ({ route, navigation }) => {
     //clear input values when add button is pressed
 
     const handleButtonPress = () => {
-        setCloth("Select Clothing Item");
+        setCloth("");
         setItemURI('https://cdn-icons-png.flaticon.com/128/6834/6834320.png');
         setAmount("")
     };

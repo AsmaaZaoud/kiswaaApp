@@ -5,7 +5,8 @@ import {
   Button,
   Pressable,
   ScrollView,
-  Dimensions
+  Dimensions,
+  ImageBackground
 } from "react-native";
 import React, { Component, useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -45,26 +46,32 @@ const DonorHistory = ({ route, navigation }) => {
 
   const [smallArray, setSmallArray] = useState([])
   console.log("smallArray", smallArray)
-    ;
+
+  const [number, setNumber] = useState()
+  console.log("number", number)
 
   let counter = 0;
 
-  // donationArray.map((item, index) => {
-  //   console.log("*****************")
-  //   console.log("dateslot", item.dateSlot)
-  //   console.log("timeslot", item.timeSlot)
-  //   console.log("trackid", item.trackId)
-  //   console.log("donateditems", item.donatedItems)
-  //   // item.donatedItems.map(())
-  //   console.log("quantity", item.donatedItems.map(obj => obj.amount))
-  //   console.log("*****************")
-  // })
+  const readDonations = async () => {
+    const q = query(collection(db, "donorDonation"), where("email", "==", user));
+    const docs = await getDocs(q);
+    // let counter = 0
+    docs.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      counter += 1
+      //setCounter(counter)
+      console.log("readDonations => ", doc.id, " => ", doc.data());
+    });
+    setNumber(counter)
+    //console.log("counter: ", counter)
+  }
 
   console.log('counter => ', counter)
 
   useEffect(() => {
     if (isFocused) {
       readAllWhere();
+      readDonations();
     }
   }, [isFocused]);
 
@@ -92,12 +99,20 @@ const DonorHistory = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
 
-      {/* <Text variant="headlineLarge" style={{ marginTop: 100, marginBottom: 30 }}>
-        View Past Donations
-      </Text> */}
-
-      {/* <View style={{ width: "90%" }}> */}
-      <ScrollView
+      {
+        number === 0 ? 
+        <Block>
+        <Text bold size={20} color="#32325D" style={{alignSelf: 'center', margin: 20}}>
+          Uh oh! Looks like you haven't made any donations yet. {'\n'}
+          Check this page again when you have!
+        </Text>
+        <ImageBackground
+        style={{width: width * 0.9, height: height * 0.5, alignSelf: 'center'}}
+        source={{uri: 'https://i.pinimg.com/564x/1b/44/87/1b448703bd3fca661cd7cafd6d6b90c1.jpg'}}
+        ></ImageBackground> 
+        </Block>
+        :
+        <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
         <Text bold size={28} color="#32325D" style={{alignSelf: 'center', margin: 20}}>
@@ -115,7 +130,8 @@ const DonorHistory = ({ route, navigation }) => {
           ))}
         </View>
       </ScrollView>
-      {/* </View> */}
+      }
+
     </SafeAreaView>
   );
 };

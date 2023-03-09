@@ -45,21 +45,20 @@ const Home = ({ route, navigation }) => {
 
   const isFocused = useIsFocused();
 
-
-  const [itemsArray, setItemsArray] = useState([])
-  // const [ItemsDic, setItemsDic] = useState([])
   const [number, setNumber] = useState()
   const [nickname, setNickname] = useState('')
   const [image, setImage] = useState("");
 
-  console.log('itemsArrayOUTSIDE: ', itemsArray)
+  const [finalArray, setFinalArray] = useState([])
+  console.log('finalArray', finalArray)
+
 
   //clothes type data
   const ClothTypeData = [
     { label: "Blouse", value: "Blouse", uri: 'https://i.pinimg.com/564x/d9/1b/87/d91b87a86b9924cdce26b631bd3a968e.jpg' },
     { label: "Caftan", value: "Caftan", uri: 'https://i.etsystatic.com/31945487/r/il/2aadec/3870275767/il_fullxfull.3870275767_od8t.jpg' },
     { label: "Cardigan", value: "Cardigan", uri: 'https://i.pinimg.com/564x/a5/84/9d/a5849d187e57e693c6d765436893030a.jpg' },
-    { label: "Cloak", value: "Cloak", uri: "https://i.pinimg.com/564x/16/ab/81/16ab812be83fa017cc2addff0df54854.jpg" },
+    { label: "Cloak", value: "Cloak", uri: "https://i.pinimg.com/564x/67/db/97/67db97f356fc31a34f7cc01df7b8ea64.jpg" },
     { label: "Coat", value: "Coat", uri: 'https://i.pinimg.com/564x/f6/73/7d/f6737d49a2571e063cd811812c3a922c.jpg' },
     { label: "Dress", value: "Dress", uri: 'https://i.pinimg.com/564x/a9/1b/cb/a91bcb63b4c31333a9402f74200a36a3.jpg' },
     { label: "Dungarees", value: "Dungarees", uri: 'https://i.ytimg.com/vi/soPPAhMPHtY/maxresdefault.jpg' },
@@ -86,11 +85,6 @@ const Home = ({ route, navigation }) => {
     { label: "T-Shirt", value: "T-Shirt", uri: 'https://i.pinimg.com/564x/d6/9c/5a/d69c5a1ba98ce97c40a16ff506233f7a.jpg' },
   ];
 
-  itemsArray.map((item) =>
-    console.log(ClothTypeData.find((object) => object.value === item.type).uri
-    )
-  )
-
   //get image from database
   const read = async () => {
     let user = auth?.currentUser?.email;
@@ -112,44 +106,33 @@ const Home = ({ route, navigation }) => {
     readAllWhere()
   }, []);
 
-
-  //readAllWhere 
   const readAllWhere = async () => {
-    console.log("cart...");
     const q = query(collection(db, "familyRequests"), where("status", "==", "pending"));
     const docs = await getDocs(q);
+    const promises = [];
+    const itemsArray = [];
+  
     docs.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
       console.log('readAllWhere => ', doc.id, " => ", doc.data());
+      const docRef = collection(db, "familyRequests", doc.id, "Items");
+      const promise = getDocs(docRef).then((docs2) => {
+        docs2.forEach((doc) => {
+          console.log('getCartItems => ', doc.id, " => ", doc.data());
+          console.log('quantity: => ', doc.data().quantity, 'type: => ', doc.data().type)
+          console.log({type: doc.data().type, quantity: doc.data().quantity})
+  
+          itemsArray.push({ type: doc.data().type, quantity: doc.data().quantity });
+        });
+      });
+      promises.push(promise);
     });
+  
+    await Promise.all(promises);
+  
+    console.log('itemsArray',itemsArray);
 
-    let temp = [];
-
-    docs.forEach(async (doc) => {
-      temp.push({
-        id: doc.id,
-        data: doc.data(),
-        items: await getCartItems(doc.id)
-      })
-    })
-  }
-
-  const getCartItems = async (cartId) => {
-    console.log(cartId);
-    const docRef = collection(db, "familyRequests", cartId, "Items");
-    const docSnap = await getDocs(docRef);
-    let temp = []
-    docSnap.forEach((doc) => {
-      temp.push({
-        type: doc.data().type,
-        quantity: doc.data().quantity
-      })
-    })
-    console.log('tempdata: ', temp)
-    setItemsArray(temp)
-    //console.log('ItemsArray INSIDE', itemsArray)
-    //return temp
-  }
+    setFinalArray(itemsArray)
+  };
 
   useEffect(() => {
     if (isFocused) {
@@ -223,11 +206,11 @@ const Home = ({ route, navigation }) => {
               {/* log in / sign up / sign out*/}
 
               <TouchableOpacity onPress={() => navigation.navigate('Onboarding')}>
-                  <Image
-                    style={styles.backButton}
-                    source={{ uri: 'https://cdn-icons-png.flaticon.com/512/54/54623.png' }}
-                  ></Image>
-                </TouchableOpacity>
+                <Image
+                  style={styles.backButton}
+                  source={{ uri: 'https://cdn-icons-png.flaticon.com/512/54/54623.png' }}
+                ></Image>
+              </TouchableOpacity>
 
               {
                 user === undefined ?
@@ -312,7 +295,7 @@ const Home = ({ route, navigation }) => {
 
             {/* requests */}
             {
-              itemsArray.map((item, index) => {
+              finalArray.map((item, index) => {
                 return (
                   <View key={index}>
                     <TouchableOpacity onPress={() => navigation.navigate('Donate', { type: item.type, quantity: item.quantity, uri: ClothTypeData.find((object) => object.label === item.type).uri })}>
@@ -415,10 +398,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 25,
     margin: 20,
-    position: 'absolute', 
-    top: 0, 
+    position: 'absolute',
+    top: 0,
     left: 0
-},
+  },
 });
 
 export default Home;

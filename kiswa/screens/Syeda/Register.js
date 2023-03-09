@@ -232,6 +232,7 @@ const Register = ({ navigation }) => {
 
     if (stat !== "granted") {
       setLocationError("Please Allow Location");
+      return
     } else {
       setLocationError('');
     }
@@ -240,6 +241,7 @@ const Register = ({ navigation }) => {
       setZoneError("");
     } else {
       setZoneError("Select Zone");
+      return
     }
 
     if (
@@ -390,7 +392,6 @@ const Register = ({ navigation }) => {
                   style={{
                     textAlign: "center",
                     color: "red",
-                    fontSize: normalize(19),
                   }}
                 >
                   {locationError}
@@ -408,7 +409,7 @@ const Register = ({ navigation }) => {
 
                 </Block>
 
-                <Block width={width * 0.35} style={{ marginBottom: 0 }}>
+                <Block width={width * 0.5} style={{ marginBottom: 0 }}>
                   <Dropdown
                     style={styles.dropdown}
                     placeholderStyle={styles.placeholderStyle}
@@ -427,7 +428,6 @@ const Register = ({ navigation }) => {
                     style={{
                       textAlign: "center",
                       color: "red",
-                      fontSize: 12,
                     }}
                   >
                     {ZoneError}

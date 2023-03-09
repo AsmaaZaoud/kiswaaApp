@@ -109,7 +109,9 @@ const CheckOut = ({ route, navigation }) => {
 
     useEffect(() => {
         if (isFocused) {
+            if (user !== undefined) {
             readName();
+            }
         }
     }, [isFocused]);
 
