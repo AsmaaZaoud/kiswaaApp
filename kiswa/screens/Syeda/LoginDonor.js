@@ -6,7 +6,7 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -24,7 +24,6 @@ import {
   setDoc,
   addDoc,
   collection,
-
   query,
   where,
   deleteDoc,
@@ -34,15 +33,12 @@ import {
   getDocs,
   getDoc,
   Timestamp,
-
-
 } from "firebase/firestore";
 import { db } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 
 const LoginDonor = ({ navigation }) => {
-
   const [error, setError] = useState();
 
   const [email, setEmail] = useState();
@@ -62,31 +58,31 @@ const LoginDonor = ({ navigation }) => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        console.log('Logged in')
-        setSignedIn(true)
-        navigation.navigate('Home')
+        console.log("Logged in");
+        setSignedIn(true);
+        navigation.navigate("Home");
       })
       .catch((error) => {
-        if (error.message === 'Firebase: Error (auth/missing-email).'){
-          setError("Please enter your email id.")
-          setPasswordError('')
+        if (error.message === "Firebase: Error (auth/missing-email).") {
+          setError("Please enter your email id.");
+          setPasswordError("");
         }
-        if (error.message === 'Firebase: Error (auth/internal-error).'){
-          setError("Incorrect email or no password.")
-          setPasswordError('')
+        if (error.message === "Firebase: Error (auth/internal-error).") {
+          setError("Incorrect email or no password.");
+          setPasswordError("");
         }
-        if (error.message === 'Firebase: Error (auth/wrong-password).'){
-          setError("")
-          setPasswordError("Wrong password.")
+        if (error.message === "Firebase: Error (auth/wrong-password).") {
+          setError("");
+          setPasswordError("Wrong password.");
         }
-        if (error.message === 'Firebase: Error (auth/user-not-found).'){
-          setError('This email is not registered. Sign up first.')
-          setPasswordError('')
+        if (error.message === "Firebase: Error (auth/user-not-found).") {
+          setError("This email is not registered. Sign up first.");
+          setPasswordError("");
         }
         console.log(error.message);
-        setSignedIn(false)
-      })
-  }
+        setSignedIn(false);
+      });
+  };
 
   return (
     <Block flex middle>
@@ -98,14 +94,19 @@ const LoginDonor = ({ navigation }) => {
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <Block flex>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-              <Image
-                style={styles.backButton}
-                source={{ uri: 'https://cdn-icons-png.flaticon.com/512/54/54623.png' }}
-              ></Image>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("App")}>
+                <Image
+                  style={styles.backButton}
+                  source={{
+                    uri: "https://cdn-icons-png.flaticon.com/512/54/54623.png",
+                  }}
+                ></Image>
+              </TouchableOpacity>
               <Block flex={0.17} middle>
-                <Image source={require('../../Images/purple_transparent.png')} style={{width: 250, height: 200}}/>
+                <Image
+                  source={require("../../Images/purple_transparent.png")}
+                  style={{ width: 250, height: 200 }}
+                />
               </Block>
               <Block flex center>
                 <KeyboardAvoidingView
@@ -113,7 +114,7 @@ const LoginDonor = ({ navigation }) => {
                   behavior="padding"
                   enabled
                 >
-                  <Text style={{color: 'red'}}>{error}</Text>
+                  <Text style={{ color: "red" }}>{error}</Text>
                   <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                     <Input
                       borderless
@@ -134,7 +135,7 @@ const LoginDonor = ({ navigation }) => {
                     />
                   </Block>
 
-                  <Text style={{color: 'red'}}>{passwordError}</Text>
+                  <Text style={{ color: "red" }}>{passwordError}</Text>
                   <Block width={width * 0.8}>
                     <Input
                       password
@@ -239,13 +240,13 @@ const styles = StyleSheet.create({
   backButton: {
     width: 50,
     height: 50,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 25,
     margin: 20,
-    position: 'absolute', 
-    top: 0, 
-    left: 0
-},
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
 });
 
 export default LoginDonor;

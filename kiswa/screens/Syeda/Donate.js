@@ -30,7 +30,7 @@ export function normalize(size) {
 
 const Donate = ({ route, navigation }) => {
   useEffect(() => {
-    alert("donate");
+    // alert("donate");
     if (
       route.params &&
       route.params.type &&

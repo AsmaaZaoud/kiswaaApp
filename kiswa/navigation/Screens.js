@@ -250,6 +250,7 @@ function HomeStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" },
         }}
       />
+      <Stack.Screen name="Donate" component={Donate} />
       <Stack.Screen
         name="Pro"
         component={Pro}
@@ -278,8 +279,10 @@ function DonateStack(props) {
       mode: "card",
       headerShown: "screen",
     }}
+    // initialRouteName="Donate"
   >
     <Stack.Screen
+      name="Donate"
       component={Donate}
       options={{
         header: ({ navigation, scene }) => (
@@ -292,23 +295,6 @@ function DonateStack(props) {
           />
         ),
         cardStyle: { backgroundColor: "#F8F9FE" },
-      }}
-    />
-    <Stack.Screen
-      name="Pro"
-      component={Pro}
-      options={{
-        header: ({ navigation, scene }) => (
-          <Header
-            title=""
-            back
-            white
-            transparent
-            navigation={navigation}
-            scene={scene}
-          />
-        ),
-        headerTransparent: true,
       }}
     />
   </Stack.Navigator>;
@@ -543,11 +529,13 @@ export default function OnboardingStack(props) {
         {/* /*********  Login - Register **********/}
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Donate" component={Donate} />
+        {/* <Stack.Screen name="Donate" component={Donate} /> */}
         <Stack.Screen name="CheckOut" component={CheckOut} />
         <Stack.Screen name="Feedback" component={Feedback} />
         <Stack.Screen name="DonorHistory" component={DonorHistory} />
         <Stack.Screen name="AboutUs" component={AboutUs} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="LoginDonor" component={LoginDonor} />
 
         {/* /*********  Meimouna - Family **********/}
         <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
@@ -598,13 +586,12 @@ function AppStack(props) {
         }}
       />
       <Drawer.Screen
-        name="Profile"
-        component={ProfileStack}
+        name="AboutUs"
+        component={AboutUsStack}
         options={{
           headerShown: false,
         }}
       />
-      {/* syeda */}
       <Drawer.Screen
         name="Donate"
         component={DonateStack}
@@ -620,12 +607,13 @@ function AppStack(props) {
         }}
       />
       <Drawer.Screen
-        name="AboutUs"
-        component={AboutUsStack}
+        name="Profile"
+        component={ProfileStack}
         options={{
           headerShown: false,
         }}
       />
+      {/* syeda */}
     </Drawer.Navigator>
   );
 }
