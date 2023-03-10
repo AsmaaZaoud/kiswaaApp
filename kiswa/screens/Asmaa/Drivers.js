@@ -18,7 +18,9 @@ import {
   Table,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { DataTable } from "react-native-paper";
+import { DataTable, Searchbar } from "react-native-paper";
+
+// import { DataTable } from "react-native-paper";
 import { Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
 
@@ -42,39 +44,14 @@ import { Images, argonTheme, articles } from "../../constants/";
 import { Card, Header } from "../../components";
 
 import { Icon, AntDesign, FontAwesome } from "react-native-vector-icons";
-// import { normalize } from "..Asmaa/AdminHome";
+import ArButton from "../../components/Button";
+import { normalize } from "./AdminHome";
+import DriverDetails from "./DriverDetails";
 
 const { width, height } = Dimensions.get("screen");
-const scale = width / 824;
-export function normalize(size) {
-  const newSize = size * scale;
-  if (Platform.OS === "ios") {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize));
-  } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
-  }
-}
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
-const categories = [
-  {
-    title: "Music Album",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?fit=crop&w=840&q=80",
-    price: "$125",
-  },
-  {
-    title: "Events",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1543747579-795b9c2c3ada?fit=crop&w=840&q=80",
-    price: "$35",
-  },
-];
 
 const Drivers = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
@@ -138,7 +115,6 @@ const Drivers = ({ navigation }) => {
       // console.log(t);
     });
     setOrders(temp);
-
     // setAllorderss(temp)
     //console.log(drivers);
     setFlag(true);
@@ -156,85 +132,138 @@ const Drivers = ({ navigation }) => {
       });
   };
 
+  // >>>>>>>>>>>>>> Search functions <<<<<<<<<<<<<<
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+    if (value.length === 0) {
+      setDrivers(allDrivers);
+    }
+
+    const filteredData = allDrivers.filter((item) =>
+      item.fname.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filteredData.length === 0) {
+      setDrivers([]);
+    } else {
+      setDrivers(filteredData);
+    }
+  };
+
   const renderCards = () => {
     return (
-      <Block>
-        <Block
-          style={[
-            styles.head,
-            { height: height * 0.08, justifyContent: "space-between" },
-          ]}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Text
-              style={{
-                fontSize: deviceType == "mobile" ? 20 : 30,
-                marginLeft: "5%",
-              }}
-            >
-              {flag}
-            </Text>
-          </View>
-        </Block>
-        <DataTable.Header
-          key={1}
+      <Block style={{ borderWidth: 0, height: height }}>
+        {/* <ScrollView> */}
+        {/* <View
           style={{
-            borderWidth: 1,
-            borderColor: "black",
-            width: "95%",
-            marginLeft: "3%",
-            backgroundColor: "#5e1e7f",
+            // borderWidth: 2,
+            marginTop: 0,
+            height: height * 0.8,
           }}
-        >
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
+        > */}
+        <ScrollView>
+          <Text
+            style={{
+              fontSize: deviceType == "mobile" ? 20 : 30,
+              marginLeft: "5%",
+              // marginTop: "3%",
+            }}
           >
-            Type
-          </DataTable.Title>
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
+            Orders
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              width: width,
+            }}
           >
-            Location
-          </DataTable.Title>
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Date
-          </DataTable.Title>
+            {orders.map((item) => (
+              <View style={styles.notificationBox} key={item.type}>
+                <View
+                  style={{
+                    // flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingHorizontal: "2%",
+                    paddingVertical: "1%",
+                  }}
+                >
+                  <Text style={styles.description}>{item.type} </Text>
+                  {/* <Text style={styles.description}>{item.dateTime}</Text> */}
+                </View>
 
-          <DataTable.Title
-            numeric
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Time
-          </DataTable.Title>
-        </DataTable.Header>
-        {orders &&
-          orders.map((x) => (
-            <DataTable.Row
-              key={x.user}
-              style={{
-                width: "95%",
-                height: "12%",
-                marginLeft: "3%",
-                backgroundColor: "#f3e5f5",
-                borderWidth: 1,
-              }}
-            >
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.type}
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.location}
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.date}
-              </DataTable.Cell>
-              <DataTable.Cell numeric textStyle={{ fontSize: normalize(25) }}>
-                {x.time}
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
+                <View
+                  style={{
+                    borderWidth: 0.6,
+                    width: width * 0.4,
+                    marginBottom: "1%",
+                    // borderWidth: 1,
+                  }}
+                ></View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    margin: "5%",
+                    marginTop: "2%",
+                    // borderWidth: 1,
+                    marginBottom: "1%",
+                  }}
+                >
+                  {item.type == "pickup" ? (
+                    <Image
+                      style={styles.icon}
+                      source={require("../../assets/imgs/pick.png")}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.icon}
+                      source={require("../../assets/imgs/deliv.png")}
+                    />
+                  )}
+
+                  <View
+                    style={{
+                      width: "67%",
+                      // borderWidth: 1,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        //   width: "50%",
+                        // borderWidth: 1,
+                        padding: "1%",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {/* <MaterialIcons name="location-pin" size={25} />
+                        <Text style={styles.description}>{item.location}</Text>
+                        <Text style={styles.description}>{item.location}</Text> */}
+                      <Text style={styles.description}>{item.location}</Text>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        width: "75%",
+                        // borderWidth: 1,
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {/* <MaterialIcons name="date-range" size={25} /> */}
+                      {/* <Text style={styles.description}>
+                          {item.date} -{item.time}
+                        </Text> */}
+                    </View>
+                  </View>
+                </View>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+        {/* </View> */}
       </Block>
     );
   };
@@ -265,7 +294,11 @@ const Drivers = ({ navigation }) => {
           <Block
             style={[
               styles.head,
-              { height: height * 0.08, justifyContent: "space-between" },
+              {
+                height: height * 0.08,
+                justifyContent: "space-between",
+                // borderWidth: 1,
+              },
             ]}
           >
             <View style={{ flexDirection: "row" }}>
@@ -282,20 +315,36 @@ const Drivers = ({ navigation }) => {
                 Driverss
               </Text>
             </View>
-            <Button
-              color="#6a1b9a"
-              style={{ width: "25%", height: "50%" }}
-              onPress={() => navigation.navigate("AddDriver")}
-            >
-              <Text
+            <View style={{ flexDirection: "row" }}>
+              <Searchbar
+                placeholder="Search"
+                onChangeText={handleSearch}
+                value={searchQuery}
                 style={{
-                  fontSize: deviceType == "mobile" ? 18 : 26,
-                  color: "#FFF",
+                  width: width * 0.33,
+                  borderRadius: "10%",
+                  height:
+                    deviceType == "mobile" ? height * 0.039 : height * 0.043,
+                  marginTop: "2%",
                 }}
+                autoCorrect={false}
+              />
+              <Button
+                // color="#6a1b9a"
+                color="#5AA15A"
+                style={{ width: "20%", height: height * 0.033 }}
+                onPress={() => navigation.navigate("AddDriver")}
               >
-                Add
-              </Text>
-            </Button>
+                <Text
+                  style={{
+                    fontSize: deviceType == "mobile" ? 15 : 24,
+                    color: "#FFF",
+                  }}
+                >
+                  Add
+                </Text>
+              </Button>
+            </View>
           </Block>
 
           <DataTable.Header
@@ -306,27 +355,38 @@ const Drivers = ({ navigation }) => {
               borderColor: "black",
               width: "90%",
               marginLeft: "3%",
-              backgroundColor: "white",
+              backgroundColor: "#4b0095",
+              borderWidth: 1,
             }}
           >
-            <DataTable.Title textStyle={{ fontSize: normalize(25) }}>
+            <DataTable.Title
+              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
+            >
               Name
             </DataTable.Title>
 
-            <DataTable.Title textStyle={{ fontSize: normalize(25) }}>
+            <DataTable.Title
+              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
+            >
               Phone
             </DataTable.Title>
             {/* <DataTable.Title  textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title> */}
             {/* <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title> */}
-            <DataTable.Title numeric textStyle={{ fontSize: normalize(25) }}>
+            <DataTable.Title
+              numeric
+              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
+            >
               Zone
             </DataTable.Title>
-            <DataTable.Title numeric textStyle={{ fontSize: normalize(25) }}>
+            <DataTable.Title
+              numeric
+              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
+            >
               Delete
             </DataTable.Title>
           </DataTable.Header>
 
-          <View height={flag ? height * 0.2 : height * 0.5}>
+          <View height={flag ? height * 0.16 : height * 0.5}>
             <ScrollView>
               {drivers &&
                 drivers.map((x, i) => (
@@ -373,27 +433,20 @@ const Drivers = ({ navigation }) => {
                       <Pressable
                         onPress={() => deleteDriver(x.email)}
                         style={{
-                          borderColor: "#bdbdbd",
-                          borderWidth: 1,
-                          backgroundColor: "#bdbdbd",
-                          borderRadius: "5%",
+                          paddingLeft: "70%",
                         }}
                       >
-                        <Text
-                          style={{
-                            fontSize: normalize(25),
-                            width: normalize(100),
-                            color: "blac",
-                            textAlign: "center",
-                          }}
-                        >
-                          X
-                        </Text>
+                        <AntDesign
+                          name="delete"
+                          size={normalize(37)}
+                          color="red"
+                        />
                       </Pressable>
                     </DataTable.Cell>
                   </DataTable.Row>
                 ))}
             </ScrollView>
+            <View style={{ width: width }}></View>
           </View>
 
           {flag && orders.length == 0 ? (
@@ -404,6 +457,7 @@ const Drivers = ({ navigation }) => {
                 // borderWidth: 2,
                 justifyContent: "center",
                 margin: "25%",
+                marginTop: "6%",
                 alignContent: "center",
                 textAlign: "center",
               }}
@@ -446,10 +500,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: "1%",
     marginTop: "3%",
-    width: "90%",
+    width: "100%",
     marginLeft: "3%",
     alignItems: "center",
-    // borderWidth:2,
+    // borderWidth: 2,
     justifyContent: "space-between",
   },
   title: {
@@ -498,18 +552,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     justifyContent: "center",
   },
-  notificationList: {
-    marginTop: 20,
-    padding: 10,
-  },
-  notificationBox: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 5,
-    backgroundColor: "#FFFFFF",
-    flexDirection: "row",
-    borderRadius: 10,
-  },
+
   image: {
     width: 45,
     height: 45,
@@ -534,10 +577,39 @@ const styles = StyleSheet.create({
   },
 
   smallInput: {
-    width: width * 0.2,
+    width: width * 0.24,
     // borderWidth:2,
     fontSize: normalize(20),
     textAlign: "right",
+  },
+  notificationList: {
+    // marginTop: "1%",
+    // padding: "3%",
+    borderWidth: 1,
+    backgroundColor: "white",
+    flexDirection: "row",
+  },
+  notificationBox: {
+    width: width * 0.4,
+    // padding: "5%",
+    // paddingTop: "1%",
+    marginTop: "2%",
+    marginBottom: "3%",
+    marginLeft: "4%",
+    backgroundColor: "#F1EEFF",
+    // flexDirection: "row",
+    borderRadius: "15%",
+    borderWidth: 0.3,
+  },
+  icon: {
+    width: 60,
+    height: 60,
+  },
+  description: {
+    fontSize: normalize(20),
+    // color: "#3498db",
+    marginLeft: "3%",
+    // textAlign: "center",
   },
 });
 

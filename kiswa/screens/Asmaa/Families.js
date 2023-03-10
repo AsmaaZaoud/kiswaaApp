@@ -17,7 +17,7 @@ import {
   TouchableOpacity,
   Table,
 } from "react-native";
-import { DataTable } from "react-native-paper";
+import { DataTable, Searchbar } from "react-native-paper";
 import { Button } from "galio-framework";
 
 //FireBase
@@ -46,24 +46,6 @@ const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
-const categories = [
-  {
-    title: "Music Album",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?fit=crop&w=840&q=80",
-    price: "$125",
-  },
-  {
-    title: "Events",
-    description:
-      "Rock music is a genre of popular music. It developed during and after the 1960s in the United Kingdom.",
-    image:
-      "https://images.unsplash.com/photo-1543747579-795b9c2c3ada?fit=crop&w=840&q=80",
-    price: "$35",
-  },
-];
 
 const Families = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
@@ -75,8 +57,8 @@ const Families = ({ navigation }) => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
 
-  const [drivers, setDrivers] = useState([]);
-  const [allDrivers, setAllDrivers] = useState([]);
+  const [families, setFamilies] = useState([]);
+  const [allFamilies, setAllFamilies] = useState([]);
 
   const readAllWhere = async () => {
     let temp = [];
@@ -87,9 +69,9 @@ const Families = ({ navigation }) => {
       temp.push(doc.data());
       //console.log(doc.id, " => ", doc.data());
     });
-    setDrivers(temp);
-    setAllDrivers(temp);
-    //console.log(drivers);
+    setFamilies(temp);
+    setAllFamilies(temp);
+    // console.log("alll", allFamilies);
   };
   const [flag, setFlag] = useState(false);
 
@@ -116,82 +98,137 @@ const Families = ({ navigation }) => {
     setRequests(temp);
 
     // setAllorderss(temp)
-    //console.log(drivers);
+    //console.log(families);
     setFlag(true);
   };
 
+  // >>>>>>>>>>>>>> Search functions <<<<<<<<<<<<<<
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (value) => {
+    console.log("familiesss", allFamilies);
+    setSearchQuery(value);
+    if (value.length === 0) {
+      setFamilies(allFamilies);
+    }
+
+    const filteredData = allFamilies.filter(
+      (item) =>
+        item.userName &&
+        item.userName.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filteredData.length === 0) {
+      setFamilies([]);
+    } else {
+      setFamilies(filteredData);
+    }
+  };
   const renderCards = () => {
     return (
-      <Block>
-        <Block
-          style={[
-            styles.head,
-            { height: height * 0.08, justifyContent: "space-between" },
-          ]}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Text
-              style={{
-                fontSize: deviceType == "mobile" ? 20 : 30,
-                marginLeft: "5%",
-              }}
-            >
-              {flag}
-            </Text>
-          </View>
-        </Block>
-        <DataTable.Header
-          key={1}
-          style={{
-            borderWidth: 1,
-            borderColor: "black",
-            width: "90%",
-            marginLeft: "3%",
-            backgroundColor: "#5e1e7f",
-          }}
-        >
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
+      <Block
+        // height={height * 0.6}
+        style={{ borderWidth: 1, height: height, marginTop: "5%" }}
+      >
+        <ScrollView>
+          <Text
+            style={{
+              fontSize: deviceType == "mobile" ? 20 : 30,
+              marginLeft: "5%",
+              marginTop: "3%",
+            }}
           >
-            Cart
-          </DataTable.Title>
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
+            Requests
+          </Text>
+          <View
+            style={{ flexDirection: "row", flexWrap: "wrap", width: width }}
           >
-            Status
-          </DataTable.Title>
-          <DataTable.Title
-            textStyle={[styles.tabletitle, { fontSize: normalize(25) }]}
-          >
-            Email
-          </DataTable.Title>
+            {/* <ScrollView> */}
+            {requests &&
+              requests.map((item) => (
+                <View style={styles.notificationBox} key={item.type}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: "2%",
+                      paddingVertical: "1%",
+                    }}
+                  >
+                    <Text style={styles.description}>{item.status} </Text>
+                    {/* <Text style={styles.description}>{item.dateTime}</Text> */}
+                  </View>
 
-          {/* <DataTable.Title numeric textStyle={[styles.tabletitle ,{fontSize: normalize(25) }]}>Time</DataTable.Title> */}
-        </DataTable.Header>
-        {requests &&
-          requests.map((x) => (
-            <DataTable.Row
-              key={x.user}
-              style={{
-                width: "90%",
-                height: "12%",
-                marginLeft: "3%",
-                backgroundColor: "#f3e5f5",
-                borderWidth: 1,
-              }}
-            >
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.cart}
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.status}
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                {x.familyID}
-              </DataTable.Cell>
-              {/* <DataTable.Cell numeric textStyle={{fontSize:normalize(25) }}>{x.time}</DataTable.Cell> */}
-            </DataTable.Row>
-          ))}
+                  <View
+                    style={{
+                      borderWidth: 0.6,
+                      width: width * 0.4,
+                      marginBottom: "1%",
+                      // borderWidth: 1,
+                    }}
+                  ></View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      margin: "5%",
+                      marginTop: "2%",
+                      // borderWidth: 1,
+                      marginBottom: "1%",
+                    }}
+                  >
+                    {item.status == "pending" ? (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/Asmaa/pendingDon.png")}
+                      />
+                    ) : (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/Asmaa/fullfied.png")}
+                      />
+                    )}
+
+                    <View
+                      style={{
+                        width: "67%",
+                        // borderWidth: 1,
+                      }}
+                    >
+                      <View
+                        style={{
+                          // flexDirection: "row",
+                          width: "120%",
+                          // borderWidth: 1,
+                          padding: "1%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        {/* <MaterialIcons name="location-pin" size={25} />
+                        <Text style={styles.description}>{item.location}</Text>
+                        <Text style={styles.description}>{item.location}</Text> */}
+                        <Text style={styles.description}>{item.dateSlot}</Text>
+                        <Text style={styles.description}>{item.timeSlot}</Text>
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          width: "75%",
+                          // borderWidth: 1,
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        {/* <MaterialIcons name="date-range" size={25} /> */}
+                        {/* <Text style={styles.description}>
+                          {item.date} -{item.time}
+                        </Text> */}
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              ))}
+          </View>
+        </ScrollView>
       </Block>
     );
   };
@@ -215,6 +252,18 @@ const Families = ({ navigation }) => {
             Families
           </Text>
         </View>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={handleSearch}
+          value={searchQuery}
+          style={{
+            width: width * 0.38,
+            borderRadius: "10%",
+            height: "77%",
+            marginTop: "2%",
+          }}
+          autoCorrect={false}
+        />
         {/* <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}>
                       
                       <Text style={{fontSize:deviceType=="mobile" ?18: 26, color:"#FFF"}}>Add</Text> 
@@ -261,8 +310,8 @@ const Families = ({ navigation }) => {
       </DataTable.Header>
       <View height={flag ? height * 0.2 : height * 0.5}>
         <ScrollView>
-          {drivers &&
-            drivers.map((x) => (
+          {families &&
+            families.map((x) => (
               <DataTable.Row
                 key={x.email}
                 onPress={() => readOne(x.email)}
@@ -274,7 +323,7 @@ const Families = ({ navigation }) => {
                 }}
               >
                 <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                  {x.firstName}
+                  {x.userName}
                 </DataTable.Cell>
                 <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
                   {x.email}
@@ -290,11 +339,11 @@ const Families = ({ navigation }) => {
       {flag && requests.length == 0 ? (
         <View
           style={{
-            width: width * 0.5,
-            height: height * 0.2,
+            width: width * 0.9,
+            // height: height * 0.5,
             // borderWidth: 2,
             justifyContent: "center",
-            margin: "25%",
+            marginTop: "6%",
             alignContent: "center",
             textAlign: "center",
           }}
@@ -382,18 +431,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     justifyContent: "center",
   },
-  notificationList: {
-    marginTop: 20,
-    padding: 10,
-  },
-  notificationBox: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 5,
-    backgroundColor: "#FFFFFF",
-    flexDirection: "row",
-    borderRadius: 10,
-  },
+
   image: {
     width: 45,
     height: 45,
@@ -413,6 +451,35 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   rowData: { color: "black", fontSize: width * 0.04 },
+  notificationList: {
+    marginTop: "1%",
+    // padding: "3%",
+    // borderWidth: 1,
+    backgroundColor: "white",
+    flexDirection: "row",
+  },
+  notificationBox: {
+    width: width * 0.4,
+    // padding: "5%",
+    // paddingTop: "1%",
+    marginTop: "2%",
+    marginBottom: "3%",
+    marginLeft: "8%",
+    backgroundColor: "#F1EEFF",
+    // flexDirection: "row",
+    borderRadius: "15%",
+    borderWidth: 0.3,
+  },
+  icon: {
+    width: 50,
+    height: 50,
+  },
+  description: {
+    fontSize: normalize(20),
+    // color: "#3498db",
+    marginLeft: "3%",
+    // textAlign: "center",
+  },
 });
 
 export default Families;

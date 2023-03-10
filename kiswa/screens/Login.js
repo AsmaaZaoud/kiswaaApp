@@ -69,7 +69,7 @@ const Login = ({ navigation }) => {
     const donorSnap = await getDoc(donor);
 
     if (driverSnap.exists()) {
-      navigation.navigate("DriverHome");
+      navigation.navigate("DriverDash", email);
     } else if (clerkSnap.exists()) {
       navigation.navigate("InventoryClerkHomePage");
     } else if (familySnap.exists()) {

@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { DataTable } from "react-native-paper";
 import { theme } from "galio-framework";
-
+import Dashboard from "./Dashboard";
 import { Tab, TabView } from "@rneui/themed";
 
 //FireBase
@@ -31,7 +31,7 @@ import { signOut } from "firebase/auth";
 import { Images, argonTheme, articles } from "../../constants/";
 import { Card, Header } from "../../components";
 import {
-  AntDesign,
+  FontAwesome5,
   FontAwesome,
   MaterialCommunityIcons,
 } from "react-native-vector-icons";
@@ -46,6 +46,9 @@ import Families from "./Families";
 import Clerks from "./Clerks";
 import Inventory from "./Inventory";
 import Donors from "./Donors";
+import FamiliesCards from "./FamiliesCards";
+import InventoryTable from "./InventoryTable";
+import Feedback from "./Feedback";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 830;
@@ -58,15 +61,17 @@ export function normalize(size) {
   }
 }
 
-const AdminHome = ({ navigation }) => {
+const AdminHome = ({ route, navigation }) => {
+  const invType = route.params;
+  // console.log(p);
   const [deviceType, setDeviceType] = useState("");
+  const [users, setUsers] = useState("graph");
+  const [inv, setInv] = useState("graph");
 
   useEffect(() => {
+    invType ? setInv(invType) : null;
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-  }, []);
-
-  const [color, setColor] = useState("#e1ddf0");
-  const [page, setPage] = useState("Dashboard");
+  }, [invType]);
 
   const onSignOut = () => {
     signOut(auth)
@@ -74,32 +79,21 @@ const AdminHome = ({ navigation }) => {
       .catch((error) => console.log("Error logging out: ", error));
   };
 
-  const [index, setIndex] = React.useState(0);
-  const groups = { 0: "Men", 1: "Women", 2: "Boys", 3: "Girls" };
+  const [index, setIndex] = useState(0);
 
-  const [ageGroup, setAgeGroup] = useState("");
-  const [type, setType] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  // const [color, setColor] = useState(colors[0].label);
-  const [size, setSize] = useState("S");
-
-  // console.log(ageGroup, type, quantity, color, size);
-  console.log(index);
   return (
-    <View style={{ backgroundColor: "#5e1e7f" }}>
+    <View style={{ backgroundColor: "#4B0095" }}>
       <View style={styles.top}>
         <Image
-          source={require("../../assets/imgs/kiswaLogo.jpg")}
-          style={{ width: 150, height: 50 }}
-          width={width * 0.27}
-          height={height * 0.05}
+          source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
+          style={{ width: normalize(230), height: normalize(80) }}
         />
         <Pressable onPress={onSignOut}>
           <MaterialCommunityIcons
             name="logout"
-            size={deviceType == "mobile" ? 30 : 45}
+            size={normalize(50)}
             color="white"
-            style={{ margin: 5 }}
+            style={{ marginVertical: "2%", marginTop: "28%" }}
           />
         </Pressable>
       </View>
@@ -111,6 +105,7 @@ const AdminHome = ({ navigation }) => {
 
       <Block style={{ backgroundColor: "white", flexDirection: "colum" }}>
         <Tab
+          // scrollable={true}
           value={index}
           onChange={setIndex}
           indicatorStyle={{
@@ -119,129 +114,196 @@ const AdminHome = ({ navigation }) => {
           }}
         >
           <Tab.Item
+            // scrollable={true}
             onChange={setIndex}
             value={0}
             title="Men"
             style={{
-              borderBottomColor: index == 0 ? "#5e1e7f" : "white",
-              borderBottomWidth: 5,
-            }}
-          >
-            <FontAwesome name="home" size={deviceType == "mobile" ? 30 : 45} />
-            <Text style={{ fontSize: normalize(19) }}>Home</Text>
-          </Tab.Item>
-          <Tab.Item
-            onChange={setIndex}
-            value={1}
-            title="Women"
-            style={{
-              borderBottomColor: index == 1 ? "#5e1e7f" : "white",
-              borderBottomWidth: 5,
-            }}
-          >
-            <FontAwesome name="car" size={deviceType == "mobile" ? 30 : 45} />
-            <Text style={{ fontSize: normalize(19) }}>Drivers</Text>
-          </Tab.Item>
-          <Tab.Item
-            onChange={setIndex}
-            value={2}
-            title="Boys"
-            style={{
-              borderBottomColor: index == 2 ? "#5e1e7f" : "white",
-              borderBottomWidth: 5,
-            }}
-          >
-            <FontAwesome name="user" size={deviceType == "mobile" ? 30 : 45} />
-            <Text style={{ fontSize: normalize(19) }}>Families</Text>
-          </Tab.Item>
-          <Tab.Item
-            onChange={setIndex}
-            value={3}
-            title="Girls"
-            style={{
-              borderBottomColor: index == 3 ? "#5e1e7f" : "white",
-              borderBottomWidth: 5,
-            }}
-          >
-            <FontAwesome name="gift" size={deviceType == "mobile" ? 30 : 45} />
-            <Text style={{ fontSize: normalize(19) }}>Donors</Text>
-          </Tab.Item>
-          <Tab.Item
-            onChange={setIndex}
-            value={4}
-            title="Girls"
-            style={{
-              borderBottomColor: index == 4 ? "#5e1e7f" : "white",
-              borderBottomWidth: 5,
-            }}
-          >
-            <FontAwesome name="users" size={deviceType == "mobile" ? 30 : 45} />
-            <Text style={{ fontSize: normalize(19) }}>Clerk</Text>
-          </Tab.Item>
-          <Tab.Item
-            onChange={setIndex}
-            value={5}
-            title="Girls"
-            style={{
-              borderBottomColor: index == 5 ? "#5e1e7f" : "white",
+              borderBottomColor: index == 0 ? "#af9ec6" : "white",
               borderBottomWidth: 5,
             }}
           >
             <FontAwesome
-              name="database"
+              name="home"
+              size={deviceType == "mobile" ? 30 : 45}
+              color="#e68d69"
+            />
+            <Text style={{ fontSize: normalize(19) }}>Home</Text>
+          </Tab.Item>
+          <Tab.Item
+            scrollable={true}
+            onChange={setIndex}
+            value={1}
+            title="Women"
+            style={{
+              borderBottomColor: index == 1 ? "#af9ec6" : "white",
+              borderBottomWidth: 5,
+            }}
+          >
+            <FontAwesome
+              color="#e68d69"
+              name="users"
               size={deviceType == "mobile" ? 30 : 45}
             />
-            <Text style={{ fontSize: normalize(19) }}>Inventory</Text>
+            <Text style={{ fontSize: normalize(19) }}>Users</Text>
+          </Tab.Item>
+          <Tab.Item
+            scrollable={false}
+            onChange={setIndex}
+            value={2}
+            title="Boys"
+            style={{
+              borderBottomColor: index == 2 ? "#af9ec6" : "white",
+              borderBottomWidth: 5,
+            }}
+          >
+            <FontAwesome5
+              color="#e68d69"
+              name="user-tie"
+              size={deviceType == "mobile" ? 30 : 45}
+            />
+            <Text style={{ fontSize: normalize(19) }}>Workers</Text>
+          </Tab.Item>
+          <Tab.Item
+            scrollable={false}
+            onChange={setIndex}
+            value={3}
+            title="Girls"
+            style={{
+              borderBottomColor: index == 3 ? "#af9ec6" : "white",
+              borderBottomWidth: 5,
+            }}
+          >
+            <FontAwesome
+              color="#e68d69"
+              name="table"
+              size={deviceType == "mobile" ? 30 : 45}
+            />
+            <Text style={{ fontSize: normalize(19) }}>Tables</Text>
           </Tab.Item>
         </Tab>
         {/* </Block> */}
 
-        <TabView value={index} onChange={setIndex} animationType="spring">
+        <TabView
+          disableSwipe
+          scrollable={true}
+          disableTransition
+          value={index}
+          onChange={setIndex}
+        >
           {/*--------- Dashboard -------------*/}
-          <TabView.Item value={0} style={styles.comp}>
-            <View
-              style={{
-                justifyContent: "center",
-                alignContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: normalize(25) }}>Dashboard</Text>
-            </View>
-          </TabView.Item>
-
-          {/*--------- Drivers -------------*/}
-          <TabView.Item style={styles.comp}>
-            <View style={styles.board}>
-              <Drivers navigation={navigation} />
-            </View>
+          <TabView.Item scrollable={true} style={styles.comp}>
+            {/* <Text style={{fontSize: normalize(25)}}>Dashboard</Text> */}
+            <Dashboard />
           </TabView.Item>
 
           {/*--------- Families -------------*/}
-          <TabView.Item style={styles.comp}>
+          <TabView.Item scrollable={true} style={styles.comp}>
             <View style={styles.board}>
-              <Families navigation={navigation} />
+              <View
+                style={{
+                  // width: width * 0.,
+                  // borderWidth: 2,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  // marginHorizontal: "6%",
+                  marginTop: "5%",
+                }}
+              >
+                <Button size="small" onPress={() => setUsers("families")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Families
+                  </Text>
+                </Button>
+                <Button size="small" onPress={() => setUsers("donors")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Donors
+                  </Text>
+                </Button>
+                <Button size="small" onPress={() => setUsers("feedback")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Feedback
+                  </Text>
+                </Button>
+              </View>
+
+              {/* <Families navigation={navigation} /> */}
+              {users == "feedback" ? (
+                <Feedback navigation={navigation} />
+              ) : users == "donors" ? (
+                <Donors navigation={navigation} />
+              ) : (
+                // <FamiliesCards navigation={navigation} />
+                <Families navigation={navigation} />
+              )}
+              {/* <FamiliesCards navigation={navigation} /> */}
+            </View>
+          </TabView.Item>
+          {/*--------- Drivers -------------*/}
+          <TabView.Item disableTransition style={styles.comp}>
+            <View style={styles.board}>
+              {users == "drivers" ? (
+                <Drivers navigation={navigation} />
+              ) : (
+                <Clerks navigation={navigation} />
+              )}
+              <View
+                style={{
+                  width: width * 0.5,
+                  // borderWidth: 2,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginHorizontal: "6%",
+                  marginTop: "90%",
+                }}
+              >
+                <Button onPress={() => setUsers("drivers")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Drivers
+                  </Text>
+                </Button>
+                <Button onPress={() => setUsers("clerks")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Clerks
+                  </Text>
+                </Button>
+              </View>
             </View>
           </TabView.Item>
 
           {/*--------- Donors -------------*/}
-          <TabView.Item style={styles.comp}>
+          <TabView.Item disableTransition style={styles.comp}>
             <View style={styles.board}>
-              <Donors navigation={navigation} />
-            </View>
-          </TabView.Item>
+              {/* <View
+                style={{
+                  width: width * 0.5,
+                  // borderWidth: 2,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginHorizontal: "6%",
+                  marginTop: "5%",
+                }}
+              >
+                <Button onPress={() => setUsers("graph")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Graphs
+                  </Text>
+                </Button>
+                <Button onPress={() => setUsers("table")}>
+                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
+                    Table
+                  </Text>
+                </Button>
+              </View> */}
+              {invType == "graph" ? (
+                <View>
+                  <Inventory navigation={navigation} />
 
-          {/*--------- clerks -------------*/}
-          <TabView.Item style={styles.comp}>
-            <View style={styles.board}>
-              <Clerks navigation={navigation} />
-            </View>
-          </TabView.Item>
-
-          {/*--------- Inventory -------------*/}
-          <TabView.Item value={5} style={styles.comp}>
-            <View style={styles.board}>
-              <Inventory navigation={navigation} />
+                  <Text>Grapg</Text>
+                </View>
+              ) : (
+                <InventoryTable navigation={navigation} />
+              )}
             </View>
           </TabView.Item>
         </TabView>
@@ -252,8 +314,8 @@ const AdminHome = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   top: {
-    marginTop: "1%",
-    //borderBottomWidth:0.5,
+    marginTop: width > 500 ? "1%" : "6%",
+    // borderBottomWidth: 5,
     padding: "3%",
     flexDirection: "row",
     justifyContent: "space-between",
