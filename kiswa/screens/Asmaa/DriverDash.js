@@ -93,20 +93,17 @@ const DriverDash = ({ route, navigation }) => {
           <DriverHome navigation={navigation} email={id} />
           {/* </View> */}
         </TabView.Item>
-
         {/*--------- Map -------------*/}
         <TabView.Item style={styles.comp}>
           <View style={styles.board}>
             {/* <Text>Map</Text> */}
-            <DriverMap />
+            <DriverMap navigation={navigation} email={id} />
           </View>
         </TabView.Item>
-
         {/*--------- History -------------*/}
         <TabView.Item style={styles.comp}>
           <DriverHistory navigation={navigation} email={id} />
         </TabView.Item>
-
         {/*--------- Profile -------------*/}
         <TabView.Item style={styles.comp}>
           <DriverProfile navigation={navigation} email={id} />

@@ -33,6 +33,7 @@ import { signOut } from "firebase/auth";
 import { Tab, TabView } from "@rneui/themed";
 import DriverHistory from "./DriverHistory";
 import DriverProfile from "./DriverProfile";
+import { useIsFocused } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -46,6 +47,8 @@ export function normalize(size) {
 }
 
 const DriverHome = (props) => {
+  const isFocused = useIsFocused();
+
   const id = props.email;
   const navigation = props.navigation;
   // alert(id);
@@ -54,11 +57,13 @@ const DriverHome = (props) => {
   const [arr, setArr] = useState([]);
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-    readOrders();
+    // alert("effect");
     readOrders();
 
+    // readOrders();
+
     // setArr(pickup);
-  }, []);
+  }, [props]);
   const [index, setIndex] = useState(0);
 
   const change = (type) => {
@@ -108,16 +113,11 @@ const DriverHome = (props) => {
         doc.data().type == "pickup" ? pick.push(t) : deliv.push(t);
       }
 
-      // console.log(t);
-      // setArr(pick);
+      setOrders(temp);
+      setPickup(pick);
+      setDeliver(deliv);
+      setArr(pickup);
     });
-    setOrders(temp);
-    setPickup(pick);
-    setDeliver(deliv);
-
-    setArr(pickup);
-
-    console.log(arr);
   };
   let lat = 25.2709954;
   let long = 51.5324509;
@@ -310,6 +310,7 @@ const styles = StyleSheet.create({
     borderRadius: "7%",
     flexDirection: "row",
     padding: "3%",
+    marginBottom: "9%",
     shadowColor: "#666",
     shadowOffset: {
       width: 1,
@@ -321,7 +322,7 @@ const styles = StyleSheet.create({
   },
 
   dataView: {
-    marginBottom: "6%",
+    marginBottom: "10%",
   },
   dataTitles: {
     fontSize: normalize(19),

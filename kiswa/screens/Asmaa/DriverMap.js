@@ -15,6 +15,8 @@ import { Entypo } from "react-native-vector-icons";
 import { auth, db } from "../../config";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { useIsFocused } from "@react-navigation/native";
+
 // import { Block } from "galio-framework";
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -26,8 +28,11 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
-const DriverMap = () => {
-  let id = auth?.currentUser?.email;
+const DriverMap = (props) => {
+  const isFocused = useIsFocused();
+  const id = props.email;
+  const navigation = props.navigation;
+  // let id = auth?.currentUser?.email;
   let lat = 25.2709954;
   let long = 51.5324509;
 
@@ -46,22 +51,21 @@ const DriverMap = () => {
       let hour = doc.data().dateTime.toDate().getHours();
       console.log(doc.data().dateTime.toDate());
       let t = doc.data();
-
       t.time = hour + ":00";
       t.dateTime = doc.data().dateTime.toDate();
-
       t.date = doc.data().dateTime.toDate().toLocaleDateString();
-      let a;
-      doc.data().type == "pickup"
-        ? (a = await readUser(doc.data().userId, "donors"))
-        : (a = await readUser(doc.data().userId, "families"));
-      t.userName = a.userName;
-      t.phone = a.phone;
+      // let a;
+      // doc.data().type == "pickup"
+      //   ? (a = await readUser(doc.data().userId, "donors"))
+      //   : (a = await readUser(doc.data().userId, "families"));
+      // t.userName = a.userName;
+      // t.phone = a.phone;
       t.dateTime.toDateString() == today ? temp.push(t) : null;
-
-      setOrders(temp);
-      setOrders(temp);
     });
+
+    await Promise.all(temp);
+    setOrders(temp);
+    // setOrders(temp);
 
     console.log("22", ordersTomo);
     // sortTime();
@@ -75,22 +79,21 @@ const DriverMap = () => {
       let hour = doc.data().dateTime.toDate().getHours();
       console.log(doc.data().dateTime.toDate());
       let t = doc.data();
-
       t.time = hour + ":00";
       t.dateTime = doc.data().dateTime.toDate();
-
       t.date = doc.data().dateTime.toDate().toLocaleDateString();
-      let a;
-      doc.data().type == "pickup"
-        ? (a = await readUser(doc.data().userId, "donors"))
-        : (a = await readUser(doc.data().userId, "families"));
-      t.userName = a.userName;
-      t.phone = a.phone;
+      // let a;
+      // doc.data().type == "pickup"
+      //   ? (a = await readUser(doc.data().userId, "donors"))
+      //   : (a = await readUser(doc.data().userId, "families"));
+      // t.userName = a.userName;
+      // t.phone = a.phone;
       t.dateTime.toDateString() == tomorrow ? temp2.push(t) : null;
-
-      setOrdersTomo(temp2);
       setOrdersTomo(temp2);
     });
+    await Promise.all(temp2);
+
+    // setOrdersTomo(temp2);
 
     console.log("22", ordersTomo);
     // sortTime();
@@ -139,13 +142,7 @@ const DriverMap = () => {
     makeDate();
     readOrders();
     readOrdersTomo();
-  }, [2]);
-
-  useEffect(() => {
-    makeDate();
-    readOrders();
-    readOrdersTomo();
-  }, []);
+  }, [props]);
 
   return (
     <SafeAreaView style={{ width: width, height: 700 }}>
@@ -200,7 +197,7 @@ const DriverMap = () => {
                     <View style={{ marginLeft: "4%" }}>
                       <Text style={styles.userName}>{item.location}</Text>
                       <Text style={styles.description}>
-                        {item.userName} 66006600
+                        {/* {item.userName} 66006600 */}
                       </Text>
                     </View>
                   </View>
@@ -266,6 +263,8 @@ const DriverMap = () => {
                 </View>
               </TouchableOpacity>
             ))
+          ) : orders.length > 0 ? (
+            <Text style={styles.noOrder}>No orders for now! </Text>
           ) : (
             <Text style={styles.noOrder}>Done! 😊</Text>
           )}
