@@ -460,7 +460,10 @@ const InventoryTable = ({ navigation }) => {
             <ScrollView>
               {inventory &&
                 inventory.map((i, x) => (
-                  <DataTable.Row style={{ height: "1%", borderWidth: 0.5 }}>
+                  <DataTable.Row
+                    key={x}
+                    style={{ height: "1%", borderWidth: 0.5 }}
+                  >
                     <DataTable.Cell
                       id={i.id}
                       textStyle={{ fontSize: normalize(18) }}

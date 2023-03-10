@@ -46,7 +46,6 @@ import { Card, Header } from "../../components";
 import { Icon, AntDesign, FontAwesome } from "react-native-vector-icons";
 import ArButton from "../../components/Button";
 import { normalize } from "./AdminHome";
-import DriverDetails from "./DriverDetails";
 
 const { width, height } = Dimensions.get("screen");
 

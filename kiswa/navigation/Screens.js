@@ -13,12 +13,10 @@ import Elements from "../screens/Elements";
 import Home from "../screens/Syeda/Home";
 import Onboarding from "../screens/Syeda/Onboarding";
 import Pro from "../screens/Pro";
+import Login from "../screens/Login";
+import Register from "../screens/Syeda/Register";
 // import Profile from "../screens/Syeda/Profile";
 // import React from "react";
-import Register from "../screens/Syeda/Register";
-
-
-//import Login from "../screens/Login";
 
 //syeda
 import Donate from "../screens/Syeda/Donate";
@@ -41,38 +39,28 @@ import { createStackNavigator } from "@react-navigation/stack";
 import RegisterFamily from "../screens/Meimouna/RegisterFamily";
 import FamilyHome from "../screens/Meimouna/FamilyHome";
 import FamilyRequest from "../screens/Meimouna/FamilyRequest";
-//drivers && Admin
+//Asmaa drivers && Admin
 import Drivers from "../screens/Asmaa/Drivers";
 import AdminHome from "../screens/Asmaa/AdminHome";
 import DriverHome from "../screens/Asmaa/DriverHome";
 import AddDriver from "../screens/Asmaa/AddDriver";
-import AdminHomeCopy from "../screens/Asmaa/AdminHomeCopy";
 import DriveProfile from "../screens/Asmaa/DriverProfile";
-import Deliver from "../screens/Asmaa/Deliver";
-import Pickup from "../screens/Asmaa/Pickup";
 import DriverHistory from "../screens/Asmaa/DriverHistory";
 import DriverDash from "../screens/Asmaa/DriverDash";
 import FamiliesCards from "../screens/Asmaa/FamiliesCards";
 import InventoryTable from "../screens/Asmaa/InventoryTable";
 import DriverMap from "../screens/Asmaa/DriverMap";
-import Feedback from "../screens/Asmaa/Feedback";
+import FeedbackAdmin from "../screens/Asmaa/FeedbackAdmin";
 import OrderDetails from "../screens/Asmaa/OrderDetails";
-
-//invent
-import InventoryClerks from "../screens/Asmaa/InventoryClerks";
 import AddClerk from "../screens/Asmaa/AddClerk";
 import Clerks from "../screens/Asmaa/Clerks";
 import Inventory from "../screens/Asmaa/Inventory";
-
-//Donor
 import Donors from "../screens/Asmaa/Donors";
-
-//Families
 import Families from "../screens/Asmaa/Families";
 import Dashboard from "../screens/Asmaa/Dashboard";
 
 //for onboarding
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("screen");
 
@@ -118,20 +106,6 @@ function ElementsStack(props) {
     </Stack.Navigator>
   );
 }
-
-//Syeda****** For later
-// function Donors(props) {
-//   return (
-//     <Stack.Navigator
-//       screenOptions={{
-//         mode: "card",
-//         headerShown: false,
-//       }}
-//     >
-
-//     </Stack.Navigator>
-//   );
-// }
 
 function ArticlesStack(props) {
   return (
@@ -206,8 +180,7 @@ function DriverStack(props) {
         component={AddDriver}
         options={{ title: "AddDriver" }}
       />
-      <Stack.Screen name="Pickup" component={Pickup} />
-      <Stack.Screen name="Deliver" component={Deliver} />
+
       <Stack.Screen name="DriveProfile" component={DriveProfile} />
     </Stack.Navigator>
   );
@@ -238,15 +211,11 @@ function Admin(props) {
         }}
       />
 
-      <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
-
       <Stack.Screen
         name="AddClerk"
         component={AddClerk}
         options={{ title: "AddClerk" }}
       />
-
-      <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
 
       <Stack.Screen name="Donors" component={Donors} />
       <Stack.Screen name="Families" component={Families} />
@@ -303,126 +272,46 @@ function HomeStack(props) {
 }
 
 function DonateStack(props) {
-// stack for all name="Donate"
- <Stack.Navigator
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
+  // stack for all name="Donate"
+  <Stack.Navigator
+    screenOptions={{
+      mode: "card",
+      headerShown: "screen",
+    }}
+  >
+    <Stack.Screen
+      component={Donate}
+      options={{
+        header: ({ navigation, scene }) => (
+          <Header
+            title="Donate"
+            search
+            options
+            navigation={navigation}
+            scene={scene}
+          />
+        ),
+        cardStyle: { backgroundColor: "#F8F9FE" },
       }}
-    >
-      <Stack.Screen
-        component={Donate}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title="Donate"
-              search
-              options
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#F8F9FE" },
-        }}
-      />
-      <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true,
-        }}
-      />
-         </Stack.Navigator>
-}
-
-export default function OnboardingStack(props) {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
+    />
+    <Stack.Screen
+      name="Pro"
+      component={Pro}
+      options={{
+        header: ({ navigation, scene }) => (
+          <Header
+            title=""
+            back
+            white
+            transparent
+            navigation={navigation}
+            scene={scene}
+          />
+        ),
+        headerTransparent: true,
       }}
-    >
-      <Stack.Screen
-        name="Onboarding"
-        component={Onboarding}
-        option={{ headerTransparent: true }}
-      />
-      <Stack.Screen name="App" component={AppStack} />
-      {/* /********* Syeda**********/}
-      {/* <Stack.Screen name="Register" component={Register} /> */}
-      {/* <Stack.Screen */}
-      {/* /********* Fatima - Clerk **********/}
-
-      {/* /********* Fatima**********/}
-      {/* inventory clerk home page */}
-      <Stack.Screen
-        name="InventoryClerkHomePage"
-        component={InventoryClerkHomePage}
-      />
-      {/* <Stack.Screen name="AdminHome" component={AdminHome} /> */}
-      {/* /********* Asmaa - Admin **********/}
-      {/* inventory clerk profile */}
-      <Stack.Screen
-        name="InventoryClerkProfile"
-        component={InventoryClerkProfile}
-      />
-
-      {/* <Stack.Screen name="AdminHome" component={AdminHome} /> */}
-      <Stack.Screen name="AddClerk" component={AddClerk} />
-      <Stack.Screen name="Clerks" component={Clerks} />
-      <Stack.Screen name="Inventory" component={Inventory} />
-      <Stack.Screen name="FamiliesCards" component={FamiliesCards} />
-      <Stack.Screen name="InventoryTable" component={InventoryTable} />
-
-      {/* /********* Asmaa - Admin **********/}
-      <Stack.Screen name="AdminHome" component={AdminHome} />
-      {/* /********* Asmaa - Driver **********/}
-      <Stack.Screen name="DriverHome" component={DriverHome} />
-      <Stack.Screen name="AddDriver" component={AddDriver} />
-      <Stack.Screen name="DriveProfile" component={DriveProfile} />
-      <Stack.Screen name="Donors" component={Donors} />
-      <Stack.Screen name="Families" component={Families} />
-      <Stack.Screen name="DriverHistory" component={DriverHistory} />
-      <Stack.Screen name="DriverDash" component={DriverDash} />
-      <Stack.Screen name="DriverMap" component={DriverMap} />
-      <Stack.Screen name="Feedback" component={Feedback} />
-      <Stack.Screen name="Drivers" component={Drivers} />
-      <Stack.Screen
-        name="OrderDetails"
-        component={OrderDetails}
-        options={{
-          headerShown: true,
-          title: "",
-          headerBackTitle: "Back",
-          headerTintColor: "#5e1e7f",
-        }}
-      />
-
-      {/* /*********  LogIn **********/}
-      {/* <Stack.Screen name="Login" component={Login} /> */}
-      {/* /*********  Login - Register **********/}
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
-
-      {/* /*********  Meimouna - Family **********/}
-      <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
-      <Stack.Screen name="FamilyHome" component={FamilyHome} />
-      <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
-      <Stack.Screen name="Dashboard" component={Dashboard} />
-
-    </Stack.Navigator>
-  );
+    />
+  </Stack.Navigator>;
 }
 
 function DonorHistoryStack(props) {
@@ -604,9 +493,55 @@ export default function OnboardingStack(props) {
 
         <Stack.Screen name="App" component={AppStack} />
 
+        {/* /********* Fatima**********/}
+        {/* inventory clerk home page */}
+        <Stack.Screen
+          name="InventoryClerkHomePage"
+          component={InventoryClerkHomePage}
+        />
+        {/* <Stack.Screen name="AdminHome" component={AdminHome} /> */}
+        {/* /********* Asmaa - Admin **********/}
+        {/* inventory clerk profile */}
+        <Stack.Screen
+          name="InventoryClerkProfile"
+          component={InventoryClerkProfile}
+        />
 
-        {/* /********* Syeda**********/}
+        {/* <Stack.Screen name="AdminHome" component={AdminHome} /> */}
+        <Stack.Screen name="AddClerk" component={AddClerk} />
+        <Stack.Screen name="Clerks" component={Clerks} />
+        <Stack.Screen name="Inventory" component={Inventory} />
+        <Stack.Screen name="FamiliesCards" component={FamiliesCards} />
+        <Stack.Screen name="InventoryTable" component={InventoryTable} />
 
+        {/* /********* Asmaa - Admin **********/}
+        <Stack.Screen name="AdminHome" component={AdminHome} />
+        {/* /********* Asmaa - Driver **********/}
+        <Stack.Screen name="DriverHome" component={DriverHome} />
+        <Stack.Screen name="AddDriver" component={AddDriver} />
+        <Stack.Screen name="DriveProfile" component={DriveProfile} />
+        <Stack.Screen name="Donors" component={Donors} />
+        <Stack.Screen name="Families" component={Families} />
+        <Stack.Screen name="DriverHistory" component={DriverHistory} />
+        <Stack.Screen name="DriverDash" component={DriverDash} />
+        <Stack.Screen name="DriverMap" component={DriverMap} />
+        <Stack.Screen name="FeedbackAdmin" component={FeedbackAdmin} />
+        <Stack.Screen name="Drivers" component={Drivers} />
+        <Stack.Screen
+          name="OrderDetails"
+          component={OrderDetails}
+          options={{
+            headerShown: true,
+            title: "",
+            headerBackTitle: "Back",
+            headerTintColor: "#5e1e7f",
+          }}
+        />
+
+        {/* /*********  LogIn **********/}
+        {/* <Stack.Screen name="Login" component={Login} /> */}
+        {/* /*********  Login - Register **********/}
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Donate" component={Donate} />
         <Stack.Screen name="CheckOut" component={CheckOut} />
@@ -614,25 +549,11 @@ export default function OnboardingStack(props) {
         <Stack.Screen name="DonorHistory" component={DonorHistory} />
         <Stack.Screen name="AboutUs" component={AboutUs} />
 
-        {/* <Stack.Screen */}
-
-        <Stack.Screen
-
-          name="InventoryClerkHomePage"
-          component={InventoryClerkHomePage}
-        />
-
-        <Stack.Screen name="AdminHome" component={AdminHome} />
-
-        <Stack.Screen name="DriverHome" component={DriverHome} />
-
-        <Stack.Screen name="LoginDonor" component={LoginDonor} />
-
+        {/* /*********  Meimouna - Family **********/}
         <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
         <Stack.Screen name="FamilyHome" component={FamilyHome} />
         <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
-
-
+        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     )
   );
@@ -705,42 +626,6 @@ function AppStack(props) {
           headerShown: false,
         }}
       />
-      {/* Fatima */}
-      {/* <Drawer.Screen
-        name="InventoryClerkHomePage"
-        component={InventoryStack}
-      // options={{
-      //   headerShown: true,
-      // }}
-      />
-      <Drawer.Screen
-        name="DriverHome"
-        component={DriverStack}
-      // options={{
-      //   headerShown: true,
-      // }}
-      />
-      <Drawer.Screen
-        name="Account"
-        component={Register}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Drawer.Screen
-        name="Elements"
-        component={ElementsStack}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Drawer.Screen
-        name="Articles"
-        component={ArticlesStack}
-        options={{
-          headerShown: false,
-        }}
-      /> */}
     </Drawer.Navigator>
   );
 }

@@ -48,7 +48,7 @@ import Inventory from "./Inventory";
 import Donors from "./Donors";
 import FamiliesCards from "./FamiliesCards";
 import InventoryTable from "./InventoryTable";
-import Feedback from "./Feedback";
+import Feedback from "./FeedbackAdmin";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 830;

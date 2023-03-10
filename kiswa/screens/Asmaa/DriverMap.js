@@ -11,8 +11,6 @@ import {
   View,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import MapView from "react-native-maps";
-import { Marker } from "react-native-maps";
 import { Entypo } from "react-native-vector-icons";
 import { auth, db } from "../../config";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";

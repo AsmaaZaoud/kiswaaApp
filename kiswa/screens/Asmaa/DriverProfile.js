@@ -85,7 +85,7 @@ const DriverProfile = (props, { navigation }) => {
       setPhone(docSnap.data().phone);
       setEmail(docSnap.data().email);
       setImage(docSnap.data().image);
-      setDob(docSnap.data().dob.toDate());
+      setDob(docSnap.data().dob?.toDate());
       // alert(dob)
       setQId(docSnap.data().qId);
     } else {
