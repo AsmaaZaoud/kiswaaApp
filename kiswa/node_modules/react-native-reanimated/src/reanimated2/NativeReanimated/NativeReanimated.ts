@@ -3,8 +3,10 @@ import {
   SharedValue,
   SensorValue3D,
   SensorValueRotation,
+  AnimatedKeyboardInfo,
 } from '../commonTypes';
 import { Descriptor } from '../hook/commonTypes';
+import { checkVersion } from '../platform-specific/checkVersion';
 
 export class NativeReanimated {
   native: boolean;
@@ -17,6 +19,9 @@ export class NativeReanimated {
     }
     this.InnerNativeModule = global.__reanimatedModuleProxy;
     this.native = native;
+    if (native) {
+      checkVersion();
+    }
   }
 
   installCoreFunctions(valueSetter: <T>(value: T) => void): void {
@@ -96,5 +101,13 @@ export class NativeReanimated {
 
   configureProps(uiProps: string[], nativeProps: string[]): void {
     this.InnerNativeModule.configureProps(uiProps, nativeProps);
+  }
+
+  subscribeForKeyboardEvents(keyboardEventData: AnimatedKeyboardInfo): number {
+    return this.InnerNativeModule.subscribeForKeyboardEvents(keyboardEventData);
+  }
+
+  unsubscribeFromKeyboardEvents(listenerId: number): void {
+    this.InnerNativeModule.unsubscribeFromKeyboardEvents(listenerId);
   }
 }

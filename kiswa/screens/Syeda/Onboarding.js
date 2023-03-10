@@ -101,6 +101,30 @@ const Onboarding = ({ navigation }) => {
           people who requested them and the worn out ones go to recycling
           organizations.
         </Text>
+      </Block>
+
+
+      <Block style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flex:1 }}>
+        <Block>
+          <TouchableOpacity onPress={() => navigation.replace("App")}>
+          <Image
+            style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20 }}
+            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/812/812319.png' }}
+          ></Image>
+          <Text style={{color: 'white', textAlign: 'center'}}>DONOR</Text>
+          </TouchableOpacity>
+        </Block>
+        <Block>
+        <TouchableOpacity onPress={() => navigation.replace("RegisterFamily")}>
+          <Image
+            style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20  }}
+            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2904/2904889.png' }}
+          ></Image>
+          <Text style={{color: 'white', textAlign: 'center'}}>RECEIVER</Text>
+          </TouchableOpacity>
+        </Block>
+      </Block>
+   
       </Block> */}
 
       {/* <Block

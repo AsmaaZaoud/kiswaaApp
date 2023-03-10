@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { Animated, Dimensions, Easing } from "react-native";
 // header for screens
 import { Header, Icon } from "../components";
@@ -12,11 +13,22 @@ import Elements from "../screens/Elements";
 import Home from "../screens/Syeda/Home";
 import Onboarding from "../screens/Syeda/Onboarding";
 import Pro from "../screens/Pro";
-import Profile from "../screens/Profile";
-import React from "react";
+// import Profile from "../screens/Syeda/Profile";
+// import React from "react";
 import Register from "../screens/Syeda/Register";
 
-import Login from "../screens/Login";
+
+//import Login from "../screens/Login";
+
+//syeda
+import Donate from "../screens/Syeda/Donate";
+import CheckOut from "../screens/Syeda/CheckOut";
+import LoginDonor from "../screens/Syeda/LoginDonor";
+import Feedback from "../screens/Syeda/Feedback";
+import DonorHistory from "../screens/Syeda/DonorHistory";
+import Profile from "../screens/Syeda/Profile";
+import AboutUs from "../screens/Syeda/AboutUs";
+import AppOnboard from "../screens/Syeda/AppOnboard";
 
 // Fatima
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
@@ -58,6 +70,9 @@ import Donors from "../screens/Asmaa/Donors";
 //Families
 import Families from "../screens/Asmaa/Families";
 import Dashboard from "../screens/Asmaa/Dashboard";
+
+//for onboarding
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get("screen");
 
@@ -198,49 +213,45 @@ function DriverStack(props) {
   );
 }
 
-function ProfileStack(props) {
+//Asmaa
+function Admin(props) {
   return (
     <Stack.Navigator
-      initialRouteName="Profile"
+      initialRouteName="AdminHome"
       screenOptions={{
         mode: "card",
         headerShown: "screen",
       }}
     >
       <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              transparent
-              white
-              title="Profile"
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#FFFFFF" },
-          headerTransparent: true,
+        name="AdminHome"
+        component={AdminHome}
+        option={{
+          title: "AdminHome",
+          headerStyle: {
+            backgroundColor: "darkblue",
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
         }}
       />
+
+      <Stack.Screen name="InventoryClerks" component={InventoryClerks} />
+
       <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true,
-        }}
+        name="AddClerk"
+        component={AddClerk}
+        options={{ title: "AddClerk" }}
       />
+
+      <Stack.Screen name="AdminHomeCopy" component={AdminHomeCopy} />
+
+      <Stack.Screen name="Donors" component={Donors} />
+      <Stack.Screen name="Families" component={Families} />
+      <Stack.Screen name="Clerks" component={Clerks} />
+      <Stack.Screen name="Inventory" component={Inventory} />
     </Stack.Navigator>
   );
 }
@@ -291,13 +302,55 @@ function HomeStack(props) {
   );
 }
 
-// stack for all
+function DonateStack(props) {
+// stack for all name="Donate"
+ <Stack.Navigator
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        component={Donate}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Donate"
+              search
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" },
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true,
+        }}
+      />
+         </Stack.Navigator>
+}
+
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator
       screenOptions={{
         mode: "card",
-        headerShown: false,
+        headerShown: "screen",
       }}
     >
       <Stack.Screen
@@ -367,7 +420,221 @@ export default function OnboardingStack(props) {
       <Stack.Screen name="FamilyHome" component={FamilyHome} />
       <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
       <Stack.Screen name="Dashboard" component={Dashboard} />
+
     </Stack.Navigator>
+  );
+}
+
+function DonorHistoryStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="DonorHistory"
+        component={DonorHistory}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="DonorHistory"
+              search
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" },
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ProfileStack(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              transparent
+              white
+              title="Profile"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#FFFFFF" },
+          headerTransparent: true,
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function AboutUsStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        mode: "card",
+        headerShown: "screen",
+      }}
+    >
+      <Stack.Screen
+        name="AboutUs"
+        component={AboutUs}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="AboutUs"
+              search
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" },
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+export default function OnboardingStack(props) {
+  const [firstLaunch, setFirstLaunch] = useState(null);
+  useEffect(() => {
+    async function setData() {
+      const appData = await AsyncStorage.getItem("appLaunched");
+      if (appData == null) {
+        setFirstLaunch(true);
+        AsyncStorage.setItem("appLaunched", "false");
+      } else {
+        //setFirstLaunch(true); //i am changing it to true to see the onboarding screen
+        //this is what it should be //setFirstLaunch(false);
+        setFirstLaunch(false);
+      }
+    }
+    setData();
+  }, []);
+  return (
+    firstLaunch != null && (
+      <Stack.Navigator
+        screenOptions={{
+          mode: "card",
+          headerShown: false,
+        }}
+      >
+        {firstLaunch && (
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="AppOnboard"
+            component={AppOnboard}
+          />
+        )}
+
+        <Stack.Screen
+          name="Onboarding"
+          component={Onboarding}
+          option={{
+            headerTransparent: true,
+          }}
+        />
+
+        <Stack.Screen name="App" component={AppStack} />
+
+
+        {/* /********* Syeda**********/}
+
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Donate" component={Donate} />
+        <Stack.Screen name="CheckOut" component={CheckOut} />
+        <Stack.Screen name="Feedback" component={Feedback} />
+        <Stack.Screen name="DonorHistory" component={DonorHistory} />
+        <Stack.Screen name="AboutUs" component={AboutUs} />
+
+        {/* <Stack.Screen */}
+
+        <Stack.Screen
+
+          name="InventoryClerkHomePage"
+          component={InventoryClerkHomePage}
+        />
+
+        <Stack.Screen name="AdminHome" component={AdminHome} />
+
+        <Stack.Screen name="DriverHome" component={DriverHome} />
+
+        <Stack.Screen name="LoginDonor" component={LoginDonor} />
+
+        <Stack.Screen name="RegisterFamily" component={RegisterFamily} />
+        <Stack.Screen name="FamilyHome" component={FamilyHome} />
+        <Stack.Screen name="FamilyRequest" component={FamilyRequest} />
+
+
+      </Stack.Navigator>
+    )
   );
 }
 
@@ -416,20 +683,42 @@ function AppStack(props) {
           headerShown: false,
         }}
       />
-
+      {/* syeda */}
       <Drawer.Screen
-        name="DriverHome"
-        component={DriverStack}
+        name="Donate"
+        component={DonateStack}
         options={{
           headerShown: false,
         }}
       />
       <Drawer.Screen
-        name="AdminHome"
-        component={AdminStack}
+        name="DonorHistory"
+        component={DonorHistoryStack}
         options={{
           headerShown: false,
         }}
+      />
+      <Drawer.Screen
+        name="AboutUs"
+        component={AboutUsStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      {/* Fatima */}
+      {/* <Drawer.Screen
+        name="InventoryClerkHomePage"
+        component={InventoryStack}
+      // options={{
+      //   headerShown: true,
+      // }}
+      />
+      <Drawer.Screen
+        name="DriverHome"
+        component={DriverStack}
+      // options={{
+      //   headerShown: true,
+      // }}
       />
       <Drawer.Screen
         name="Account"
@@ -451,7 +740,7 @@ function AppStack(props) {
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }
