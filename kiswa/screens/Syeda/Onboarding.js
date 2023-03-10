@@ -22,8 +22,6 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
-import argonTheme from "../../constants/Theme";
-import Images from "../../constants/Images";
 
 const Onboarding = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
@@ -151,7 +149,7 @@ const styles = StyleSheet.create({
     marginTop: "30%",
   },
   imagesIpad: {
-    width: width - theme.SIZES.BASE * 30,
+    width: width - theme.SIZES.BASE * 40,
     height: theme.SIZES.BASE * 18,
     resizeMode: "contain",
     marginTop: "40%",

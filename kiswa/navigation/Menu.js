@@ -15,10 +15,6 @@ function CustomDrawerContent({
 }) {
   const screens = [
     "Home",
-    // "AdminHome",
-    // "DriverHome",
-    // "DriveProfile",
-    // "InventoryClerkHomePage",
   ];
   return (
     <Block

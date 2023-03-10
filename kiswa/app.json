@@ -7,9 +7,8 @@
     "platforms": ["ios", "android"],
     "version": "1.7.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/Fatima/SplashPage2.png",
+      "image": "./assets/Fatima/SplashPage5.gif",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
