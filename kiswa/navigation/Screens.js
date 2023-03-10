@@ -307,7 +307,7 @@ export default function OnboardingStack(props) {
       />
       <Stack.Screen name="App" component={AppStack} />
       {/* /********* Syeda**********/}
-      <Stack.Screen name="Register" component={Register} />
+      {/* <Stack.Screen name="Register" component={Register} /> */}
       {/* <Stack.Screen */}
       {/* /********* Fatima - Clerk **********/}
 
@@ -317,7 +317,7 @@ export default function OnboardingStack(props) {
         name="InventoryClerkHomePage"
         component={InventoryClerkHomePage}
       />
-      <Stack.Screen name="AdminHome" component={AdminHome} />
+      {/* <Stack.Screen name="AdminHome" component={AdminHome} /> */}
       {/* /********* Asmaa - Admin **********/}
       {/* inventory clerk profile */}
       <Stack.Screen
@@ -357,7 +357,7 @@ export default function OnboardingStack(props) {
       />
 
       {/* /*********  LogIn **********/}
-      <Stack.Screen name="Login" component={Login} />
+      {/* <Stack.Screen name="Login" component={Login} /> */}
       {/* /*********  Login - Register **********/}
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
