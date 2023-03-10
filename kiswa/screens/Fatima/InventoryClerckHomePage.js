@@ -23,7 +23,6 @@ import { Card, Divider } from "@rneui/themed";
 
 // Dropdown
 import { Dropdown } from "react-native-element-dropdown";
-const { width } = Dimensions.get("screen");
 
 // const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
@@ -56,14 +55,27 @@ import {
 import { signOut } from "firebase/auth";
 import { auth } from "../../config";
 
-import Test from "../../components/Fatima/Test";
-import AddItemModal from "../../components/Fatima/AddItemModal";
+const { height, width } = Dimensions.get("screen");
+const scale = width / 830;
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 
 const InventoryClerkHomePage = ({ navigation }) => {
+  const [deviceType, setDeviceType] = useState("");
+  useEffect(() => {
+    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
+  }, []);
   // const
-  const [IDs, setIDs] = useState([]);
-  const [selectedItem, setSelectedItem] = useState([]);
+  // const [selectedItem, setSelectedItem] = useState();
+  let selectedItem = {};
   const [items, setItems] = useState([]);
+  const [id, setID] = useState("");
   const [type, setType] = useState("");
   const [size, setSize] = useState("");
   const [quality, setQuality] = useState("");
@@ -72,7 +84,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
   const [age, setAge] = useState("");
   //
   const [addModalVisible, setAddModalVisible] = useState(false);
-  const [testVisible, setTestVisible] = useState(false);
+
   //
   const onSignOut = () => {
     signOut(auth)
@@ -82,9 +94,6 @@ const InventoryClerkHomePage = ({ navigation }) => {
   // ////////////////////////////////////////// //
   // DB
   const reformat = (doc) => {
-    for (let i = 1; i <= items.length; i++) {
-      IDs.includes(i) ? null : IDs.push(i);
-    }
     return { id: doc.id, ...doc.data() };
   };
 
@@ -95,7 +104,6 @@ const InventoryClerkHomePage = ({ navigation }) => {
       );
     };
     listenAll();
-    console.log(IDs);
   }, []);
 
   const set = async () => {
@@ -114,6 +122,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
       .catch((error) => {
         console.log(error.message);
       });
+    setID("");
     setType("");
     setSize("");
     setQuality("");
@@ -123,25 +132,42 @@ const InventoryClerkHomePage = ({ navigation }) => {
     setAddModalVisible(!addModalVisible);
   };
 
+  // change edit
+  const changeEdit = (item) => {
+    setEditModalVisible(!editModalVisible);
+    setID(item.id);
+    setType(item.type);
+    setSize(item.size);
+    setQuality(item.quality);
+    setColor(item.color);
+    setGender(item.gender);
+    setAge(item.age);
+    console.log(item);
+    for (let i in item) {
+      selectedItem[i] = item[i];
+    }
+    console.log(selectedItem);
+  };
   // Update -- edit
-  const update = async (item) => {
-    const { id, ...rest } = item;
+  const update = async () => {
+    const docRef = doc(db, "inventory", id);
     await setDoc(
-      doc(db, "inventory", id),
+      docRef,
       {
         type: type,
         size: size,
         quality: quality,
         color: color,
         gender: gender,
+        age: age,
         available: true,
       },
       { merge: true }
     )
       .then(() => {
+        submit();
         console.log("data updated");
-        setEditModalVisible(!editModalVisible);
-        setSelectedItem(null);
+        setEditModalVisible(false);
       })
       .catch((error) => {
         console.log(error.message);
@@ -195,34 +221,36 @@ const InventoryClerkHomePage = ({ navigation }) => {
       <View
         style={{
           backgroundColor: "#525F7F",
-          height: "10%",
+          height: "17.5%",
           padding: "5%",
           flexDirection: "row",
         }}
       >
-        <Block style={{ width: "5%" }}></Block>
-        <Image source={require("../../components/Fatima/image 1.png")} />
-        <Block style={{ justifyContent: "center", marginLeft: "30%" }}>
-          <Text style={{ color: "white", fontSize: "20%" }}>
-            Inventory Clerk
-          </Text>
+        <Block>
+          <Image
+            source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
+            style={{ width: "1%", height: "2%" }}
+            width={width * 0.2}
+            height={height * 0.04}
+          />
+        </Block>
+        <Block style={{ justifyContent: "center", marginLeft: "21%" }}>
+          <Text style={{ color: "white", fontSize: 20 }}>Inventory Clerk</Text>
         </Block>
         <Block style={{ alignSelf: "right", marginLeft: "30%", width: "5%" }}>
           <Icon name="sign-out" size={30} color="white" onPress={onSignOut} />
         </Block>
         <Block style={{ justifyContent: "right", width: "5%" }}>
-          <Icon name="user" size={30} color="white" />
+          <Icon
+            name="user"
+            size={30}
+            color="white"
+            onPress={() => navigation.navigate("InventoryClerkProfile")}
+            // onPress={<InventoryClerkProfile id={id} />}
+          />
         </Block>
       </View>
       <Card>
-        {/* <Button
-          shadowless
-          color={Theme.COLORS.SUCCESS}
-          onPress={() => setTestVisible(!testVisible)}
-          style={{ alignSelf: "right", marginLeft: "1%", marginBottom: "2%" }}
-        >
-          Add Item
-        </Button> */}
         <Button
           shadowless
           color={Theme.COLORS.SUCCESS}
@@ -231,9 +259,6 @@ const InventoryClerkHomePage = ({ navigation }) => {
         >
           Add Item
         </Button>
-        {/* <View>
-          <Test show={testVisible} />
-        </View> */}
         <Card.Divider />
         <DataTable>
           <DataTable.Header>
@@ -248,41 +273,33 @@ const InventoryClerkHomePage = ({ navigation }) => {
             <DataTable.Title></DataTable.Title>
           </DataTable.Header>
           <ScrollView vertical="true">
-            {items.map((i, x) => (
-              <DataTable.Row style={{ height: "1%" }}>
-                <DataTable.Cell id={i.id}>{IDs[x]}</DataTable.Cell>
-                <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
-                <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
-                <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>
-                <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
-                <DataTable.Cell id={i.id}>{i.age}</DataTable.Cell>
-                <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
-                {/* hide not availabe items */}
-                {/* {i.available == true ? <DataTable.Cell>Available</DataTable.Cell> : null} */}
-                <DataTable.Cell>
-                  {i.available == true ? "Available" : "Not-Available"}
-                </DataTable.Cell>
-                <DataTable.Cell numeric>
-                  {" "}
-                  <Button
-                    shadowless
-                    color={Theme.COLORS.ERROR}
-                    onPress={() => {
-                      setEditModalVisible(!editModalVisible),
-                        console.log(i),
-                        setSelectedItem(i);
-                      console.log(selectedItem);
-                    }}
-                    style={{
-                      alignSelf: "center",
-                      marginTop: "9%",
-                    }}
-                  >
-                    Edit
-                  </Button>
-                </DataTable.Cell>
-              </DataTable.Row>
-            ))}
+            {items.map((i, x) =>
+              i.available == true ? (
+                <DataTable.Row style={{ height: "1%" }}>
+                  <DataTable.Cell id={i.id}>{[x + 1]}</DataTable.Cell>
+                  <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
+                  <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
+                  <DataTable.Cell id={i.id}>{i.color}</DataTable.Cell>
+                  <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
+                  <DataTable.Cell id={i.id}>{i.age}</DataTable.Cell>
+                  <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
+                  <DataTable.Cell id={i.id}>Available</DataTable.Cell>
+                  <DataTable.Cell numeric>
+                    <Button
+                      shadowless
+                      color={Theme.COLORS.ERROR}
+                      onPress={() => changeEdit(i)}
+                      style={{
+                        alignSelf: "center",
+                        marginTop: "9%",
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  </DataTable.Cell>
+                </DataTable.Row>
+              ) : null
+            )}
           </ScrollView>
         </DataTable>
       </Card>
@@ -462,6 +479,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
                 setType(item.value);
               }}
             />
+            {/* {console.log(ClothTypeData)} */}
             {error.key == "type" && error.satus && (
               <Text style={styles.errorMessage}>{error.msg}</Text>
             )}
@@ -479,7 +497,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
               searchPlaceholder="Search..."
               animated={false}
               value={size}
-              placeholder={selectedItem.size}
+              placeholder={"Size"}
               onChange={(item) => {
                 setSize(item.value);
               }}
@@ -501,7 +519,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
               searchPlaceholder="Search..."
               animated={false}
               value={color}
-              placeholder={selectedItem.color}
+              placeholder={"Color"}
               onChange={(item) => {
                 setColor(item.value);
               }}
@@ -522,13 +540,35 @@ const InventoryClerkHomePage = ({ navigation }) => {
               search
               searchPlaceholder="Search..."
               animated={false}
-              value={selectedItem.gender}
-              placeholder={selectedItem.gender}
+              value={gender}
+              placeholder={"Gender"}
               onChange={(item) => {
                 setGender(item.value);
               }}
             />
             {error.key == "gender" && error.satus && (
+              <Text style={styles.errorMessage}>{error.msg}</Text>
+            )}
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={AgeCategory}
+              labelField="label"
+              valueField="value"
+              id="value"
+              maxHeight={200}
+              search
+              searchPlaceholder="Search..."
+              animated={false}
+              value={age}
+              placeholder={"Age Category"}
+              onChange={(item) => {
+                setAge(item.value);
+              }}
+            />
+            {error.key == "age" && error.satus && (
               <Text style={styles.errorMessage}>{error.msg}</Text>
             )}
             <Dropdown
@@ -545,7 +585,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
               searchPlaceholder="Search..."
               animated={false}
               value={quality}
-              placeholder={selectedItem.quality}
+              placeholder={"Quality"}
               onChange={(item) => {
                 setQuality(item.value);
               }}
