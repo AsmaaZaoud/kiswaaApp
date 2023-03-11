@@ -13,7 +13,7 @@ class DrawerItem extends React.Component {
       case "Home":
         return (
           <Icon
-            name="shop"
+            name=""
             family="ArgonExtra"
             size={14}
             color={focused ? "white" : argonTheme.COLORS.PRIMARY}
@@ -49,7 +49,34 @@ class DrawerItem extends React.Component {
       case "Profile":
         return (
           <Icon
-            name="chart-pie-35"
+            name=""
+            family="ArgonExtra"
+            size={14}
+            color={focused ? "white" : argonTheme.COLORS.WARNING}
+          />
+        );
+      case "Donate":
+        return (
+          <Icon
+            name=""
+            family="FontAwesome5"
+            size={14}
+            color={focused ? "white" : argonTheme.COLORS.WARNING}
+          />
+        );
+      case "DonorHistory":
+        return (
+          <Icon
+            name=""
+            family="ArgonExtra"
+            size={14}
+            color={focused ? "white" : argonTheme.COLORS.WARNING}
+          />
+        );
+      case "AboutUs":
+        return (
+          <Icon
+            name=""
             family="ArgonExtra"
             size={14}
             color={focused ? "white" : argonTheme.COLORS.WARNING}
@@ -94,8 +121,8 @@ class DrawerItem extends React.Component {
         onPress={() =>
           title == "Getting Started"
             ? Linking.openURL(
-                "https://demos.creative-tim.com/argon-pro-react-native/docs/"
-              ).catch((err) => console.error("An error occurred", err))
+              "https://demos.creative-tim.com/argon-pro-react-native/docs/"
+            ).catch((err) => console.error("An error occurred", err))
             : navigation.navigate(title)
         }
       >

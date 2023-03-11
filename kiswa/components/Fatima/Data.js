@@ -1,4 +1,5 @@
 export const ClothTypeData = [
+  { label: "Abaya", value: "Abaya" },
   { label: "Blouse", value: "Blouse" },
   { label: "Bodysuit", value: "Bodysuit" },
   { label: "Caftan", value: "Caftan" },
@@ -27,6 +28,7 @@ export const ClothTypeData = [
   { label: "Sock", value: "Sock" },
   { label: "Sweater", value: "Sweater" },
   { label: "Swimsuit", value: "Swimsuit" },
+  { label: "Thoub", value: "Thoub" },
   { label: "Tie", value: "Tie" },
   { label: "Tights", value: "Tights" },
   { label: "Tops", value: "Tops" },
@@ -79,5 +81,6 @@ export const QualityData = [
 export const AgeCategory = [
   { label: "Baby", value: "Baby" },
   { label: "Kids", value: "Kids" },
+  { label: "Teenagers", value: "Teenagers" },
   { label: "Adults", value: "Adults" },
 ];
