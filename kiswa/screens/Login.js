@@ -105,7 +105,7 @@ const Login = ({ navigation }) => {
     if (email == "Admin@admin.com") {
       navigation.navigate("AdminHome");
       return;
->>>>>>> main
+>>>>>>> origin/mainLastBackUp
     }
     const driver = doc(db, "drivers", email.toLowerCase());
     const clerk = doc(db, "inventoryWorkers", email.toLowerCase());

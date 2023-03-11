@@ -11,7 +11,7 @@ import {
   View,
   PixelRatio,
   Platform,
->>>>>>> main
+>>>>>>> origin/mainLastBackUp
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 
@@ -106,7 +106,7 @@ const Onboarding = ({ navigation }) => {
       </ImageBackground>
 
       {/* <Block center style={{ width: "90%", marginTop: "30%" }}>
->>>>>>> main
+>>>>>>> origin/mainLastBackUp
         <Text style={{ color: "white", fontSize: 15, textAlign: "center" }}>
           Kiswa is a free platform on which you can either choose to become a
           donor and donate clothes or a receiver and receive clothes.
@@ -194,7 +194,7 @@ const Onboarding = ({ navigation }) => {
           flex: 1,
         }}
       > */}
->>>>>>> main
+>>>>>>> origin/mainLastBackUp
     </Block>
     // </Block>
   );
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     // borderWidth: 1,
     marginTop: 0,
->>>>>>> main
+>>>>>>> origin/mainLastBackUp
   },
   title: {
     marginTop: "-5%",
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
->>>>>>> main
+>>>>>>> origin/mainLastBackUp
 });
 
 export default Onboarding;
