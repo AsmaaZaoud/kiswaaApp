@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   Image,
@@ -6,15 +6,28 @@ import {
   StatusBar,
   Dimensions,
   TouchableOpacity,
+<<<<<<< HEAD
+=======
+  View,
+  PixelRatio,
+  Platform,
+>>>>>>> main
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 
-const { height, width } = Dimensions.get("screen");
-
-import argonTheme from "../../constants/Theme";
-import Images from "../../constants/Images";
+const { width, height } = Dimensions.get("screen");
+const scale = width / 450;
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 
 const Onboarding = ({ navigation }) => {
+<<<<<<< HEAD
   return (
     <Block flex style={styles.container}>
       <Block center>
@@ -25,6 +38,75 @@ const Onboarding = ({ navigation }) => {
       </Block>
 
       <Block center style={{ width: "90%" }}>
+=======
+  const [deviceType, setDeviceType] = useState("");
+  useEffect(() => {
+    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
+  }, []);
+  return (
+    <Block flex style={styles.container}>
+      <ImageBackground
+        resizeMode="cover"
+        source={require("../../assets/Fatima/background.png")}
+        style={{ width, height, zIndex: 1 }}
+      >
+        <TouchableOpacity onPress={() => navigation.replace("Login")}>
+          <Text
+            style={{
+              marginTop: "17%",
+              marginLeft: "80%",
+              color: "#FAF9F6",
+              fontFamily: "Cochin",
+              fontSize: normalize(18),
+            }}
+            bold
+          >
+            Login
+          </Text>
+        </TouchableOpacity>
+        <Block center style={{ marginTop: "20%" }}>
+          <Image
+            source={require("../../assets/Fatima/Logo.png")}
+            style={styles.logo}
+          />
+        </Block>
+        <Block
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Block style={{ marginLeft: "3%" }}>
+            <TouchableOpacity onPress={() => navigation.replace("App")}>
+              <Image
+                style={
+                  deviceType == "mobile" ? styles.images : styles.imagesIpad
+                }
+                source={require("../../assets/Fatima/heart.png")}
+              ></Image>
+            </TouchableOpacity>
+            <Text style={styles.lable}>DONATE</Text>
+          </Block>
+          <Block style={{ marginLeft: "17%" }}>
+            <TouchableOpacity
+              onPress={() => navigation.replace("RegisterFamily")}
+            >
+              <Image
+                style={
+                  deviceType == "mobile" ? styles.images : styles.imagesIpad
+                }
+                source={require("../../assets/Fatima/donation.png")}
+              ></Image>
+
+              <Text style={styles.lable}>RECEIVE</Text>
+            </TouchableOpacity>
+          </Block>
+        </Block>
+      </ImageBackground>
+
+      {/* <Block center style={{ width: "90%", marginTop: "30%" }}>
+>>>>>>> main
         <Text style={{ color: "white", fontSize: 15, textAlign: "center" }}>
           Kiswa is a free platform on which you can either choose to become a
           donor and donate clothes or a receiver and receive clothes.
@@ -47,6 +129,7 @@ const Onboarding = ({ navigation }) => {
       >
         <Block>
           <TouchableOpacity onPress={() => navigation.replace("App")}>
+<<<<<<< HEAD
             <Image
               style={{
                 width: 150,
@@ -82,12 +165,44 @@ const Onboarding = ({ navigation }) => {
           <Text style={{ color: "white", textAlign: "center" }}>RECEIVER</Text>
         </Block>
       </Block>
+=======
+          <Image
+            style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20 }}
+            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/812/812319.png' }}
+          ></Image>
+          <Text style={{color: 'white', textAlign: 'center'}}>DONOR</Text>
+          </TouchableOpacity>
+        </Block>
+        <Block>
+        <TouchableOpacity onPress={() => navigation.replace("RegisterFamily")}>
+          <Image
+            style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20  }}
+            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2904/2904889.png' }}
+          ></Image>
+          <Text style={{color: 'white', textAlign: 'center'}}>RECEIVER</Text>
+          </TouchableOpacity>
+        </Block>
+      </Block>
+   
+      </Block> */}
+
+      {/* <Block
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+        }}
+      > */}
+>>>>>>> main
     </Block>
+    // </Block>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+<<<<<<< HEAD
     backgroundColor: "#541178",
   },
   padded: {
@@ -108,6 +223,18 @@ const styles = StyleSheet.create({
     zIndex: 2,
     position: "relative",
     marginTop: "5%",
+=======
+    backgroundColor: "#4B0095",
+  },
+  logo: {
+    width: width - theme.SIZES.BASE,
+    height: theme.SIZES.BASE * 15,
+    position: "relative",
+    // marginTop: "10%",
+    resizeMode: "contain",
+    // borderWidth: 1,
+    marginTop: 0,
+>>>>>>> main
   },
   title: {
     marginTop: "-5%",
@@ -115,6 +242,34 @@ const styles = StyleSheet.create({
   subTitle: {
     marginTop: 20,
   },
+<<<<<<< HEAD
+=======
+  lable: {
+    color: "#FAF9F6",
+    textAlign: "center",
+    fontFamily: "Cochin",
+    fontSize: normalize(19),
+    // justifyContent: "center",
+  },
+  images: {
+    width: width - theme.SIZES.BASE * 18,
+    height: theme.SIZES.BASE * 18,
+    resizeMode: "contain",
+    marginTop: "30%",
+  },
+  imagesIpad: {
+    width: width - theme.SIZES.BASE * 40,
+    height: theme.SIZES.BASE * 18,
+    resizeMode: "contain",
+    marginTop: "40%",
+
+    // borderWidth: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+  },
+>>>>>>> main
 });
 
 export default Onboarding;
