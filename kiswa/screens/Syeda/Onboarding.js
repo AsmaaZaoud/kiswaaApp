@@ -6,12 +6,9 @@ import {
   StatusBar,
   Dimensions,
   TouchableOpacity,
-<<<<<<< HEAD
-=======
   View,
   PixelRatio,
   Platform,
->>>>>>> origin/mainLastBackUp
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 
@@ -27,18 +24,6 @@ export function normalize(size) {
 }
 
 const Onboarding = ({ navigation }) => {
-<<<<<<< HEAD
-  return (
-    <Block flex style={styles.container}>
-      <Block center>
-        <Image
-          source={require("../../assets/imgs/kiswaLogo.jpg")}
-          style={styles.logo}
-        />
-      </Block>
-
-      <Block center style={{ width: "90%" }}>
-=======
   const [deviceType, setDeviceType] = useState("");
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
@@ -106,7 +91,6 @@ const Onboarding = ({ navigation }) => {
       </ImageBackground>
 
       {/* <Block center style={{ width: "90%", marginTop: "30%" }}>
->>>>>>> origin/mainLastBackUp
         <Text style={{ color: "white", fontSize: 15, textAlign: "center" }}>
           Kiswa is a free platform on which you can either choose to become a
           donor and donate clothes or a receiver and receive clothes.
@@ -129,43 +113,6 @@ const Onboarding = ({ navigation }) => {
       >
         <Block>
           <TouchableOpacity onPress={() => navigation.replace("App")}>
-<<<<<<< HEAD
-            <Image
-              style={{
-                width: 150,
-                height: 150,
-                tintColor: "white",
-                borderWidth: 3,
-                borderColor: "white",
-                margin: 20,
-              }}
-              source={{
-                uri: "https://cdn-icons-png.flaticon.com/512/812/812319.png",
-              }}
-            ></Image>
-          </TouchableOpacity>
-          <Text style={{ color: "white", textAlign: "center" }}>DONOR</Text>
-        </Block>
-        <Block>
-          <TouchableOpacity onPress={() => navigation.replace("LoginFamily")}>
-            <Image
-              style={{
-                width: 150,
-                height: 150,
-                tintColor: "white",
-                borderWidth: 3,
-                borderColor: "white",
-                margin: 20,
-              }}
-              source={{
-                uri: "https://cdn-icons-png.flaticon.com/512/2904/2904889.png",
-              }}
-            ></Image>
-          </TouchableOpacity>
-          <Text style={{ color: "white", textAlign: "center" }}>RECEIVER</Text>
-        </Block>
-      </Block>
-=======
           <Image
             style={{ width: 150, height: 150, tintColor: 'white', borderWidth: 3, borderColor: 'white', margin: 20 }}
             source={{ uri: 'https://cdn-icons-png.flaticon.com/512/812/812319.png' }}
@@ -194,7 +141,6 @@ const Onboarding = ({ navigation }) => {
           flex: 1,
         }}
       > */}
->>>>>>> origin/mainLastBackUp
     </Block>
     // </Block>
   );
@@ -202,28 +148,6 @@ const Onboarding = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-<<<<<<< HEAD
-    backgroundColor: "#541178",
-  },
-  padded: {
-    paddingHorizontal: theme.SIZES.BASE * 2,
-    position: "relative",
-    bottom: theme.SIZES.BASE,
-    zIndex: 2,
-  },
-  button: {
-    width: width - theme.SIZES.BASE * 4,
-    height: theme.SIZES.BASE * 3,
-    shadowRadius: 0,
-    shadowOpacity: 0,
-  },
-  logo: {
-    width: 300,
-    height: 200,
-    zIndex: 2,
-    position: "relative",
-    marginTop: "5%",
-=======
     backgroundColor: "#4B0095",
   },
   logo: {
@@ -234,7 +158,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     // borderWidth: 1,
     marginTop: 0,
->>>>>>> origin/mainLastBackUp
   },
   title: {
     marginTop: "-5%",
@@ -242,8 +165,6 @@ const styles = StyleSheet.create({
   subTitle: {
     marginTop: 20,
   },
-<<<<<<< HEAD
-=======
   lable: {
     color: "#FAF9F6",
     textAlign: "center",
@@ -269,7 +190,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
->>>>>>> origin/mainLastBackUp
 });
 
 export default Onboarding;

@@ -40,10 +40,10 @@ const DriverHistory = (props, { navigation }) => {
     const docs = await getDocs(q);
     // console.log(docs)
     docs.forEach((doc) => {
-      let hour = doc.data().dateTime.toDate().getHours();
+      let hour = doc.data()?.dateTime.toDate().getHours();
       let t = doc.data();
       t.time = hour + ":00";
-      t.date = doc.data().dateTime.toDate().toLocaleDateString();
+      t.date = doc.data()?.dateTime.toDate().toLocaleDateString();
       doc.data().status == "fullfied" ? temp.push(t) : null;
       // temp.push(doc.data());
       console.log(doc.id, " => ", doc.data());
@@ -61,32 +61,6 @@ const DriverHistory = (props, { navigation }) => {
     readOrders();
   }, []);
 
-  const data = [
-    {
-      id: 1,
-      description: "Loconsectetur adipiscing elit",
-    },
-    {
-      id: 2,
-      description: "Loconsectetur adipiscing elit",
-    },
-    {
-      id: 3,
-      description: "Loconsectetur adipiscing elit",
-    },
-    {
-      id: 4,
-      description: "Loconsectetur adipiscing elit",
-    },
-    {
-      id: 5,
-      description: "Loconsectetur adipiscing elit",
-    },
-    {
-      id: 6,
-      description: "Loconsectetur adipiscing elit",
-    },
-  ];
   return (
     <Block
       flex
