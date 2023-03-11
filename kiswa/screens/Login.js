@@ -48,6 +48,54 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [userr, setUserr] = useState("");
 
+<<<<<<< HEAD
+  const reformat = (doc) => {
+    return { id: doc.id, ...doc.data() };
+  };
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(async () => {
+        const clerk = await getDoc(doc(db, "inventoryWorkers", email));
+
+        const driver = await getDoc(doc(db, "drivers", email));
+        const family = await getDoc(doc(db, "families", email.toLowerCase()));
+        // const admin = "admin@admin.com"
+        // user = reformat(user)
+        if (email == "Admin@admin.com") {
+          navigation.replace("AdminHome");
+        } else if (email === reformat(clerk).id) {
+          navigation.replace("InventoryClerkHomePage");
+        } else if (email === reformat(driver).id) {
+          navigation.replace("DriverHome");
+        } else if (email.toLowerCase() === reformat(family).id) {
+          navigation.replace("FamilyHome", email);
+        } else {
+          navigation.replace("App");
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+        alert(error.message);
+        setSignedIn(false);
+      });
+  };
+
+  const getFamily = async () => {
+    console.log(email);
+    const docRef = doc(db, "families", email.toLowerCase());
+    const docSnap = await getDoc(docRef);
+    let temp;
+    if (docSnap.exists()) {
+      console.log(temp);
+
+      temp = docSnap.data();
+      setUser(temp);
+      console.log(docSnap.data());
+      console.log(user);
+      console.log(temp);
+    } else {
+      console.log("No such document!");
+=======
   // reformat
   const reformat = (doc) => {
     return { id: doc.id, ...doc.data() };
@@ -57,6 +105,7 @@ const Login = ({ navigation }) => {
     if (email == "Admin@admin.com") {
       navigation.navigate("AdminHome");
       return;
+>>>>>>> origin/mainLastBackUp
     }
     const driver = doc(db, "drivers", email.toLowerCase());
     const clerk = doc(db, "inventoryWorkers", email.toLowerCase());
