@@ -228,10 +228,10 @@ const FamilyRequest = ({ route, navigation }) => {
                 setIndex(e);
                 setAgeGroup(groups[e]);
               }}
-              indicatorStyle={{
-                backgroundColor: "#842DCE",
-                height: 3,
-              }}
+              // indicatorStyle={{
+              //   backgroundColor: "#842DCE",
+              //   height: 3,
+              // }}
               // variant="defualt"
 
               scrollable={false}
@@ -241,19 +241,20 @@ const FamilyRequest = ({ route, navigation }) => {
             >
               <Tab.Item title="Adults" titleStyle={{ fontSize: 14 }}>
                 <Image
-                  source={require("../../assets/imgs/adults2-removebg-preview.png")}
+                  source={require("../../assets/imgs/teens.jpeg")}
                   style={{
                     width: 88,
                     height: 88,
-                    borderColor: ageGroup == "Adults" ? "#842DCE" : "white",
+                    borderColor: ageGroup == "Adults" ? "#F9966B" : "white",
                     borderWidth: 3,
                     borderRadius: 43,
                   }}
                 />
                 <Text
                   style={{
-                    color: ageGroup == "Adults" ? "#842DCE" : "black",
+                    color: ageGroup == "Adults" ? "#F9966B" : "black",
                     fontWeight: ageGroup == "Adults" ? "bold" : "normal",
+                    fontSize: 16,
                   }}
                 >
                   Adults
@@ -261,19 +262,20 @@ const FamilyRequest = ({ route, navigation }) => {
               </Tab.Item>
               <Tab.Item title="Teenagers" titleStyle={{ fontSize: 12 }}>
                 <Image
-                  source={require("../../assets/imgs/teens.png")}
+                  source={require("../../assets/imgs/adult.png")}
                   style={{
                     width: 88,
                     height: 90,
-                    borderColor: ageGroup == "Teenagers" ? "#842DCE" : "white",
+                    borderColor: ageGroup == "Teenagers" ? "#F9966B" : "white",
                     borderWidth: 3,
                     borderRadius: 43,
                   }}
                 />
                 <Text
                   style={{
-                    color: ageGroup == "Teenagers" ? "#842DCE" : "black",
+                    color: ageGroup == "Teenagers" ? "#F9966B" : "black",
                     fontWeight: ageGroup == "Teenagers" ? "bold" : "normal",
+                    fontSize: 15,
                   }}
                 >
                   Teenagers
@@ -281,19 +283,20 @@ const FamilyRequest = ({ route, navigation }) => {
               </Tab.Item>
               <Tab.Item title="Kids" titleStyle={{ fontSize: 12 }}>
                 <Image
-                  source={require("../../assets/imgs/kids1.png")}
+                  source={require("../../assets/imgs/kidss.jpeg")}
                   style={{
-                    width: 88,
-                    height: 88,
-                    borderColor: ageGroup == "Kids" ? "#842DCE" : "white",
+                    width: 90,
+                    height: 90,
+                    borderColor: ageGroup == "Kids" ? "#F9966B" : "white",
                     borderWidth: 3,
                     borderRadius: 43,
                   }}
                 />
                 <Text
                   style={{
-                    color: ageGroup == "Kids" ? "#842DCE" : "black",
+                    color: ageGroup == "Kids" ? "#F9966B" : "black",
                     fontWeight: ageGroup == "Kids" ? "bold" : "normal",
+                    fontSize: 16,
                   }}
                 >
                   Kids
@@ -305,15 +308,16 @@ const FamilyRequest = ({ route, navigation }) => {
                   style={{
                     width: 88,
                     height: 88,
-                    borderColor: ageGroup == "Baby" ? "#842DCE" : "white",
+                    borderColor: ageGroup == "Baby" ? "#F9966B" : "white",
                     borderWidth: 3,
                     borderRadius: 43,
                   }}
                 />
                 <Text
                   style={{
-                    color: ageGroup == "Baby" ? "#842DCE" : "black",
+                    color: ageGroup == "Baby" ? "#F9966B" : "black",
                     fontWeight: ageGroup == "Baby" ? "bold" : "normal",
+                    fontSize: 16,
                   }}
                 >
                   Babys
@@ -433,7 +437,7 @@ const FamilyRequest = ({ route, navigation }) => {
                     <Pressable onPress={() => setModalVisible(!modalVisible)}>
                       <Entypo
                         name="chevron-with-circle-left"
-                        color="#842DCE"
+                        color="#F9966B"
                         size={40}
                       />
                     </Pressable>
@@ -631,7 +635,7 @@ const FamilyRequest = ({ route, navigation }) => {
               style={{
                 marginTop: "14%",
                 marginBottom: "10%",
-                backgroundColor: "#4C4AAB",
+                backgroundColor: "#F9966B",
                 height: "18%",
                 width: "60%",
                 alignItems: "center",
@@ -760,8 +764,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 15,
-    marginTop: "25%",
-    height: "80%",
+    marginTop: "15%",
+    height: "85%",
     backgroundColor: "white",
     borderRadius: 15,
     padding: "5%",
@@ -786,7 +790,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: "#842DCE",
+    backgroundColor: "#FFA07A",
   },
   textStyle: {
     color: "white",

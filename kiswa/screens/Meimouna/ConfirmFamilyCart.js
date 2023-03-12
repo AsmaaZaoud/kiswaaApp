@@ -185,45 +185,6 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
 
   console.log(available);
 
-  // const checkAvailable2 = (x) => {
-  //   console.log("sec");
-  //   console.log("sec", x);
-  //   itemsArray.forEach((item) => {
-  //     if (item.type == x.type && item.color == x.color && item.size == x.size) {
-  //       console.log("inven..", item.type);
-  //       console.log("yess match!");
-  //       setAvailable(true);
-  //     }
-  //   });
-  // };
-
-  // console.log(available);
-
-  // console.log(items);
-  // useEffect(() => {
-  //   userinfo();
-  // }, [id]);
-  // const [userinforr, setUserinforr] = useState([]);
-
-  // const userinfo = async () => {
-  //   const collectionRef = collection(db, "families");
-  //   const q = query(collectionRef);
-  //   const unsubscribe = onSnapshot(q, (querySnapshot) => {
-  //     setUserinforr(
-  //       querySnapshot.docs.map((doc) => ({
-  //         id: doc.id,
-  //         // data: doc.data(),
-  //         zone: doc.data().zone,
-  //         phone: doc.data().phone,
-  //       }))
-  //     );
-  //     // console.log(userinforr);
-  //   });
-  //   return () => unsubscribe();
-  // };
-  // setTheUser(userinforr.find((elem) => elem.id === id));
-  // console.log(theUser.phone);
-
   const validation = async () => {
     if (date == "") {
       setDateError("please select date!");
@@ -277,7 +238,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
           title="Check Out"
           style={{
             height: "9%",
-            marginBottom: "5%",
+            marginBottom: "2%",
             backgroundColor: "#FFFAFA",
             borderColor: "lightgray",
             borderWidth: 1,
@@ -286,8 +247,6 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
           titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
         />
         <View style={styles.main}>
-          {/* <SafeAreaView style={{ flex: 1 }}> */}
-          {/* <View style={styles.main}> */}
           <Block style={styles.hed1}>
             <Text style={styles.text1}>Contact Information</Text>
             <Text></Text>
@@ -295,11 +254,8 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
             <View
               style={{
                 width: "80%",
-                // backgroundColor: "red",
                 height: "20%",
                 marginLeft: "9%",
-                // justifyContent: "center",
-                // alignItems: "center",
                 borderBottomWidth: 1,
               }}
             >
@@ -307,14 +263,12 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                 style={{
                   width: "70%",
                   flexDirection: "row",
-                  // backgroundColor: "gray",
                   height: "30%",
                 }}
               >
-                <Entypo name="location" color="#842DCE" size={34} />
-                <Text style={{ marginLeft: "5%", fontSize: 19 }}>{zone}</Text>
+                <Entypo name="location" color="red" size={32} />
+                <Text style={{ marginLeft: "5%", fontSize: 19 }}> {zone}</Text>
               </View>
-              {/* <Text style={{ fontSize: 18, marginLeft: "20%" }}>{zone}</Text> */}
 
               <View
                 style={{
@@ -324,38 +278,31 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   height: "30%",
                 }}
               >
-                <Entypo name="phone" color="#842DCE" size={32} />
+                <Entypo name="phone" color="green" size={32} />
                 <Text style={{ marginLeft: "5%", fontSize: 19 }}>
+                  {" "}
                   +974 {phone}
                 </Text>
               </View>
-
-              {/* <Text style={{ fontSize: 18, marginLeft: "20%" }}>{phone}</Text> */}
-
               <View
                 style={{
                   width: "70%",
                   flexDirection: "row",
-                  // backgroundColor: "yellow",
                   height: "30%",
                 }}
               >
-                <Entypo name="email" color="#842DCE" size={29} />
-                <Text style={{ marginLeft: "5%", fontSize: 19 }}>{id}</Text>
+                <Entypo name="email" color="green" size={29} />
+                <Text style={{ marginLeft: "5%", fontSize: 19 }}> {id}</Text>
               </View>
-              {/* <Text style={{ fontSize: 18, marginLeft: "20%" }}>{theUser}</Text> */}
             </View>
-            {/* <Text></Text> */}
 
             <View
               style={{
                 width: "90%",
                 height: "50%",
-                // borderWidth: 1,
                 marginLeft: "5%",
                 marginTop: "5%",
-                // backgroundColor: "yellow",
-                padding: "1%",
+                // padding: "1%",
               }}
             >
               <Text style={{ fontSize: 20, marginLeft: 15 }}>
@@ -374,7 +321,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   height: "15%",
                   marginBottom: "5%",
                   marginTop: "3%",
-                  marginLeft: 15,
+                  // marginLeft: 15,
                   width: "100%",
                 }}
               >
@@ -382,11 +329,12 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   onPress={() => setTime("8AM - 12PM")}
                   style={{
                     backgroundColor:
-                      time == "8AM - 12PM" ? "#4C4AAB" : "purple",
-                    margin: "2%",
+                      time == "8AM - 12PM" ? "#F8B88B" : "purple",
+                    margin: "1.5%",
                     height: "85%",
-                    width: "29%",
+                    width: "30%",
                     justifyContent: "center",
+                    borderRadius: 4,
                   }}
                 >
                   <Text style={{ color: "white", textAlign: "center" }}>
@@ -397,11 +345,12 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   onPress={() => setTime("12PM - 6PM")}
                   style={{
                     backgroundColor:
-                      time == "12PM - 6PM" ? "#4C4AAB" : "purple",
-                    margin: "2%",
+                      time == "12PM - 6PM" ? "#F8B88B" : "purple",
+                    margin: "1.5%",
                     height: "85%",
-                    width: "29%",
+                    width: "30%",
                     justifyContent: "center",
+                    borderRadius: 4,
                   }}
                 >
                   <Text style={{ color: "white", textAlign: "center" }}>
@@ -412,11 +361,12 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   onPress={() => setTime("6PM - 10PM")}
                   style={{
                     backgroundColor:
-                      time == "6PM - 10PM" ? "#4C4AAB" : "purple",
-                    margin: "2%",
+                      time == "6PM - 10PM" ? "#F8B88B" : "purple",
+                    margin: "1.5%",
                     height: "85%",
                     width: "30%",
                     justifyContent: "center",
+                    borderRadius: 4,
                   }}
                 >
                   <Text style={{ color: "white", textAlign: "center" }}>
@@ -438,7 +388,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   width: "70%",
                   marginLeft: "15%",
                   height: "55%",
-                  marginTop: "2%",
+                  marginTop: "3%",
                 }}
               >
                 <Pressable
@@ -446,10 +396,11 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   style={{
                     backgroundColor:
                       date == `${dateString} - ${first2date}`
-                        ? "#4C4AAB"
+                        ? "#F8B88B"
                         : "purple",
-                    margin: "2%",
-                    height: "25%",
+                    marginBottom: "4%",
+                    height: "27%",
+                    borderRadius: 4,
                     justifyContent: "center",
                   }}
                 >
@@ -462,11 +413,12 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   style={{
                     backgroundColor:
                       date == `${sec1date} - ${sec2date}`
-                        ? "#4C4AAB"
+                        ? "#F8B88B"
                         : "purple",
-                    margin: "2%",
-                    height: "25%",
+                    marginBottom: "4%",
+                    height: "27%",
                     justifyContent: "center",
+                    borderRadius: 4,
                   }}
                 >
                   <Text style={{ color: "white", textAlign: "center" }}>
@@ -478,11 +430,12 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   style={{
                     backgroundColor:
                       date == `${third1date} - ${third2date}`
-                        ? "#4C4AAB"
+                        ? "#F8B88B"
                         : "purple",
-                    margin: "2%",
-                    height: "25%",
+                    marginBottom: "3%",
+                    height: "27%",
                     justifyContent: "center",
+                    borderRadius: 4,
                   }}
                 >
                   <Text style={{ color: "white", textAlign: "center" }}>
@@ -496,9 +449,9 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               <Pressable
                 onPress={() => validation()}
                 style={{
-                  marginBottom: "5%",
-                  marginTop: "8%",
-                  backgroundColor: "#4C4AAB",
+                  marginBottom: "1%",
+                  marginTop: "9%",
+                  backgroundColor: "#F9966B",
                   height: 50,
                   width: "75%",
                   alignItems: "center",
@@ -517,8 +470,6 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               </Pressable>
             </View>
           </Block>
-
-          <Text></Text>
           <Text></Text>
         </View>
       </SafeAreaView>
@@ -575,15 +526,16 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   main: {
-    // backgroundColor: "#F3E8EA",
-    backgroundColor: "#fbe5ff",
+    backgroundColor: "#FFFFF7",
+    // backgroundColor: "#fbe5ff",
     width: "90%",
     marginLeft: "5%",
     // marginTop: "5%",
     // borderColor: "#842DCE",
     // borderWidth: 3,
     borderRadius: 10,
-    height: "86%",
+    height: "90%",
+    marginBottom: "1%",
   },
   text1: {
     color: "#842DCE",

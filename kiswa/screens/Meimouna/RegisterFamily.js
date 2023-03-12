@@ -201,12 +201,39 @@ export default function RegisterFamily({ navigation }) {
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <Block flex>
-              <Block flex={0.19} >
-                
-              <Text style={{ padding: 20, color: 'blue' }} onPress={() => navigation.navigate("Onboarding")}>Go Back</Text>
-              <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: 20, margin: 20 }}>Register as Family</Text>
+              <Block flex={0.19}>
+                <Text
+                  style={{ padding: 20, color: "blue" }}
+                  onPress={() => navigation.navigate("Onboarding")}
+                >
+                  Go Back
+                </Text>
+
+                <Block flex={0.17} middle>
+                  <Image
+                    source={require("../../assets/Fatima/BlackLogo-noBackground.png")}
+                    style={{
+                      width: width - theme.SIZES.BASE,
+                      height: theme.SIZES.BASE * 5,
+                      position: "relative",
+                      resizeMode: "contain",
+                      marginTop: "25%",
+                      marginBottom: "10%",
+                    }}
+                  />
+                </Block>
               </Block>
-              <Block flex center>
+              <Block flex center style={{ marginTop: "5%" }}>
+                <Text
+                  style={{
+                    justifyContent: "flex-start",
+                    alignSelf: "center",
+                    fontSize: 18,
+                    margin: "2%",
+                  }}
+                >
+                  Register as Family
+                </Text>
                 <KeyboardAvoidingView
                   style={{ flex: 1 }}
                   behavior="padding"

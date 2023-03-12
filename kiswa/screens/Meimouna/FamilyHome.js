@@ -126,30 +126,16 @@ const FamilyHome = ({ route, navigation }) => {
         {/* welcome user */}
         <Block style={styles.header1}>
           <Block>
-            <Text style={styles.text}>Welcome</Text>
+            <Text style={styles.text}>Welcome,</Text>
             <Text style={styles.textt}>{userName}</Text>
           </Block>
           <Block>
-            {/* <Image
-            source={require("../../assets/imgs/FamilyUser.png")}
-            style={{
-              width: 100,
-              height: 100,
-            }}
-          /> */}
-
             <Image
               style={{
                 width: 90,
                 height: 90,
-                tintColor: "#4C4AAB",
-                borderWidth: 3,
-                borderColor: "#4C4AAB",
-                borderRadius: 20,
               }}
-              source={{
-                uri: "https://cdn-icons-png.flaticon.com/512/2904/2904889.png",
-              }}
+              source={require("../../assets/Fatima/donation.png")}
             ></Image>
           </Block>
         </Block>
@@ -158,9 +144,9 @@ const FamilyHome = ({ route, navigation }) => {
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
             Kiswa
           </Text>
-          <Text style={{ width: "70%", color: "white", fontSize: 15 }}>
-            Creative engineers and data scientists building a world where you
-            can belong anywhere
+          <Text style={{ width: "66%", color: "white", fontSize: 15 }}>
+            We connect with clothing donators to fulfill your requests while
+            protecting your privacy and security.
           </Text>
         </Block>
         {/* request and history */}
@@ -271,8 +257,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginLeft: "6%",
-    marginBottom: "10%",
-    width: "80%",
+    marginBottom: "7%",
+    width: "85%",
   },
   header2: {
     alignItems: "center",
@@ -296,13 +282,14 @@ const styles = StyleSheet.create({
     width: "84%",
   },
   text: {
-    fontSize: 26,
+    fontSize: 24,
     margin: 5,
   },
   textt: {
-    fontSize: 26,
+    fontSize: 27,
     margin: 5,
     fontWeight: "bold",
+    color: "#B21807",
   },
   box1: {
     width: 160,

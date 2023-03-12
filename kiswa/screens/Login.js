@@ -73,7 +73,7 @@ const Login = ({ navigation }) => {
     } else if (clerkSnap.exists()) {
       navigation.navigate("InventoryClerkHomePage");
     } else if (familySnap.exists()) {
-      navigation.navigate("FamilyHome");
+      navigation.navigate("FamilyHome", email);
     } else if (donorSnap.exists()) {
       navigation.navigate("App");
     }

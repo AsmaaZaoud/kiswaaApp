@@ -200,11 +200,6 @@ const FamilyCart = ({ route, navigation }) => {
                         </Text>
                         <Text style={styles.ct}></Text>
                       </View>
-                      {/* <View key={i + 2} style={styles.board22}>
-                  <Text style={styles.ctt}>Color</Text>
-                  <Text style={styles.ctt}>Size</Text>
-                  <Text style={styles.ctt}>Quantity</Text>
-                </View> */}
                       <View key={i + 2} style={styles.board2}>
                         <Text style={styles.ctt}>{x.data.color}</Text>
                         <Text style={styles.ctt}>{x.data.size}</Text>
@@ -246,8 +241,6 @@ const FamilyCart = ({ route, navigation }) => {
                           }}
                         />
                       </View>
-                      {/* </View>
-              </View> */}
                     </View>
                   ))}
                 </View>
@@ -300,7 +293,7 @@ const FamilyCart = ({ route, navigation }) => {
                 }
                 style={{
                   // marginBottom: "10%",
-                  backgroundColor: cart.length >= 1 ? "#842DCE" : "gray",
+                  backgroundColor: cart.length >= 1 ? "#F9966B" : "gray",
                   height: 50,
                   width: "75%",
                   alignItems: "center",
@@ -596,11 +589,13 @@ const styles = StyleSheet.create({
   },
   main: {
     // backgroundColor: "#F3E8EA",
-    backgroundColor: "#fbe5ff",
+    backgroundColor: "#F8F6F0",
     margin: "5%",
+    marginTop: "3%",
     // borderColor: "#842DCE",
     // borderWidth: 3,
     // borderRadius: 10,
+    paddingTop: "2%",
     height: "82%",
   },
   scrollView: {

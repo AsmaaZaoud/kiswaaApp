@@ -118,14 +118,20 @@ export default function FamilyProfile({ route, navigation }) {
     getPermissions();
   };
   const [phoneError, setPhoneError] = useState("");
+  const [nameError, setNameError] = useState("");
   const validation = async () => {
     if (phonenum.length === 8) {
       setPhoneError("");
     } else {
       setPhoneError("Number is not valid");
     }
+    if (userName.length != 0) {
+      setNameError("");
+    } else {
+      setNameError("Enter User Name");
+    }
 
-    if (phonenum.length === 8) {
+    if (phonenum.length === 8 && userName.length != 0) {
       console.log("okay");
       update();
     }
@@ -141,7 +147,7 @@ export default function FamilyProfile({ route, navigation }) {
       <View
         style={{
           flex: 1,
-          backgroundColor: "#fbe5ff",
+          backgroundColor: "#FFF9FF",
           height: "90%",
           marginTop: "5%",
         }}
@@ -154,15 +160,15 @@ export default function FamilyProfile({ route, navigation }) {
                 <View style={{ marginRight: "8%" }}>
                   <Entypo
                     name="log-out"
-                    color="#4C4AAB"
+                    color="#F9966B"
                     size={30}
                     onPress={() => onSignOut()}
                     style={{ marginLeft: "25%" }}
                   />
                   <Text
                     style={{
-                      color: "#4C4AAB",
-                      fontSize: 14,
+                      color: "#F9966B",
+                      fontSize: 13,
                       fontWeight: "bold",
                     }}
                   >
@@ -203,7 +209,7 @@ export default function FamilyProfile({ route, navigation }) {
                 <Text
                   style={{
                     fontSize: 18,
-                    color: "#842DCE",
+                    color: "#F9966B",
                     fontWeight: "bold",
                     marginRight: "7%",
                   }}
@@ -228,7 +234,7 @@ export default function FamilyProfile({ route, navigation }) {
               <View
                 style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Entypo name="user" color="#842DCE" size={29} />
+                <Entypo name="user" color="#F9966B" size={29} />
                 <Text
                   style={{ marginLeft: "7%", fontSize: 20, marginTop: "1%" }}
                 >
@@ -245,14 +251,14 @@ export default function FamilyProfile({ route, navigation }) {
                 </Text>
               </View>
               <Text></Text>
-              <Text style={{ color: "#842DCE", marginLeft: "5%" }}>
+              <Text style={{ color: "#F9966B", marginLeft: "5%" }}>
                 _________________________________________
               </Text>
               <Text></Text>
               <View
                 style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Entypo name="location" color="#842DCE" size={29} />
+                <Entypo name="location" color="#F9966B" size={29} />
                 <Text style={{ margin: "7%", fontSize: 20, marginTop: "1%" }}>
                   Zone:{"  "}
                   <Text
@@ -266,14 +272,14 @@ export default function FamilyProfile({ route, navigation }) {
                   </Text>
                 </Text>
               </View>
-              <Text style={{ color: "#842DCE", marginLeft: "5%" }}>
+              <Text style={{ color: "#F9966B", marginLeft: "5%" }}>
                 _________________________________________
               </Text>
               <Text></Text>
               <View
                 style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Entypo name="old-mobile" color="#842DCE" size={29} />
+                <Entypo name="old-mobile" color="#F9966B" size={29} />
                 <Text style={{ margin: "7%", fontSize: 20, marginTop: "1%" }}>
                   Number:{"  "}
                   <Text
@@ -288,7 +294,7 @@ export default function FamilyProfile({ route, navigation }) {
                 </Text>
               </View>
 
-              <Text style={{ color: "#842DCE", marginLeft: "5%" }}>
+              <Text style={{ color: "#F9966B", marginLeft: "5%" }}>
                 _________________________________________
               </Text>
               <Text></Text>
@@ -312,7 +318,7 @@ export default function FamilyProfile({ route, navigation }) {
                 <Pressable onPress={() => setModalVisible(!modalVisible)}>
                   <Entypo
                     name="chevron-with-circle-left"
-                    color="#842DCE"
+                    color="#F9966B"
                     size={40}
                   />
                 </Pressable>
@@ -334,16 +340,11 @@ export default function FamilyProfile({ route, navigation }) {
 
               <Block style={styles.modalblock2}>
                 <Text style={styles.modalText}>{id}</Text>
-                <Text></Text>
+
                 <Block>
                   {/* <Text style={{ fontSize: 16, marginBottom: 10, marginTop: 20 }}>
                   What Color?
                 </Text> */}
-                  <TextInput
-                    label="Phone Number"
-                    value={phonenum}
-                    onChangeText={(text) => setPhoneNum(text)}
-                  />
                   <Text
                     style={{
                       // textAlign: "center",
@@ -353,8 +354,21 @@ export default function FamilyProfile({ route, navigation }) {
                   >
                     {phoneError}
                   </Text>
+                  <TextInput
+                    label="Phone Number"
+                    value={phonenum}
+                    onChangeText={(text) => setPhoneNum(text)}
+                  />
 
-                  <Text></Text>
+                  <Text
+                    style={{
+                      // textAlign: "center",
+                      color: "red",
+                      fontSize: 14,
+                    }}
+                  >
+                    {nameError}
+                  </Text>
                   <TextInput
                     label="User Name"
                     value={userName}
@@ -417,7 +431,7 @@ export default function FamilyProfile({ route, navigation }) {
           borderColor: "lightgray",
           borderWidth: 1,
           marginBottom: "1%",
-          marginTop: "2%",
+          // marginTop: "1%",
           alignItems: "center",
           // paddingLeft: "1%",
         }}
@@ -455,7 +469,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: "40%",
-    backgroundColor: "#fbe5ff",
+    backgroundColor: "#FFF9FF",
     marginBottom: "1%",
   },
   headerContent: {
@@ -498,8 +512,12 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "white",
     borderRadius: 60,
-    height: "65%",
+    height: "68%",
     paddingTop: "2%",
+    width: "95%",
+    marginLeft: "4%",
+    borderWidth: 2,
+    borderColor: "lightgray",
   },
   box: {
     padding: 5,
@@ -523,7 +541,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 15,
-    marginTop: 50,
+    marginTop: "8%",
     height: 680,
     backgroundColor: "white",
     borderRadius: 15,
@@ -571,7 +589,7 @@ const styles = StyleSheet.create({
   },
 
   buttonClose: {
-    backgroundColor: "#842DCE",
+    backgroundColor: "#F9966B",
   },
   textStyle: {
     color: "white",

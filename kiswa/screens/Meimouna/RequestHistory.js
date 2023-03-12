@@ -84,22 +84,26 @@ export default function RequestHistory({ route, navigation }) {
           titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
         />
 
-        {/* <Text
-              style={{ color: "#842DCE", fontSize: 22, fontWeight: "bold" }}
-            >
-              Request History
-            </Text> */}
-
         <View
           style={{
             width: "98%",
             paddingBottom: "5%",
             paddingTop: "5%",
             height: "100%",
-            backgroundColor: "#fbe5ff",
+            backgroundColor: "#FFFAF0",
             // marginBottom: "5%",
           }}
         >
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "bold",
+              marginLeft: "5%",
+            }}
+          >
+            {request.length} Completed Requests
+          </Text>
+          <Text></Text>
           {request.length == 0 ? (
             <Text
               style={{
@@ -144,7 +148,7 @@ export default function RequestHistory({ route, navigation }) {
                     <DataTable.Title
                       textStyle={{ color: "white", fontSize: 15 }}
                     >
-                      Group
+                      Age
                     </DataTable.Title>
                     <DataTable.Title
                       textStyle={{ color: "white", fontSize: 15 }}
@@ -234,7 +238,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   tableHeader: {
-    backgroundColor: "#842DCE",
+    backgroundColor: "#F9966B",
     borderRadius: 10,
   },
 });
