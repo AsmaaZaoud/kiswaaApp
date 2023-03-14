@@ -54,7 +54,7 @@ const Login = ({ navigation }) => {
   };
 
   const getUser = async () => {
-    if (email == "Admin@admin.com") {
+    if (email == "admin@admin.com") {
       navigation.navigate("AdminHome");
       return;
     }
