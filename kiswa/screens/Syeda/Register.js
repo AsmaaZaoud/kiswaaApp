@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -31,7 +31,6 @@ import {
   setDoc,
   addDoc,
   collection,
-
   query,
   where,
   deleteDoc,
@@ -41,8 +40,6 @@ import {
   getDocs,
   getDoc,
   Timestamp,
-
-
 } from "firebase/firestore";
 import { db } from "../../config";
 
@@ -54,16 +51,15 @@ const { width, height } = Dimensions.get("screen");
 const scale = width / 834;
 
 export function normalize(size) {
-  const newSize = size * scale
-  if (Platform.OS === 'ios') {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
 
 const Register = ({ navigation }) => {
-
   const zones = [
     { label: " All Zones", value: "0" },
     { label: "Doha", value: "1" },
@@ -78,17 +74,17 @@ const Register = ({ navigation }) => {
     { label: "Al Shahaniya", value: "10" },
   ];
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const [emailError, setEmailError] = useState('');
-  const [passError, setPassError] = useState('');
-  const [confirmError, setConfirmError] = useState('');
-  const [nameError, setNameError] = useState('');
-  const [phoneError, setPhoneError] = useState('');
+  const [emailError, setEmailError] = useState("");
+  const [passError, setPassError] = useState("");
+  const [confirmError, setConfirmError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
 
   const [ZoneError, setZoneError] = useState("");
   const [zone, setZone] = useState(zones[0].label);
@@ -103,22 +99,21 @@ const Register = ({ navigation }) => {
 
   let user = auth?.currentUser?.email;
 
-  console.log('user logged in: ', user)
+  console.log("user logged in: ", user);
 
   const handleRegister = () => {
     setflag(0);
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         console.log("registered");
-        add()
+        add();
         navigation.replace("App");
-      }
-      )
+      })
       .catch((error) => console.log(error.message));
   };
 
   const add = async () => {
-    const docRef = doc(db, "donors", email)
+    const docRef = doc(db, "donors", email);
 
     await setDoc(docRef, {
       userName: name,
@@ -126,7 +121,7 @@ const Register = ({ navigation }) => {
       location: location,
       email: email,
       zone: zone,
-      image: ''
+      image: "",
     })
       .then(() => {
         console.log("data submitted");
@@ -135,7 +130,7 @@ const Register = ({ navigation }) => {
         console.log(error.message);
       });
     //console.log("Document written with ID: ", docRef.id);
-  }
+  };
 
   const getLocation = () => {
     const getPermissions = async () => {
@@ -145,21 +140,19 @@ const Register = ({ navigation }) => {
       console.log(status);
       if (status !== "granted") {
         console.log("Please grant location permissions");
-        Alert.alert("Please grant location permissions.")
+        Alert.alert("Please grant location permissions.");
         return;
-      }
-      else {
-        console.log('permitted')
-        Alert.alert("Your location has been recorded.")
+      } else {
+        console.log("permitted");
+        Alert.alert("Your location has been recorded.");
       }
 
       let currentLocation = await Location.getCurrentPositionAsync({});
-      console.log(currentLocation)
+      console.log(currentLocation);
       setLocation(currentLocation);
     };
     getPermissions();
   };
-
 
   const validateEmail = (email) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -171,77 +164,70 @@ const Register = ({ navigation }) => {
     return passwordRegex.test(password);
   };
 
-
-
   const validation = () => {
     if (!name) {
-      setNameError('Please enter your nickname');
+      setNameError("Please enter your nickname");
       return;
-    }
-    else {
-      setNameError('');
+    } else {
+      setNameError("");
     }
 
     if (!phone) {
-      setPhoneError('Please enter a valid phone number that is 8 digits long')
+      setPhoneError("Please enter a valid phone number that is 8 digits long");
       return;
-    }
-    else {
-      setPhoneError('');
+    } else {
+      setPhoneError("");
     }
 
     if (!email) {
-      setEmailError('Please enter an email address');
+      setEmailError("Please enter an email address");
       return;
-    }
-    else {
-      setEmailError('');
+    } else {
+      setEmailError("");
     }
 
     if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError("Please enter a valid email address");
       return;
-    }
-    else {
-      setEmailError('');
+    } else {
+      setEmailError("");
     }
 
     if (!password) {
-      setPassError('Please enter a password');
+      setPassError("Please enter a password");
       return;
-    }
-    else {
-      setPassError('');
+    } else {
+      setPassError("");
     }
 
     if (!validatePassword(password)) {
-      setPassError('Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character');
+      setPassError(
+        "Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character"
+      );
       return;
-    }
-    else {
-      setPassError('');
+    } else {
+      setPassError("");
     }
 
     if (password !== confirmPassword) {
-      setConfirmError('Passwords do not match');
+      setConfirmError("Passwords do not match");
       return;
-    }
-    else {
-      setConfirmError('');
+    } else {
+      setConfirmError("");
     }
 
     if (stat !== "granted") {
       setLocationError("Please Allow Location");
-      return
+      return;
     } else {
-      setLocationError('');
+      setLocationError("");
     }
 
     if (zone !== " All Zones") {
       setZoneError("");
     } else {
       setZoneError("Select Zone");
-      return
+      return;
     }
 
     if (
@@ -251,15 +237,12 @@ const Register = ({ navigation }) => {
       validateEmail &&
       password &&
       validatePassword &&
-      stat === 'granted' &&
+      stat === "granted" &&
       zone !== " All Zones"
     ) {
-      handleRegister()
+      handleRegister();
     }
   };
-
-
-
 
   return (
     <Block flex middle>
@@ -267,32 +250,42 @@ const Register = ({ navigation }) => {
         source={Images.RegisterBackground}
         style={{ width, height, zIndex: 1 }}
       >
-
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.articles}>
-
-              <TouchableOpacity onPress={() => navigation.navigate('LoginDonor')}>
+              contentContainerStyle={styles.articles}
+            >
+              <TouchableOpacity
+                onPress={() => navigation.navigate("LoginDonor")}
+              >
                 <Image
                   style={styles.backButton}
-                  source={{ uri: 'https://cdn-icons-png.flaticon.com/512/54/54623.png' }}
+                  source={{
+                    uri: "https://cdn-icons-png.flaticon.com/512/54/54623.png",
+                  }}
                 ></Image>
               </TouchableOpacity>
               {/* <View style={{marginBottom: 50}}></View> */}
-              <Image source={require('../../Images/purple_transparent.png')} style={{ width: 250, height: 200, justifyContent: 'flex-start', alignSelf: 'center', }} />
+              <Image
+                source={require("../../Images/purple_transparent.png")}
+                style={{
+                  width: 250,
+                  height: 200,
+                  justifyContent: "flex-start",
+                  alignSelf: "center",
+                }}
+              />
               {/* <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: 25 }}>Register as Donor</Text> */}
               <View style={styles.container}>
-
                 <Text style={styles.error}>{nameError}</Text>
 
-                <Block width={width * 0.8} >
+                <Block width={width * 0.8}>
                   <Input
                     borderless
                     value={name}
                     onChangeText={setName}
-                    autoCapitalize='words'
+                    autoCapitalize="words"
                     placeholder="Nickname"
                     iconContent={
                       <Icon
@@ -307,7 +300,7 @@ const Register = ({ navigation }) => {
                 </Block>
 
                 <Text style={styles.error}>{phoneError}</Text>
-                <Block width={width * 0.8} >
+                <Block width={width * 0.8}>
                   <Input
                     borderless
                     value={phone}
@@ -328,7 +321,7 @@ const Register = ({ navigation }) => {
                 </Block>
 
                 <Text style={styles.error}>{emailError}</Text>
-                <Block width={width * 0.8} >
+                <Block width={width * 0.8}>
                   <Input
                     borderless
                     placeholder="Email"
@@ -349,7 +342,7 @@ const Register = ({ navigation }) => {
                 </Block>
 
                 <Text style={styles.error}>{passError}</Text>
-                <Block width={width * 0.8} >
+                <Block width={width * 0.8}>
                   <Input
                     borderless
                     placeholder="Password"
@@ -369,7 +362,7 @@ const Register = ({ navigation }) => {
                 </Block>
 
                 <Text style={styles.error}>{confirmError}</Text>
-                <Block width={width * 0.8} >
+                <Block width={width * 0.8}>
                   <Input
                     borderless
                     placeholder="Confirm Password"
@@ -406,7 +399,6 @@ const Register = ({ navigation }) => {
                       Get Location
                     </Text>
                   </Button>
-
                 </Block>
 
                 <Block width={width * 0.5} style={{ marginBottom: 0 }}>
@@ -434,18 +426,13 @@ const Register = ({ navigation }) => {
                   </Text>
                 </Block>
 
-
                 <Block width={width * 0.35}>
-                  <Button
-                    style={styles.createButton}
-                    onPress={validation}
-                  >
+                  <Button style={styles.createButton} onPress={validation}>
                     <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                       Register
                     </Text>
                   </Button>
                 </Block>
-
               </View>
             </ScrollView>
           </Block>
@@ -454,8 +441,6 @@ const Register = ({ navigation }) => {
     </Block>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   registerContainer: {
@@ -466,45 +451,45 @@ const styles = StyleSheet.create({
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
-      height: 4
+      height: 4,
     },
     shadowRadius: 8,
     shadowOpacity: 0.1,
     elevation: 1,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   passwordCheck: {
     paddingLeft: 15,
     paddingTop: 13,
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   createButton: {
     width: width * 0.5,
     marginTop: 25,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     //backgroundColor: '#F5FCFF',
   },
   input: {
-    width: '80%',
+    width: "80%",
     height: 40,
     margin: 15,
     borderWidth: 1,
     padding: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   error: {
-    color: 'red',
+    color: "red",
   },
   button: {
     width: width - theme.SIZES.BASE * 4,
     height: theme.SIZES.BASE * 3,
     shadowRadius: 0,
-    shadowOpacity: 0
+    shadowOpacity: 0,
   },
   inputIcons: {
     marginRight: 12,
@@ -532,12 +517,12 @@ const styles = StyleSheet.create({
   backButton: {
     width: 50,
     height: 50,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 25,
     margin: 20,
-    position: 'absolute',
+    position: "absolute",
     top: 0,
-    left: 0
+    left: 0,
   },
 });
 

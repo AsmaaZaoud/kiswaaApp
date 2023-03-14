@@ -18,7 +18,7 @@ function CustomDrawerContent({
   const screens = [
     "Home",
     "AboutUs",
-    "Donate",
+
     user !== undefined ? "DonorHistory" : null,
     user !== undefined ? "Profile" : null,
   ];

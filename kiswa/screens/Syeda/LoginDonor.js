@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Image,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -94,14 +95,20 @@ const LoginDonor = ({ navigation }) => {
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <Block flex>
-              <TouchableOpacity onPress={() => navigation.navigate("App")}>
+              {/* <Pressable onPress={() => navigation.navigate("Onboarding")}>
                 <Image
                   style={styles.backButton}
                   source={{
                     uri: "https://cdn-icons-png.flaticon.com/512/54/54623.png",
                   }}
                 ></Image>
-              </TouchableOpacity>
+              </Pressable> */}
+              <Text
+                style={{ padding: 20, color: "blue" }}
+                onPress={() => navigation.goBack()}
+              >
+                Go Back
+              </Text>
               <Block flex={0.17} middle>
                 <Image
                   source={require("../../Images/purple_transparent.png")}

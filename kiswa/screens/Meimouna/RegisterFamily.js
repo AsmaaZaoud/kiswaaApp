@@ -274,6 +274,7 @@ export default function RegisterFamily({ navigation }) {
                       borderless
                       placeholder="Phone Number"
                       value={phone}
+                      maxLength={8}
                       onChangeText={(pho) => {
                         setPhone(pho);
                         phoneValidate();

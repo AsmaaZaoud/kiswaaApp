@@ -112,11 +112,12 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   const [theUser, setTheUser] = useState("");
   useEffect(() => {
     getFamily();
+    getDriver();
     console.log(cartId);
   }, [id]);
 
   const getFamily = async () => {
-    console.log(id);
+    // console.log(id);
     const docRef = doc(db, "families", id);
     const docSnap = await getDoc(docRef);
     let temp = [];
@@ -124,6 +125,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
       setTheUser(docSnap.data().email);
       setPhone(docSnap.data().phone);
       setZone(docSnap.data().zone);
+      // await getDriver();
     } else {
       console.log("No such document!");
     }
@@ -146,7 +148,8 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
       );
     };
     listenAll();
-    console.log("ids..", IDs);
+
+    // console.log("ids..", IDs);
   }, []);
   // console.log(itemsArray);
 
@@ -181,6 +184,21 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
       setAvailable(true);
     }
     console.log("my... ", myavait);
+  };
+
+  const [driver, setDriver] = useState("");
+  const getDriver = async () => {
+    var temp = "";
+    const q = query(collection(db, "drivers"), where("zone", "==", "Rume"));
+    const docs = await getDocs(q);
+    docs.forEach((doc) => {
+      console.log(doc.id, " ==========> ", doc.data());
+      temp = doc.id;
+      setDriver(doc.id);
+
+      // console.log(temp);
+    });
+    setDriver(temp);
   };
 
   console.log(available);
@@ -222,6 +240,28 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
       .catch((error) => {
         console.log(error.message);
       });
+    //Asma: I added this
+    if (available && driver) {
+      // alert("yess");
+      const docRefDriver = await addDoc(
+        collection(db, "drivers", driver, "orders"),
+        {
+          phone: phone,
+          userId: id,
+          location: zone,
+          dateSlot: date,
+          timeSlot: time,
+          // trackId: trackId,
+          // time: route.params.time,
+          // date: route.params.date,
+          // trackId: trackId,
+          status: "pending",
+          type: "deliver",
+        }
+      );
+      console.log("driver orders add ID: ", docRefDriver.id);
+    }
+
     navigation.navigate("FamilyHome", id);
   };
   const renderArticles = () => {

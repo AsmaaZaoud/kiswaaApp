@@ -33,18 +33,22 @@ import {
 } from "react-native-vector-icons";
 import { DataTable } from "react-native-paper";
 import { db } from "../../config";
+import { normalize } from "../Syeda/Home";
 const { width } = Dimensions.get("screen");
 export default function RequestHistory({ route, navigation }) {
   const id = route.params;
   console.log(id);
 
   const [request, setRequest] = useState([]);
+  const [allRequest, setAllRequest] = useState([]);
 
   useEffect(() => {
     const q = query(
       collection(db, "familyRequests"),
       where("familyID", "==", `${id}`),
-      where("status", "==", "fullfied")
+      where("cart", "==", "closed")
+
+      // where("status", "==", "fullfied")
     );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -55,12 +59,26 @@ export default function RequestHistory({ route, navigation }) {
           id: doc.id,
         }))
       );
+      setAllRequest(
+        querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }))
+      );
     });
 
     return () => unsubscribe();
   }, [id]);
   const [cart, setCart] = useState([]);
-
+  const filterStatus = (stat) => {
+    var temp = [...allRequest];
+    if (stat == "done") {
+      temp = temp.filter((x) => x.status == "fullfied");
+    } else {
+      temp = temp.filter((x) => x.status == "pending");
+    }
+    setRequest(temp);
+  };
   console.log(request);
   const renderArticles = () => {
     return (
@@ -83,13 +101,47 @@ export default function RequestHistory({ route, navigation }) {
           }}
           titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
         />
-
+        <View
+          style={{
+            // flexDirection: "row",
+            // justifyContent: "space-between",
+            // width: "50%",
+            // marginHorizontal: "25%",
+            // height: "5%",
+            // padding: "2%",
+            backgroundColor: "#F7CFCF",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "50%",
+              marginHorizontal: "25%",
+              padding: "2%",
+            }}
+          >
+            <Text
+              style={{ fontSize: 18, color: "blue" }}
+              onPress={() => filterStatus("done")}
+            >
+              Done
+            </Text>
+            <Text>|</Text>
+            <Text
+              style={{ fontSize: 18, color: "blue" }}
+              onPress={() => filterStatus("pending")}
+            >
+              Pending
+            </Text>
+          </View>
+        </View>
         <View
           style={{
             width: "98%",
             paddingBottom: "5%",
             paddingTop: "5%",
-            height: "100%",
+            height: "90%",
             backgroundColor: "#FFFAF0",
             // marginBottom: "5%",
           }}

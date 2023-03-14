@@ -557,7 +557,10 @@ export default function OnboardingStack(props) {
         <Stack.Screen name="FamilyFeedback" component={FamilyFeedback} />
         <Stack.Screen name="FeedbackConf" component={FeedbackConf} />
         <Stack.Screen name="RequestHistory" component={RequestHistory} />
-        <Stack.Screen name="RequestHistoryComp" component={RequestHistoryComp} />
+        <Stack.Screen
+          name="RequestHistoryComp"
+          component={RequestHistoryComp}
+        />
         <Stack.Screen name="FamilyProfile" component={FamilyProfile} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
@@ -610,13 +613,13 @@ function AppStack(props) {
           headerShown: false,
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Donate"
         component={DonateStack}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
       <Drawer.Screen
         name="DonorHistory"
         component={DonorHistoryStack}

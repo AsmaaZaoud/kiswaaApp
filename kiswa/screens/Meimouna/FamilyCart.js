@@ -291,6 +291,7 @@ const FamilyCart = ({ route, navigation }) => {
                     id,
                   })
                 }
+                disabled={cart.length == 0}
                 style={{
                   // marginBottom: "10%",
                   backgroundColor: cart.length >= 1 ? "#F9966B" : "gray",
