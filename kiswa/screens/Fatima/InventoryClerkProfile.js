@@ -264,8 +264,8 @@ const InventoryClerkProfile = ({ navigation }) => {
     <SafeAreaView>
       <View
         style={{
-          backgroundColor: "#525F7F",
-          height: "30%",
+          backgroundColor: "#44088F",
+          height: height / 10,
           padding: "5%",
           flexDirection: "row",
         }}
@@ -368,8 +368,6 @@ const InventoryClerkProfile = ({ navigation }) => {
                         style={[
                           styles.xsmalInput,
                           {
-                            borderColor: FnameError ? "red" : "black",
-                            borderWidth: editFlag ? 0.3 : 0,
                             marginLeft: "6%",
                           },
                         ]}
@@ -377,26 +375,25 @@ const InventoryClerkProfile = ({ navigation }) => {
                         value={Fname}
                         onChangeText={setFname}
                         onBlur={() => validOne(1)}
-                        editable={editFlag}
+                        editable={false}
                       />
                     </View>
 
                     <View style={{ width: "45%" }}>
                       <Text style={styles.text}>Last Name</Text>
                       <TextInput
+                        editable={false}
                         autoCorrect={false}
                         style={[
                           styles.xsmalInput,
                           {
-                            borderColor: LnameError ? "red" : "black",
-                            borderWidth: editFlag ? 0.3 : 0,
+                            marginLeft: "5%",
                           },
                         ]}
                         placeholder="Grek"
                         value={Lname}
                         onChangeText={setLname}
                         onBlur={() => validOne(2)}
-                        editable={editFlag}
                       />
                     </View>
                   </Block>
@@ -405,7 +402,7 @@ const InventoryClerkProfile = ({ navigation }) => {
                     width={width * 0.8}
                     style={{
                       marginBottom: 15,
-                      flexDirection: width > 500 ? "row" : "colunm",
+                      flexDirection: width > 500 ? "row" : "column",
                     }}
                   >
                     <View
@@ -428,6 +425,59 @@ const InventoryClerkProfile = ({ navigation }) => {
                         editable={false}
                       />
                     </View>
+                    <View style={styles.con}>
+                      {/* Display the selected date */}
+                      <Text style={[styles.text, { marginLeft: "8%" }]}>
+                        Date of Birth
+                      </Text>
+                      <Pressable
+                        style={[
+                          styles.pickedDateContainer,
+                          {
+                            marginLeft: "9%",
+                          },
+                        ]}
+                        onPress={editFlag ? showPicker : null}
+                      >
+                        <Text style={styles.pickedDate}>
+                          {dob
+                            ? dob.toLocaleDateString()
+                            : date.toLocaleDateString()}
+                        </Text>
+                      </Pressable>
+                    </View>
+                  </Block>
+
+                  <Block
+                    width={width * 0.8}
+                    style={{
+                      marginBottom: 15,
+                      flexDirection: width > 500 ? "row" : "column",
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: width > 500 ? "50%" : "100%",
+                        marginRight: width > 500 ? 5 : 0,
+                      }}
+                    >
+                      <Text style={styles.text}>Email</Text>
+                      <TextInput
+                        autoCorrect={false}
+                        style={[
+                          styles.smallInput,
+                          {
+                            borderColor: emailError ? "red" : "black",
+                            borderWidth: editFlag ? 0.3 : 0,
+                          },
+                        ]}
+                        placeholder="abc@example"
+                        value={data.email}
+                        onChangeText={(value) => cheack(value, "email")}
+                        onBlur={() => validOne(5)}
+                        // editable={false}
+                      />
+                    </View>
 
                     <View
                       style={{
@@ -446,7 +496,7 @@ const InventoryClerkProfile = ({ navigation }) => {
                           {
                             borderColor: phoneError ? "red" : "black",
                             borderWidth: editFlag ? 0.3 : 0,
-                            marginLeft: "5%",
+                            marginLeft: "8%",
                           },
                         ]}
                         placeholder="66005500"
@@ -456,84 +506,6 @@ const InventoryClerkProfile = ({ navigation }) => {
                         maxLength={8}
                         editable={editFlag}
                       />
-                    </View>
-                  </Block>
-
-                  <Block
-                    width={width * 0.8}
-                    style={{
-                      marginBottom: 15,
-                      flexDirection: width > 500 ? "row" : "colunm",
-                    }}
-                  >
-                    <View
-                      style={{
-                        width: width > 500 ? "50%" : "100%",
-                        marginRight: width > 500 ? 5 : 0,
-                      }}
-                    >
-                      <Text style={styles.text}>Email</Text>
-                      <TextInput
-                        autoCorrect={false}
-                        style={[
-                          styles.smallInput,
-                          { borderColor: emailError ? "red" : "black" },
-                        ]}
-                        placeholder="abc@example"
-                        value={data.email}
-                        onChangeText={(value) => cheack(value, "email")}
-                        onBlur={() => validOne(5)}
-                        editable={false}
-                      />
-                    </View>
-
-                    <View style={styles.con}>
-                      {/* Display the selected date */}
-                      <Text style={[styles.text, { marginLeft: "8%" }]}>
-                        Date of Birth
-                      </Text>
-                      <Pressable
-                        style={[
-                          styles.pickedDateContainer,
-                          {
-                            borderWidth: editFlag ? 0.3 : 0,
-                            marginLeft: "6.5%",
-                          },
-                        ]}
-                        onPress={editFlag ? showPicker : null}
-                      >
-                        <Text style={styles.pickedDate}>
-                          {dob
-                            ? dob.toLocaleDateString()
-                            : date.toLocaleDateString()}
-                        </Text>
-                      </Pressable>
-
-                      {/* The date picker */}
-                      {isPickerShow && (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            width: "120%",
-                            padding: "1%",
-                            marginTop: "5%",
-                          }}
-                        ></View>
-                      )}
-                      {isPickerShow && (
-                        <DateTimePicker
-                          value={date}
-                          mode={"date"}
-                          display={
-                            Platform.OS === "ios" ? "spinner" : "default"
-                          }
-                          is24Hour={true}
-                          onChange={onChange}
-                          style={styles.datePicker}
-                          maximumDate={max}
-                        />
-                      )}
                     </View>
                   </Block>
 
@@ -548,6 +520,7 @@ const InventoryClerkProfile = ({ navigation }) => {
                       borderWidth: 0,
                       justifyContent: "space-between",
                       marginTop: "2%",
+                      justifyContent: "center",
                     }}
                   >
                     {editFlag ? (
@@ -624,6 +597,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: "5%",
     fontSize: normalize(18),
+    marginLeft: "6%",
   },
   smallInput: {
     width: "90%",
@@ -657,9 +631,7 @@ const styles = StyleSheet.create({
     width: width * 0.37,
     height: height * 0.05,
     padding: "4%",
-    // backgroundColor: "#FFF",
-    borderRadius: "12%",
-    borderWidth: 0.3,
+    borderRadius: 10,
     backgroundColor: "#EBEBEB",
     fontSize: 26,
   },
@@ -680,27 +652,27 @@ const styles = StyleSheet.create({
   },
   // Buttons
   DoneButton: {
-    borderRadius: 2,
+    borderRadius: 50,
     width: 100,
     padding: 10,
     backgroundColor: Theme.COLORS.SUCCESS,
-    marginLeft: "25%",
+    marginLeft: "40%",
     alignSelf: "center",
   },
   CancelButton: {
-    borderRadius: 2,
+    borderRadius: 50,
     width: 100,
     padding: 10,
-    marginLeft: "25%",
     backgroundColor: Theme.COLORS.ERROR,
     alignSelf: "center",
+    marginLeft: "10%",
   },
   EditButton: {
-    borderRadius: 2,
+    borderRadius: 50,
     width: 100,
     padding: 10,
-    marginLeft: "25%",
-    backgroundColor: Theme.COLORS.MUTED,
+    marginLeft: "40%",
+    backgroundColor: "#6D4E93",
     alignSelf: "center",
   },
   ButtonText: { color: "white", alignSelf: "center", fontSize: 18 },
