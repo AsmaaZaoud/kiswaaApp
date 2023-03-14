@@ -298,8 +298,6 @@ const AdminHome = ({ route, navigation }) => {
               {invType == "graph" ? (
                 <View>
                   <Inventory navigation={navigation} />
-
-                  <Text>Grapg</Text>
                 </View>
               ) : (
                 <InventoryTable navigation={navigation} />

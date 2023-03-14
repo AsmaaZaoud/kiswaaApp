@@ -434,7 +434,7 @@ const Dashboard = () => {
                 ]}
               >
                 <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-                  Achived Orders
+                  Todays Orders
                 </Text>
                 <View
                   style={{
@@ -444,8 +444,8 @@ const Dashboard = () => {
                 ></View>
                 <View style={{ padding: "6%", flexDirection: "row" }}>
                   <CircularProgress
-                    radius={deviceType == "mobile" ? 85 : 100}
-                    value={(3 / 6) * 100}
+                    radius={deviceType == "mobile" ? 80 : 100}
+                    value={(4 / 6) * 100}
                     textColor="222"
                     fontSize={30}
                     valueSuffix={"%"}

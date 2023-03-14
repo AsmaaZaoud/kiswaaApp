@@ -159,7 +159,7 @@ const Inventory = ({ navigation }) => {
                 // flex: 1,
                 // borderWidth: 1,
                 height: height * 0.3,
-                width: width * 3,
+                width: width * 1.7,
               }}
             >
               <View
@@ -432,7 +432,7 @@ const Inventory = ({ navigation }) => {
             ></View>
             <BarChart
               data={{
-                labels: ["Total In Come", "Profit", "dd"],
+                labels: ["Donations", "Requests"],
                 datasets: [
                   {
                     data: [30, 20, 10],
@@ -443,11 +443,11 @@ const Inventory = ({ navigation }) => {
               height={height * 0.3}
               //yAxisLabel={"QR"}
               chartConfig={{
-                backgroundColor: "#ECA3F5",
-                backgroundGradientFrom: "#eff3ff",
-                backgroundGradientTo: "#efefef",
+                backgroundColor: "#fff",
+                backgroundGradientFrom: "#fff",
+                backgroundGradientTo: "#fff",
                 decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
+                color: (opacity = 255) => `rgba(127, 125, 169, ${opacity})`,
                 style: {
                   borderRadius: 16,
                 },
