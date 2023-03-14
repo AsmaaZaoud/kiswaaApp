@@ -129,7 +129,11 @@ const InventoryClerkHomePage = ({ navigation }) => {
     setColor("");
     setGender("");
     setAge("");
-    setAddModalVisible(!addModalVisible);
+    addModalVisible
+      ? setAddModalVisibile(!addModalVisible)
+      : editModalVisible
+      ? setEditModalVisible(!editModalVisible)
+      : null;
   };
 
   // change edit
@@ -167,7 +171,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
       .then(() => {
         submit();
         console.log("data updated");
-        setEditModalVisible(false);
+        setEditModalVisible(!editModalVisible);
       })
       .catch((error) => {
         console.log(error.message);
@@ -211,17 +215,28 @@ const InventoryClerkHomePage = ({ navigation }) => {
       : (set(), setError({ satus: false, key: null, msg: "" }));
   };
 
+  const cancel = () => {
+    setID("");
+    setType("");
+    setSize("");
+    setQuality("");
+    setColor("");
+    setGender("");
+    setAge("");
+    setAddModalVisible(!addModalVisible);
+  };
   return (
     <SafeAreaView
       style={{
         // flex: 1,
         overflow: "scroll",
+        height: height,
       }}
     >
       <View
         style={{
-          backgroundColor: "#525F7F",
-          height: "17.5%",
+          backgroundColor: "#44088F",
+          height: height / 10,
           padding: "5%",
           flexDirection: "row",
         }}
@@ -269,10 +284,9 @@ const InventoryClerkHomePage = ({ navigation }) => {
             <DataTable.Title>Gender</DataTable.Title>
             <DataTable.Title>Age</DataTable.Title>
             <DataTable.Title>Quality</DataTable.Title>
-            <DataTable.Title>Availability</DataTable.Title>
             <DataTable.Title></DataTable.Title>
           </DataTable.Header>
-          <ScrollView vertical="true">
+          <ScrollView vertical="true" style={{ height: height / 1.35 }}>
             {items.map((i, x) =>
               i.available == true ? (
                 <DataTable.Row style={{ height: "1%" }}>
@@ -283,7 +297,6 @@ const InventoryClerkHomePage = ({ navigation }) => {
                   <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
                   <DataTable.Cell id={i.id}>{i.age}</DataTable.Cell>
                   <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
-                  <DataTable.Cell id={i.id}>Available</DataTable.Cell>
                   <DataTable.Cell numeric>
                     <Button
                       shadowless
@@ -307,6 +320,16 @@ const InventoryClerkHomePage = ({ navigation }) => {
       <Modal animationType="slide" transparent={true} visible={addModalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <Text
+              style={{
+                fontSize: 20,
+                alignSelf: "center",
+                fontWeight: "bold",
+                margin: 20,
+              }}
+            >
+              Add Items
+            </Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -440,15 +463,44 @@ const InventoryClerkHomePage = ({ navigation }) => {
             {error.key == "quality" && error.satus && (
               <Text style={styles.errorMessage}>{error.msg}</Text>
             )}
-            <Pressable
-              color={Theme.COLORS.PRIMARY}
-              style={[styles.button]}
-              onPress={() => {
-                submit();
-              }}
-            >
-              <Text style={{ color: "white", alignSelf: "center" }}>Done</Text>
-            </Pressable>
+            <Block style={{ flexDirection: "row", alignSelf: "center" }}>
+              <Pressable
+                color={Theme.COLORS.PRIMARY}
+                style={[styles.button]}
+                onPress={() => {
+                  submit();
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    alignSelf: "center",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                  }}
+                >
+                  Done
+                </Text>
+              </Pressable>
+              <Pressable
+                color={Theme.COLORS.PRIMARY}
+                style={[styles.cancelButton]}
+                onPress={() => {
+                  cancel();
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    alignSelf: "center",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                  }}
+                >
+                  Cancel
+                </Text>
+              </Pressable>
+            </Block>
           </View>
         </View>
       </Modal>
@@ -460,6 +512,16 @@ const InventoryClerkHomePage = ({ navigation }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <Text
+              style={{
+                fontSize: 20,
+                alignSelf: "center",
+                fontWeight: "bold",
+                margin: 20,
+              }}
+            >
+              Edit Item
+            </Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -597,14 +659,19 @@ const InventoryClerkHomePage = ({ navigation }) => {
               color={Theme.COLORS.PRIMARY}
               style={[styles.button]}
               onPress={() => {
-                // update(selectedItem.id),
-                // console.log(selectedItem.type);
-                // setEditModalVisible(!editModalVisible);
                 update(selectedItem);
-                // setSelectedItem();
               }}
             >
-              <Text style={{ color: "white", alignSelf: "center" }}>Done</Text>
+              <Text
+                style={{
+                  color: "white",
+                  alignSelf: "center",
+                  fontSize: 15,
+                  fontWeight: "bold",
+                }}
+              >
+                Done
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -650,16 +717,25 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 2,
+    borderRadius: 10,
     width: 100,
     padding: 10,
     backgroundColor: "#5E72E4",
-
     alignSelf: "center",
+    marginTop: "10%",
+  },
+  cancelButton: {
+    borderRadius: 10,
+    width: 100,
+    padding: 10,
+    backgroundColor: "#F5365C",
+    alignSelf: "center",
+    marginLeft: "30%",
+    marginTop: "10%",
   },
   dropdown: {
     margin: "2%",
-    height: "10%",
+    height: height / 18,
     backgroundColor: "white",
     borderRadius: 12,
     padding: "1.2%",

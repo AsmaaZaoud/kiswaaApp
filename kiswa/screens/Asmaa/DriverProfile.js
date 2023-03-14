@@ -372,7 +372,7 @@ const DriverProfile = (props, { navigation }) => {
                   width={width * 0.8}
                   style={{
                     marginBottom: 15,
-                    flexDirection: width > 500 ? "row" : "colunm",
+                    flexDirection: width > 500 ? "row" : "column",
                   }}
                 >
                   <View
@@ -427,7 +427,7 @@ const DriverProfile = (props, { navigation }) => {
                   width={width * 0.8}
                   style={{
                     marginBottom: 15,
-                    flexDirection: width > 500 ? "row" : "colunm",
+                    flexDirection: width > 500 ? "row" : "column",
                   }}
                 >
                   <View
