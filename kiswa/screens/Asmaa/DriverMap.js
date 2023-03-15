@@ -140,8 +140,8 @@ const DriverMap = (props) => {
 
   useEffect(() => {
     makeDate();
-    readOrders();
-    readOrdersTomo();
+    // readOrders();
+    // readOrdersTomo();
   }, [props]);
 
   return (

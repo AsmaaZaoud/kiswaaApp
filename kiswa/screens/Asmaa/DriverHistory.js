@@ -58,7 +58,7 @@ const DriverHistory = (props, { navigation }) => {
 
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-    readOrders();
+    // readOrders();
   }, []);
 
   return (

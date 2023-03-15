@@ -78,7 +78,7 @@ const DriverProfile = (props, { navigation }) => {
     const docRef = doc(db, "drivers", id.toLowerCase());
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+      // console.log("Document data:", docSnap.data());
       setData(docSnap.data());
       setFname(docSnap.data().fname);
       setLname(docSnap.data().lname);
@@ -89,7 +89,7 @@ const DriverProfile = (props, { navigation }) => {
       // alert(dob)
       setQId(docSnap.data().qId);
     } else {
-      console.log("No such document!");
+      // console.log("No such document!");
     }
   };
 
@@ -97,7 +97,7 @@ const DriverProfile = (props, { navigation }) => {
     setEditFlag(false);
     setMsg(false);
     await updateImage();
-    console.log(Fname, Lname, phone, dob);
+    // console.log(Fname, Lname, phone, dob);
     const docRef = doc(db, "drivers", id.toLowerCase());
     await setDoc(
       docRef,
