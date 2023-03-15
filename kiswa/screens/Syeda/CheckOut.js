@@ -17,7 +17,7 @@ import {
   Alert,
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-
+import { Dropdown } from "react-native-element-dropdown";
 import { Button, Icon, Input } from "../../components";
 import { Images, argonTheme } from "../../constants";
 
@@ -61,6 +61,21 @@ export function normalize(size) {
 import { useIsFocused } from "@react-navigation/native";
 
 const CheckOut = ({ route, navigation }) => {
+
+  const zones = [
+    { label: " All Zones", value: "0" },
+    { label: "Doha", value: "1" },
+    { label: "Al Rayyan", value: "2" },
+    { label: "Rumeilah", value: "3" },
+    { label: "Wadi Al Sail", value: "4" },
+    { label: "Al Daayen", value: "5" },
+    { label: "Umm Salal", value: "6" },
+    { label: "Al Wakra", value: "7" },
+    { label: "Al Khor", value: "8" },
+    { label: "Al Shamal", value: "9" },
+    { label: "Al Shahaniya", value: "10" },
+  ];
+
   const isFocused = useIsFocused();
 
   const [email, setEmail] = useState("");
@@ -70,10 +85,15 @@ const CheckOut = ({ route, navigation }) => {
   let confirm = route.params.itemsArray;
   console.log("confirmCheckout: ", confirm);
 
+
+
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
 
   const [locationError, setLocationError] = useState("");
+
+  const [ZoneError, setZoneError] = useState("");
+  const [zone, setZone] = useState(zones[0].label);
 
   const [signedIn, setSignedIn] = useState(false);
   const [flag, setflag] = useState(0);
@@ -99,6 +119,7 @@ const CheckOut = ({ route, navigation }) => {
       console.log("email : ", email);
       setLocation(doc.data().location);
       console.log("location: ", location);
+      setZone(doc.data().zone)
     });
   };
 
@@ -117,6 +138,7 @@ const CheckOut = ({ route, navigation }) => {
       phone: phone,
       email: email,
       location: location,
+      zone: zone,
       // type: route.params.type,
       // amount: route.params.amount,
       timeSlot: route.params.time,
@@ -164,6 +186,7 @@ const CheckOut = ({ route, navigation }) => {
       phone: phone,
       email: email,
       location: location,
+      zone: zone,
       // type: route.params.type,
       // amount: route.params.amount,
       timeSlot: route.params.time,
@@ -240,7 +263,14 @@ const CheckOut = ({ route, navigation }) => {
       setLocationError("");
     }
 
-    if (phone && email && validateEmail && stat === "granted") {
+    if (zone !== " All Zones") {
+      setZoneError("");
+    } else {
+      setZoneError("Select Zone");
+      return;
+    }
+
+    if (phone && email && validateEmail && stat === "granted" && zone !== " All Zones") {
       done();
     }
   };
@@ -388,6 +418,31 @@ const CheckOut = ({ route, navigation }) => {
                     </Button>
                   </Block>
 
+                  <Block width={width * 0.5}>
+                  <Dropdown
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    data={zones}
+                    maxHeight={160}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={zone}
+                    value={zone}
+                    onChange={(item) => {
+                      setZone(item.label);
+                    }}
+                  ></Dropdown>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                    }}
+                  >
+                    {ZoneError}
+                  </Text>
+                </Block>
+
                   <Block width={width * 0.8}>
                     {/* <Button
                                                 style={styles.createButton}
@@ -504,7 +559,7 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 30,
     borderRadius: 10,
-    backgroundColor: "#b19cd9",
+    backgroundColor: "#842DCE",
     position: "relative",
     overflow: "hidden",
     width: "70%",
@@ -516,6 +571,26 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
+  },
+  dropdown: {
+    marginBottom: 10,
+    padding: 7,
+    borderRadius: 4,
+    borderColor: argonTheme.COLORS.INPUT_ERROR,
+    height: 44,
+    backgroundColor: "#FFFFFF",
+    shadowColor: argonTheme.COLORS.BLACK,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    shadowOpacity: 0.05,
+    elevation: 2,
+  },
+  placeholderStyle: {
+    fontSize: 14,
+    color: argonTheme.COLORS.HEADER,
+  },
+  selectedTextStyle: {
+    fontSize: 12,
   },
 });
 

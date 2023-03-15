@@ -115,7 +115,7 @@ const DonorHistory = ({ route, navigation }) => {
         <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
-        <Text bold size={28} color="#32325D" style={{alignSelf: 'center', margin: 20}}>
+        <Text bold size={28} color="#32325D" style={{alignSelf: 'center', margin: 10}}>
           View Past Donations
         </Text>
         <View style={{width: width * 0.9}}>

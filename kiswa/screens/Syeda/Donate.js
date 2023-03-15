@@ -514,22 +514,22 @@ const Donate = ({ route, navigation }) => {
     >
       <Block style={styles.container}>
         <ImageBackground
-          style={styles.Image}
+          style={cloth === '' ? '' : styles.Image}
           source={{
             uri:
               ItemURI == ""
-                ? "https://cdn-icons-png.flaticon.com/128/6834/6834320.png"
+                ? ""
                 : ItemURI,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("Home")}>
             <Image
               style={styles.backButton}
               source={{
                 uri: "https://cdn-icons-png.flaticon.com/512/54/54623.png",
               }}
             ></Image>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </ImageBackground>
 
         <Text style={{ fontSize: 15, color: "red" }}>{dropError}</Text>
@@ -565,7 +565,7 @@ const Donate = ({ route, navigation }) => {
           style={styles.button}
           onPress={() => add(cloth, amount)}
         >
-          <Text style={styles.buttonText}>Add</Text>
+          <Text style={styles.buttonText}>{confirm.length === 0 ? 'Add' : 'Add more Items'}</Text>
         </TouchableOpacity>
 
         <Block
@@ -615,19 +615,19 @@ const Donate = ({ route, navigation }) => {
       <Block style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}>
         <Button
           onPress={changeColor1}
-          style={{ backgroundColor: flag1 === 0 ? "purple" : "green" }}
+          style={{ backgroundColor: flag1 === 0 ? "purple" : "#F8B88B" }}
         >
           8AM - 12PM
         </Button>
         <Button
           onPress={changeColor2}
-          style={{ backgroundColor: flag2 === 0 ? "purple" : "green" }}
+          style={{ backgroundColor: flag2 === 0 ? "purple" : "#F8B88B" }}
         >
           12PM - 6PM
         </Button>
         <Button
           onPress={changeColor3}
-          style={{ backgroundColor: flag3 === 0 ? "purple" : "green" }}
+          style={{ backgroundColor: flag3 === 0 ? "purple" : "#F8B88B" }}
         >
           6PM - 10PM
         </Button>
@@ -642,7 +642,7 @@ const Donate = ({ route, navigation }) => {
       <Block style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}>
         <Button
           onPress={checkColor1}
-          style={{ backgroundColor: check1 === 0 ? "purple" : "green" }}
+          style={{ backgroundColor: check1 === 0 ? "purple" : "#F8B88B" }}
         >
           <Text style={{ color: "white" }}>
             {dateString} - {first2date}
@@ -650,7 +650,7 @@ const Donate = ({ route, navigation }) => {
         </Button>
         <Button
           onPress={checkColor2}
-          style={{ backgroundColor: check2 === 0 ? "purple" : "green" }}
+          style={{ backgroundColor: check2 === 0 ? "purple" : "#F8B88B" }}
         >
           <Text style={{ color: "white" }}>
             {sec1date} - {sec2date}
@@ -658,7 +658,7 @@ const Donate = ({ route, navigation }) => {
         </Button>
         <Button
           onPress={checkColor3}
-          style={{ backgroundColor: check3 === 0 ? "purple" : "green" }}
+          style={{ backgroundColor: check3 === 0 ? "purple" : "#F8B88B" }}
         >
           <Text style={{ color: "white" }}>
             {third1date} - {third2date}
@@ -717,7 +717,7 @@ const styles = StyleSheet.create({
   },
   Image: {
     width: width * 1,
-    height: height * 0.5,
+    height: height * 0.3,
     //borderRadius: 10,
     overflow: "hidden",
     alignSelf: "center",
@@ -726,7 +726,7 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 30,
     borderRadius: 10,
-    backgroundColor: "#b19cd9",
+    backgroundColor: "#842DCE",
     position: "relative",
     overflow: "hidden",
     width: "70%",
