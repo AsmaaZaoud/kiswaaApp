@@ -40,7 +40,10 @@ import { useIsFocused } from "@react-navigation/native";
 
 const Home = ({ route, navigation }) => {
 
-  let user = auth?.currentUser?.email;
+  let Currentuser = auth?.currentUser?.email;
+  console.log("Currentuser: ", Currentuser)
+
+  const [user, setUser] = useState(auth?.currentUser?.email)
   console.log("user: ", user)
 
   const isFocused = useIsFocused();
@@ -50,7 +53,7 @@ const Home = ({ route, navigation }) => {
   const [image, setImage] = useState("");
 
   const [finalArray, setFinalArray] = useState([])
-  console.log('finalArray', finalArray)
+  //console.log('finalArray', finalArray)
 
 
   //clothes type data
@@ -91,18 +94,20 @@ const Home = ({ route, navigation }) => {
     const docRef = doc(db, "donors", user);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+      //console.log("Document data:", docSnap.data());
       setImage(docSnap.data().image);
-      console.log("read image:", image)
+      //console.log("read image:", image)
+      console.log("EXISTS document!");
     } else {
       console.log("No such document!");
+      setUser(undefined)
     }
   };
 
   //read from database
 
   useEffect(() => {
-    console.log("use...");
+    //console.log("use...");
     readAllWhere()
   }, []);
 
@@ -113,13 +118,13 @@ const Home = ({ route, navigation }) => {
     const itemsArray = [];
   
     docs.forEach((doc) => {
-      console.log('readAllWhere => ', doc.id, " => ", doc.data());
+      //console.log('readAllWhere => ', doc.id, " => ", doc.data());
       const docRef = collection(db, "familyRequests", doc.id, "Items");
       const promise = getDocs(docRef).then((docs2) => {
         docs2.forEach((doc) => {
-          console.log('getCartItems => ', doc.id, " => ", doc.data());
-          console.log('quantity: => ', doc.data().quantity, 'type: => ', doc.data().type)
-          console.log({type: doc.data().type, quantity: doc.data().quantity})
+          // console.log('getCartItems => ', doc.id, " => ", doc.data());
+          // console.log('quantity: => ', doc.data().quantity, 'type: => ', doc.data().type)
+          // console.log({type: doc.data().type, quantity: doc.data().quantity})
   
           itemsArray.push({ type: doc.data().type, quantity: doc.data().quantity });
         });
@@ -129,7 +134,7 @@ const Home = ({ route, navigation }) => {
   
     await Promise.all(promises);
   
-    console.log('itemsArray',itemsArray);
+    //console.log('itemsArray',itemsArray);
 
     setFinalArray(itemsArray)
   };
@@ -154,7 +159,7 @@ const Home = ({ route, navigation }) => {
       // doc.data() is never undefined for query doc snapshots
       counter += 1
       //setCounter(counter)
-      console.log("readDonations => ", doc.id, " => ", doc.data());
+      // console.log("readDonations => ", doc.id, " => ", doc.data());
     });
     setNumber(counter)
     //console.log("counter: ", counter)
@@ -301,8 +306,8 @@ const Home = ({ route, navigation }) => {
                     <TouchableOpacity onPress={() => navigation.navigate('Donate', { type: item.type, quantity: item.quantity, uri: ClothTypeData.find((object) => object.label === item.type).uri })}>
                       <LilacCard
                         imageUrl={ClothTypeData.find((object) => object.label === item.type).uri}
-                        title={item.type}
-                        subtitle={item.quantity}
+                        title={item.quantity + ' ' + item.type}
+                        //subtitle={item.quantity}
                       />
                     </TouchableOpacity>
                   </View>
