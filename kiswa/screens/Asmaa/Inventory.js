@@ -38,6 +38,7 @@ import {
   getDoc,
   addDoc,
   collection,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../config";
 //argon
@@ -64,7 +65,9 @@ const Inventory = ({ navigation }) => {
   const [Total, setTotal] = useState(0);
 
   useEffect(() => {
-    readAllWhere();
+    readItems();
+    readRequests();
+    readDonations();
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
 
@@ -72,19 +75,17 @@ const Inventory = ({ navigation }) => {
   const [allinventory, setAllInventory] = useState([]);
   const [blouse, setBlouse] = useState([]);
 
-  const readAllWhere = async () => {
-    let temp = [];
-    const q = query(collection(db, "inventory"));
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      console.log(doc.id, " => ", doc.data());
+  const readItems = async () => {
+    const collectionRef = collection(db, "inventory");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      //  console.log("snapshot");
+      setInventory(querySnapshot.docs.map((doc) => doc.data()));
+
+      //  setTotal(inventory.length)
     });
-    setTotal(temp.length);
-    setInventory(temp);
-    setAllInventory(temp);
-    console.log(inventory);
+
+    return () => unsubscribe();
   };
 
   const data = {
@@ -97,6 +98,35 @@ const Inventory = ({ navigation }) => {
       },
     ],
     legend: ["Donation Days"], // optional
+  };
+
+  const [donLen, setDonLen] = useState(0);
+  const [ReqLen, setReqLen] = useState(0);
+
+  const [requests, setRequests] = useState([]);
+  const readRequests = async () => {
+    const collectionRef = collection(db, "familyRequests");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setRequests(querySnapshot.docs.map((doc) => doc.data()));
+      setReqLen(requests.length);
+      console.log(ReqLen);
+    });
+
+    return () => unsubscribe();
+  };
+  const [donations, setDonations] = useState([]);
+  const readDonations = async () => {
+    const collectionRef = collection(db, "donorDonation");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDonations(querySnapshot.docs.map((doc) => doc.data()));
+      setDonLen(donations.length);
+    });
+
+    return () => unsubscribe();
   };
 
   return (
@@ -257,19 +287,29 @@ const Inventory = ({ navigation }) => {
                       legendFontSize: 15,
                     },
                     {
-                      name: "Men",
-                      population: inventory.filter((item) => item.age === "men")
-                        .length,
+                      name: "Adults",
+                      population: inventory.filter(
+                        (item) => item.age === "Adults"
+                      ).length,
                       color: "#D7C3F0",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
                     {
-                      name: "Women",
+                      name: "Baby",
                       population: inventory.filter(
-                        (item) => item.age === "women"
+                        (item) => item.age === "Baby"
                       ).length,
                       color: "#F7C3F0",
+                      legendFontColor: "#727F7F",
+                      legendFontSize: 15,
+                    },
+                    {
+                      name: "Teenagers",
+                      population: inventory.filter(
+                        (item) => item.age === "Teenagers"
+                      ).length,
+                      color: "#eaaeF0",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -281,7 +321,7 @@ const Inventory = ({ navigation }) => {
                     backgroundGradientFrom: "#eff3ff",
                     backgroundGradientTo: "#efefef",
                     // decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    color: (opacity = 1) => `rgba(2, 2, 10, ${opacity})`,
                     style: {
                       // borderRadius: 16,
                       color: "red",
@@ -386,7 +426,7 @@ const Inventory = ({ navigation }) => {
                     backgroundGradientFrom: "#eff3ff",
                     backgroundGradientTo: "#efefef",
                     decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    color: (opacity = 1) => `rgba(20, 20, 19, ${opacity})`,
                     style: {
                       borderRadius: 16,
                     },
@@ -431,12 +471,13 @@ const Inventory = ({ navigation }) => {
                 width: "100%",
               }}
             ></View>
+
             <BarChart
               data={{
-                labels: ["Donations", "Requests"],
+                labels: ["Donations", "Requests", ""],
                 datasets: [
                   {
-                    data: [30, 20, 10],
+                    data: [donations.length, requests.length, 0],
                   },
                 ],
               }}
@@ -444,11 +485,11 @@ const Inventory = ({ navigation }) => {
               height={height * 0.3}
               //yAxisLabel={"QR"}
               chartConfig={{
-                backgroundColor: "#fff",
+                backgroundColor: "#f02",
                 backgroundGradientFrom: "#fff",
                 backgroundGradientTo: "#fff",
                 decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 255) => `rgba(127, 125, 169, ${opacity})`,
+                color: (opacity = 255) => `rgba(45, 28, 29, ${opacity})`,
                 style: {
                   borderRadius: 16,
                 },
