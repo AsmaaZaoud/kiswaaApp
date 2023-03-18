@@ -31,6 +31,7 @@ import {
   addDoc,
   collection,
   where,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../config";
 //argon
@@ -61,45 +62,53 @@ const Families = ({ navigation }) => {
   const [allFamilies, setAllFamilies] = useState([]);
 
   const readAllWhere = async () => {
-    let temp = [];
-    const q = query(collection(db, "families"));
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "families");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setAllFamilies(querySnapshot.docs.map((doc) => doc.data()));
+      setFamilies(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setFamilies(temp);
-    setAllFamilies(temp);
-    // console.log("alll", allFamilies);
+
+    return () => unsubscribe();
   };
   const [flag, setFlag] = useState(false);
 
   const [requests, setRequests] = useState([]);
   //  let user = "Wsd@ass.com"
+  // const readOne = async (user) => {
+  //   setHover(user);
+  //   let temp = [];
+  //   const q = query(
+  //     collection(db, "familyRequests"),
+  //     where("familyID", "==", user)
+  //   );
+  //   const docs = await getDocs(q);
+  //   // console.log(docs)
+  //   docs.forEach((doc) => {
+  //     let t = doc.data();
+  //     temp.push(t);
+  //     console.log(doc.id, " => ", t);
+  //   });
+  //   setRequests(temp);
+
+  //   setFlag(true);
+  // };
+
   const readOne = async (user) => {
     setHover(user);
-    let temp = [];
     const q = query(
       collection(db, "familyRequests"),
       where("familyID", "==", user)
     );
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      // let hour = doc.data().dateTime.toDate().getHours()
-      let t = doc.data();
-      // t.time = hour + ":00"
-      // t.date = doc.data().dateTime.toDate().toLocaleDateString()
-      temp.push(t);
-      console.log(doc.id, " => ", t);
-      // console.log(t);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setRequests(querySnapshot.docs.map((doc) => doc.data()));
+      //  setFamilies(querySnapshot.docs.map((doc) => doc.data()));
+      setFlag(true);
     });
-    setRequests(temp);
 
-    // setAllorderss(temp)
-    //console.log(families);
-    setFlag(true);
+    return () => unsubscribe();
   };
 
   // >>>>>>>>>>>>>> Search functions <<<<<<<<<<<<<<
@@ -128,7 +137,11 @@ const Families = ({ navigation }) => {
     return (
       <Block
         // height={height * 0.6}
-        style={{ borderWidth: 1, height: height, marginTop: "5%" }}
+        style={{
+          borderWidth: 1,
+          height: height,
+          marginTop: "5%",
+        }}
       >
         <ScrollView>
           <Text
@@ -141,7 +154,11 @@ const Families = ({ navigation }) => {
             Requests
           </Text>
           <View
-            style={{ flexDirection: "row", flexWrap: "wrap", width: width }}
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              width: width,
+            }}
           >
             {/* <ScrollView> */}
             {requests &&

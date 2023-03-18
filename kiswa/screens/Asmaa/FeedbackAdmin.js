@@ -14,7 +14,14 @@ import React, { useEffect, useState } from "react";
 import { Feather, MaterialIcons, AntDesign } from "react-native-vector-icons";
 import { signOut } from "firebase/auth";
 import { db } from "../../config";
-import { collection, deleteDoc, doc, getDocs, query } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 import { Block } from "galio-framework";
 const { width, height } = Dimensions.get("screen");
 const scale = width / 830;
@@ -36,24 +43,15 @@ const FeedbackAdmin = (props, { navigation }) => {
   const [feedback, setFeedback] = useState([]);
 
   const readFeedback = async () => {
-    let temp = [];
-    const q = query(collection(db, "feedback"));
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      //   let hour = doc.data().dateTime.getHours();
-      let t = doc.data();
-      t.id = doc.id;
-      //   t.time = hour + ":00";
-      // t.date = doc.data().dateTime.toDate().toLocaleDateString();
-      //   doc.data().status == "done" ? temp.push(t) : null;
-      temp.push(t);
-      console.log(doc.id, " => ", t);
-      //   doc.data().type == "pickup" ? pick.push(t) : deliv.push(t);
+    const collectionRef = collection(db, "feedback");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setFeedback(querySnapshot.docs.map((doc) => doc.data()));
+      // setAllDonors(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setFeedback(temp);
-    // setArr(temp);
-    console.log(feedback);
+
+    return () => unsubscribe();
   };
 
   useEffect(() => {

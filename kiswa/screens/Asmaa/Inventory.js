@@ -147,6 +147,7 @@ const Inventory = ({ navigation }) => {
             >
               <AntDesign
                 name="table"
+                color="#80B84B"
                 size={normalize(40)}
                 style={{ marginTop: "1%" }}
               />

@@ -174,12 +174,12 @@ const AdminHome = ({ route, navigation }) => {
               borderBottomWidth: 5,
             }}
           >
-            <FontAwesome
+            <FontAwesome5
               color="#e68d69"
-              name="table"
+              name="warehouse"
               size={deviceType == "mobile" ? 30 : 45}
             />
-            <Text style={{ fontSize: normalize(19) }}>Tables</Text>
+            <Text style={{ fontSize: normalize(19) }}>Inventory</Text>
           </Tab.Item>
         </Tab>
         {/* </Block> */}
@@ -242,11 +242,6 @@ const AdminHome = ({ route, navigation }) => {
           {/*--------- Drivers -------------*/}
           <TabView.Item disableTransition style={styles.comp}>
             <View style={styles.board}>
-              {users == "drivers" ? (
-                <Drivers navigation={navigation} />
-              ) : (
-                <Clerks navigation={navigation} />
-              )}
               <View
                 style={{
                   width: width * 0.5,
@@ -254,7 +249,7 @@ const AdminHome = ({ route, navigation }) => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   marginHorizontal: "6%",
-                  marginTop: "90%",
+                  marginTop: "5%",
                 }}
               >
                 <Button onPress={() => setUsers("drivers")}>
@@ -264,10 +259,15 @@ const AdminHome = ({ route, navigation }) => {
                 </Button>
                 <Button onPress={() => setUsers("clerks")}>
                   <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
-                    Clerks
+                    Inventory Workers
                   </Text>
                 </Button>
               </View>
+              {users == "drivers" ? (
+                <Drivers navigation={navigation} />
+              ) : (
+                <Clerks navigation={navigation} />
+              )}
             </View>
           </TabView.Item>
 

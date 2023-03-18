@@ -164,12 +164,12 @@ const InventoryTable = ({ navigation }) => {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                width: width * 0.86,
+                width: width * 0.9,
                 // borderWidth: 1,
               }}
             >
               <View style={{ flexDirection: "row" }}>
-                <Feather name="box" size={deviceType == "mobile" ? 30 : 45} />
+                {/* <Feather name="box" size={deviceType == "mobile" ? 30 : 45} /> */}
                 <Text
                   style={{
                     fontSize: deviceType == "mobile" ? 20 : 30,
@@ -199,9 +199,11 @@ const InventoryTable = ({ navigation }) => {
                 >
                   <Octicons
                     name="graph"
+                    color="green"
                     size={deviceType == "mobile" ? 40 : 45}
                     style={{ marginTop: deviceType == "mobile" ? "5%" : "2%" }}
                   />
+                  {/* <Text>See graphs</Text> */}
                 </Pressable>
               </View>
             </View>
@@ -537,7 +539,7 @@ const styles = StyleSheet.create({
     padding: "1%",
     marginTop: "3%",
     width: "90%",
-    marginLeft: "3%",
+    // marginLeft: "3%",
     alignItems: "center",
     // borderWidth:2,
     justifyContent: "space-between",

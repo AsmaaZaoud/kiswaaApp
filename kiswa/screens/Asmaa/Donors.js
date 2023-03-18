@@ -31,6 +31,7 @@ import {
   addDoc,
   collection,
   where,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../config";
 //argon
@@ -53,7 +54,6 @@ const Donors = ({ navigation }) => {
 
   useEffect(() => {
     setFlag(false);
-    // console.log(width);
     readAllWhere();
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
@@ -62,45 +62,34 @@ const Donors = ({ navigation }) => {
   const [alldonors, setAllDonors] = useState([]);
 
   const readAllWhere = async () => {
-    let temp = [];
-    const q = query(collection(db, "donors"));
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "donors");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDonors(querySnapshot.docs.map((doc) => doc.data()));
+      setAllDonors(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setDonors(temp);
-    setAllDonors(temp);
-    //console.log(donors);
+
+    return () => unsubscribe();
   };
   const [flag, setFlag] = useState(false);
 
   const [donations, setDonations] = useState([]);
-  //  let user = "Wsd@ass.com"
+
   const readOne = async (user) => {
     setHover(user);
-    let temp = [];
     const q = query(
       collection(db, "donorDonation"),
       where("email", "==", user)
     );
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      // let hour = doc.data().dateTime.toDate().getHours()
-      let t = doc.data();
-      // t.time = hour + ":00"
-      // t.date = doc.data().dateTime.toDate().toLocaleDateString()
-      temp.push(t);
-      console.log(doc.id, " => ", t);
-      // console.log(t);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDonations(querySnapshot.docs.map((doc) => doc.data()));
+      //  setFamilies(querySnapshot.docs.map((doc) => doc.data()));
+      setFlag(true);
     });
-    setDonations(temp);
 
-    // setAllorderss(temp)
-    //console.log(donors);
-    setFlag(true);
+    return () => unsubscribe();
   };
 
   const renderCards = () => {

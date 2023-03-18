@@ -31,6 +31,7 @@ import {
   collection,
   setDoc,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../config";
 import { Block } from "galio-framework";
@@ -67,7 +68,7 @@ const Dashboard = () => {
   const stat = [
     {
       title: "Donations",
-      data: "Donations",
+      data: "donations",
       img: require("../../assets/imgs/donations.png"),
     },
     {
@@ -121,107 +122,106 @@ const Dashboard = () => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
 
+  const zonesData = () => {
+    for (x in families) {
+      var loc = x.zone;
+      z.forEach((y) => {
+        y.name == loc ? (y.count += 1) : null;
+      });
+    }
+  };
+
   //Users---------
   const [families, setFamilies] = useState([]);
   const readFamilies = async () => {
-    let temp = [];
-    const q = query(collection(db, "families"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      let loc = doc.data().zone;
-      // z.doc.data().zone += 1;
-      z.forEach((x) => {
-        x.name == loc ? (x.count += 1) : null;
-      });
-
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "families");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setFamilies(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setFamilies(temp);
-    setKhor(z);
-    console.log("z", z);
-    //console.log(drivers);
+
+    return () => unsubscribe();
   };
 
   const [donors, setDonors] = useState([]);
   const readDonors = async () => {
-    let temp = [];
-    const q = query(collection(db, "donors"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "donors");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDonors(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setDonors(temp);
+
+    return () => unsubscribe();
   };
 
   const [drivers, setDrivers] = useState([]);
   const readDrivers = async () => {
-    let temp = [];
-    const q = query(collection(db, "drivers"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "drivers");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDrivers(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setDrivers(temp);
+
+    return () => unsubscribe();
   };
   const [workers, setWorkers] = useState([]);
   const readWorkers = async () => {
-    let temp = [];
-    const q = query(collection(db, "inventoryWorkers"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "inventoryWorkers");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setWorkers(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setWorkers(temp);
+
+    return () => unsubscribe();
   };
 
-  //
   const [requests, setRequests] = useState([]);
   const readRequests = async () => {
-    let temp = [];
-    const q = query(collection(db, "familyRequests"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "familyRequests");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setRequests(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setRequests(temp);
+
+    return () => unsubscribe();
   };
   const [donations, setDonations] = useState([]);
   const readDonations = async () => {
-    let temp = [];
-    const q = query(collection(db, "donations"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "donorDonation");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDonations(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setDonations(temp);
+
+    return () => unsubscribe();
   };
   const [feedback, setFeedback] = useState([]);
   const readFeedback = async () => {
-    let temp = [];
-    const q = query(collection(db, "feedback"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "feedback");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setFeedback(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setFeedback(temp);
+
+    return () => unsubscribe();
   };
   const [items, setItems] = useState([]);
   const readItems = async () => {
-    let temp = [];
-    const q = query(collection(db, "inventory"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "inventory");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setItems(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setItems(temp);
+
+    return () => unsubscribe();
   };
   const data = {
     labels: ["Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday"],
@@ -370,13 +370,13 @@ const Dashboard = () => {
                         <Text></Text>
 
                         <Text style={{ fontSize: normalize(25) }}>
-                          {x.data == "requests"
-                            ? requests.length
-                            : x.data == "donations"
-                            ? donations.length
-                            : x.data == "items"
-                            ? items.length
-                            : feedback.length}
+                          {x.data == "workers"
+                            ? workers.length
+                            : x.data == "drivers"
+                            ? drivers.length
+                            : x.data == "donors"
+                            ? donors.length
+                            : families.length}
                         </Text>
                       </View>
                     </View>
@@ -423,11 +423,11 @@ const Dashboard = () => {
             <Block
               style={{
                 flexDirection: "row",
-                width: width * 3,
+                width: width * 1.5,
                 height: height * 0.4,
               }}
             >
-              <View
+              {/* <View
                 style={[
                   styles.status,
                   { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
@@ -458,7 +458,7 @@ const Dashboard = () => {
 
                   <Text>3/6</Text>
                 </View>
-              </View>
+              </View> */}
               <View
                 style={[
                   styles.status,
