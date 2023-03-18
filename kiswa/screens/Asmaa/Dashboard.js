@@ -50,6 +50,15 @@ const Dashboard = () => {
   const [deviceType, setDeviceType] = useState("");
   const [khor, setKhor] = useState([]);
   const [value, setValue] = useState(0);
+  const [daysSt, setDaysSt] = useState({
+    Sunday: 0,
+    Monday: 0,
+    Tuesday: 0,
+    Wednesday: 0,
+    Thursday: 0,
+    Friday: 0,
+  });
+  // const [reqDaysst, setReqDaysst] = useState({});
 
   const zones = [];
   const z = [
@@ -64,6 +73,22 @@ const Dashboard = () => {
     { name: "Al Shamal", count: 0 },
     { name: "Al Shahaniya", count: 0 },
   ];
+  const days = {
+    Sunday: 0,
+    Monday: 0,
+    Tuesday: 0,
+    Wednesday: 0,
+    Thursday: 0,
+    Friday: 0,
+  };
+  const reqDays = {
+    Sunday: 0,
+    Monday: 0,
+    Tuesday: 0,
+    Wednesday: 0,
+    Thursday: 0,
+    Friday: 0,
+  };
 
   const stat = [
     {
@@ -119,16 +144,14 @@ const Dashboard = () => {
     readWorkers();
     readFeedback();
     readDrivers();
+    zonesData();
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
 
   const zonesData = () => {
-    for (x in families) {
-      var loc = x.zone;
-      z.forEach((y) => {
-        y.name == loc ? (y.count += 1) : null;
-      });
-    }
+    donations.forEach((x) => {
+      console.log(x.day);
+    });
   };
 
   //Users---------
@@ -186,6 +209,13 @@ const Dashboard = () => {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("snapshot");
       setRequests(querySnapshot.docs.map((doc) => doc.data()));
+
+      // querySnapshot.docs.forEach((doc) => {
+      //   d = doc.data().day;
+      //   reqDays[d] += 1;
+      // });
+      // console.log(reqDays);
+      // setReqDaysst(reqDays);
     });
 
     return () => unsubscribe();
@@ -197,6 +227,13 @@ const Dashboard = () => {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("snapshot");
       setDonations(querySnapshot.docs.map((doc) => doc.data()));
+
+      querySnapshot.docs.forEach((doc) => {
+        d = doc.data().day;
+        days[d] += 1;
+      });
+      console.log(days);
+      setDaysSt(days);
     });
 
     return () => unsubscribe();
@@ -223,17 +260,25 @@ const Dashboard = () => {
 
     return () => unsubscribe();
   };
+
   const data = {
     labels: ["Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday"],
     datasets: [
       {
-        data: [12, 10, 10, 20, 30, 18],
+        data: [
+          daysSt.Sunday,
+          daysSt.Monday,
+          daysSt.Tuesday,
+          daysSt.Wednesday,
+          daysSt.Thursday,
+          daysSt.Friday,
+        ],
 
         color: (opacity = 3) => `rgba(233, 162, 134, ${opacity})`, // optional
         strokeWidth: 4, // optional
       },
       {
-        data: [10, 5, 11, 7, 9, 4],
+        data: [0, 1, 1, 2, 3, 4],
 
         color: (opacity = 3) => `rgba(181, 136, 237, ${opacity})`, // optional
         strokeWidth: 4, // optional
@@ -386,24 +431,26 @@ const Dashboard = () => {
             </View>
           </ScrollView>
 
-          <LineChart
-            data={data}
-            width={width * 1.1}
-            height={height * 0.25}
-            verticalLabelRotation={0}
-            chartConfig={{
-              backgroundColor: "#ccc",
-              backgroundGradientFrom: "#fff",
-              backgroundGradientTo: "#fff",
-              decimalPlaces: 0,
-              color: (opacity = 0) => `rgba(100, 102,101 , ${opacity})`,
-              style: {
-                // borderRadius: 16,
-                // margin: "1%",
-              },
-            }}
-            bezier
-          />
+          {daysSt && (
+            <LineChart
+              data={data}
+              width={width * 1.1}
+              height={height * 0.25}
+              verticalLabelRotation={0}
+              chartConfig={{
+                backgroundColor: "#ccc",
+                backgroundGradientFrom: "#fff",
+                backgroundGradientTo: "#fff",
+                decimalPlaces: 0,
+                color: (opacity = 0) => `rgba(100, 102,101 , ${opacity})`,
+                style: {
+                  // borderRadius: 16,
+                  // margin: "1%",
+                },
+              }}
+              bezier
+            />
+          )}
 
           <View
             style={{
