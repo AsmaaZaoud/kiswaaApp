@@ -4,6 +4,8 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  PixelRatio,
+  Platform,
   ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -41,10 +43,18 @@ import { Card, Header } from "../../components";
 
 import { Icon, AntDesign, FontAwesome } from "react-native-vector-icons";
 import ArButton from "../../components/Button";
-import { normalize } from "./AdminHome";
 
 const { width, height } = Dimensions.get("screen");
+const scale = width / 830;
 
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
@@ -255,11 +265,6 @@ const Donors = ({ navigation }) => {
           }}
           autoCorrect={false}
         />
-        {/* <Button L color="primary"  style={{width:"25%", height:"50%"}} onPress={()=>navigation.navigate("AddDriver")}>
-                      
-                      <Text style={{fontSize:deviceType=="mobile" ?18: 26, color:"#FFF"}}>Add</Text> 
-                      
-                      </Button>     */}
       </Block>
 
       <DataTable.Header
@@ -275,7 +280,7 @@ const Donors = ({ navigation }) => {
       >
         <DataTable.Title
           textStyle={{
-            fontSize: deviceType == "mobile" ? width * 0.04 : width * 0.025,
+            fontSize: normalize(20),
             fontWeight: "bold",
           }}
         >
@@ -283,7 +288,7 @@ const Donors = ({ navigation }) => {
         </DataTable.Title>
         <DataTable.Title
           textStyle={{
-            fontSize: deviceType == "mobile" ? width * 0.04 : width * 0.025,
+            fontSize: normalize(20),
             fontWeight: "bold",
           }}
         >
@@ -292,7 +297,7 @@ const Donors = ({ navigation }) => {
         <DataTable.Title
           numeric
           textStyle={{
-            fontSize: deviceType == "mobile" ? width * 0.04 : width * 0.025,
+            fontSize: normalize(20),
             fontWeight: "bold",
           }}
         >
@@ -308,7 +313,7 @@ const Donors = ({ navigation }) => {
                 onPress={() => readOne(x.email)}
                 style={{
                   width: "90%",
-                  height: "12%",
+                  // height: "12%",
                   marginLeft: "3%",
                   backgroundColor: hover == x.email ? "#f3e5f5" : "white",
                 }}

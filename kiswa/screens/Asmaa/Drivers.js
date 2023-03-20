@@ -46,12 +46,18 @@ import { Card, Header } from "../../components";
 
 import { Icon, AntDesign, FontAwesome } from "react-native-vector-icons";
 import ArButton from "../../components/Button";
-import { normalize } from "./AdminHome";
 
 const { width, height } = Dimensions.get("screen");
+const scale = width / 830;
 
-const thumbMeasure = (width - 48 - 32) / 3;
-const cardWidth = width - theme.SIZES.BASE * 2;
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 
 const Drivers = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
@@ -99,19 +105,15 @@ const Drivers = ({ navigation }) => {
 
   const readOne = async (user) => {
     setHover(user);
-    let temp = [];
     const q = query(collection(db, "drivers", user, "orders"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      let hour = doc.data().dateTime.toDate().getHours();
-      let t = doc.data();
-      t.time = hour + ":00";
-      t.date = doc.data().dateTime.toDate().toLocaleDateString();
-      temp.push(t);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setOrders(querySnapshot.docs.map((doc) => doc.data()));
+      //  setFamilies(querySnapshot.docs.map((doc) => doc.data()));
+      setFlag(true);
     });
-    setOrders(temp);
 
-    setFlag(true);
+    return () => unsubscribe();
   };
 
   const deleteDriver = async (id) => {
@@ -149,14 +151,6 @@ const Drivers = ({ navigation }) => {
   const renderCards = () => {
     return (
       <Block style={{ borderWidth: 0, height: height }}>
-        {/* <ScrollView> */}
-        {/* <View
-          style={{
-            // borderWidth: 2,
-            marginTop: 0,
-            height: height * 0.8,
-          }}
-        > */}
         <ScrollView>
           <Text
             style={{
@@ -178,14 +172,14 @@ const Drivers = ({ navigation }) => {
               <View style={styles.notificationBox} key={item.type}>
                 <View
                   style={{
-                    // flexDirection: "row",
+                    flexDirection: "row",
                     justifyContent: "space-between",
                     paddingHorizontal: "2%",
                     paddingVertical: "1%",
                   }}
                 >
                   <Text style={styles.description}>{item.type} </Text>
-                  {/* <Text style={styles.description}>{item.dateTime}</Text> */}
+                  <Text style={styles.description}>{item.date}</Text>
                 </View>
 
                 <View
@@ -225,7 +219,7 @@ const Drivers = ({ navigation }) => {
                   >
                     <View
                       style={{
-                        flexDirection: "row",
+                        // flexDirection: "row",
                         //   width: "50%",
                         // borderWidth: 1,
                         padding: "1%",
@@ -235,7 +229,10 @@ const Drivers = ({ navigation }) => {
                       {/* <MaterialIcons name="location-pin" size={25} />
                         <Text style={styles.description}>{item.location}</Text>
                         <Text style={styles.description}>{item.location}</Text> */}
+                      <Text style={styles.description}>{item.userName}</Text>
+
                       <Text style={styles.description}>{item.location}</Text>
+                      <Text style={styles.description}>{item.timeSlot}</Text>
                     </View>
 
                     <View

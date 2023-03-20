@@ -69,7 +69,7 @@ import Inventory from "../screens/Asmaa/Inventory";
 import Donors from "../screens/Asmaa/Donors";
 import Families from "../screens/Asmaa/Families";
 import Dashboard from "../screens/Asmaa/Dashboard";
-
+import FamilyCartDetails from "../screens/Asmaa/FamilyCartDetails";
 //for onboarding
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -557,6 +557,17 @@ export default function OnboardingStack(props) {
         <Stack.Screen name="FamilyFeedback" component={FamilyFeedback} />
         <Stack.Screen name="FeedbackConf" component={FeedbackConf} />
         <Stack.Screen name="RequestHistory" component={RequestHistory} />
+        <Stack.Screen
+          name="FamilyCartDetails"
+          component={FamilyCartDetails}
+          options={{
+            headerShown: true,
+            title: "",
+            headerBackTitle: "Back",
+            // headerTintColor: "#5e1e7f",
+          }}
+        />
+
         <Stack.Screen
           name="RequestHistoryComp"
           component={RequestHistoryComp}

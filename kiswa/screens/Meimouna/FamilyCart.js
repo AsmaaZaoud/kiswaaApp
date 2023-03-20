@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   Dimensions,
+  Image,
 } from "react-native";
 import {
   Fontisto,
@@ -201,6 +202,11 @@ const FamilyCart = ({ route, navigation }) => {
                         <Text style={styles.ct}></Text>
                       </View>
                       <View key={i + 2} style={styles.board2}>
+                        <Image
+                          style={styles.smallImage}
+                          source={{ uri: x.data.icon }}
+                        />
+
                         <Text style={styles.ctt}>{x.data.color}</Text>
                         <Text style={styles.ctt}>{x.data.size}</Text>
                         <Text style={styles.ctt}>{x.data.quantity}</Text>
@@ -654,6 +660,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     // backgroundColor: "lightpink",
     alignItems: "center",
+  },
+  smallImage: {
+    width: 60,
+    height: 60,
+    //borderRadius: 10,
   },
   ct: {
     color: "#842DCE",

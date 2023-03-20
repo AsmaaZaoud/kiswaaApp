@@ -15,6 +15,8 @@ import {
   Table,
   SafeAreaView,
   Pressable,
+  Platform,
+  PixelRatio,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 
@@ -53,10 +55,18 @@ import {
   AntDesign,
 } from "react-native-vector-icons";
 import ArButton from "../../components/Button";
-import { normalize } from "@rneui/themed";
 
 const { width, height } = Dimensions.get("screen");
+const scale = width / 830;
 
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
@@ -166,7 +176,7 @@ const Inventory = ({ navigation }) => {
                 style={{
                   fontSize: normalize(18),
                   marginLeft: "3%",
-                  marginTop: "3.9%",
+                  marginTop: "3%",
                 }}
               >
                 Total items ={inventory.length}
@@ -175,12 +185,7 @@ const Inventory = ({ navigation }) => {
             <Pressable
               onPress={() => navigation.navigate("AdminHome", "table")}
             >
-              <AntDesign
-                name="table"
-                color="#80B84B"
-                size={normalize(40)}
-                style={{ marginTop: "1%" }}
-              />
+              <AntDesign name="table" color="#80B84B" size={normalize(40)} />
             </Pressable>
           </View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>

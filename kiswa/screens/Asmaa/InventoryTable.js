@@ -414,44 +414,6 @@ const InventoryTable = ({ navigation }) => {
                 }}
               />
             </DataTable.Title>
-            <DataTable.Title textStyle={styles.title}>
-              <Dropdown
-                style={[
-                  styles.smallInput,
-                  // { padding: 0, width: open ? width * 0.6 : width * 0.2 },
-                ]}
-                placeholderStyle={{
-                  fontSize: normalize(20),
-                  textAlign: "left",
-                  color: "white",
-                  fontWeight: "bold",
-                }}
-                selectedTextStyle={{
-                  fontSize: normalize(20),
-                  textAlign: "left",
-                  color: "white",
-                  fontWeight: "bold",
-                }}
-                inputSearchStyle={styles.inputSearchStyle}
-                data={[
-                  { label: "Available", value: true },
-                  { label: "Not-Available", value: false },
-                ]}
-                labelField="label"
-                valueField="value"
-                maxHeight={200}
-                id="value"
-                search
-                searchPlaceholder="Search..."
-                animated={false}
-                // value={size}
-                placeholder={"Available"}
-                onChange={(item) => {
-                  select(item.value, "available");
-                  // setOpen(true);
-                }}
-              />
-            </DataTable.Title>
           </DataTable.Header>
           <View
             style={{
@@ -507,9 +469,6 @@ const InventoryTable = ({ navigation }) => {
                       textStyle={{ fontSize: normalize(18) }}
                     >
                       {i.quality}
-                    </DataTable.Cell>
-                    <DataTable.Cell textStyle={{ fontSize: normalize(18) }}>
-                      {i.available == true ? "Available" : "Not-Available"}
                     </DataTable.Cell>
                   </DataTable.Row>
                 ))}
