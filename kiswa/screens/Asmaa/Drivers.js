@@ -36,6 +36,7 @@ import {
   collection,
   setDoc,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../config";
 //argon
@@ -81,41 +82,35 @@ const Drivers = ({ navigation }) => {
   const [allDrivers, setAllDrivers] = useState([]);
 
   const [flag, setFlag] = useState(false);
+
   const readAllWhere = async () => {
-    let temp = [];
-    const q = query(collection(db, "drivers"));
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "drivers");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDrivers(querySnapshot.docs.map((doc) => doc.data()));
+      setAllDrivers(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setDrivers(temp);
-    setAllDrivers(temp);
-    //console.log(drivers);
+
+    return () => unsubscribe();
   };
 
   const [orders, setOrders] = useState([]);
 
-  //  let user = "Wsd@ass.com"
   const readOne = async (user) => {
     setHover(user);
     let temp = [];
     const q = query(collection(db, "drivers", user, "orders"));
     const docs = await getDocs(q);
-    // console.log(docs)
     docs.forEach((doc) => {
       let hour = doc.data().dateTime.toDate().getHours();
       let t = doc.data();
       t.time = hour + ":00";
       t.date = doc.data().dateTime.toDate().toLocaleDateString();
       temp.push(t);
-      // console.log(doc.id, " => ", t);
-      // console.log(t);
     });
     setOrders(temp);
-    // setAllorderss(temp)
-    //console.log(drivers);
+
     setFlag(true);
   };
 
@@ -124,7 +119,7 @@ const Drivers = ({ navigation }) => {
     await deleteDoc(driverDoc)
       .then(() => {
         alert("data delted");
-        readAllWhere();
+        // readAllWhere();
       })
       .catch((error) => {
         console.log(error.message);
@@ -294,6 +289,7 @@ const Drivers = ({ navigation }) => {
             style={[
               styles.head,
               {
+                width: width,
                 height: height * 0.08,
                 justifyContent: "space-between",
                 // borderWidth: 1,
@@ -302,7 +298,7 @@ const Drivers = ({ navigation }) => {
           >
             <View style={{ flexDirection: "row" }}>
               <FontAwesome
-                name="user"
+                name="drivers-license-o"
                 size={deviceType == "mobile" ? 30 : 45}
               />
               <Text
@@ -352,35 +348,25 @@ const Drivers = ({ navigation }) => {
               borderTopWidth: 0,
               borderBottomWidth: 2,
               borderColor: "black",
-              width: "90%",
-              marginLeft: "3%",
-              backgroundColor: "#4b0095",
-              borderWidth: 1,
+              width: "100%",
+              // marginLeft: "3%",
+              // backgroundColor: "#4b0095",
+              // borderWidth: 1,
             }}
           >
-            <DataTable.Title
-              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
-            >
+            <DataTable.Title textStyle={{ fontSize: normalize(25) }}>
               Name
             </DataTable.Title>
 
-            <DataTable.Title
-              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
-            >
+            <DataTable.Title textStyle={{ fontSize: normalize(25) }}>
               Phone
             </DataTable.Title>
             {/* <DataTable.Title  textStyle={{fontSize:normalize(25) }}>Email</DataTable.Title> */}
             {/* <DataTable.Title numeric textStyle={{fontSize:normalize(25) }}>Phone</DataTable.Title> */}
-            <DataTable.Title
-              numeric
-              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
-            >
+            <DataTable.Title numeric textStyle={{ fontSize: normalize(25) }}>
               Zone
             </DataTable.Title>
-            <DataTable.Title
-              numeric
-              textStyle={{ color: "#FFF", fontSize: normalize(25) }}
-            >
+            <DataTable.Title numeric textStyle={{ fontSize: normalize(25) }}>
               Delete
             </DataTable.Title>
           </DataTable.Header>
@@ -393,9 +379,9 @@ const Drivers = ({ navigation }) => {
                     key={x.email}
                     onPress={() => readOne(x.email)}
                     style={{
-                      width: "90%",
+                      width: "100%",
                       height: "10%",
-                      marginLeft: "3%",
+                      // marginLeft: "3%",
                       backgroundColor: hover == x.email ? "#f3e5f5" : "white",
                     }}
                   >
@@ -483,11 +469,12 @@ const Drivers = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     //flex: 1,
-    // borderWidth:2,
+    // borderWidth: 2,
     // borderColor:"red",
     backgroundColor: "#EBEBEB",
     //paddingTop: 50,
     paddingHorizontal: "5%",
+    width: width,
   },
   head: {
     // flexDirection:"row",
@@ -500,7 +487,7 @@ const styles = StyleSheet.create({
     padding: "1%",
     marginTop: "3%",
     width: "100%",
-    marginLeft: "3%",
+    // marginLeft: "3%",
     alignItems: "center",
     // borderWidth: 2,
     justifyContent: "space-between",

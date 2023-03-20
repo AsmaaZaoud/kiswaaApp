@@ -14,7 +14,14 @@ import React, { useState, useEffect } from "react";
 import { Entypo } from "react-native-vector-icons";
 import { auth, db } from "../../config";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
-import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 import { useIsFocused } from "@react-navigation/native";
 
 // import { Block } from "galio-framework";
@@ -35,6 +42,27 @@ const DriverMap = (props) => {
   // let id = auth?.currentUser?.email;
   let lat = 25.2709954;
   let long = 51.5324509;
+
+  let user = auth?.currentUser?.email;
+
+  const getOrders = async () => {
+    console.log(today);
+    const collectionRef = collection(db, "drivers", user, "orders");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setOrders(
+        querySnapshot.docs.map((doc) =>
+          new Date(doc.data().date) == new Date() ? doc.data() : undefined
+        )
+      );
+      console.log(orders);
+      //  setOrders(querySnapshot.docs.map((doc) => doc.data()));
+      // setArr(orders.filter((x) => x.status == "pending"));
+    });
+
+    return () => unsubscribe();
+  };
 
   const [today, setToday] = useState();
   const [tomorrow, setTomorrow] = useState();
@@ -128,6 +156,7 @@ const DriverMap = (props) => {
   const makeDate = () => {
     var newD = new Date();
     var tom = new Date(newD);
+    // console.log(newD);
 
     tom.setDate(tom.getDate() + 1);
 
@@ -140,6 +169,7 @@ const DriverMap = (props) => {
 
   useEffect(() => {
     makeDate();
+    getOrders();
     // readOrders();
     // readOrdersTomo();
   }, [props]);
@@ -159,51 +189,53 @@ const DriverMap = (props) => {
             {today && today}
           </Text>
           {orders.length > 0 ? (
-            orders.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                // onPress={() => showAlert("row")}
-              >
-                <View style={styles.eventBox}>
-                  <View style={styles.eventDate}>
-                    <View>
-                      <Entypo name="dot-single" size={30} />
-                      <View
-                        style={{
-                          marginHorizontal: 15,
-                          borderWidth: 1,
-                          width: 2,
-                          height: 60,
-                        }}
-                      ></View>
-                    </View>
-                    <Text style={styles.eventDay}>{item.time} PM</Text>
+            orders.map((item) =>
+              item != undefined ? (
+                <TouchableOpacity
+                  key={item.id}
+                  // onPress={() => showAlert("row")}
+                >
+                  <View style={styles.eventBox}>
+                    <View style={styles.eventDate}>
+                      <View>
+                        <Entypo name="dot-single" size={30} />
+                        <View
+                          style={{
+                            marginHorizontal: 15,
+                            borderWidth: 1,
+                            width: 2,
+                            height: 60,
+                          }}
+                        ></View>
+                      </View>
+                      <Text style={styles.eventDay}>{item.time} PM</Text>
 
-                    {/* <Text style={styles.eventMonth}>{item.month}</Text> */}
-                  </View>
-                  <View style={styles.eventContent}>
-                    {item.type == "pickup" ? (
-                      <Image
-                        style={styles.icon}
-                        source={require("../../assets/imgs/pick.png")}
-                      />
-                    ) : (
-                      <Image
-                        style={styles.icon}
-                        source={require("../../assets/imgs/deliv.png")}
-                      />
-                    )}
-                    {/* <Text style={styles.eventTime}>10:00 am - 10:45 am</Text> */}
-                    <View style={{ marginLeft: "4%" }}>
-                      <Text style={styles.userName}>{item.location}</Text>
-                      <Text style={styles.description}>
-                        {/* {item.userName} 66006600 */}
-                      </Text>
+                      {/* <Text style={styles.eventMonth}>{item.month}</Text> */}
+                    </View>
+                    <View style={styles.eventContent}>
+                      {item.type == "pickup" ? (
+                        <Image
+                          style={styles.icon}
+                          source={require("../../assets/imgs/pick.png")}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.icon}
+                          source={require("../../assets/imgs/deliv.png")}
+                        />
+                      )}
+                      {/* <Text style={styles.eventTime}>10:00 am - 10:45 am</Text> */}
+                      <View style={{ marginLeft: "4%" }}>
+                        <Text style={styles.userName}>{item.location}</Text>
+                        <Text style={styles.description}>
+                          {/* {item.userName} 66006600 */}
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            ))
+                </TouchableOpacity>
+              ) : null
+            )
           ) : (
             <Text style={styles.noOrder}>Done! 😊</Text>
           )}

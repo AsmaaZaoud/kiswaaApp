@@ -61,7 +61,6 @@ export function normalize(size) {
 import { useIsFocused } from "@react-navigation/native";
 
 const CheckOut = ({ route, navigation }) => {
-
   const zones = [
     { label: " All Zones", value: "0" },
     { label: "Doha", value: "1" },
@@ -84,8 +83,6 @@ const CheckOut = ({ route, navigation }) => {
 
   let confirm = route.params.itemsArray;
   console.log("confirmCheckout: ", confirm);
-
-
 
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
@@ -119,7 +116,7 @@ const CheckOut = ({ route, navigation }) => {
       console.log("email : ", email);
       setLocation(doc.data().location);
       console.log("location: ", location);
-      setZone(doc.data().zone)
+      setZone(doc.data().zone);
     });
   };
 
@@ -131,10 +128,21 @@ const CheckOut = ({ route, navigation }) => {
     }
   }, [isFocused]);
 
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   const donate = async () => {
+    const day = new Date().getDay();
     let trackId = Math.floor(Math.random() * 10000);
     //Alert.alert("working")
     const docRef = await addDoc(collection(db, "donorDonation"), {
+      day: weekday[day],
       phone: phone,
       email: email,
       location: location,
@@ -270,7 +278,13 @@ const CheckOut = ({ route, navigation }) => {
       return;
     }
 
-    if (phone && email && validateEmail && stat === "granted" && zone !== " All Zones") {
+    if (
+      phone &&
+      email &&
+      validateEmail &&
+      stat === "granted" &&
+      zone !== " All Zones"
+    ) {
       done();
     }
   };
@@ -419,29 +433,29 @@ const CheckOut = ({ route, navigation }) => {
                   </Block>
 
                   <Block width={width * 0.5}>
-                  <Dropdown
-                    style={styles.dropdown}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    data={zones}
-                    maxHeight={160}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={zone}
-                    value={zone}
-                    onChange={(item) => {
-                      setZone(item.label);
-                    }}
-                  ></Dropdown>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: "red",
-                    }}
-                  >
-                    {ZoneError}
-                  </Text>
-                </Block>
+                    <Dropdown
+                      style={styles.dropdown}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      data={zones}
+                      maxHeight={160}
+                      labelField="label"
+                      valueField="value"
+                      placeholder={zone}
+                      value={zone}
+                      onChange={(item) => {
+                        setZone(item.label);
+                      }}
+                    ></Dropdown>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                      }}
+                    >
+                      {ZoneError}
+                    </Text>
+                  </Block>
 
                   <Block width={width * 0.8}>
                     {/* <Button

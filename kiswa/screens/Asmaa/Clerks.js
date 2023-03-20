@@ -4,6 +4,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  Pressable,
   ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -30,6 +31,8 @@ import {
   getDoc,
   addDoc,
   collection,
+  deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../config";
 //argon
@@ -55,24 +58,21 @@ const Clerks = ({ navigation }) => {
   const [allClerk, setAllClerk] = useState([]);
 
   const readAllWhere = async () => {
-    let temp = [];
-    const q = query(collection(db, "inventoryWorkers"));
-    const docs = await getDocs(q);
-    // console.log(docs)
-    docs.forEach((doc) => {
-      temp.push(doc.data());
-      //console.log(doc.id, " => ", doc.data());
+    const collectionRef = collection(db, "inventoryWorkers");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setClerk(querySnapshot.docs.map((doc) => doc.data()));
+      setAllClerk(querySnapshot.docs.map((doc) => doc.data()));
     });
-    setClerk(temp);
-    setAllClerk(temp);
-    //console.log(clerk);
+
+    return () => unsubscribe();
   };
 
   // >>>>>>>>>>>>>> Search functions <<<<<<<<<<<<<<
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const handleSearch = (value) => {
-    console.log("clerk", allClerk);
     setSearchQuery(value);
     if (value.length === 0) {
       setClerk(allClerk);
@@ -90,6 +90,17 @@ const Clerks = ({ navigation }) => {
     }
   };
 
+  const deletClerk = async (id) => {
+    const driverDoc = doc(db, "inventoryWorkers", id); //remove clerk
+    await deleteDoc(driverDoc)
+      .then(() => {
+        alert("data delted");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <Block flex>
       <View style={styles.container}>
@@ -98,6 +109,7 @@ const Clerks = ({ navigation }) => {
             style={[
               styles.head,
               {
+                width: width,
                 height: height * 0.08,
                 justifyContent: "space-between",
                 // borderWidth: 1,
@@ -124,9 +136,10 @@ const Clerks = ({ navigation }) => {
                 onChangeText={handleSearch}
                 value={searchQuery}
                 style={{
-                  width: width * 0.34,
+                  width: width * 0.33,
                   borderRadius: "10%",
-                  height: "77%",
+                  height:
+                    deviceType == "mobile" ? height * 0.039 : height * 0.043,
                   marginTop: "2%",
                 }}
                 autoCorrect={false}
@@ -134,12 +147,12 @@ const Clerks = ({ navigation }) => {
               <Button
                 // color="#6a1b9a"
                 color="#5AA15A"
-                style={{ width: "20%" }}
+                style={{ width: "20%", height: height * 0.033 }}
                 onPress={() => navigation.navigate("AddClerk")}
               >
                 <Text
                   style={{
-                    fontSize: deviceType == "mobile" ? 19 : 24,
+                    fontSize: deviceType == "mobile" ? 15 : 24,
                     color: "#FFF",
                   }}
                 >
@@ -154,8 +167,8 @@ const Clerks = ({ navigation }) => {
               borderTopWidth: 0,
               borderBottomWidth: 2,
               borderColor: "black",
-              width: "90%",
-              marginLeft: "3%",
+              width: "100%",
+              // marginLeft: "3%",
               backgroundColor: "white",
             }}
           >
@@ -184,15 +197,24 @@ const Clerks = ({ navigation }) => {
             >
               Phone
             </DataTable.Title>
+            <DataTable.Title
+              numeric
+              textStyle={{
+                fontSize: deviceType == "mobile" ? width * 0.04 : width * 0.025,
+                fontWeight: "bold",
+              }}
+            >
+              Delete
+            </DataTable.Title>
           </DataTable.Header>
           {clerk &&
             clerk.map((x) => (
               <DataTable.Row
                 key={x.email}
                 style={{
-                  width: "90%",
+                  width: "100%",
                   height: "12%",
-                  marginLeft: "3%",
+                  // marginLeft: "3%",
                   backgroundColor: "white",
                 }}
               >
@@ -204,6 +226,16 @@ const Clerks = ({ navigation }) => {
                 </DataTable.Cell>
                 <DataTable.Cell numeric textStyle={{ fontSize: normalize(25) }}>
                   {x.phone}
+                </DataTable.Cell>
+                <DataTable.Cell numeric>
+                  <Pressable
+                    onPress={() => deletClerk(x.email)}
+                    style={{
+                      paddingLeft: "70%",
+                    }}
+                  >
+                    <AntDesign name="delete" size={normalize(37)} color="red" />
+                  </Pressable>
                 </DataTable.Cell>
               </DataTable.Row>
             ))}
@@ -217,23 +249,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#EBEBEB",
-    //paddingTop: 50,
     paddingHorizontal: "5%",
   },
   head: {
-    // flexDirection:"row",
-    // borderWidth:1,
-    // padding:"1%",
-    // justifyContent:"space-between",
-    // marginBottom:0
-
     flexDirection: "row",
     padding: "1%",
     marginTop: "3%",
     width: "100%",
-    marginLeft: "3%",
     alignItems: "center",
-    // borderWidth: 2,
     justifyContent: "space-between",
   },
   title: {

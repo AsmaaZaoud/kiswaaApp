@@ -221,12 +221,24 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
     }
   };
 
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
   const closeRequest = async () => {
+    const day = new Date().getDay();
     const docRef = doc(db, "familyRequests", cartId);
 
     await setDoc(
       docRef,
       {
+        day: weekday[day],
         cart: "closed",
         dateSlot: date,
         timeSlot: time,

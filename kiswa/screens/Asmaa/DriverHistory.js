@@ -12,8 +12,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { Feather, MaterialIcons } from "react-native-vector-icons";
 import { signOut } from "firebase/auth";
-import { db } from "../../config";
-import { collection, getDocs, query } from "firebase/firestore";
+import { auth, db } from "../../config";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import { Block } from "galio-framework";
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -31,7 +31,7 @@ const DriverHistory = (props, { navigation }) => {
   console.log(id);
   const [deviceType, setDeviceType] = useState("");
 
-  // const [arr, setArr] = useState([]);
+  const [arr, setArr] = useState([]);
   const [orders, setOrders] = useState([]);
 
   const readOrders = async () => {
@@ -55,10 +55,32 @@ const DriverHistory = (props, { navigation }) => {
     // setArr(temp);
     console.log(orders);
   };
+  let user = auth?.currentUser?.email;
+
+  const getOrders = async () => {
+    // console.log(cartId);
+    const collectionRef = collection(db, "drivers", user, "orders");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setArr(
+        querySnapshot.docs.map((doc) =>
+          doc.data().status == "fullfield" ? doc.data() : undefined
+        )
+      );
+
+      setOrders(querySnapshot.docs.map((doc) => doc.data()));
+      // setArr(orders.filter((x) => x.status == "pending"));
+      console.log("arrr", arr);
+    });
+
+    return () => unsubscribe();
+  };
 
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
     // readOrders();
+    getOrders();
   }, []);
 
   return (
@@ -70,14 +92,14 @@ const DriverHistory = (props, { navigation }) => {
       <Block style={styles.registerContainer}>
         <Block flex>
           <Text style={styles.title}>Orders History</Text>
-          {orders.length > 0 ? (
+          {arr.length > 0 ? (
             <FlatList
               style={styles.notificationList}
               enableEmptySections={true}
-              data={orders}
-              keyExtractor={(item) => item.id}
+              data={arr}
+              keyExtractor={(item) => (item != undefined ? item.id : 0)}
               renderItem={({ item }) => {
-                return (
+                return item != undefined ? (
                   <View style={styles.notificationBox} key={item.type}>
                     <View
                       style={{
@@ -88,7 +110,7 @@ const DriverHistory = (props, { navigation }) => {
                       }}
                     >
                       <Text style={styles.description}>Order# </Text>
-                      <Text style={styles.description}>2FE5DF3</Text>
+                      <Text style={styles.description}>F{item.trackId}</Text>
                     </View>
 
                     <View
@@ -147,7 +169,7 @@ const DriverHistory = (props, { navigation }) => {
                         >
                           <MaterialIcons name="date-range" size={25} />
                           <Text style={styles.description}>
-                            {item.date} -{item.time}
+                            {item.date} -{item.timeSlot}
                           </Text>
                         </View>
                       </View>
@@ -162,7 +184,7 @@ const DriverHistory = (props, { navigation }) => {
                       </View>
                     </View>
                   </View>
-                );
+                ) : null;
               }}
             />
           ) : (
@@ -220,9 +242,9 @@ const styles = StyleSheet.create({
     height: 50,
   },
   description: {
-    fontSize: normalize(20),
+    fontSize: normalize(19),
     // color: "#3498db",
-    marginLeft: "3%",
+    marginLeft: "5%",
     // textAlign: "center",
   },
 });
