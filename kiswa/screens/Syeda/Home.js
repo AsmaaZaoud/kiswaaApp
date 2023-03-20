@@ -278,7 +278,8 @@ const Home = ({ route, navigation }) => {
                       ></Image>
                     </Block>
                     :
-                    <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
+                    null
+                    //<Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>0 Donations</Text>
                 }
 
               </Block>
