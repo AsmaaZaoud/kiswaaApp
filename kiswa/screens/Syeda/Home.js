@@ -70,7 +70,7 @@ const Home = ({ route, navigation }) => {
     { label: "Jumper", value: "Jumper", uri: 'https://i.pinimg.com/564x/65/70/13/65701369d99d39458f99e4d04f80ab4d.jpg' },
     { label: "Jumpsuit", value: "Jumpsuit", uri: 'https://i.pinimg.com/564x/04/00/83/040083896aaf020fa83aa12dbac805fe.jpg' },
     { label: "Leggings", value: "Leggings", uri: 'https://i.pinimg.com/564x/9c/51/11/9c5111b9a77206aa76698ae2c41884a1.jpg' },
-    { label: "Legwarmers", value: "Legwarmers", uri: 'https://i.pinimg.com/564x/a1/aa/38/a1aa3845e69b70935f9ed6d8c39b90fa.jpg' },
+    { label: "Hoodie", value: "Hoodie", uri: 'https://i.pinimg.com/474x/a6/52/44/a65244223c6112a7e9d7286729bd9434.jpg' },
     { label: "Pants", value: "Pants", uri: 'https://media.istockphoto.com/id/530930442/photo/row-of-black-pants-hangs-in-wardrobe-at-home.jpg?s=612x612&w=0&k=20&c=ZFM23HW4i3gKgfT5PplBTTajAq3L1qGG30MCjWqZliA=' },
     { label: "Playsuit", value: "Playsuit", uri: 'https://ae01.alicdn.com/kf/HTB1W34cPxnaK1RjSZFtq6zC2VXai/Korean-Style-2019-New-Fashion-Women-s-Playsuits-Chic-Double-Pocket-Skinny-Strap-Long-sleeved-Casual.jpg_Q90.jpg_.webp' },
     { label: "Poncho", value: "Poncho", uri: "https://i.pinimg.com/564x/50/b3/70/50b37094d3839e4aede85fc1e2c359f9.jpg" },

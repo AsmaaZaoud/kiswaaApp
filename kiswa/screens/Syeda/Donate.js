@@ -150,10 +150,10 @@ const Donate = ({ route, navigation }) => {
       uri: "https://i.pinimg.com/564x/9c/51/11/9c5111b9a77206aa76698ae2c41884a1.jpg",
     },
     {
-      label: "Legwarmers",
-      value: "Legwarmers",
-      icon: "https://cdn-icons-png.flaticon.com/128/8853/8853176.png",
-      uri: "https://i.pinimg.com/564x/a1/aa/38/a1aa3845e69b70935f9ed6d8c39b90fa.jpg",
+      label: "Hoodie",
+      value: "Hoodie",
+      icon: "https://cdn-icons-png.flaticon.com/512/9431/9431166.png",
+      uri: "https://i.pinimg.com/474x/a6/52/44/a65244223c6112a7e9d7286729bd9434.jpg",
     },
     {
       label: "Pants",
