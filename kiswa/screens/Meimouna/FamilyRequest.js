@@ -68,7 +68,7 @@ const FamilyRequest = ({ route, navigation }) => {
     { label: "Jumper", value: "Jumper" },
     { label: "Jumpsuit", value: "Jumpsuit" },
     { label: "Leggings", value: "Leggings" },
-    { label: "Legwarmers", value: "Legwarmers" },
+    { label: "Warmers", value: "Warmers" },
     { label: "Pants", value: "Pants" },
     { label: "Playsuit", value: "Playsuit" },
     { label: "Poncho", value: "Poncho" },
@@ -393,7 +393,7 @@ const FamilyRequest = ({ route, navigation }) => {
 
           <Block style={{ height: "60%", marginTop: "2%", width: "100%" }}>
             <Tab
-              style={{ width: "100%", height: "26%" }}
+              style={{ width: "100%", height: "26%", marginBottom: "6%" }}
               value={index}
               onChange={(e) => {
                 setIndex(e);
@@ -416,9 +416,9 @@ const FamilyRequest = ({ route, navigation }) => {
                   style={{
                     width: 88,
                     height: 88,
-                    borderColor: ageGroup == "Adults" ? "#F9966B" : "white",
-                    borderWidth: 3,
-                    borderRadius: 43,
+                    borderColor: ageGroup == "Adults" ? "#F9966B" : "lightgray",
+                    borderWidth: ageGroup == "Adults" ? 3 : 2,
+                    borderRadius: 40,
                   }}
                 />
                 <Text
@@ -437,8 +437,9 @@ const FamilyRequest = ({ route, navigation }) => {
                   style={{
                     width: 88,
                     height: 90,
-                    borderColor: ageGroup == "Teenagers" ? "#F9966B" : "white",
-                    borderWidth: 3,
+                    borderColor:
+                      ageGroup == "Teenagers" ? "#F9966B" : "lightgray",
+                    borderWidth: ageGroup == "Teenagers" ? 3 : 2,
                     borderRadius: 43,
                   }}
                 />
@@ -458,8 +459,8 @@ const FamilyRequest = ({ route, navigation }) => {
                   style={{
                     width: 90,
                     height: 90,
-                    borderColor: ageGroup == "Kids" ? "#F9966B" : "white",
-                    borderWidth: 3,
+                    borderColor: ageGroup == "Kids" ? "#F9966B" : "lightgray",
+                    borderWidth: ageGroup == "Kids" ? 3 : 2,
                     borderRadius: 43,
                   }}
                 />
@@ -500,12 +501,11 @@ const FamilyRequest = ({ route, navigation }) => {
               <TabView.Item
                 style={{
                   width: "100%",
-                  height: "100%",
+                  height: "96%",
                   // backgroundColor: "lightgray",
                 }}
               >
                 <View style={{ paddingBottom: "2%" }}>
-                  <Text></Text>
                   <ScrollView style={{}}>
                     <View style={styles.board}>
                       {data.map((x, i) => (
@@ -525,9 +525,8 @@ const FamilyRequest = ({ route, navigation }) => {
                   </ScrollView>
                 </View>
               </TabView.Item>
-              <TabView.Item style={{ width: "100%", height: "100%" }}>
+              <TabView.Item style={{ width: "100%", height: "96%" }}>
                 <View>
-                  <Text></Text>
                   <ScrollView>
                     <View style={styles.board}>
                       {data.map((x, i) => (
@@ -547,9 +546,8 @@ const FamilyRequest = ({ route, navigation }) => {
                   </ScrollView>
                 </View>
               </TabView.Item>
-              <TabView.Item style={{ width: "100%", height: "100%" }}>
+              <TabView.Item style={{ width: "100%", height: "96%" }}>
                 <View>
-                  <Text></Text>
                   <ScrollView>
                     <View style={styles.board}>
                       {data.map((x, i) => (
@@ -569,9 +567,8 @@ const FamilyRequest = ({ route, navigation }) => {
                   </ScrollView>
                 </View>
               </TabView.Item>
-              <TabView.Item style={{ width: "100%", height: "100%" }}>
+              <TabView.Item style={{ width: "100%", height: "96%" }}>
                 <View>
-                  <Text></Text>
                   <ScrollView>
                     <View style={styles.board}>
                       {data.map((x, i) => (
@@ -804,7 +801,7 @@ const FamilyRequest = ({ route, navigation }) => {
             <Pressable
               onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
               style={{
-                marginTop: "14%",
+                marginTop: "12%",
                 marginBottom: "10%",
                 backgroundColor: "#F9966B",
                 height: "18%",
@@ -899,7 +896,7 @@ const styles = StyleSheet.create({
   board: {
     width: "90%",
     marginLeft: "5%",
-    height: "100%",
+    height: "80%",
     // borderColor: "white",
     // borderWidth: 5, #FDEEF4
     flexDirection: "row",

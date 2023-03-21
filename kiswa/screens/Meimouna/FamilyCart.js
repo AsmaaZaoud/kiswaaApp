@@ -101,7 +101,7 @@ const FamilyCart = ({ route, navigation }) => {
   const [Dzone, setDZone] = useState("");
   const readName = async () => {
     let user = auth?.currentUser?.email;
-    alert(user);
+    // alert(user);
     const q = query(collection(db, "families"), where("email", "==", user));
     const docs = await getDocs(q);
 
