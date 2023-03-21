@@ -185,7 +185,7 @@ const Profile = ({ route, navigation }) => {
       .catch((error) => {
         console.log('ERROR: ', error.message);
       });
-      navigation.navigate('Home')
+      //navigation.navigate('Home')
   }
 
   return (

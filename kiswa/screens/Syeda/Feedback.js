@@ -27,6 +27,11 @@ const Feedback = ({ navigation }) => {
     setFeedbackText('');
   };
 
+  const exit = () => {
+    setModalVisible(false);
+    navigation.navigate("Home")
+  }
+
   const handleSubmit = () => {
     console.log('Selected Emoji:', selectedEmoji);
     console.log('Feedback Text:', feedbackText);
@@ -75,7 +80,7 @@ const Feedback = ({ navigation }) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.closeButton} onPress={() => navigation.navigate("Home")}>
+            <TouchableOpacity style={styles.closeButton} onPress={exit}>
               <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
             <Text style={styles.modalText}>How was your experience?</Text>
@@ -139,7 +144,7 @@ const styles = StyleSheet.create({
   modalText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginVertical: 20,
   },
   emojiContainer: {
     flexDirection: 'row',

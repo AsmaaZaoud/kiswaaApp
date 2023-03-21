@@ -82,7 +82,7 @@ const CheckOut = ({ route, navigation }) => {
   const [location, setLocation] = useState("");
 
   let confirm = route.params.itemsArray;
-  let zone = route.params.zone;
+  //let zone = route.params.zone;
 
   console.log("confirmCheckout: ", confirm);
 
@@ -91,6 +91,7 @@ const CheckOut = ({ route, navigation }) => {
 
   const [locationError, setLocationError] = useState("");
 
+  const [zone, setZone] = useState(zones[0].label);
   const [ZoneError, setZoneError] = useState("");
 
   const [signedIn, setSignedIn] = useState(false);
@@ -117,7 +118,7 @@ const CheckOut = ({ route, navigation }) => {
       console.log("email : ", email);
       setLocation(doc.data().location);
       console.log("location: ", location);
-      // setZone(doc.data().zone);
+      setZone(doc.data().zone);
     });
   };
 
@@ -153,6 +154,7 @@ const CheckOut = ({ route, navigation }) => {
     "Saturday",
   ];
   const donate = async () => {
+    console.log("donor donate button working")
     const day = new Date().getDay();
     let trackId = Math.floor(Math.random() * 10000);
     //Alert.alert("working")
@@ -169,7 +171,8 @@ const CheckOut = ({ route, navigation }) => {
       trackId: trackId,
       donatedItems: confirm,
     });
-    console.log("Document written with ID: ", docRef.id);
+    console.log("DONOR DONATION Document written with ID: ", docRef.id);
+    navigation.navigate("Feedback");
 
     //Asma: I added this
     const docRefDriver = await addDoc(
@@ -200,7 +203,7 @@ const CheckOut = ({ route, navigation }) => {
     //     console.log("Document written with ID: ", docRef2.id);
     // })
 
-    navigation.navigate("Feedback");
+    //navigation.navigate("Feedback");
   };
 
   const done = async () => {
@@ -376,18 +379,10 @@ const CheckOut = ({ route, navigation }) => {
                   <Block width={width * 0.8}>
                     <TouchableOpacity
                       style={styles.donateButton}
-                      onPress={() => donate()}
+                      onPress={donate}
                     >
                       <Text style={styles.donateButtonText}>Donate</Text>
                     </TouchableOpacity>
-                    {/* <Button
-                                                style={styles.createButton}
-                                                onPress={validation}
-                                            >
-                                                <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                                                    DONE
-                                                </Text>
-                                            </Button> */}
                   </Block>
                 </View>
               ) : (
@@ -473,15 +468,6 @@ const CheckOut = ({ route, navigation }) => {
                   </Block>
 
                   <Block width={width * 0.8}>
-                    {/* <Button
-                                                style={styles.createButton}
-                                                onPress={validation}
-                                            >
-                                                <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                                                    DONE
-                                                </Text>
-                                            </Button> */}
-
                     <TouchableOpacity
                       style={styles.donateButton}
                       onPress={validation}
