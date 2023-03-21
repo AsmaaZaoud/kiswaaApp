@@ -1,24 +1,47 @@
 {
   "expo": {
-    "name": "Argon FREE React Native",
-    "slug": "argon-free-react-native",
-    "plugins": ["expo-image-picker"],
+    "name": "Kiswa",
+    "slug": "Kiswa",
+    "plugins": [
+      "expo-image-picker"
+    ],
     "privacy": "public",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.7.1",
     "orientation": "portrait",
     "splash": {
-      "image": "./assets/Fatima/SplashPage5.gif",
+      "image": "./assets/Fatima/background.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
-    "description": "Argon React Native, based on Argon Design System. Coded by Creative Tim"
+    "android": {
+      "package": "com.kiswa23.Kiswa",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "forgroundImage": "./assets/Fatima/Logo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "description": "Kiswa is a capstone project 2023",
+    "extra": {
+      "eas": {
+        "projectId": "41f9f18d-1662-47a7-874f-d2a8eae80c9d"
+      }
+    }
   }
 }
