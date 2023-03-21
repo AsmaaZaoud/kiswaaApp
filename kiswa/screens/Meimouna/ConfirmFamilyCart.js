@@ -42,9 +42,9 @@ const { width } = Dimensions.get("screen");
 
 const ConfirmFamilyCart = ({ route, navigation }) => {
   // const [userinforr, setUserinforr] = useState([]);
-  const { items, cartId, id } = route.params;
-  console.log(cartId);
-  console.log(items);
+  const { items, cartId, id, Dzone } = route.params;
+  // console.log(cartId);
+  // console.log(items);
   //........dates............................
 
   //todays date
@@ -112,8 +112,8 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   const [theUser, setTheUser] = useState("");
   useEffect(() => {
     getFamily();
-    getDriver();
-    console.log(cartId);
+    readDriver();
+    // console.log(cartId);
   }, [id]);
 
   const getFamily = async () => {
@@ -129,6 +129,20 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
     } else {
       console.log("No such document!");
     }
+  };
+
+  const [drivers, setDrivers] = useState([]);
+
+  const readDriver = async () => {
+    console.log(Dzone);
+    const q = query(collection(db, "drivers"), where("zone", "==", zone));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDrivers(querySnapshot.docs.map((doc) => doc.data().email));
+      console.log("ddd", drivers[0]);
+    });
+
+    return () => unsubscribe();
   };
   // ..... invantory DB.............
   const [IDs, setIDs] = useState([]);
@@ -165,7 +179,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   //items => cart items, itemsArray=> inventory items
 
   const checkAvailable = async (x) => {
-    console.log("first..", available);
+    // console.log("first..", available);
     const myavait = itemsArray.filter((item) => {
       return (
         item.type == x.type &&
@@ -175,33 +189,18 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
         item.size == x.size
       );
     });
-    console.log("my1... ", myavait);
+    // console.log("my1... ", myavait);
     if (myavait.length == 0) {
-      console.log("empty...");
-      console.log(myavait.length);
+      // console.log("empty...");
+      // console.log(myavait.length);
       setAvailable(false);
     } else {
       setAvailable(true);
     }
-    console.log("my... ", myavait);
+    // console.log("my... ", myavait);
   };
 
-  const [driver, setDriver] = useState("");
-  const getDriver = async () => {
-    var temp = "";
-    const q = query(collection(db, "drivers"), where("zone", "==", "Rume"));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      console.log(doc.id, " ==========> ", doc.data());
-      temp = doc.id;
-      setDriver(doc.id);
-
-      // console.log(temp);
-    });
-    setDriver(temp);
-  };
-
-  console.log(available);
+  // console.log(available);
 
   const validation = async () => {
     if (date == "") {
@@ -253,26 +252,23 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
         console.log(error.message);
       });
     //Asma: I added this
-    if (available && driver) {
-      // alert("yess");
-      const docRefDriver = await addDoc(
-        collection(db, "drivers", driver, "orders"),
-        {
-          phone: phone,
-          userId: id,
-          location: zone,
-          dateSlot: date,
-          timeSlot: time,
-          // trackId: trackId,
-          // time: route.params.time,
-          // date: route.params.date,
-          // trackId: trackId,
-          status: "pending",
-          type: "deliver",
-        }
-      );
-      console.log("driver orders add ID: ", docRefDriver.id);
-    }
+    const docRefDriver = await addDoc(
+      collection(db, "drivers", drivers[0], "orders"),
+      {
+        phone: phone,
+        userId: theUser,
+        location: Dzone,
+        dateSlot: date,
+        timeSlot: time,
+        // trackId: trackId,
+        time: "12:00PM",
+        date: new Date().toLocaleDateString("en-US"),
+        // trackId: trackId,
+        status: "pending",
+        type: "pickup",
+      }
+    );
+    console.log("driver orders add ID: ", docRefDriver.id);
 
     navigation.navigate("FamilyHome", id);
   };

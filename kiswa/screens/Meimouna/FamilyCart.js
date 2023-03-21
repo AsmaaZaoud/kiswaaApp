@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   Dimensions,
+  Image,
 } from "react-native";
 import {
   Fontisto,
@@ -36,7 +37,7 @@ import {
   updateDoc,
   deleteField,
 } from "firebase/firestore";
-import { db } from "../../config";
+import { auth, db } from "../../config";
 const { width } = Dimensions.get("screen");
 
 const FamilyCart = ({ route, navigation }) => {
@@ -65,12 +66,16 @@ const FamilyCart = ({ route, navigation }) => {
 
   const [itemId, setItemId] = useState("");
   const { cartId, id } = route.params;
-  console.log(cartId);
+  // console.log(cartId);
   // console.log("idd..", id);
   const [cart, setCart] = useState([]);
   useEffect(() => {
     getCartItems();
+    readName();
   }, [cartId]);
+  useEffect(() => {
+    readName();
+  }, []);
 
   // const items = [];
   const [items, setItems] = useState([]);
@@ -93,13 +98,29 @@ const FamilyCart = ({ route, navigation }) => {
     return () => unsubscribe();
   };
 
-  console.log(cart);
-  console.log("it..", items);
+  const [Dzone, setDZone] = useState("");
+  const readName = async () => {
+    let user = auth?.currentUser?.email;
+    alert(user);
+    const q = query(collection(db, "families"), where("email", "==", user));
+    const docs = await getDocs(q);
+
+    docs.forEach((doc) => {
+      alert("each");
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+      setDZone(doc.data().zone);
+      alert(Dzone);
+    });
+  };
+
+  // console.log(cart);
+  // console.log("it..", items);
 
   // .............ubpdate........
   const update = async (upId) => {
-    console.log("---------------------");
-    console.log(upId);
+    // console.log("---------------------");
+    // console.log(upId);
     const docRef = doc(db, "familyRequests", cartId, "Items", upId);
     await setDoc(
       docRef,
@@ -201,6 +222,11 @@ const FamilyCart = ({ route, navigation }) => {
                         <Text style={styles.ct}></Text>
                       </View>
                       <View key={i + 2} style={styles.board2}>
+                        <Image
+                          style={styles.smallImage}
+                          source={{ uri: x.data.icon }}
+                        />
+
                         <Text style={styles.ctt}>{x.data.color}</Text>
                         <Text style={styles.ctt}>{x.data.size}</Text>
                         <Text style={styles.ctt}>{x.data.quantity}</Text>
@@ -289,6 +315,7 @@ const FamilyCart = ({ route, navigation }) => {
                     items,
                     cartId,
                     id,
+                    Dzone,
                   })
                 }
                 disabled={cart.length == 0}
@@ -654,6 +681,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     // backgroundColor: "lightpink",
     alignItems: "center",
+  },
+  smallImage: {
+    width: 60,
+    height: 60,
+    //borderRadius: 10,
   },
   ct: {
     color: "#842DCE",

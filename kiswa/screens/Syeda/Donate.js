@@ -16,6 +16,8 @@ import {
 } from "react-native";
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
+import { auth, db } from "../../config";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -30,6 +32,7 @@ export function normalize(size) {
 
 const Donate = ({ route, navigation }) => {
   useEffect(() => {
+    readName();
     // alert("donate");
     if (
       route.params &&
@@ -294,6 +297,18 @@ const Donate = ({ route, navigation }) => {
   const [confirm, setConfirm] = useState([]);
   console.log("confirm OUTSIFE: ", confirm);
 
+  const [zone, setZone] = useState("");
+  const readName = async () => {
+    let user = auth?.currentUser?.email;
+    console.log("readName");
+    const q = query(collection(db, "donors"), where("email", "==", user));
+    const docs = await getDocs(q);
+    docs.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+      setZone(doc.data().zone);
+    });
+  };
   const error = () => {
     if (confirm.length > 0) {
       if (time === "") {
@@ -308,11 +323,13 @@ const Donate = ({ route, navigation }) => {
       } else {
         setDateError("");
       }
+      console.log("zooooooone====>>>>>", zone);
       if (time !== "" && date !== "") {
         navigation.navigate("CheckOut", {
           itemsArray: confirm,
           time: time,
           date: date,
+          zone: zone,
         });
       }
     } else {
@@ -514,12 +531,9 @@ const Donate = ({ route, navigation }) => {
     >
       <Block style={styles.container}>
         <ImageBackground
-          style={cloth === '' ? '' : styles.Image}
+          style={cloth === "" ? "" : styles.Image}
           source={{
-            uri:
-              ItemURI == ""
-                ? ""
-                : ItemURI,
+            uri: ItemURI == "" ? "" : ItemURI,
           }}
         >
           {/* <TouchableOpacity onPress={() => navigation.navigate("Home")}>
@@ -565,7 +579,9 @@ const Donate = ({ route, navigation }) => {
           style={styles.button}
           onPress={() => add(cloth, amount)}
         >
-          <Text style={styles.buttonText}>{confirm.length === 0 ? 'Add' : 'Add more Items'}</Text>
+          <Text style={styles.buttonText}>
+            {confirm.length === 0 ? "Add" : "Add more Items"}
+          </Text>
         </TouchableOpacity>
 
         <Block

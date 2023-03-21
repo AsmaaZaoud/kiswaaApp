@@ -82,6 +82,8 @@ const CheckOut = ({ route, navigation }) => {
   const [location, setLocation] = useState("");
 
   let confirm = route.params.itemsArray;
+  let zone = route.params.zone;
+
   console.log("confirmCheckout: ", confirm);
 
   const [emailError, setEmailError] = useState("");
@@ -90,7 +92,6 @@ const CheckOut = ({ route, navigation }) => {
   const [locationError, setLocationError] = useState("");
 
   const [ZoneError, setZoneError] = useState("");
-  const [zone, setZone] = useState(zones[0].label);
 
   const [signedIn, setSignedIn] = useState(false);
   const [flag, setflag] = useState(0);
@@ -116,14 +117,28 @@ const CheckOut = ({ route, navigation }) => {
       console.log("email : ", email);
       setLocation(doc.data().location);
       console.log("location: ", location);
-      setZone(doc.data().zone);
+      // setZone(doc.data().zone);
     });
+  };
+
+  const [drivers, setDrivers] = useState([]);
+
+  const readDriver = async () => {
+    const q = query(collection(db, "drivers"), where("zone", "==", zone));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDrivers(querySnapshot.docs.map((doc) => doc.data().email));
+      console.log("ddd", drivers[0]);
+    });
+
+    return () => unsubscribe();
   };
 
   useEffect(() => {
     if (isFocused) {
       if (user !== undefined) {
         readName();
+        readDriver();
       }
     }
   }, [isFocused]);
@@ -158,11 +173,11 @@ const CheckOut = ({ route, navigation }) => {
 
     //Asma: I added this
     const docRefDriver = await addDoc(
-      collection(db, "drivers", "sim@mail.com", "orders"),
+      collection(db, "drivers", drivers[0], "orders"),
       {
         phone: phone,
         userId: email,
-        location: "khor",
+        location: zone,
         timeSlot: route.params.time,
         dateSlot: route.params.date,
         trackId: trackId,

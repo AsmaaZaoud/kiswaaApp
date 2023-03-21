@@ -4,6 +4,8 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  PixelRatio,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -42,10 +44,18 @@ import { Card, Header } from "../../components";
 
 import { Icon, AntDesign, FontAwesome } from "react-native-vector-icons";
 import ArButton from "../../components/Button";
-import { normalize } from "./AdminHome";
 
 const { width, height } = Dimensions.get("screen");
+const scale = width / 830;
 
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 const Clerks = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
 
