@@ -57,7 +57,9 @@
     "react-native-svg": "12.3.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-view-slider": "^1.1.1",
-    "validator": "^13.9.0"
+    "validator": "^13.9.0",
+    "expo-notifications": "~0.16.1",
+    "expo-device": "~4.3.0"
   },
   "devDependencies": {
     "babel-preset-expo": "~9.2.0"

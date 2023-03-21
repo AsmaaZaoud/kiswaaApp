@@ -132,7 +132,7 @@ const DriverHome = (props) => {
           </Text>
         </Pressable>
       </Block>
-      <SafeAreaView style={{ height: "85%", width: width }}>
+      <SafeAreaView style={{ height: 650 }}>
         <ScrollView>
           <View style={styles.home}>
             {arr.length != 0 ? (

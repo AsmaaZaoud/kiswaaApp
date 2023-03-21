@@ -53,7 +53,12 @@ const DriverMap = (props) => {
       console.log("snapshot");
       setOrders(
         querySnapshot.docs.map((doc) =>
-          new Date(doc.data().date) == new Date() ? doc.data() : undefined
+          doc.data().date == new Date().toLocaleDateString("en-US")
+            ? doc.data()
+            : console.log(
+                doc.data().date,
+                new Date().toLocaleDateString("en-US")
+              )
         )
       );
       console.log(orders);

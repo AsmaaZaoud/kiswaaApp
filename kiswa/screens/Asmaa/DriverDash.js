@@ -29,7 +29,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config";
 import { signOut } from "firebase/auth";
-import { Tab, TabView } from "@rneui/themed";
+import { Tab, TabView, Badge } from "@rneui/themed";
 import DriverHistory from "./DriverHistory";
 import DriverProfile from "./DriverProfile";
 import DriverHome from "./DriverHome";
@@ -129,6 +129,18 @@ const DriverDash = ({ route, navigation }) => {
             backgroundColor: "white",
           }}
         >
+          <Badge
+            value="3"
+            status="error"
+            width={25}
+            height={30}
+            containerStyle={{
+              position: "absolute",
+              top: 4,
+              left: 60,
+              height: 25,
+            }}
+          />
           <FontAwesome
             color={index == 0 ? "#5e1e7f" : "black"}
             name="home"
@@ -146,7 +158,20 @@ const DriverDash = ({ route, navigation }) => {
             backgroundColor: "white",
           }}
         >
+          <Badge
+            value="3"
+            status="error"
+            width={25}
+            height={25}
+            containerStyle={{
+              position: "absolute",
+              top: 4,
+              left: 60,
+              height: 25,
+            }}
+          />
           <Feather
+            position="absolute"
             color={index == 1 ? "#5e1e7f" : "black"}
             name="list"
             size={deviceType == "mobile" ? 40 : 45}
@@ -163,6 +188,18 @@ const DriverDash = ({ route, navigation }) => {
             backgroundColor: "white",
           }}
         >
+          <Badge
+            value="3"
+            status="error"
+            width={25}
+            height={25}
+            containerStyle={{
+              position: "absolute",
+              top: 4,
+              left: 60,
+              height: 25,
+            }}
+          />
           <FontAwesome
             color={index == 2 ? "#5e1e7f" : "black"}
             name="history"
