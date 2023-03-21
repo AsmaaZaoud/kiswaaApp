@@ -1,7 +1,7 @@
 {
-  "name": "argon-react-native",
+  "name": "Kiswa",
   "version": "1.8.0",
-  "description": "Argon React Native, based on Argon Design System. Coded by Creative Tim",
+  "description": "Kisaw capstone",
   "main": "App.js",
   "scripts": {
     "start": "expo start",
