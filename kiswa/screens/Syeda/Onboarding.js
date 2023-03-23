@@ -51,7 +51,7 @@ const Onboarding = ({ navigation }) => {
         </TouchableOpacity>
         <Block center style={{ marginTop: "20%" }}>
           <Image
-            source={require("../../assets/Fatima/Logo.png")}
+            source={require("../../assets/Fatima/Whitelogo-noBackground.png")}
             style={styles.logo}
           />
         </Block>
