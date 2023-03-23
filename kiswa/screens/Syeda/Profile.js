@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -10,7 +10,7 @@ import {
   Modal,
   TouchableOpacity,
   View,
-  Alert
+  Alert,
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
@@ -20,7 +20,7 @@ import { HeaderHeight } from "../../constants/utils";
 
 import { useIsFocused } from "@react-navigation/native";
 
-import { auth } from '../../config';
+import { auth } from "../../config";
 
 import {
   doc,
@@ -47,7 +47,6 @@ const { width, height } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 
 const Profile = ({ route, navigation }) => {
-
   let user = auth?.currentUser?.email;
 
   const isFocused = useIsFocused();
@@ -66,25 +65,25 @@ const Profile = ({ route, navigation }) => {
     { label: "Al Shahaniya", value: "10" },
   ];
 
-  const [nickname, setNickname] = useState('')
-  const [zone, setZone] = useState('')
-  const [number, setNumber] = useState()
+  const [nickname, setNickname] = useState("");
+  const [zone, setZone] = useState("");
+  const [number, setNumber] = useState();
 
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const [location, setLocation] = useState()
+  const [location, setLocation] = useState();
   const [stat, setStat] = useState("denied");
 
   const [image, setImage] = useState("");
 
   useEffect(() => {
     if (isFocused) {
-      readName()
-      readDonations()
-      read()
+      readName();
+      readDonations();
+      read();
     }
-  }, [isFocused])
+  }, [isFocused]);
 
   const read = async () => {
     let user = auth?.currentUser?.email;
@@ -93,7 +92,7 @@ const Profile = ({ route, navigation }) => {
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       setImage(docSnap.data().image);
-      console.log("read image:", image)
+      console.log("read image:", image);
     } else {
       console.log("No such document!");
     }
@@ -107,7 +106,7 @@ const Profile = ({ route, navigation }) => {
     if (!result.canceled) {
       setImage(result.uri);
       console.log("set image uri: ", image);
-      console.log('result.uri', result.uri)
+      console.log("result.uri", result.uri);
       //update function
       const docRef = doc(db, "donors", user);
       await setDoc(docRef, { image: result.uri }, { merge: true })
@@ -125,30 +124,33 @@ const Profile = ({ route, navigation }) => {
     const q = query(collection(db, "donors"), where("email", "==", user));
     const docs = await getDocs(q);
     docs.forEach((doc) => {
-      setNickname(doc.data().userName)
-      setZone(doc.data().zone)
-      setEmail(doc.data().email)
-      setPhone(doc.data().phone)
-      setLocation(doc.data().location)
+      setNickname(doc.data().userName);
+      setZone(doc.data().zone);
+      setEmail(doc.data().email);
+      setPhone(doc.data().phone);
+      setLocation(doc.data().location);
     });
-  }
+  };
 
   //count no. of donations
   let counter = 0;
 
   const readDonations = async () => {
-    const q = query(collection(db, "donorDonation"), where("email", "==", user));
+    const q = query(
+      collection(db, "donorDonation"),
+      where("email", "==", user)
+    );
     const docs = await getDocs(q);
     // let counter = 0
     docs.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      counter += 1
+      counter += 1;
       //setCounter(counter)
       console.log("readDonations => ", doc.id, " => ", doc.data());
     });
-    setNumber(counter)
+    setNumber(counter);
     //console.log("counter: ", counter)
-  }
+  };
 
   const getLocation = () => {
     const getPermissions = async () => {
@@ -158,16 +160,15 @@ const Profile = ({ route, navigation }) => {
       console.log(status);
       if (status !== "granted") {
         console.log("Please grant location permissions");
-        Alert.alert("Please grant location permissions.")
+        Alert.alert("Please grant location permissions.");
         return;
-      }
-      else {
-        console.log('permitted')
-        Alert.alert("Your new location has been recorded.")
+      } else {
+        console.log("permitted");
+        Alert.alert("Your new location has been recorded.");
       }
 
       let currentLocation = await Location.getCurrentPositionAsync({});
-      console.log(currentLocation)
+      console.log(currentLocation);
       setLocation(currentLocation);
     };
     getPermissions();
@@ -176,17 +177,27 @@ const Profile = ({ route, navigation }) => {
   const update = async () => {
     let user = auth?.currentUser?.email;
     const docRef = doc(db, "donors", user);
-    await setDoc(docRef, { email: email, location: location, phone: phone, userName: nickname, zone: zone }, { merge: true })
+    await setDoc(
+      docRef,
+      {
+        email: email,
+        location: location,
+        phone: phone,
+        userName: nickname,
+        zone: zone,
+      },
+      { merge: true }
+    )
       .then(() => {
         console.log("data updated");
-        Alert.alert("You new information has been recorded.")
+        Alert.alert("You new information has been recorded.");
         //navigation.navigate("PersonalInfo");
       })
       .catch((error) => {
-        console.log('ERROR: ', error.message);
+        console.log("ERROR: ", error.message);
       });
-      //navigation.navigate('Home')
-  }
+    //navigation.navigate('Home')
+  };
 
   return (
     <Block flex style={styles.profile}>
@@ -198,28 +209,31 @@ const Profile = ({ route, navigation }) => {
         >
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{ width, marginTop: '25%' }}
+            style={{ width, marginTop: "25%" }}
           >
             <Block flex style={styles.profileCard}>
               <Block middle style={styles.avatarContainer}>
-                <View style={{width: 120}}>
-                <Image
-                  style={styles.avatar}
-                  source={{ uri: image == "" ? 'https://cdn-icons-png.flaticon.com/512/1173/1173817.png' : image }}
-                />
-                <TouchableOpacity onPress={pickImage}>
+                <View style={{ width: 120 }}>
                   <Image
-                    style={styles.addImage}
+                    style={styles.avatar}
                     source={{
-                      uri: "https://cdn-icons-png.flaticon.com/512/61/61183.png",
+                      uri:
+                        image == ""
+                          ? "https://cdn-icons-png.flaticon.com/512/1173/1173817.png"
+                          : image,
                     }}
                   />
-                </TouchableOpacity>
+                  <TouchableOpacity onPress={pickImage}>
+                    <Image
+                      style={styles.addImage}
+                      source={{
+                        uri: "https://cdn-icons-png.flaticon.com/512/61/61183.png",
+                      }}
+                    />
+                  </TouchableOpacity>
                 </View>
               </Block>
-              <Block style={styles.info}>
-
-              </Block>
+              <Block style={styles.info}></Block>
               <Block flex>
                 <Block middle style={styles.nameInfo}>
                   <Text bold size={28} color="#32325D">
@@ -231,28 +245,53 @@ const Profile = ({ route, navigation }) => {
                   <Text size={16} color="#32325D" style={{ marginTop: 10 }}>
                     {zone}, Qatar
                   </Text>
-                  {
-                    number === 0 ?
-                      null
-                      :
-                      number === 1 ?
-                        <Block row>
-                          <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>Proud Donor of 1 Donation</Text>
-                          <Image
-                            style={{ width: 25, height: 25, marginLeft: 12, marginTop: 10 }}
-                            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/9466/9466004.png' }}
-                          ></Image>
-                        </Block>
-                        :
-                        <Block row>
-                          <Text style={{ fontSize: 15, alignSelf: 'center', marginTop: 15 }}>Proud Donor of {number} Donations</Text>
-                          <Image
-                            style={{ width: 25, height: 25, marginLeft: 12, marginTop: 10 }}
-                            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/9466/9466004.png' }}
-                          ></Image>
-                        </Block>
-                  }
-
+                  {number === 0 ? null : number === 1 ? (
+                    <Block row>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          alignSelf: "center",
+                          marginTop: 15,
+                        }}
+                      >
+                        Proud Donor of 1 Donation
+                      </Text>
+                      <Image
+                        style={{
+                          width: 25,
+                          height: 25,
+                          marginLeft: 12,
+                          marginTop: 10,
+                        }}
+                        source={{
+                          uri: "https://cdn-icons-png.flaticon.com/512/9466/9466004.png",
+                        }}
+                      ></Image>
+                    </Block>
+                  ) : (
+                    <Block row>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          alignSelf: "center",
+                          marginTop: 15,
+                        }}
+                      >
+                        Proud Donor of {number} Donations
+                      </Text>
+                      <Image
+                        style={{
+                          width: 25,
+                          height: 25,
+                          marginLeft: 12,
+                          marginTop: 10,
+                        }}
+                        source={{
+                          uri: "https://cdn-icons-png.flaticon.com/512/9466/9466004.png",
+                        }}
+                      ></Image>
+                    </Block>
+                  )}
                 </Block>
                 <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
                   <Block style={styles.divider} />
@@ -260,13 +299,13 @@ const Profile = ({ route, navigation }) => {
 
                 {/* editable fields */}
                 <Block style={styles.container}>
-                  <Block width={width * 0.8} >
+                  <Block width={width * 0.8}>
                     <Input
                       style={styles.input}
                       borderless
                       value={nickname}
                       onChangeText={setNickname}
-                      autoCapitalize='words'
+                      autoCapitalize="words"
                       placeholder="Nickname"
                       iconContent={
                         <Icon
@@ -277,10 +316,9 @@ const Profile = ({ route, navigation }) => {
                           style={styles.inputIcons}
                         />
                       }
-
                     />
                   </Block>
-                  <Block width={width * 0.8} >
+                  <Block width={width * 0.8}>
                     <Input
                       style={styles.input}
                       borderless
@@ -310,9 +348,8 @@ const Profile = ({ route, navigation }) => {
                         Change Location
                       </Text>
                     </Button>
-
                   </Block>
-                  <Block width={width * 0.50} style={{ marginBottom: 0 }}>
+                  <Block width={width * 0.5} style={{ marginBottom: 0 }}>
                     <Dropdown
                       style={styles.dropdown}
                       placeholderStyle={styles.placeholderStyle}
@@ -330,17 +367,13 @@ const Profile = ({ route, navigation }) => {
                   </Block>
 
                   <Block width={width * 0.35}>
-                    <Button
-                      style={styles.createButton}
-                      onPress={update}
-                    >
+                    <Button style={styles.createButton} onPress={update}>
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                         Update Info
                       </Text>
                     </Button>
                   </Block>
                 </Block>
-
               </Block>
             </Block>
           </ScrollView>
@@ -348,22 +381,22 @@ const Profile = ({ route, navigation }) => {
       </Block>
     </Block>
   );
-}
+};
 
 const styles = StyleSheet.create({
   profile: {
     marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
-    flex: 1
+    flex: 1,
   },
   profileContainer: {
     width: width,
     height: height,
     padding: 0,
-    zIndex: 1
+    zIndex: 1,
   },
   profileBackground: {
     width: width,
-    height: height / 2
+    height: height / 2,
   },
   profileCard: {
     // position: "relative",
@@ -377,35 +410,35 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowRadius: 8,
     shadowOpacity: 0.2,
-    zIndex: 2
+    zIndex: 2,
   },
   info: {
-    paddingHorizontal: 40
+    paddingHorizontal: 40,
   },
   avatarContainer: {
     position: "relative",
-    marginTop: -80
+    marginTop: -80,
   },
   avatar: {
     width: 124,
     height: 124,
     borderRadius: 62,
-    borderWidth: 0
+    borderWidth: 0,
   },
   nameInfo: {
-    marginTop: 35
+    marginTop: 35,
   },
   divider: {
     width: "90%",
     borderWidth: 1,
-    borderColor: "#E9ECEF"
+    borderColor: "#E9ECEF",
   },
   thumb: {
     borderRadius: 4,
     marginVertical: 4,
     alignSelf: "center",
     width: thumbMeasure,
-    height: thumbMeasure
+    height: thumbMeasure,
   },
   inputIcons: {
     marginRight: 12,
@@ -415,7 +448,7 @@ const styles = StyleSheet.create({
     padding: 7,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: 'purple',
+    borderColor: "purple",
     height: 44,
     backgroundColor: "#FFFFFF",
     shadowColor: argonTheme.COLORS.BLACK,
@@ -433,13 +466,13 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 1,
-    borderColor: 'purple',
-    margin: 15
+    borderColor: "purple",
+    margin: 15,
   },
   createButton: {
     width: width * 0.5,
     marginTop: 25,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   container: {
     flex: 1,

@@ -112,8 +112,8 @@ const LoginDonor = ({ navigation }) => {
               </Text>
               <Block flex={0.17} middle>
                 <Image
-                  source={require("../../Images/purple_transparent.png")}
-                  style={{ width: 250, height: 200 }}
+                  source={require("../../assets/Fatima/Blacklogo-noBackground.png")}
+                  style={{ width: 250, height: 80 }}
                 />
               </Block>
               <Block flex center>

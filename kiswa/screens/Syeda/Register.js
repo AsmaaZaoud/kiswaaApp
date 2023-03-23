@@ -268,10 +268,11 @@ const Register = ({ navigation }) => {
               </TouchableOpacity>
               {/* <View style={{marginBottom: 50}}></View> */}
               <Image
-                source={require("../../Images/purple_transparent.png")}
+                source={require("../../assets/Fatima/Blacklogo-noBackground.png")}
                 style={{
                   width: 250,
-                  height: 200,
+                  height: 80,
+                  margin: 50,
                   justifyContent: "flex-start",
                   alignSelf: "center",
                 }}
