@@ -8,7 +8,7 @@
     "version": "1.7.1",
     "orientation": "portrait",
     "splash": {
-      "image": "./assets/Fatima/splashPage.gif",
+      "image": "./assets/Fatima/splashPage.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +23,6 @@
       "package": "com.rahma23.Rahma",
       "versionCode": 1,
       "adaptiveIcon": {
-        "forgroundImage": "./assets/Fatima/Whitelogo-noBackground.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": ["android.permission.RECORD_AUDIO"]
