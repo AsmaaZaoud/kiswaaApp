@@ -9,9 +9,9 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 //argon
-import { Images, argonTheme, articles } from "../constants/";
+import { Images, argonTheme, articles } from "../constants";
 
-import { Card } from "../components/";
+import { Card } from "../components";
 import React from "react";
 
 const { width } = Dimensions.get("screen");

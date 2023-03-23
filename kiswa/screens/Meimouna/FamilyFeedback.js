@@ -151,7 +151,7 @@ const FamilyFeedback = ({ route, navigation }) => {
               </View>
               <Text></Text>
               <Text style={{ fontSize: 18, marginBottom: "6%" }}>
-                How satisfied are you with Kiswa?
+                How satisfied are you with Rahma?
               </Text>
               {/* <Text></Text> */}
               <View

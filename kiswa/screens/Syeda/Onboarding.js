@@ -90,7 +90,7 @@ const Onboarding = ({ navigation }) => {
 
       {/* <Block center style={{ width: "90%", marginTop: "30%" }}>
         <Text style={{ color: "white", fontSize: 15, textAlign: "center" }}>
-          Kiswa is a free platform on which you can either choose to become a
+          Rahma is a free platform on which you can either choose to become a
           donor and donate clothes or a receiver and receive clothes.
         </Text>
 

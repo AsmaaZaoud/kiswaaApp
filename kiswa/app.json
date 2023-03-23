@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Kiswa",
-    "slug": "Kiswa",
+    "name": "Rahma",
+    "slug": "Rahma",
     "plugins": ["expo-image-picker"],
     "privacy": "public",
     "platforms": ["ios", "android"],
@@ -20,15 +20,15 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.kiswa23.Kiswa",
+      "package": "com.rahma23.Rahma",
       "versionCode": 1,
       "adaptiveIcon": {
-        "forgroundImage": "./assets/Fatima/Logo.png",
+        "forgroundImage": "./assets/Fatima/Whitelogo-noBackground.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": ["android.permission.RECORD_AUDIO"]
     },
-    "description": "Kiswa is a capstone project 2023",
+    "description": "Rahma is a capstone project 2023",
     "extra": {
       "eas": {
         "projectId": "41f9f18d-1662-47a7-874f-d2a8eae80c9d"

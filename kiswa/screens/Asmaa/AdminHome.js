@@ -28,7 +28,7 @@ import { db } from "../../config";
 import { signOut } from "firebase/auth";
 
 //argon
-import { Images, argonTheme, articles } from "../../constants/";
+import { Images, argonTheme, articles } from "../../constants";
 import { Card, Header } from "../../components";
 import {
   FontAwesome5,

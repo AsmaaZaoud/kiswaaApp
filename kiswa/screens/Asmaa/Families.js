@@ -38,7 +38,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config";
 //argon
-import { Images, argonTheme, articles } from "../../constants/";
+import { Images, argonTheme, articles } from "../../constants";
 
 import { Card, Header } from "../../components";
 

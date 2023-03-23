@@ -28,7 +28,7 @@ import Profile from "../screens/Syeda/Profile";
 import AboutUs from "../screens/Syeda/AboutUs";
 import AppOnboard from "../screens/Syeda/AppOnboard";
 
-// Fatima
+// Fatima Inventory
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
 import InventoryClerkProfile from "../screens/Fatima/InventoryClerkProfile";
 

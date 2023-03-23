@@ -15,17 +15,17 @@ const AppOnboard = ({ route, navigation }) => {
       //the properties are title, subtitile, background color, and an image
       pages={[
         {
-          title: "Welcome to Kiswa!",
+          title: "Welcome to Rahma!",
           subtitle:
-            "Kiswa is a free platform on which you can either choose to become a donor and donate clothes or a receiver and receive clothes.",
-          backgroundColor: "#541178",
+            "Rahma is a free platform on which you can either choose to become a donor and donate clothes or a receiver and receive clothes.",
+          backgroundColor: "#4B0095",
+
           image: (
             <Image
               style={{ width: "90%", height: 140 }}
               source={{
-                uri: "https://raw.githubusercontent.com/AsmaaZaoud/kiswaaApp/Fatima/kiswa/assets/Fatima/Whitelogo-noBackground.png",
+                uri: "../../assets/Fatima/Whitelogo-noBackground.png",
               }}
-              //source={require('../../Images/kiswa-logo.png')}
             />
           ),
         },
@@ -33,7 +33,7 @@ const AppOnboard = ({ route, navigation }) => {
           title: "Environment Friendly",
           subtitle:
             "We accept clothes of all quality types. The good quality ones go to people who requested them, and the worn out ones go to recycling organizations.",
-          backgroundColor: "#541178",
+          backgroundColor: "#4B0095",
           image: (
             <Image
               style={{ width: 300, height: 200 }}
@@ -45,7 +45,7 @@ const AppOnboard = ({ route, navigation }) => {
           title: "Secured Privacy",
           subtitle:
             "We do not ask for any personal information other than the necessary contact information. All of your personal details are private and will never be shared with anyone.",
-          backgroundColor: "#541178",
+          backgroundColor: "#4B0095",
           image: (
             <Image
               style={{ width: 300, height: 200 }}
@@ -57,7 +57,7 @@ const AppOnboard = ({ route, navigation }) => {
           title: "Door-to-door service",
           subtitle:
             "We will come to your house to pick-up/deliver the donation.",
-          backgroundColor: "#541178",
+          backgroundColor: "#4B0095",
           image: (
             <Image
               style={{ width: 300, height: 200 }}
@@ -81,12 +81,12 @@ const AppOnboard = ({ route, navigation }) => {
               }}
             />
           ),
-          backgroundColor: "#541178",
+          backgroundColor: "#4B0095",
           image: (
             <Image
               style={{ width: "90%", height: 140 }}
               source={{
-                uri: "https://raw.githubusercontent.com/AsmaaZaoud/kiswaaApp/Fatima/kiswa/assets/Fatima/Whitelogo-noBackground.png",
+                uri: "https://raw.githubusercontent.com/AsmaaZaoud/rahmaaApp/Fatima/rahma/assets/Fatima/Whitelogo-noBackground.png",
               }}
             />
           ),
@@ -103,4 +103,4 @@ export default AppOnboard;
 //npx react-native run-android
 //after runnning this command you should (or maybe not idk) be able to see the onboarding screens againn
 //whitelogo url
-//https://raw.githubusercontent.com/AsmaaZaoud/kiswaaApp/Fatima/kiswa/assets/Fatima/Whitelogo-noBackground.png
+//https://raw.githubusercontent.com/AsmaaZaoud/rahmaaApp/Fatima/rahma/assets/Fatima/Whitelogo-noBackground.png

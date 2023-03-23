@@ -139,10 +139,10 @@ const FamilyHome = ({ route, navigation }) => {
             ></Image>
           </Block>
         </Block>
-        {/* about kiswa */}
+        {/* about rahma */}
         <Block style={styles.header2}>
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
-            Kiswa
+            Rahma
           </Text>
           <Text style={{ width: "66%", color: "white", fontSize: 15 }}>
             We connect with clothing donators to fulfill your requests while
