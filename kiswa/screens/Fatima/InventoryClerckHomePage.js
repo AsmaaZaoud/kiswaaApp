@@ -243,7 +243,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
       >
         <Block>
           <Image
-            source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
+            source={require("../../assets/Fatima/Whitelogo-noBackground.png")}
             style={{ width: "1%", height: "2%" }}
             width={width * 0.2}
             height={height * 0.04}

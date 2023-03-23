@@ -71,7 +71,7 @@ const DriverDash = ({ route, navigation }) => {
       >
         <View style={styles.topl}>
           <Image
-            source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
+            source={require("../../assets/Fatima/Whitelogo-noBackground.png")}
             style={{ width: 150, height: 50 }}
             width={width * 0.35}
             height={height * 0.05}

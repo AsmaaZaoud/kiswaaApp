@@ -85,7 +85,7 @@ const AdminHome = ({ route, navigation }) => {
     <View style={{ backgroundColor: "#4B0095" }}>
       <View style={styles.top}>
         <Image
-          source={require("../../assets/Fatima/WhiteLogo-noBackground.png")}
+          source={require("../../assets/Fatima/Whitelogo-noBackground.png")}
           style={{ width: normalize(230), height: normalize(80) }}
         />
         <Pressable onPress={onSignOut}>
