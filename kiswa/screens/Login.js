@@ -173,6 +173,7 @@ const Login = ({ navigation }) => {
                 : styles.registerContainerLarge
             }
           >
+            {/* comment */}
             <Block flex style={{ marginTop: "10%" }}>
               <Block flex={0.17} middle>
                 <Image
