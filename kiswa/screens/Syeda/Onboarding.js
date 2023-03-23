@@ -10,8 +10,11 @@ import {
   PixelRatio,
   Platform,
 } from "react-native";
-import { Block, Button, Text, theme } from "galio-framework";
+import * as Notifications from "expo-notifications";
+// import { Notifications } from "expo";
 
+import { Block, Button, Text, theme } from "galio-framework";
+// import { schedulePushNotification } from "../../App";
 const { width, height } = Dimensions.get("screen");
 const scale = width / 450;
 export function normalize(size) {
@@ -21,6 +24,19 @@ export function normalize(size) {
   } else {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
+}
+
+const notification = {
+  content: {
+    title: "You've got mail! 📬",
+    body: "Here is the notification body",
+    data: { data: "goes here" },
+  },
+  trigger: { seconds: 2 },
+};
+
+async function schedulePushNotification() {
+  await Notifications.scheduleNotificationAsync(notification);
 }
 
 const Onboarding = ({ navigation }) => {
@@ -53,6 +69,12 @@ const Onboarding = ({ navigation }) => {
           <Image
             source={require("../../assets/Fatima/Logo.png")}
             style={styles.logo}
+          />
+          <Button
+            title="Press to schedule a notification"
+            onPress={async () => {
+              await schedulePushNotification();
+            }}
           />
         </Block>
         <Block

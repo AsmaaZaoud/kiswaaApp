@@ -188,15 +188,17 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
 
   const [driver, setDriver] = useState("");
   const getDriver = async () => {
+    alert("get Drive");
+    alert(zone);
     var temp = "";
-    const q = query(collection(db, "drivers"), where("zone", "==", "Rume"));
+    const q = query(collection(db, "drivers"), where("zone", "==", zone));
     const docs = await getDocs(q);
     docs.forEach((doc) => {
       console.log(doc.id, " ==========> ", doc.data());
       temp = doc.id;
       setDriver(doc.id);
 
-      // console.log(temp);
+      alert(temp);
     });
     setDriver(temp);
   };
@@ -253,8 +255,8 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
         console.log(error.message);
       });
     //Asma: I added this
-    if (available && driver) {
-      // alert("yess");
+    if (driver) {
+      alert("yess");
       const docRefDriver = await addDoc(
         collection(db, "drivers", driver, "orders"),
         {
@@ -272,6 +274,16 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
         }
       );
       console.log("driver orders add ID: ", docRefDriver.id);
+
+      const notiref = await addDoc(
+        collection(db, "drivers", driver, "notifications"),
+        {
+          title: "New Order",
+          body: "Deliver order to" + zone,
+          seen: "false",
+        }
+      );
+      console.log("notification  add ID: ", notiref.id);
     }
 
     navigation.navigate("FamilyHome", id);

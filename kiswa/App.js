@@ -29,37 +29,49 @@ enableScreens();
 
 import Screens from "./navigation/Screens";
 import { Images, articles, argonTheme } from "./constants";
+import { Button } from "react-native-paper";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
+    shouldPlaySound: true,
     shouldSetBadge: false,
   }),
 });
-// Can use this function below OR use Expo's Push Notification Tool from: https://expo.dev/notifications
-async function sendPushNotification(expoPushToken) {
-  const message = {
-    to: expoPushToken,
-    sound: "default",
-    title: "Original Title",
-    body: "And here is the body!",
-    data: { someData: "goes here" },
-  };
+// cache app images
+const assetImages = [
+  Images.Onboarding,
+  Images.LogoOnboarding,
+  Images.Logo,
+  Images.Pro,
+  Images.ArgonLogo,
+  Images.iOSLogo,
+  Images.androidLogo,
+];
 
-  await fetch("https://exp.host/--/api/v2/push/send", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Accept-encoding": "gzip, deflate",
-      "Content-Type": "application/json",
+async function schedulePushNotification() {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "You've got mail! 📬",
+      body: "Here is the notification body",
+      data: { data: "goes here" },
     },
-    body: JSON.stringify(message),
+    trigger: { seconds: 2 },
   });
 }
 
 async function registerForPushNotificationsAsync() {
   let token;
+
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
   if (Device.isDevice) {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
@@ -78,27 +90,8 @@ async function registerForPushNotificationsAsync() {
     alert("Must use physical device for Push Notifications");
   }
 
-  if (Platform.OS === "android") {
-    Notifications.setNotificationChannelAsync("default", {
-      name: "default",
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
-    });
-  }
-
   return token;
 }
-// cache app images
-const assetImages = [
-  Images.Onboarding,
-  Images.LogoOnboarding,
-  Images.Logo,
-  Images.Pro,
-  Images.ArgonLogo,
-  Images.iOSLogo,
-  Images.androidLogo,
-];
 
 function cacheImages(images) {
   return images.map((image) => {
@@ -112,15 +105,18 @@ function cacheImages(images) {
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 function App(props) {
+  const [appIsReady, setAppIsReady] = useState(false);
+
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [appIsReady, setAppIsReady] = useState(false);
+
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
     );
+    console.log("set...", expoPushToken);
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -129,7 +125,7 @@ function App(props) {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+        console.log("rrrrrrrrr", response);
       });
 
     return () => {
@@ -139,6 +135,7 @@ function App(props) {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+
   useEffect(() => {
     async function prepare() {
       try {
@@ -176,6 +173,7 @@ function App(props) {
       <GalioProvider theme={argonTheme}>
         <Block flex>
           {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+
           <Screens />
         </Block>
       </GalioProvider>
