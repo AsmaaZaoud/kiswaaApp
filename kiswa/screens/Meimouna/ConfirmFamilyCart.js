@@ -116,6 +116,9 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
     // console.log(cartId);
   }, [id]);
 
+  const [long, setlong] = useState("");
+  const [lat, setLat] = useState("");
+
   const getFamily = async () => {
     // console.log(id);
     const docRef = doc(db, "families", id);
@@ -125,6 +128,9 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
       setTheUser(docSnap.data().email);
       setPhone(docSnap.data().phone);
       setZone(docSnap.data().zone);
+      setLat(docSnap.data().location.coords.latitude);
+      setlong(docSnap.data().location.coords.longitude);
+
       // await getDriver();
     } else {
       console.log("No such document!");
@@ -135,7 +141,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
 
   const readDriver = async () => {
     console.log(Dzone);
-    const q = query(collection(db, "drivers"), where("zone", "==", zone));
+    const q = query(collection(db, "drivers"), where("zone", "==", Dzone));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("snapshot");
       setDrivers(querySnapshot.docs.map((doc) => doc.data().email));
@@ -261,14 +267,25 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
         dateSlot: date,
         timeSlot: time,
         // trackId: trackId,
-        time: "12:00PM",
+        time: time,
         date: new Date().toLocaleDateString("en-US"),
         // trackId: trackId,
         status: "pending",
         type: "pickup",
+        long: long,
+        lat: lat,
       }
     );
     console.log("driver orders add ID: ", docRefDriver.id);
+    const notiref = await addDoc(
+      collection(db, "drivers", drivers[0], "notifications"),
+      {
+        title: "New Order",
+        body: "Deliver order to " + Dzone,
+        seen: "false",
+      }
+    );
+    console.log("notification  add ID: ", notiref.id);
 
     navigation.navigate("FamilyHome", id);
   };

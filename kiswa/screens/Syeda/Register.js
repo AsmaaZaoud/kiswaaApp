@@ -268,7 +268,7 @@ const Register = ({ navigation }) => {
               </TouchableOpacity>
               {/* <View style={{marginBottom: 50}}></View> */}
               <Image
-                source={require("../../assets/Fatima/Blacklogo-noBackground.png")}
+                source={require("../../assets/Fatima/BlackLogo.png")}
                 style={{
                   width: 250,
                   height: 80,

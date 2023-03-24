@@ -168,8 +168,8 @@ const Drivers = ({ navigation }) => {
               width: width,
             }}
           >
-            {orders.map((item) => (
-              <View style={styles.notificationBox} key={item.type}>
+            {orders.map((item, i) => (
+              <View style={styles.notificationBox} key={i}>
                 <View
                   style={{
                     flexDirection: "row",

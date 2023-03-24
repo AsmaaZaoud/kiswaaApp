@@ -17,7 +17,14 @@ import {
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
 import { auth, db } from "../../config";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -32,7 +39,7 @@ export function normalize(size) {
 
 const Donate = ({ route, navigation }) => {
   useEffect(() => {
-    readName();
+    getZone();
     // alert("donate");
     if (
       route.params &&
@@ -68,9 +75,27 @@ const Donate = ({ route, navigation }) => {
   };
 
   useEffect(() => {
+    getZone();
     console.log(cloth);
     console.log(amount);
-  });
+  }, []);
+
+  const [Dzone, setDZone] = useState("");
+  const getZone = async () => {
+    let user = auth?.currentUser?.email;
+    console.log(id);
+    const docRef = doc(db, "donors", user);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setDZone(docSnap.data().zone);
+
+      // setLat(docSnap.data().location.coords.latitude);
+      // setLog(docSnap.data().location.coords.longitude);
+    } else {
+      console.log("No such document!");
+    }
+    // alert(Dzone);
+  };
 
   //dropdown
 
@@ -329,7 +354,7 @@ const Donate = ({ route, navigation }) => {
           itemsArray: confirm,
           time: time,
           date: date,
-          zone: zone,
+          Dzone: Dzone,
         });
       }
     } else {

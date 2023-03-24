@@ -177,7 +177,7 @@ const Login = ({ navigation }) => {
             <Block flex style={{ marginTop: "10%" }}>
               <Block flex={0.17} middle>
                 <Image
-                  source={require("../assets/Fatima/Blacklogo-noBackground.png")}
+                  source={require("../assets/Fatima/BlackLogo.png")}
                   style={
                     deviceType == "mobile" ? styles.logoSmall : styles.logoLarge
                   }

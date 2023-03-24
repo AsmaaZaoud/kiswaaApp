@@ -189,10 +189,10 @@ const DriverMap = (props) => {
             {today && today}
           </Text>
           {orders.length > 0 ? (
-            orders.map((item) =>
+            orders.map((item, i) =>
               item != undefined ? (
                 <TouchableOpacity
-                  key={item.id}
+                  key={i}
                   // onPress={() => showAlert("row")}
                 >
                   <View style={styles.eventBox}>
@@ -250,9 +250,9 @@ const DriverMap = (props) => {
             {tomorrow && tomorrow}
           </Text>
           {ordersTomo.length > 0 ? (
-            ordersTomo.map((item) => (
+            ordersTomo.map((item, i) => (
               <TouchableOpacity
-                key={item.id}
+                key={i + 20}
                 // onPress={() => showAlert("row")}
               >
                 <View style={styles.eventBox}>

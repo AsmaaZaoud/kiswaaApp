@@ -82,7 +82,7 @@ const CheckOut = ({ route, navigation }) => {
   const [location, setLocation] = useState("");
 
   let confirm = route.params.itemsArray;
-  //let zone = route.params.zone;
+  let Dzone = route.params.Dzone;
 
   console.log("confirmCheckout: ", confirm);
 
@@ -103,34 +103,64 @@ const CheckOut = ({ route, navigation }) => {
 
   console.log("user logged in: ", user);
 
-  const readName = async () => {
-    let user = auth?.currentUser?.email;
-    console.log("readName");
-    const q = query(collection(db, "donors"), where("email", "==", user));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
-      console.log("just phone", doc.data().phone);
-      setPhone(doc.data().phone);
-      console.log("phone: ", phone);
-      setEmail(doc.data().email);
-      console.log("email : ", email);
-      setLocation(doc.data().location);
-      console.log("location: ", location);
-      setZone(doc.data().zone);
-    });
-  };
+  // const readName = async () => {
+  //   alert("hhhhh");
+  //   let user = auth?.currentUser?.email;
+  //   console.log("readName");
+  //   const q = query(collection(db, "donors"), where("email", "==", user));
+  //   const docs = await getDocs(q);
+  //   docs.forEach((doc) => {
+  //     alert("ffff");
+  //     // doc.data() is never undefined for query doc snapshots
+  //     console.log(doc.id, " => ", doc.data());
+  //     console.log("just phone", doc.data().phone);
+  //     setPhone(doc.data().phone);
+  //     console.log("phone: ", phone);
+  //     setEmail(doc.data().email);
+  //     alert("----------email : ", email);
+  //     setLocation(doc.data().location);
+  //     console.log("location: ", location);
+  //     setZone(doc.data().zone);
+  //   });
+  // };
 
+  const [long, setlong] = useState("");
+  const [lat, setLat] = useState("");
+
+  const readName = async () => {
+    // console.log(id);
+    const docRef = doc(db, "donors", user);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      // alert(123);
+      console.log(docSnap.id, " => ", docSnap.data());
+      console.log("just phone", docSnap.data().phone);
+      setPhone(docSnap.data().phone);
+      console.log("phone: ", phone);
+      setEmail(docSnap.data().email);
+      // alert("----------email : ", email);
+      setLocation(docSnap.data().location);
+      console.log("location: ", location);
+      setZone(docSnap.data().zone);
+      setLat(docSnap.data().location.coords.latitude);
+      setlong(docSnap.data().location.coords.longitude);
+
+      // await getDriver();
+    } else {
+      console.log("No such document!");
+    }
+  };
   const [drivers, setDrivers] = useState([]);
 
   const readDriver = async () => {
-    const q = query(collection(db, "drivers"), where("zone", "==", zone));
+    // alert(Dzone);
+    const q = query(collection(db, "drivers"), where("zone", "==", Dzone));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("snapshot");
       setDrivers(querySnapshot.docs.map((doc) => doc.data().email));
       console.log("ddd", drivers[0]);
     });
+    // alert(drivers[0]);
 
     return () => unsubscribe();
   };
@@ -144,6 +174,11 @@ const CheckOut = ({ route, navigation }) => {
     }
   }, [isFocused]);
 
+  useEffect(() => {
+    readName();
+    //  readDriver();
+  }, []);
+
   const weekday = [
     "Sunday",
     "Monday",
@@ -154,7 +189,7 @@ const CheckOut = ({ route, navigation }) => {
     "Saturday",
   ];
   const donate = async () => {
-    console.log("donor donate button working")
+    console.log("donor donate button working");
     const day = new Date().getDay();
     let trackId = Math.floor(Math.random() * 10000);
     //Alert.alert("working")
@@ -185,13 +220,24 @@ const CheckOut = ({ route, navigation }) => {
         dateSlot: route.params.date,
         trackId: trackId,
         time: route.params.time,
-        date: route.params.date,
+        date: new Date().toLocaleDateString("en-US"),
         trackId: trackId,
         status: "pending",
         type: "pickup",
+        lat: lat,
+        long: long,
       }
     );
     console.log("driver orders add ID: ", docRefDriver.id);
+    const notiref = await addDoc(
+      collection(db, "drivers", drivers[0], "notifications"),
+      {
+        title: "New Order",
+        body: "Deliver order to " + Dzone,
+        seen: "false",
+      }
+    );
+    console.log("notification  add ID: ", notiref.id);
 
     // confirm.map(async (item) => {
     //     console.log(docRef.id)

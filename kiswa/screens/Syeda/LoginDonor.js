@@ -112,7 +112,7 @@ const LoginDonor = ({ navigation }) => {
               </Text>
               <Block flex={0.17} middle>
                 <Image
-                  source={require("../../assets/Fatima/Blacklogo-noBackground.png")}
+                  source={require("../../assets/Fatima/BlackLogo.png")}
                   style={{ width: 250, height: 80 }}
                 />
               </Block>

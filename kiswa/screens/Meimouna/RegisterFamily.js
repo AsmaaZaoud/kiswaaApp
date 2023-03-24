@@ -211,7 +211,7 @@ export default function RegisterFamily({ navigation }) {
 
                 <Block flex={0.17} middle>
                   <Image
-                    source={require("../../assets/Fatima/Blacklogo-noBackground.png")}
+                    source={require("../../assets/Fatima/BlackLogo.png")}
                     style={{
                       width: width - theme.SIZES.BASE,
                       height: theme.SIZES.BASE * 5,

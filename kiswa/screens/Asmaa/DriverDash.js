@@ -26,6 +26,8 @@ import {
   getDoc,
   addDoc,
   collection,
+  onSnapshot,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "../../config";
 import { signOut } from "firebase/auth";
@@ -35,6 +37,7 @@ import DriverProfile from "./DriverProfile";
 import DriverHome from "./DriverHome";
 import Drivers from "./Drivers";
 import DriverMap from "./DriverMap";
+import * as Notifications from "expo-notifications";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -47,10 +50,16 @@ export function normalize(size) {
   }
 }
 const DriverDash = ({ route, navigation }) => {
+  let user = auth?.currentUser?.email;
+
+  async function schedulePushNotification(noti) {
+    await Notifications.scheduleNotificationAsync(noti);
+  }
   const id = route.params;
   const [deviceType, setDeviceType] = useState("");
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
+    getNotifications();
   }, []);
 
   const [index, setIndex] = useState(0);
@@ -60,6 +69,47 @@ const DriverDash = ({ route, navigation }) => {
       .catch((error) => console.log("Error logging out: ", error));
   };
 
+  const [notifications, setNotifications] = useState([]);
+  const getNotifications = async () => {
+    const collectionRef = collection(db, "drivers", user, "notifications");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      querySnapshot.docs.map((doc) =>
+        doc.data().seen == "false"
+          ? schedulePushNotification({
+              content: {
+                title: doc.data().title,
+                body: doc.data().body,
+                data: { data: "goes here" },
+              },
+              trigger: { seconds: 1 },
+            })
+          : doc.data()
+      );
+      setNotifications(querySnapshot.docs.map((doc) => doc.id));
+    });
+
+    notifications.map((x) => update(x));
+
+    return () => unsubscribe();
+  };
+
+  const update = async (id) => {
+    await setDoc(
+      doc(db, "drivers", user, "notifications", id),
+      {
+        seen: "true",
+      },
+      { merge: true }
+    )
+      .then(() => {
+        console.log("data updated");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   return (
     <Block flex>
       <View
@@ -71,7 +121,7 @@ const DriverDash = ({ route, navigation }) => {
       >
         <View style={styles.topl}>
           <Image
-            source={require("../../assets/Fatima/Whitelogo-noBackground.png")}
+            source={require("../../assets/Fatima/WhiteLogo.png")}
             style={{ width: 150, height: 50 }}
             width={width * 0.35}
             height={height * 0.05}

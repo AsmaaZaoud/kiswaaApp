@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
-  Image,
   Dimensions,
   Platform,
   PixelRatio,
@@ -13,32 +12,11 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Block, theme } from "galio-framework";
-import {
-  Feather,
-  FontAwesome,
-  Ionicons,
-  MaterialCommunityIcons,
-} from "react-native-vector-icons";
+import { FontAwesome, Ionicons } from "react-native-vector-icons";
 //Firebase
-import { auth } from "../../config";
-import {
-  doc,
-  query,
-  getDocs,
-  getDoc,
-  addDoc,
-  collection,
-  onSnapshot,
-} from "firebase/firestore";
-import { db } from "../../config";
-import { signOut } from "firebase/auth";
-import { Tab, TabView } from "@rneui/themed";
-import DriverHistory from "./DriverHistory";
-import DriverProfile from "./DriverProfile";
-import { useIsFocused } from "@react-navigation/native";
-import { or } from "react-native-reanimated";
-import { async } from "@firebase/util";
-
+import { auth, db } from "../../config";
+import { doc, query, collection, onSnapshot, setDoc } from "firebase/firestore";
+import * as Notifications from "expo-notifications";
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
 export function normalize(size) {
@@ -51,20 +29,20 @@ export function normalize(size) {
 }
 
 const DriverHome = (props) => {
-  const isFocused = useIsFocused();
+  async function schedulePushNotification(noti) {
+    await Notifications.scheduleNotificationAsync(noti);
+  }
 
-  const [IDs, setIDs] = useState([]);
-  const [itemsArray, setItemsArray] = useState([]);
-  const reformat = (doc) => {
-    for (let i = 1; i <= itemsArray.length; i++) {
-      IDs.includes(i) ? null : IDs.push(i);
-    }
+  let user = auth?.currentUser?.email;
+  useEffect(() => {
+    getOrders();
+  }, []);
 
-    return { id: doc.id, ...doc.data() };
-  };
+  const [type, setType] = useState("pick");
+  const [arr, setArr] = useState([]);
 
+  const [orders, setOrders] = useState([]);
   const getOrders = async () => {
-    // console.log(cartId);
     const collectionRef = collection(db, "drivers", user, "orders");
     const q = query(collectionRef);
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -76,24 +54,13 @@ const DriverHome = (props) => {
             : undefined
         )
       );
-
       setOrders(querySnapshot.docs.map((doc) => doc.data()));
-      // setArr(orders.filter((x) => x.type == "pickup" && x.status == "pending"));
-      console.log(arr);
     });
 
     return () => unsubscribe();
   };
-  const id = props.email;
+
   const navigation = props.navigation;
-  const [deviceType, setDeviceType] = useState("");
-  const [type, setType] = useState("pick");
-  const [arr, setArr] = useState([]);
-  useEffect(() => {
-    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-    getOrders();
-  }, []);
-  const [index, setIndex] = useState(0);
 
   const change = (type) => {
     console.log("changeeee", orders);
@@ -108,10 +75,6 @@ const DriverHome = (props) => {
       setArr(orders.filter((x) => x.type == "pickup" && x.status == "pending"));
     }
   };
-
-  const [orders, setOrders] = useState([]);
-
-  let user = auth?.currentUser?.email;
 
   let lat = 25.2709954;
   let long = 51.5324509;
@@ -136,9 +99,9 @@ const DriverHome = (props) => {
         <ScrollView>
           <View style={styles.home}>
             {arr.length != 0 ? (
-              arr.map((x) =>
+              arr.map((x, i) =>
                 x != undefined ? (
-                  <View key={x.id} style={styles.card}>
+                  <View key={i} style={styles.card}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -237,10 +200,13 @@ const DriverHome = (props) => {
                           color="#5e1e7f"
                         />
                         <Text
-                          style={styles.dataTitles}
+                          style={[
+                            styles.dataTitles,
+                            { textDecorationLine: "underline", color: "blue" },
+                          ]}
                           onPress={() =>
                             Linking.openURL(
-                              `https://www.google.com/maps/search/?api=1&query=${lat},${long}`
+                              `https://www.google.com/maps/search/?api=1&query=${x.lat},${x.long}`
                             )
                           }
                         >

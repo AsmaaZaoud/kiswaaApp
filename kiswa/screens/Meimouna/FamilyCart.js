@@ -71,10 +71,10 @@ const FamilyCart = ({ route, navigation }) => {
   const [cart, setCart] = useState([]);
   useEffect(() => {
     getCartItems();
-    readName();
+    getZone();
   }, [cartId]);
   useEffect(() => {
-    readName();
+    getZone();
   }, []);
 
   // const items = [];
@@ -99,19 +99,18 @@ const FamilyCart = ({ route, navigation }) => {
   };
 
   const [Dzone, setDZone] = useState("");
-  const readName = async () => {
-    let user = auth?.currentUser?.email;
-    // alert(user);
-    const q = query(collection(db, "families"), where("email", "==", user));
-    const docs = await getDocs(q);
+  const getZone = async () => {
+    console.log(id);
+    const docRef = doc(db, "families", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setDZone(docSnap.data().zone);
 
-    docs.forEach((doc) => {
-      alert("each");
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
-      setDZone(doc.data().zone);
-      alert(Dzone);
-    });
+      // setLat(docSnap.data().location.coords.latitude);
+      // setLog(docSnap.data().location.coords.longitude);
+    } else {
+      console.log("No such document!");
+    }
   };
 
   // console.log(cart);

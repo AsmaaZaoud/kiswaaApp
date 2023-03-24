@@ -5,9 +5,9 @@ import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPLEdfCMZhdgmqKTFBmoJ18EeTOpNssyI",
-  authDomain: "rahma-161b6.firebaseapp.com",
-  projectId: "rahma-161b6",
-  storageBucket: "rahma-161b6.appspot.com",
+  authDomain: "kiswa-161b6.firebaseapp.com",
+  projectId: "kiswa-161b6",
+  storageBucket: "kiswa-161b6.appspot.com",
   messagingSenderId: "328139468827",
   appId: "1:328139468827:web:ac710e6c1fd7555ca848be",
 };

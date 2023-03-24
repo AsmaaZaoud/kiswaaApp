@@ -97,10 +97,10 @@ const DriverHistory = (props, { navigation }) => {
               style={styles.notificationList}
               enableEmptySections={true}
               data={arr}
-              keyExtractor={(item) => (item != undefined ? item.id : 0)}
+              keyExtractor={(item) => (item != undefined ? item.trackId : 0)}
               renderItem={({ item }) => {
                 return item != undefined ? (
-                  <View style={styles.notificationBox} key={item.type}>
+                  <View style={styles.notificationBox} key={item.trackId}>
                     <View
                       style={{
                         flexDirection: "row",
