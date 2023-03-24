@@ -22,9 +22,9 @@ const AppOnboard = ({ route, navigation }) => {
 
           image: (
             <Image
-              style={{ width: "90%", height: 140 }}
+              style={{ width: "100%", height: 110 }}
               source={{
-                uri: "../../assets/Fatima/Whitelogo-noBackground.png",
+                uri: "https://raw.githubusercontent.com/AsmaaZaoud/kiswaaApp/main/kiswa/assets/Fatima/WhiteLogo.png",
               }}
             />
           ),
@@ -84,9 +84,9 @@ const AppOnboard = ({ route, navigation }) => {
           backgroundColor: "#4B0095",
           image: (
             <Image
-              style={{ width: "90%", height: 140 }}
+              style={{ width: "100%", height: 110 }}
               source={{
-                uri: "https://raw.githubusercontent.com/AsmaaZaoud/rahmaaApp/Fatima/rahma/assets/Fatima/Whitelogo-noBackground.png",
+                uri: "https://raw.githubusercontent.com/AsmaaZaoud/kiswaaApp/main/kiswa/assets/Fatima/WhiteLogo.png",
               }}
             />
           ),
