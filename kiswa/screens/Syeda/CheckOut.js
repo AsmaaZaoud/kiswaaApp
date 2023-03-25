@@ -20,6 +20,7 @@ import { Block, Text, theme } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
 import { Button, Icon, Input } from "../../components";
 import { Images, argonTheme } from "../../constants";
+import { FontAwesome, Ionicons } from "react-native-vector-icons";
 
 import {
   createUserWithEmailAndPassword,
@@ -82,8 +83,6 @@ const CheckOut = ({ route, navigation }) => {
   const [location, setLocation] = useState("");
 
   let confirm = route.params.itemsArray;
-  let Dzone = route.params.Dzone;
-
   console.log("confirmCheckout: ", confirm);
 
   const [emailError, setEmailError] = useState("");
@@ -91,8 +90,8 @@ const CheckOut = ({ route, navigation }) => {
 
   const [locationError, setLocationError] = useState("");
 
-  const [zone, setZone] = useState(zones[0].label);
   const [ZoneError, setZoneError] = useState("");
+  const [zone, setZone] = useState(zones[0].label);
 
   const [signedIn, setSignedIn] = useState(false);
   const [flag, setflag] = useState(0);
@@ -103,81 +102,32 @@ const CheckOut = ({ route, navigation }) => {
 
   console.log("user logged in: ", user);
 
-  // const readName = async () => {
-  //   alert("hhhhh");
-  //   let user = auth?.currentUser?.email;
-  //   console.log("readName");
-  //   const q = query(collection(db, "donors"), where("email", "==", user));
-  //   const docs = await getDocs(q);
-  //   docs.forEach((doc) => {
-  //     alert("ffff");
-  //     // doc.data() is never undefined for query doc snapshots
-  //     console.log(doc.id, " => ", doc.data());
-  //     console.log("just phone", doc.data().phone);
-  //     setPhone(doc.data().phone);
-  //     console.log("phone: ", phone);
-  //     setEmail(doc.data().email);
-  //     alert("----------email : ", email);
-  //     setLocation(doc.data().location);
-  //     console.log("location: ", location);
-  //     setZone(doc.data().zone);
-  //   });
-  // };
-
-  const [long, setlong] = useState("");
-  const [lat, setLat] = useState("");
-
   const readName = async () => {
-    // console.log(id);
-    const docRef = doc(db, "donors", user);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      // alert(123);
-      console.log(docSnap.id, " => ", docSnap.data());
-      console.log("just phone", docSnap.data().phone);
-      setPhone(docSnap.data().phone);
+    let user = auth?.currentUser?.email;
+    console.log("readName");
+    const q = query(collection(db, "donors"), where("email", "==", user));
+    const docs = await getDocs(q);
+    docs.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+      console.log("just phone", doc.data().phone);
+      setPhone(doc.data().phone);
       console.log("phone: ", phone);
-      setEmail(docSnap.data().email);
-      // alert("----------email : ", email);
-      setLocation(docSnap.data().location);
+      setEmail(doc.data().email);
+      console.log("email : ", email);
+      setLocation(doc.data().location);
       console.log("location: ", location);
-      setZone(docSnap.data().zone);
-      setLat(docSnap.data().location.coords.latitude);
-      setlong(docSnap.data().location.coords.longitude);
-
-      // await getDriver();
-    } else {
-      console.log("No such document!");
-    }
-  };
-  const [drivers, setDrivers] = useState([]);
-
-  const readDriver = async () => {
-    // alert(Dzone);
-    const q = query(collection(db, "drivers"), where("zone", "==", Dzone));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      console.log("snapshot");
-      setDrivers(querySnapshot.docs.map((doc) => doc.data().email));
-      console.log("ddd", drivers[0]);
+      setZone(doc.data().zone);
     });
-    // alert(drivers[0]);
-
-    return () => unsubscribe();
   };
 
   useEffect(() => {
     if (isFocused) {
       if (user !== undefined) {
         readName();
-        readDriver();
       }
     }
   }, [isFocused]);
-
-  useEffect(() => {
-    readName();
-    //  readDriver();
-  }, []);
 
   const weekday = [
     "Sunday",
@@ -189,7 +139,6 @@ const CheckOut = ({ route, navigation }) => {
     "Saturday",
   ];
   const donate = async () => {
-    console.log("donor donate button working");
     const day = new Date().getDay();
     let trackId = Math.floor(Math.random() * 10000);
     //Alert.alert("working")
@@ -206,38 +155,26 @@ const CheckOut = ({ route, navigation }) => {
       trackId: trackId,
       donatedItems: confirm,
     });
-    console.log("DONOR DONATION Document written with ID: ", docRef.id);
-    navigation.navigate("Feedback");
+    console.log("Document written with ID: ", docRef.id);
 
     //Asma: I added this
     const docRefDriver = await addDoc(
-      collection(db, "drivers", drivers[0], "orders"),
+      collection(db, "drivers", "sim@mail.com", "orders"),
       {
         phone: phone,
         userId: email,
-        location: zone,
+        location: "khor",
         timeSlot: route.params.time,
         dateSlot: route.params.date,
         trackId: trackId,
         time: route.params.time,
-        date: new Date().toLocaleDateString("en-US"),
+        date: route.params.date,
         trackId: trackId,
         status: "pending",
         type: "pickup",
-        lat: lat,
-        long: long,
       }
     );
     console.log("driver orders add ID: ", docRefDriver.id);
-    const notiref = await addDoc(
-      collection(db, "drivers", drivers[0], "notifications"),
-      {
-        title: "New Order",
-        body: "Deliver order to " + Dzone,
-        seen: "false",
-      }
-    );
-    console.log("notification  add ID: ", notiref.id);
 
     // confirm.map(async (item) => {
     //     console.log(docRef.id)
@@ -249,7 +186,7 @@ const CheckOut = ({ route, navigation }) => {
     //     console.log("Document written with ID: ", docRef2.id);
     // })
 
-    //navigation.navigate("Feedback");
+    navigation.navigate("Feedback");
   };
 
   const done = async () => {
@@ -385,7 +322,7 @@ const CheckOut = ({ route, navigation }) => {
                 Checkout
               </Text>
 
-              <Block style={{ marginTop: "10%" }}></Block>
+              <Block style={{ marginTop: "5%" }}></Block>
 
               <Block style={{ marginLeft: "5%" }}>
                 <Text
@@ -398,25 +335,38 @@ const CheckOut = ({ route, navigation }) => {
                 >
                   Donation Summary
                 </Text>
-                <Text style={{ fontSize: 20 }}>
-                  Pick Up Time Interval: {route.params.time}
+                <Text style={{ fontSize: 20, margin: "5%" }}>
+                  <Ionicons name="time-outline" size={30} color="#842DCE" />{" "}
+                  {route.params.time}
                 </Text>
-                <Text style={{ fontSize: 20 }}>
-                  Pick Up Date Interval: {route.params.date}
+
+                <Text style={{ fontSize: 20, margin: "5%" }}>
+                  <Ionicons name="md-today-sharp" size={30} color="#842DCE" />
+                  {route.params.date}
                 </Text>
-                <Block style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                  {route.params.itemsArray.map((item, index) => (
-                    <View key={index} style={styles.smallContainer}>
-                      <View style={styles.smallSquare}>
-                        <Image
-                          style={styles.smallImage}
-                          source={{ uri: item.icon }}
-                        />
-                        <Text style={styles.smallText}>{item.cloth}</Text>
-                        <Text style={styles.smallText}>x{item.amount}</Text>
+                <Block
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    height: height * 0.15,
+                    // borderWidth: 1,
+                    width: width,
+                  }}
+                >
+                  <ScrollView horizontal>
+                    {route.params.itemsArray.map((item, index) => (
+                      <View key={index} style={styles.smallContainer}>
+                        <View style={styles.smallSquare}>
+                          <Image
+                            style={styles.smallImage}
+                            source={{ uri: item.icon }}
+                          />
+                          <Text style={styles.smallText}>{item.cloth}</Text>
+                          <Text style={styles.smallText}>x{item.amount}</Text>
+                        </View>
                       </View>
-                    </View>
-                  ))}
+                    ))}
+                  </ScrollView>
                 </Block>
               </Block>
 
@@ -425,10 +375,18 @@ const CheckOut = ({ route, navigation }) => {
                   <Block width={width * 0.8}>
                     <TouchableOpacity
                       style={styles.donateButton}
-                      onPress={donate}
+                      onPress={() => donate()}
                     >
                       <Text style={styles.donateButtonText}>Donate</Text>
                     </TouchableOpacity>
+                    {/* <Button
+                                                style={styles.createButton}
+                                                onPress={validation}
+                                            >
+                                                <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                                                    DONE
+                                                </Text>
+                                            </Button> */}
                   </Block>
                 </View>
               ) : (
@@ -514,6 +472,15 @@ const CheckOut = ({ route, navigation }) => {
                   </Block>
 
                   <Block width={width * 0.8}>
+                    {/* <Button
+                                                style={styles.createButton}
+                                                onPress={validation}
+                                            >
+                                                <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                                                    DONE
+                                                </Text>
+                                            </Button> */}
+
                     <TouchableOpacity
                       style={styles.donateButton}
                       onPress={validation}
@@ -596,7 +563,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     width: 110,
-    height: 180,
+    height: 110,
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
@@ -619,7 +586,7 @@ const styles = StyleSheet.create({
   donateButton: {
     padding: 15,
     paddingHorizontal: 30,
-    borderRadius: 10,
+    borderRadius: 80,
     backgroundColor: "#842DCE",
     position: "relative",
     overflow: "hidden",

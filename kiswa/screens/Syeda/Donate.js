@@ -13,18 +13,10 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
-import { auth, db } from "../../config";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -39,7 +31,6 @@ export function normalize(size) {
 
 const Donate = ({ route, navigation }) => {
   useEffect(() => {
-    getZone();
     // alert("donate");
     if (
       route.params &&
@@ -75,27 +66,9 @@ const Donate = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    getZone();
     console.log(cloth);
     console.log(amount);
-  }, []);
-
-  const [Dzone, setDZone] = useState("");
-  const getZone = async () => {
-    let user = auth?.currentUser?.email;
-    console.log(id);
-    const docRef = doc(db, "donors", user);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setDZone(docSnap.data().zone);
-
-      // setLat(docSnap.data().location.coords.latitude);
-      // setLog(docSnap.data().location.coords.longitude);
-    } else {
-      console.log("No such document!");
-    }
-    // alert(Dzone);
-  };
+  });
 
   //dropdown
 
@@ -103,169 +76,106 @@ const Donate = ({ route, navigation }) => {
 
   const ClothTypeData = [
     {
-      label: "Blouse",
+      label: "👔Blouse",
       value: "Blouse",
       icon: "https://cdn-icons-png.flaticon.com/512/8323/8323136.png",
       uri: "https://i.pinimg.com/564x/d9/1b/87/d91b87a86b9924cdce26b631bd3a968e.jpg",
     },
     {
-      label: "Caftan",
-      value: "Caftan",
-      icon: "https://cdn-icons-png.flaticon.com/512/5238/5238311.png",
-      uri: "https://i.etsystatic.com/31945487/r/il/2aadec/3870275767/il_fullxfull.3870275767_od8t.jpg",
-    },
-    {
-      label: "Cardigan",
-      value: "Cardigan",
-      icon: "https://cdn-icons-png.flaticon.com/128/3345/3345635.png",
-      uri: "https://i.pinimg.com/564x/a5/84/9d/a5849d187e57e693c6d765436893030a.jpg",
-    },
-    {
-      label: "Cloak",
-      value: "Cloak",
-      icon: "https://cdn-icons-png.flaticon.com/512/5102/5102093.png",
-      uri: "https://i.pinimg.com/564x/67/db/97/67db97f356fc31a34f7cc01df7b8ea64.jpg",
-    },
-    {
-      label: "Coat",
-      value: "Coat",
-      icon: "https://cdn-icons-png.flaticon.com/128/7157/7157441.png",
-      uri: "https://i.pinimg.com/564x/f6/73/7d/f6737d49a2571e063cd811812c3a922c.jpg",
-    },
-    {
-      label: "Dress",
-      value: "Dress",
-      icon: "https://cdn-icons-png.flaticon.com/128/9833/9833994.png",
-      uri: "https://i.pinimg.com/564x/a9/1b/cb/a91bcb63b4c31333a9402f74200a36a3.jpg",
-    },
-    {
-      label: "Dungarees",
-      value: "Dungarees",
-      icon: "https://cdn-icons-png.flaticon.com/128/2161/2161057.png",
-      uri: "https://i.ytimg.com/vi/soPPAhMPHtY/maxresdefault.jpg",
-    },
-    {
-      label: "Jacket",
-      value: "Jacket",
-      icon: "https://cdn-icons-png.flaticon.com/128/2806/2806051.png",
-      uri: "https://i.etsystatic.com/11147089/c/2250/2250/342/0/il/adfdf1/3588743348/il_300x300.3588743348_2ol1.jpg",
-    },
-    {
-      label: "Jeans",
+      label: "👖Jeans",
       value: "Jeans",
       icon: "https://cdn-icons-png.flaticon.com/128/599/599388.png",
       uri: "https://i.pinimg.com/564x/a2/3c/13/a23c134ebdc47581fa854c248633a8f5.jpg",
     },
     {
-      label: "Jumper",
-      value: "Jumper",
-      icon: "https://cdn-icons-png.flaticon.com/128/9774/9774105.png",
-      uri: "https://i.pinimg.com/564x/65/70/13/65701369d99d39458f99e4d04f80ab4d.jpg",
+      label: "👘Caftan",
+      value: "Caftan",
+      icon: "https://cdn-icons-png.flaticon.com/512/5238/5238311.png",
+      uri: "https://i.etsystatic.com/31945487/r/il/2aadec/3870275767/il_fullxfull.3870275767_od8t.jpg",
     },
     {
-      label: "Jumpsuit",
-      value: "Jumpsuit",
-      icon: "https://cdn-icons-png.flaticon.com/128/2290/2290478.png",
-      uri: "https://i.pinimg.com/564x/04/00/83/040083896aaf020fa83aa12dbac805fe.jpg",
+      label: "🧥Coat",
+      value: "Coat",
+      icon: "https://cdn-icons-png.flaticon.com/128/7157/7157441.png",
+      uri: "https://i.pinimg.com/564x/f6/73/7d/f6737d49a2571e063cd811812c3a922c.jpg",
     },
     {
-      label: "Leggings",
-      value: "Leggings",
-      icon: "https://cdn-icons-png.flaticon.com/128/9381/9381563.png",
-      uri: "https://i.pinimg.com/564x/9c/51/11/9c5111b9a77206aa76698ae2c41884a1.jpg",
+      label: "👗Dress",
+      value: "Dress",
+      icon: "https://cdn-icons-png.flaticon.com/128/9833/9833994.png",
+      uri: "https://i.pinimg.com/564x/a9/1b/cb/a91bcb63b4c31333a9402f74200a36a3.jpg",
     },
+
     {
-      label: "Hoodie",
-      value: "Hoodie",
-      icon: "https://cdn-icons-png.flaticon.com/512/9431/9431166.png",
-      uri: "https://i.pinimg.com/474x/a6/52/44/a65244223c6112a7e9d7286729bd9434.jpg",
-    },
-    {
-      label: "Pants",
+      label: "👖Pants",
       value: "Pants",
       icon: "https://cdn-icons-png.flaticon.com/128/2390/2390116.png",
       uri: "https://media.istockphoto.com/id/530930442/photo/row-of-black-pants-hangs-in-wardrobe-at-home.jpg?s=612x612&w=0&k=20&c=ZFM23HW4i3gKgfT5PplBTTajAq3L1qGG30MCjWqZliA=",
     },
+
     {
-      label: "Playsuit",
-      value: "Playsuit",
-      icon: "https://cdn-icons-png.flaticon.com/128/122/122709.png",
-      uri: "https://ae01.alicdn.com/kf/HTB1W34cPxnaK1RjSZFtq6zC2VXai/Korean-Style-2019-New-Fashion-Women-s-Playsuits-Chic-Double-Pocket-Skinny-Strap-Long-sleeved-Casual.jpg_Q90.jpg_.webp",
-    },
-    {
-      label: "Poncho",
-      value: "Poncho",
-      icon: "https://cdn-icons-png.flaticon.com/512/1319/1319774.png",
-      uri: "https://i.pinimg.com/564x/50/b3/70/50b37094d3839e4aede85fc1e2c359f9.jpg",
-    },
-    {
-      label: "Pajamas",
+      label: "😴Pajamas",
       value: "Pajamas",
       icon: "https://cdn-icons-png.flaticon.com/128/4446/4446182.png",
       uri: "https://m.media-amazon.com/images/I/71K03lV+jIL._AC_UL1500_.jpg",
     },
+
     {
-      label: "Shawl",
-      value: "Shawl",
-      icon: "https://cdn-icons-png.flaticon.com/512/2806/2806217.png",
-      uri: "https://i.pinimg.com/564x/1d/3f/f2/1d3ff25944a6377fecdb049bdef2a77e.jpg",
-    },
-    {
-      label: "Shirt",
+      label: "👕Shirt",
       value: "Shirt",
       icon: "https://cdn-icons-png.flaticon.com/128/2503/2503380.png",
       uri: "https://i.pinimg.com/564x/5c/16/17/5c1617cc8f266adfd425e452773dddaf.jpg",
     },
     {
-      label: "Shorts",
+      label: "🩳Shorts",
       value: "Shorts",
       icon: "https://cdn-icons-png.flaticon.com/128/2237/2237015.png",
       uri: "https://i.pinimg.com/474x/89/1b/c7/891bc76dfb42ae14d5fbda7b92f7247b.jpg",
     },
     {
-      label: "Skirt",
-      value: "Skirt",
-      icon: "https://cdn-icons-png.flaticon.com/512/4507/4507761.png",
-      uri: "https://i.pinimg.com/564x/29/c9/3f/29c93f07aeb7051935cc86ac74842964.jpg",
+      label: "👖Leggings",
+      value: "Leggings",
+      icon: "https://cdn-icons-png.flaticon.com/128/9381/9381563.png",
+      uri: "https://i.pinimg.com/564x/9c/51/11/9c5111b9a77206aa76698ae2c41884a1.jpg",
     },
     {
-      label: "Sock",
+      label: "🧦Sock",
       value: "Sock",
       icon: "https://cdn-icons-png.flaticon.com/128/843/843877.png",
       uri: "https://i.pinimg.com/564x/2b/ca/5f/2bca5f01f7fb038d12d5a6f9fa4127d4.jpg",
     },
     {
-      label: "Sweater",
+      label: "🥶Sweater",
       value: "Sweater",
       icon: "https://cdn-icons-png.flaticon.com/128/9385/9385884.png",
       uri: "https://i.pinimg.com/564x/d3/b2/51/d3b2515feca557aff75d23077b2479e8.jpg",
     },
     {
-      label: "Tie",
+      label: "👔Tie",
       value: "Tie",
       icon: "https://cdn-icons-png.flaticon.com/512/1950/1950558.png",
       uri: "https://i.pinimg.com/564x/a1/6e/be/a16ebe082cb7329391b8940c8ebd07bd.jpg",
     },
     {
-      label: "Tights",
+      label: "🧣Tights",
       value: "Tights",
       icon: "https://cdn-icons-png.flaticon.com/512/3343/3343878.png",
       uri: "https://i.pinimg.com/564x/c2/95/db/c295dba7990a244ab5e56eb52578ce92.jpg",
     },
     {
-      label: "Tops",
+      label: "👚Tops",
       value: "Tops",
       icon: "https://cdn-icons-png.flaticon.com/128/3258/3258170.png",
       uri: "https://i.pinimg.com/564x/5c/ad/15/5cad15407e6c1e9b393337dc7d17c530.jpg",
     },
     {
-      label: "Tracksuit",
-      value: "Tracksuit",
+      label: "🧕🏻Abaya",
+      value: "Abaya",
       icon: "https://cdn-icons-png.flaticon.com/128/5783/5783203.png",
       uri: "https://i.pinimg.com/564x/bd/be/d1/bdbed16a24645a3ad9f42d2a528f6b3b.jpg",
     },
     {
-      label: "T-Shirt",
+      label: "👕T-Shirt",
       value: "T-Shirt",
       icon: "https://cdn-icons-png.flaticon.com/128/892/892458.png",
       uri: "https://i.pinimg.com/564x/d6/9c/5a/d69c5a1ba98ce97c40a16ff506233f7a.jpg",
@@ -322,18 +232,6 @@ const Donate = ({ route, navigation }) => {
   const [confirm, setConfirm] = useState([]);
   console.log("confirm OUTSIFE: ", confirm);
 
-  const [zone, setZone] = useState("");
-  const readName = async () => {
-    let user = auth?.currentUser?.email;
-    console.log("readName");
-    const q = query(collection(db, "donors"), where("email", "==", user));
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
-      setZone(doc.data().zone);
-    });
-  };
   const error = () => {
     if (confirm.length > 0) {
       if (time === "") {
@@ -348,13 +246,11 @@ const Donate = ({ route, navigation }) => {
       } else {
         setDateError("");
       }
-      console.log("zooooooone====>>>>>", zone);
       if (time !== "" && date !== "") {
         navigation.navigate("CheckOut", {
           itemsArray: confirm,
           time: time,
           date: date,
-          Dzone: Dzone,
         });
       }
     } else {
@@ -397,7 +293,7 @@ const Donate = ({ route, navigation }) => {
         });
       }
     }
-    handleDonatePress();
+    // handleDonatePress();
   };
 
   const handleDonatePress = () => {
@@ -515,7 +411,7 @@ const Donate = ({ route, navigation }) => {
     console.log("ADD AMOUNT => ", amount);
     console.log(
       "ADD ICON => ",
-      ClothTypeData.find((object) => object.label === cloth).icon
+      ClothTypeData.find((object) => object.value === cloth).icon
     );
 
     if ((cloth !== "" || cloth !== undefined) && amount !== "") {
@@ -525,7 +421,7 @@ const Donate = ({ route, navigation }) => {
         {
           cloth: cloth,
           amount: amount,
-          icon: ClothTypeData.find((object) => object.label === cloth).icon,
+          icon: ClothTypeData.find((object) => object.value === cloth).icon,
         },
       ]);
       console.log("confirm array: ", confirm);
@@ -548,20 +444,23 @@ const Donate = ({ route, navigation }) => {
     const newItems = confirm.filter((item, i) => i !== index);
     setConfirm(newItems);
   };
+  const [showTime, setShowTime] = useState(false);
+  const [nextFlag, setNextFlag] = useState(false);
 
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.articles}
     >
-      <Block style={styles.container}>
-        <ImageBackground
-          style={cloth === "" ? "" : styles.Image}
-          source={{
-            uri: ItemURI == "" ? "" : ItemURI,
-          }}
-        >
-          {/* <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+      {!showTime ? (
+        <Block style={styles.container}>
+          <ImageBackground
+            style={styles.Image}
+            source={{
+              uri: "https://di-uploads-pod14.dealerinspire.com/thekiastores/uploads/2020/11/Donate-Clothes-Banner-768x252.jpg",
+            }}
+          >
+            {/* <TouchableOpacity onPress={() => navigation.navigate("Home")}>
             <Image
               style={styles.backButton}
               source={{
@@ -569,147 +468,217 @@ const Donate = ({ route, navigation }) => {
               }}
             ></Image>
           </TouchableOpacity> */}
-        </ImageBackground>
+          </ImageBackground>
 
-        <Text style={{ fontSize: 15, color: "red" }}>{dropError}</Text>
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={ClothTypeData}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder="Select Clothing Item"
-          searchPlaceholder="Search..."
-          value={cloth === "" ? "Select Clothing Item" : cloth}
-          onChange={(item) => {
-            changeCloth(item.value);
-          }}
-        />
+          <Text style={{ fontSize: 15, color: "red" }}>{dropError}</Text>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={ClothTypeData}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder="Select Clothing Item"
+            searchPlaceholder="Search..."
+            value={cloth === "" ? "Select Clothing Item" : cloth}
+            onChange={(item) => {
+              changeCloth(item.value);
+            }}
+          />
 
-        <Text style={{ fontSize: 15, color: "red" }}>{amountError}</Text>
-        <TextInput
-          style={styles.input}
-          placeholder={"Enter Quantity"}
-          value={amount}
-          onChangeText={handleNumberChange}
-          keyboardType="numeric"
-        />
+          <Text style={{ fontSize: 15, color: "red" }}>{amountError}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={"Enter Quantity"}
+            value={amount}
+            onChangeText={handleNumberChange}
+            keyboardType="numeric"
+          />
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => add(cloth, amount)}
-        >
-          <Text style={styles.buttonText}>
-            {confirm.length === 0 ? "Add" : "Add more Items"}
-          </Text>
-        </TouchableOpacity>
-
-        <Block
-          style={{
-            borderWidth: 0.5,
-            borderColor: "black",
-            margin: 10,
-            width: "100%",
-          }}
-        ></Block>
-
-        <Block style={{ flexDirection: "row", flexWrap: "wrap" }}>
-          {confirm.map((item, index) => (
-            <View key={index} style={styles.smallContainer}>
-              <View style={styles.smallSquare}>
-                <Image style={styles.smallImage} source={{ uri: item.icon }} />
-                <Text style={styles.smallText}>{item.cloth}</Text>
-                <Text style={styles.smallText}>x{item.amount}</Text>
-                <TouchableOpacity
-                  style={styles.smallCloseButton}
-                  onPress={() => handleRemoveItem(index)}
-                >
-                  <Text style={styles.smallCloseButtonText}>X</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
+          <Pressable style={styles.button} onPress={() => add(cloth, amount)}>
+            <Text style={styles.buttonText}>
+              {confirm.length === 0 ? "Add" : "Add more Items"}
+            </Text>
+          </Pressable>
+          {confirm.length > 0 ? (
+            <Block
+              style={{
+                borderWidth: 0.5,
+                borderColor: "black",
+                margin: 10,
+                width: "100%",
+              }}
+            ></Block>
+          ) : null}
+          {confirm.length > 0 ? (
+            <Block
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                height: height * 0.15,
+                // borderWidth: 1,
+                width: width,
+              }}
+            >
+              <ScrollView horizontal>
+                {confirm.map((item, index) => (
+                  <View key={index} style={styles.smallContainer}>
+                    <View style={styles.smallSquare}>
+                      <Image
+                        style={styles.smallImage}
+                        source={{ uri: item.icon }}
+                      />
+                      <Text style={styles.smallText}>{item.cloth}</Text>
+                      <Text style={styles.smallText}>x{item.amount}</Text>
+                      <TouchableOpacity
+                        style={styles.smallCloseButton}
+                        onPress={() => handleRemoveItem(index)}
+                      >
+                        <Text style={styles.smallCloseButtonText}>X</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ))}
+              </ScrollView>
+            </Block>
+          ) : null}
         </Block>
+      ) : (
+        <Block style={{ marginTop: "9%", width: width }}>
+          <Text style={{ fontSize: 20, marginLeft: 6 }}>My cart</Text>
+          <Block
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              height: height * 0.15,
+              // borderWidth: 1,
+              width: width,
+            }}
+          >
+            <ScrollView horizontal>
+              {confirm.map((item, index) => (
+                <View key={index} style={styles.smallContainer}>
+                  <View style={styles.smallSquare}>
+                    <Image
+                      style={styles.smallImage}
+                      source={{ uri: item.icon }}
+                    />
+                    <Text style={styles.smallText}>{item.cloth}</Text>
+                    <Text style={styles.smallText}>x{item.amount}</Text>
+                    <TouchableOpacity
+                      style={styles.smallCloseButton}
+                      onPress={() => handleRemoveItem(index)}
+                    >
+                      <Text style={styles.smallCloseButtonText}>X</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </ScrollView>
+          </Block>
 
-        <Block
+          <Text style={{ fontSize: 20, marginLeft: 15 }}>
+            Select pick-up time interval:
+          </Text>
+
+          <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
+            {timeError}
+          </Text>
+          <Block style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}>
+            <Button
+              onPress={changeColor1}
+              style={{ backgroundColor: flag1 === 0 ? "purple" : "#F8B88B" }}
+            >
+              8AM - 12PM
+            </Button>
+            <Button
+              onPress={changeColor2}
+              style={{ backgroundColor: flag2 === 0 ? "purple" : "#F8B88B" }}
+            >
+              12PM - 6PM
+            </Button>
+            <Button
+              onPress={changeColor3}
+              style={{ backgroundColor: flag3 === 0 ? "purple" : "#F8B88B" }}
+            >
+              6PM - 10PM
+            </Button>
+          </Block>
+
+          <Text style={{ fontSize: 20, marginLeft: 15 }}>
+            Select pick-up date interval:
+          </Text>
+          <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
+            {dateError}
+          </Text>
+          <Block style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}>
+            <Button
+              onPress={checkColor1}
+              style={{ backgroundColor: check1 === 0 ? "purple" : "#F8B88B" }}
+            >
+              <Text style={{ color: "white" }}>
+                {dateString} - {first2date}
+              </Text>
+            </Button>
+            <Button
+              onPress={checkColor2}
+              style={{ backgroundColor: check2 === 0 ? "purple" : "#F8B88B" }}
+            >
+              <Text style={{ color: "white" }}>
+                {sec1date} - {sec2date}
+              </Text>
+            </Button>
+            <Button
+              onPress={checkColor3}
+              style={{ backgroundColor: check3 === 0 ? "purple" : "#F8B88B" }}
+            >
+              <Text style={{ color: "white" }}>
+                {third1date} - {third2date}
+              </Text>
+            </Button>
+          </Block>
+        </Block>
+      )}
+
+      {!showTime ? (
+        confirm.length > 0 ? (
+          <TouchableOpacity
+            style={styles.button}
+            // onPress={() => error()}
+            onPress={() => setShowTime(!showTime)}
+          >
+            <Text style={styles.buttonText}>Next</Text>
+          </TouchableOpacity>
+        ) : null
+      ) : (
+        <View
           style={{
-            borderWidth: flag === 1 ? 0.5 : 0,
-            borderColor: "black",
-            margin: 10,
-            width: "100%",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            padding: "3%",
+            paddingHorizontal: "5%",
           }}
-        ></Block>
-      </Block>
+        >
+          <TouchableOpacity
+            style={[styles.buttonSmall, { backgroundColor: "#ACACAC" }]}
+            // onPress={() => error()}
+            onPress={() => setShowTime(!showTime)}
+          >
+            <Text style={styles.buttonText}>Back</Text>
+          </TouchableOpacity>
 
-      <Text style={{ fontSize: 20, marginLeft: 15 }}>
-        Select pick-up time interval:
-      </Text>
-
-      <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
-        {timeError}
-      </Text>
-      <Block style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}>
-        <Button
-          onPress={changeColor1}
-          style={{ backgroundColor: flag1 === 0 ? "purple" : "#F8B88B" }}
-        >
-          8AM - 12PM
-        </Button>
-        <Button
-          onPress={changeColor2}
-          style={{ backgroundColor: flag2 === 0 ? "purple" : "#F8B88B" }}
-        >
-          12PM - 6PM
-        </Button>
-        <Button
-          onPress={changeColor3}
-          style={{ backgroundColor: flag3 === 0 ? "purple" : "#F8B88B" }}
-        >
-          6PM - 10PM
-        </Button>
-      </Block>
-
-      <Text style={{ fontSize: 20, marginLeft: 15 }}>
-        Select pick-up date interval:
-      </Text>
-      <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
-        {dateError}
-      </Text>
-      <Block style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}>
-        <Button
-          onPress={checkColor1}
-          style={{ backgroundColor: check1 === 0 ? "purple" : "#F8B88B" }}
-        >
-          <Text style={{ color: "white" }}>
-            {dateString} - {first2date}
-          </Text>
-        </Button>
-        <Button
-          onPress={checkColor2}
-          style={{ backgroundColor: check2 === 0 ? "purple" : "#F8B88B" }}
-        >
-          <Text style={{ color: "white" }}>
-            {sec1date} - {sec2date}
-          </Text>
-        </Button>
-        <Button
-          onPress={checkColor3}
-          style={{ backgroundColor: check3 === 0 ? "purple" : "#F8B88B" }}
-        >
-          <Text style={{ color: "white" }}>
-            {third1date} - {third2date}
-          </Text>
-        </Button>
-      </Block>
-
-      <TouchableOpacity style={styles.button} onPress={() => error()}>
-        <Text style={styles.buttonText}>Donate</Text>
-      </TouchableOpacity>
+          <Pressable
+            style={[styles.buttonSmall, { borderRadius: 30 }]}
+            onPress={() => error()}
+          >
+            <Text style={styles.buttonText}>Next</Text>
+          </Pressable>
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -719,6 +688,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    // backgroundColor: "#f3f0d9",
   },
   dropdown: {
     margin: 16,
@@ -727,6 +697,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     width: "90%",
     alignSelf: "center",
+    borderWidth: 0.3,
+    borderRadius: 13,
+    padding: 5,
   },
   icon: {
     marginRight: 5,
@@ -749,28 +722,41 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 40,
     margin: 15,
-    borderBottomWidth: 1,
-    borderColor: "lightgray",
-    //borderWidth: 1,
+    borderBottomWidth: 0.5,
+    // borderColor: "lightgray",
+    borderWidth: 0.3,
     padding: 10,
-    fontSize: 18,
-    //borderRadius: 10
+    fontSize: 20,
+    borderRadius: 10,
+    // padding: 10,
   },
   Image: {
-    width: width * 1,
-    height: height * 0.3,
+    width: width,
+    height: height * 0.17,
     //borderRadius: 10,
     overflow: "hidden",
     alignSelf: "center",
   },
   button: {
     padding: 15,
+    // paddingHorizontal: 30,
+    borderRadius: 90,
+    backgroundColor: "#842DCE",
+    // position: "relative",
+    // overflow: "hidden",
+    width: "70%",
+    alignItems: "center",
+    alignSelf: "center",
+    marginVertical: 30,
+  },
+  buttonSmall: {
+    padding: 15,
     paddingHorizontal: 30,
-    borderRadius: 10,
+    borderRadius: 50,
     backgroundColor: "#842DCE",
     position: "relative",
     overflow: "hidden",
-    width: "70%",
+    width: "45%",
     alignItems: "center",
     alignSelf: "center",
     marginVertical: 30,
@@ -798,8 +784,8 @@ const styles = StyleSheet.create({
   smallSquare: {
     backgroundColor: "white",
     borderRadius: 10,
-    width: 110,
-    height: 180,
+    width: 120,
+    height: 120,
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
@@ -819,9 +805,9 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
     backgroundColor: "#b19cd9",
-    borderRadius: 10,
-    width: 25,
-    height: 25,
+    borderRadius: 30,
+    width: 23,
+    height: 23,
     alignItems: "center",
     justifyContent: "center",
   },
