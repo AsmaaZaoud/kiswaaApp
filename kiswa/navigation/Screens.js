@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Animated, Dimensions, Easing } from "react-native";
+import { Animated, Dimensions, Easing, View } from "react-native";
 // header for screens
 import { Header, Icon } from "../components";
 import { argonTheme, tabs } from "../constants";
@@ -72,6 +72,7 @@ import Dashboard from "../screens/Asmaa/Dashboard";
 import FamilyCartDetails from "../screens/Asmaa/FamilyCartDetails";
 //for onboarding
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Text } from "react-native";
 
 const { width } = Dimensions.get("screen");
 
@@ -257,6 +258,7 @@ function HomeStack(props) {
               scene={scene}
             />
           ),
+
           cardStyle: { backgroundColor: "#F8F9FE" },
         }}
       />
@@ -544,7 +546,24 @@ export default function OnboardingStack(props) {
         <Stack.Screen name="Feedback" component={Feedback} />
         <Stack.Screen name="DonorHistory" component={DonorHistory} />
         <Stack.Screen name="AboutUs" component={AboutUs} />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            // headerShown: true,
+            header: ({ navigation, scene }) => (
+              <Header
+                title="Home"
+                search
+                options
+                navigation={navigation}
+                scene={scene}
+              />
+            ),
+
+            cardStyle: { backgroundColor: "#F8F9FE" },
+          }}
+        />
         <Stack.Screen name="LoginDonor" component={LoginDonor} />
 
         {/* /*********  Meimouna - Family **********/}
@@ -613,9 +632,11 @@ function AppStack(props) {
       <Drawer.Screen
         name="Home"
         component={HomeStack}
-        options={{
-          headerShown: false,
-        }}
+        options={
+          {
+            // headerShown: true,
+          }
+        }
       />
       <Drawer.Screen
         name="AboutUs"

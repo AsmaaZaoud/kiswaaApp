@@ -28,7 +28,12 @@ function CustomDrawerContent({
       forceInset={{ top: "always", horizontal: "never" }}
     >
       <Block flex={0.06} style={styles.header}>
-        <Image styles={styles.logo} source={{uri: 'https://raw.githubusercontent.com/AsmaaZaoud/kiswaaApp/syedaNewBackup/kiswa/Images/purple_transparent.png'}} />
+        <Image
+          styles={styles.logo}
+          source={{
+            uri: "https://raw.githubusercontent.com/AsmaaZaoud/kiswaaApp/syedaNewBackup/kiswa/Images/purple_transparent.png",
+          }}
+        />
       </Block>
       <Block flex style={{ paddingLeft: 8, paddingRight: 14 }}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
@@ -77,8 +82,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 });
 
 export default CustomDrawerContent;

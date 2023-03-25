@@ -20,6 +20,7 @@ import { Block, Text, theme } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
 import { Button, Icon, Input } from "../../components";
 import { Images, argonTheme } from "../../constants";
+import { FontAwesome, Ionicons } from "react-native-vector-icons";
 
 import {
   createUserWithEmailAndPassword,
@@ -321,7 +322,7 @@ const CheckOut = ({ route, navigation }) => {
                 Checkout
               </Text>
 
-              <Block style={{ marginTop: "10%" }}></Block>
+              <Block style={{ marginTop: "5%" }}></Block>
 
               <Block style={{ marginLeft: "5%" }}>
                 <Text
@@ -334,25 +335,38 @@ const CheckOut = ({ route, navigation }) => {
                 >
                   Donation Summary
                 </Text>
-                <Text style={{ fontSize: 20 }}>
-                  Pick Up Time Interval: {route.params.time}
+                <Text style={{ fontSize: 20, margin: "5%" }}>
+                  <Ionicons name="time-outline" size={30} color="#842DCE" />{" "}
+                  {route.params.time}
                 </Text>
-                <Text style={{ fontSize: 20 }}>
-                  Pick Up Date Interval: {route.params.date}
+
+                <Text style={{ fontSize: 20, margin: "5%" }}>
+                  <Ionicons name="md-today-sharp" size={30} color="#842DCE" />
+                  {route.params.date}
                 </Text>
-                <Block style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                  {route.params.itemsArray.map((item, index) => (
-                    <View key={index} style={styles.smallContainer}>
-                      <View style={styles.smallSquare}>
-                        <Image
-                          style={styles.smallImage}
-                          source={{ uri: item.icon }}
-                        />
-                        <Text style={styles.smallText}>{item.cloth}</Text>
-                        <Text style={styles.smallText}>x{item.amount}</Text>
+                <Block
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    height: height * 0.15,
+                    // borderWidth: 1,
+                    width: width,
+                  }}
+                >
+                  <ScrollView horizontal>
+                    {route.params.itemsArray.map((item, index) => (
+                      <View key={index} style={styles.smallContainer}>
+                        <View style={styles.smallSquare}>
+                          <Image
+                            style={styles.smallImage}
+                            source={{ uri: item.icon }}
+                          />
+                          <Text style={styles.smallText}>{item.cloth}</Text>
+                          <Text style={styles.smallText}>x{item.amount}</Text>
+                        </View>
                       </View>
-                    </View>
-                  ))}
+                    ))}
+                  </ScrollView>
                 </Block>
               </Block>
 
@@ -549,7 +563,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     width: 110,
-    height: 180,
+    height: 110,
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
@@ -572,7 +586,7 @@ const styles = StyleSheet.create({
   donateButton: {
     padding: 15,
     paddingHorizontal: 30,
-    borderRadius: 10,
+    borderRadius: 80,
     backgroundColor: "#842DCE",
     position: "relative",
     overflow: "hidden",
