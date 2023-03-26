@@ -83,6 +83,8 @@ const CheckOut = ({ route, navigation }) => {
   const [location, setLocation] = useState("");
 
   let confirm = route.params.itemsArray;
+  let Dzone = route.params.Dzone;
+
   console.log("confirmCheckout: ", confirm);
 
   const [emailError, setEmailError] = useState("");
@@ -120,14 +122,27 @@ const CheckOut = ({ route, navigation }) => {
       setZone(doc.data().zone);
     });
   };
+  const [drivers, setDrivers] = useState([]);
+
+  const readDriver = async () => {
+    console.log(Dzone);
+    alert(Dzone);
+    const q = query(collection(db, "drivers"), where("zone", "==", Dzone));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      setDrivers(querySnapshot.docs.map((doc) => doc.data().email));
+      console.log("ddd", drivers[0]);
+    });
+
+    return () => unsubscribe();
+  };
 
   useEffect(() => {
-    if (isFocused) {
-      if (user !== undefined) {
-        readName();
-      }
+    if (user != undefined) {
+      readName();
+      readDriver();
     }
-  }, [isFocused]);
+  }, []);
 
   const weekday = [
     "Sunday",
@@ -175,6 +190,15 @@ const CheckOut = ({ route, navigation }) => {
       }
     );
     console.log("driver orders add ID: ", docRefDriver.id);
+    const notiref = await addDoc(
+      collection(db, "drivers", drivers[0], "notifications"),
+      {
+        title: "New Order",
+        body: "Deliver order to " + Dzone,
+        seen: "false",
+      }
+    );
+    console.log("notification  add ID: ", notiref.id);
 
     // confirm.map(async (item) => {
     //     console.log(docRef.id)

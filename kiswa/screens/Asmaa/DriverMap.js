@@ -192,7 +192,7 @@ const DriverMap = (props) => {
             orders.map((item, i) =>
               item != undefined ? (
                 <TouchableOpacity
-                  key={i}
+                  key={item.trackId}
                   // onPress={() => showAlert("row")}
                 >
                   <View style={styles.eventBox}>
@@ -250,7 +250,7 @@ const DriverMap = (props) => {
             {tomorrow && tomorrow}
           </Text>
           {ordersTomo.length > 0 ? (
-            ordersTomo.map((item, i) => (
+            ordersTomo.map((item, i = 100) => (
               <TouchableOpacity
                 key={i + 20}
                 // onPress={() => showAlert("row")}

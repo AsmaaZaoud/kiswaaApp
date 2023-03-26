@@ -26,6 +26,7 @@ import {
   deleteDoc,
   updateDoc,
   deleteField,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../config";
 
@@ -39,6 +40,7 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
+import * as Notifications from "expo-notifications";
 
 import { auth } from "../../config";
 import { object } from "prop-types";
@@ -238,6 +240,51 @@ const Home = ({ route, navigation }) => {
     }
   };
 
+  //------------------------------------------------------------
+  async function schedulePushNotification(noti) {
+    await Notifications.scheduleNotificationAsync(noti);
+  }
+  const [notifications, setNotifications] = useState([]);
+  const getNotifications = async () => {
+    const collectionRef = collection(db, "donors", user, "notifications");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      querySnapshot.docs.map((doc) =>
+        doc.data().seen == "false"
+          ? schedulePushNotification({
+              content: {
+                title: doc.data().title,
+                body: doc.data().body,
+                data: { data: "goes here" },
+              },
+              trigger: { seconds: 1 },
+            })
+          : doc.data()
+      );
+      setNotifications(querySnapshot.docs.map((doc) => doc.id));
+    });
+
+    notifications.map((x) => update(x));
+
+    return () => unsubscribe();
+  };
+  const update = async (id) => {
+    await setDoc(
+      doc(db, "donors", user, "notifications", id),
+      {
+        seen: "true",
+      },
+      { merge: true }
+    )
+      .then(() => {
+        console.log("data updated");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  //------------------------------------------------------------
   //read from database
 
   useEffect(() => {
@@ -282,6 +329,7 @@ const Home = ({ route, navigation }) => {
   useEffect(() => {
     if (isFocused) {
       if (user != undefined) {
+        getNotifications();
         readDonations();
         readName();
         read();
@@ -368,7 +416,11 @@ const Home = ({ route, navigation }) => {
                   <Pressable onPress={() => navigation.navigate("LoginDonor")}>
                     <Text style={{ color: "blue" }}>Login/SigUp</Text>
                   </Pressable>
-                ) : null}
+                ) : (
+                  <Pressable onPress={onSignOut}>
+                    <Text style={{ color: "blue" }}>Sign Out</Text>
+                  </Pressable>
+                )}
               </Block>
               <Block center style={{ borderWidth: 0 }}>
                 <Text

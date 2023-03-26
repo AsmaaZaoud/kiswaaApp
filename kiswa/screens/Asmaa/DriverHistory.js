@@ -10,7 +10,7 @@ import {
   Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Feather, MaterialIcons } from "react-native-vector-icons";
+import { AntDesign, MaterialIcons } from "react-native-vector-icons";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../../config";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
@@ -87,9 +87,9 @@ const DriverHistory = (props, { navigation }) => {
     <Block
       flex
       middle
-      style={{ backgroundColor: "white", flex: 1, width: width }}
+      style={{ backgroundColor: "#FFF", flex: 1, width: width }}
     >
-      <Block style={styles.registerContainer}>
+      <Block>
         <Block flex>
           <Text style={styles.title}>Orders History</Text>
           {arr.length > 0 ? (
@@ -109,8 +109,8 @@ const DriverHistory = (props, { navigation }) => {
                         paddingVertical: "1%",
                       }}
                     >
-                      <Text style={styles.description}>Order# </Text>
-                      <Text style={styles.description}>F{item.trackId}</Text>
+                      <Text style={styles.description}>Order No. </Text>
+                      <Text style={styles.description}>#{item.trackId}</Text>
                     </View>
 
                     <View
@@ -141,19 +141,25 @@ const DriverHistory = (props, { navigation }) => {
 
                       <View
                         style={{
-                          width: "67%",
+                          marginLeft: "5%",
+                          width: "80%",
+                          // borderWidth: 1,
                         }}
                       >
                         <View
                           style={{
                             flexDirection: "row",
-                            width: "50%",
+                            width: "40%",
                             // borderWidth: 1,
                             padding: "1%",
                             justifyContent: "space-between",
                           }}
                         >
-                          <MaterialIcons name="location-pin" size={25} />
+                          <MaterialIcons
+                            name="location-pin"
+                            size={25}
+                            color="#5e1e7f"
+                          />
                           <Text style={styles.description}>
                             {item.location}
                           </Text>
@@ -164,12 +170,19 @@ const DriverHistory = (props, { navigation }) => {
                             flexDirection: "row",
                             width: "75%",
                             // borderWidth: 1,
+                            padding: "1%",
+
                             justifyContent: "space-between",
                           }}
                         >
-                          <MaterialIcons name="date-range" size={25} />
+                          <MaterialIcons
+                            name="date-range"
+                            size={25}
+                            color="#5e1e7f"
+                          />
+                          <Text style={styles.description}>{item.date}</Text>
                           <Text style={styles.description}>
-                            {item.date} -{item.timeSlot}
+                            {item.timeSlot}
                           </Text>
                         </View>
                       </View>
@@ -180,7 +193,7 @@ const DriverHistory = (props, { navigation }) => {
                           marginLeft: "7%",
                         }}
                       >
-                        <MaterialIcons name="done" size={45} color="green" />
+                        {/* <AntDesign name="checkcircle" size={35} color="green" /> */}
                       </View>
                     </View>
                   </View>
@@ -224,7 +237,7 @@ const styles = StyleSheet.create({
     marginTop: "1%",
     padding: "3%",
     // borderWidth: 1,
-    backgroundColor: "white",
+    backgroundColor: "#FFF",
   },
   notificationBox: {
     width: width * 0.9,
@@ -232,7 +245,7 @@ const styles = StyleSheet.create({
     paddingTop: "1%",
     marginTop: "2%",
     marginBottom: "3%",
-    backgroundColor: "#F1EEFF",
+    backgroundColor: "#F8F1FF",
     // flexDirection: "row",
     borderRadius: "15%",
     borderWidth: 0.3,

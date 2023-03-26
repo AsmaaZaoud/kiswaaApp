@@ -50,10 +50,15 @@ export function normalize(size) {
 const OrderDetails = ({ route, navigation }) => {
   const [deviceType, setDeviceType] = useState();
 
-  const id = route.params;
+  const { id } = route.params;
+  const { userName } = route.params;
+  const { phone } = route.params;
+  const { zone } = route.params;
+
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
     readOrder();
+    // alert(phone);
   }, []);
 
   const [orders, setOrders] = useState([]);
@@ -76,13 +81,9 @@ const OrderDetails = ({ route, navigation }) => {
       docSnap.data().type == "pickup"
         ? (a = await readUser(docSnap.data().userId, "donors"))
         : (a = await readUser(docSnap.data().userId, "families"));
-      //   console.log(a);
-      t.userName = a.userName;
-      t.phone = a.phone;
-      t.zone = a.zone;
+
       setData(t);
       setNum(docSnap.id.split(num)[0]);
-      //   console.log(data);
     } else {
       console.log("No such document!");
     }
@@ -107,10 +108,12 @@ const OrderDetails = ({ route, navigation }) => {
   const [btn, setBtn] = useState("green");
   const done = async () => {
     const docRef = doc(db, "drivers", user, "orders", id);
-    await setDoc(docRef, { status: "fullfied" }, { merge: true })
+    await setDoc(docRef, { status: "fullfield" }, { merge: true })
       .then(() => {
         console.log("data updated");
         setBtn("grey");
+        alert("Done");
+        navigation.goBack();
       })
       .catch((error) => {
         console.log(error.message);
@@ -156,7 +159,7 @@ const OrderDetails = ({ route, navigation }) => {
                   <View style={[styles.dataView, { flexDirection: "row" }]}>
                     <Entypo name="home" size={30} color="#5e1e7f" />
                     <Text style={styles.dataTitles}>
-                      From: {data.userName} {data.zone}
+                      From: {userName} {zone}
                     </Text>
                   </View>
                 ) : (
@@ -218,7 +221,7 @@ const OrderDetails = ({ route, navigation }) => {
                   <Ionicons name="time-outline" size={30} color="#5e1e7f" />
                   <Text
                     style={styles.dataTitles}
-                    onPress={() => Linking.openURL(`tel:${data.phone}`)}
+                    onPress={() => Linking.openURL(`tel:${phone}`)}
                   >
                     12:00 - 02:00 Pm
                   </Text>
@@ -243,9 +246,9 @@ const OrderDetails = ({ route, navigation }) => {
                     <Feather name="phone" size={30} color="green" />
                     <Text
                       style={styles.dataTitles}
-                      onPress={() => Linking.openURL(`tel:${data.phone}`)}
+                      onPress={() => Linking.openURL(`tel:${phone}`)}
                     >
-                      {data.phone}
+                      {phone}
                     </Text>
                   </View>
                 )}

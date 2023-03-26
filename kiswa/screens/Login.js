@@ -173,6 +173,12 @@ const Login = ({ navigation }) => {
                 : styles.registerContainerLarge
             }
           >
+            <Text
+              style={{ padding: 20, color: "blue" }}
+              onPress={() => navigation.navigate("Onboarding")}
+            >
+              Go Back
+            </Text>
             {/* comment */}
             <Block flex style={{ marginTop: "10%" }}>
               <Block flex={0.17} middle>

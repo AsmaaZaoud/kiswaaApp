@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
+import { auth } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -66,9 +67,26 @@ const Donate = ({ route, navigation }) => {
   };
 
   useEffect(() => {
+    user != undefined ? getZone : null;
     console.log(cloth);
     console.log(amount);
   });
+  let user = auth?.currentUser?.email;
+
+  const [Dzone, setDZone] = useState("");
+  const getZone = async () => {
+    // alert("hiii");
+    const docRef = doc(db, "donors", user);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setDZone(docSnap.data().zone);
+
+      // setLat(docSnap.data().location.coords.latitude);
+      // setLog(docSnap.data().location.coords.longitude);
+    } else {
+      console.log("No such document!");
+    }
+  };
 
   //dropdown
 
@@ -233,6 +251,7 @@ const Donate = ({ route, navigation }) => {
   console.log("confirm OUTSIFE: ", confirm);
 
   const error = () => {
+    alert(Dzone);
     if (confirm.length > 0) {
       if (time === "") {
         setTimeError("Please select a time interval");
@@ -251,6 +270,7 @@ const Donate = ({ route, navigation }) => {
           itemsArray: confirm,
           time: time,
           date: date,
+          Dzone: Dzone,
         });
       }
     } else {

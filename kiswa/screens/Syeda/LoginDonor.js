@@ -106,7 +106,7 @@ const LoginDonor = ({ navigation }) => {
               </Pressable> */}
               <Text
                 style={{ padding: 20, color: "blue" }}
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate("Onboarding")}
               >
                 Go Back
               </Text>

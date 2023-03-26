@@ -15,7 +15,14 @@ import { Block, theme } from "galio-framework";
 import { FontAwesome, Ionicons } from "react-native-vector-icons";
 //Firebase
 import { auth, db } from "../../config";
-import { doc, query, collection, onSnapshot, setDoc } from "firebase/firestore";
+import {
+  doc,
+  query,
+  collection,
+  onSnapshot,
+  setDoc,
+  addDoc,
+} from "firebase/firestore";
 import * as Notifications from "expo-notifications";
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -50,11 +57,17 @@ const DriverHome = (props) => {
       setArr(
         querySnapshot.docs.map((doc) =>
           doc.data().type == "pickup" && doc.data().status == "pending"
-            ? doc.data()
+            ? { id: doc.id, data: doc.data(), num: doc.id.split(doc.id[6])[0] }
             : undefined
         )
       );
-      setOrders(querySnapshot.docs.map((doc) => doc.data()));
+      setOrders(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+          num: doc.id.split(doc.id[6])[0],
+        }))
+      );
     });
 
     return () => unsubscribe();
@@ -68,16 +81,47 @@ const DriverHome = (props) => {
       setType("deliv");
 
       setArr(
-        orders.filter((x) => x.type == "deliver" && x.status == "pending")
+        orders.filter(
+          (x) => x.data.type == "deliver" && x.data.status == "pending"
+        )
       );
     } else {
       setType("pick");
-      setArr(orders.filter((x) => x.type == "pickup" && x.status == "pending"));
+      setArr(
+        orders.filter(
+          (x) => x.data.type == "pickup" && x.data.status == "pending"
+        )
+      );
     }
   };
 
-  let lat = 25.2709954;
-  let long = 51.5324509;
+  const map = async (lat, long, userId, type) => {
+    console.log(type);
+    if (type == "deliver") {
+      const notiref = await addDoc(
+        collection(db, "families", userId, "notifications"),
+        {
+          title: "Order on way",
+          body: "Your orders is on the way ",
+          seen: "false",
+        }
+      );
+      console.log("notification  add ID: ", notiref.id);
+    } else {
+      const notiref = await addDoc(
+        collection(db, "donors", userId, "notifications"),
+        {
+          title: "Order on way",
+          body: "Your orders is on the way ",
+          seen: "false",
+        }
+      );
+      console.log("notification  add ID: ", notiref.id);
+    }
+    Linking.openURL(
+      `https://www.google.com/maps/search/?api=1&query=${lat},${long}`
+    );
+  };
 
   return (
     <View>
@@ -101,7 +145,7 @@ const DriverHome = (props) => {
             {arr.length != 0 ? (
               arr.map((x, i) =>
                 x != undefined ? (
-                  <View key={i} style={styles.card}>
+                  <View key={i + 2} style={styles.card}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -110,7 +154,7 @@ const DriverHome = (props) => {
                     >
                       <Text style={styles.cardTitle}>Order No</Text>
 
-                      {/* <Text style={styles.cardTitle}>#{x.num}</Text> */}
+                      <Text style={styles.cardTitle}>#{x.num}</Text>
                     </View>
                     <View style={styles.userCard}>
                       <FontAwesome name="user-circle-o" size={50} />
@@ -142,13 +186,13 @@ const DriverHome = (props) => {
                       </View>
                       <View style={{ marginLeft: 10 }}>
                         <Text style={{ fontSize: normalize(15) }}>
-                          {x.userName}
+                          {x.data.userName}
                         </Text>
                         <Text style={{ fontSize: normalize(15) }}>
-                          {x.phone}
+                          {x.data.phone}
                         </Text>
                         <Text style={{ fontSize: normalize(15) }}>
-                          {x.userId}
+                          {x.data.userId}
                         </Text>
                       </View>
                     </View>
@@ -166,7 +210,7 @@ const DriverHome = (props) => {
                           size={30}
                           color="#5e1e7f"
                         />
-                        <Text style={styles.dataTitles}>{x.date}</Text>
+                        <Text style={styles.dataTitles}>{x.data.date}</Text>
                       </View>
                       <View style={[styles.dataView, { flexDirection: "row" }]}>
                         <Ionicons
@@ -174,7 +218,7 @@ const DriverHome = (props) => {
                           size={30}
                           color="#5e1e7f"
                         />
-                        <Text style={styles.dataTitles}>{x.timeSlot}</Text>
+                        <Text style={styles.dataTitles}>{x.data.timeSlot}</Text>
                       </View>
                     </View>
 
@@ -191,7 +235,7 @@ const DriverHome = (props) => {
                           size={30}
                           color="#5e1e7f"
                         />
-                        <Text style={styles.dataTitles}>{x.location}</Text>
+                        <Text style={styles.dataTitles}>{x.data.location}</Text>
                       </View>
                       <View style={[styles.dataView, { flexDirection: "row" }]}>
                         <Ionicons
@@ -205,8 +249,11 @@ const DriverHome = (props) => {
                             { textDecorationLine: "underline", color: "blue" },
                           ]}
                           onPress={() =>
-                            Linking.openURL(
-                              `https://www.google.com/maps/search/?api=1&query=${x.lat},${x.long}`
+                            map(
+                              x.data.lat,
+                              x.data.long,
+                              x.data.userId,
+                              x.data.type
                             )
                           }
                         >
@@ -220,14 +267,19 @@ const DriverHome = (props) => {
                     >
                       <Pressable
                         onPress={() =>
-                          navigation.navigate("OrderDetails", x.id)
+                          navigation.navigate("OrderDetails", {
+                            id: x.id,
+                            userName: x.data.userName,
+                            phone: x.data.phone,
+                            zone: x.data.location,
+                          })
                         }
                         style={styles.pickupButtonContainer}
                       >
                         {type == "pick" ? (
-                          <Text style={styles.pickupButton}>Pick up</Text>
+                          <Text style={styles.pickupButton}>Pick</Text>
                         ) : (
-                          <Text style={styles.pickupButton}>Deliver</Text>
+                          <Text style={styles.pickupButton}>Drop</Text>
                         )}
                       </Pressable>
                       {/* <Pressable style={styles.cancelButtonContainer}>
@@ -314,7 +366,7 @@ const styles = StyleSheet.create({
   },
   pickupButtonContainer: {
     backgroundColor: "#5e1e7f",
-    borderRadius: "7%",
+    borderRadius: "27%",
     width: width * 0.4,
     margin: "6%",
   },

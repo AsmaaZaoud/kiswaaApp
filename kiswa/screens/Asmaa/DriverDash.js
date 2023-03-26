@@ -143,13 +143,7 @@ const DriverDash = ({ route, navigation }) => {
           <DriverHome navigation={navigation} email={id} />
           {/* </View> */}
         </TabView.Item>
-        {/*--------- Map -------------*/}
-        <TabView.Item style={styles.comp}>
-          <View style={styles.board}>
-            {/* <Text>Map</Text> */}
-            <DriverMap navigation={navigation} email={id} />
-          </View>
-        </TabView.Item>
+
         {/*--------- History -------------*/}
         <TabView.Item style={styles.comp}>
           <DriverHistory navigation={navigation} email={id} />
@@ -186,7 +180,7 @@ const DriverDash = ({ route, navigation }) => {
           />
           {/* <Text style={{ fontSize: normalize(19) }}>Families</Text> */}
         </Tab.Item>
-        <Tab.Item
+        {/* <Tab.Item
           onChange={setIndex}
           value={3}
           title="Girls"
@@ -201,8 +195,8 @@ const DriverDash = ({ route, navigation }) => {
             name="list"
             size={deviceType == "mobile" ? 40 : 45}
           />
-          {/* <Text style={{ fontSize: normalize(19) }}>Donors</Text> */}
-        </Tab.Item>
+          <Text style={{ fontSize: normalize(19) }}>Donors</Text>
+        </Tab.Item> */}
         <Tab.Item
           onChange={setIndex}
           value={4}

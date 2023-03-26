@@ -32,17 +32,65 @@ import {
   deleteDoc,
   updateDoc,
   deleteField,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../config";
+import * as Notifications from "expo-notifications";
+
 const { width } = Dimensions.get("screen");
 
 const FamilyHome = ({ route, navigation }) => {
   const id = route.params;
+  //------------------------------------------------------------
+  async function schedulePushNotification(noti) {
+    await Notifications.scheduleNotificationAsync(noti);
+  }
+  const [notifications, setNotifications] = useState([]);
+  const getNotifications = async () => {
+    const collectionRef = collection(db, "families", id, "notifications");
+    const q = query(collectionRef);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("snapshot");
+      querySnapshot.docs.map((doc) =>
+        doc.data().seen == "false"
+          ? schedulePushNotification({
+              content: {
+                title: doc.data().title,
+                body: doc.data().body,
+                data: { data: "goes here" },
+              },
+              trigger: { seconds: 1 },
+            })
+          : doc.data()
+      );
+      setNotifications(querySnapshot.docs.map((doc) => doc.id));
+    });
 
+    notifications.map((x) => update(x));
+
+    return () => unsubscribe();
+  };
+  const update = async (id) => {
+    await setDoc(
+      doc(db, "families", id, "notifications"),
+      {
+        seen: "true",
+      },
+      { merge: true }
+    )
+      .then(() => {
+        console.log("data updated");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  //------------------------------------------------------------
   // console.log(id);
   const [userName, setUserName] = useState("");
   useEffect(() => {
     getFamily();
+    getNotifications();
   }, [id]);
 
   useEffect(() => {
