@@ -251,7 +251,7 @@ const Donate = ({ route, navigation }) => {
   console.log("confirm OUTSIFE: ", confirm);
 
   const error = () => {
-    alert(Dzone);
+    // alert(Dzone);
     if (confirm.length > 0) {
       if (time === "") {
         setTimeError("Please select a time interval");
@@ -313,7 +313,7 @@ const Donate = ({ route, navigation }) => {
         });
       }
     }
-    // handleDonatePress();
+    handleDonatePress();
   };
 
   const handleDonatePress = () => {

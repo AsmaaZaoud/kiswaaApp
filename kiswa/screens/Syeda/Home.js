@@ -357,7 +357,7 @@ const Home = ({ route, navigation }) => {
   };
 
   const readName = async () => {
-    console.log(id);
+    // console.log(id);
     const docRef = doc(db, "donors", user);
     const docSnap = await getDoc(docRef);
     // let temp = [];

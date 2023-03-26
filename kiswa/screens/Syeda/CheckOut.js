@@ -126,7 +126,7 @@ const CheckOut = ({ route, navigation }) => {
 
   const readDriver = async () => {
     console.log(Dzone);
-    alert(Dzone);
+    // alert(Dzone);
     const q = query(collection(db, "drivers"), where("zone", "==", Dzone));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("snapshot");
@@ -138,6 +138,7 @@ const CheckOut = ({ route, navigation }) => {
   };
 
   useEffect(() => {
+    // alert(user);
     if (user != undefined) {
       readName();
       readDriver();
@@ -172,34 +173,35 @@ const CheckOut = ({ route, navigation }) => {
     });
     console.log("Document written with ID: ", docRef.id);
 
-    //Asma: I added this
-    const docRefDriver = await addDoc(
-      collection(db, "drivers", "sim@mail.com", "orders"),
-      {
-        phone: phone,
-        userId: email,
-        location: "khor",
-        timeSlot: route.params.time,
-        dateSlot: route.params.date,
-        trackId: trackId,
-        time: route.params.time,
-        date: route.params.date,
-        trackId: trackId,
-        status: "pending",
-        type: "pickup",
-      }
-    );
-    console.log("driver orders add ID: ", docRefDriver.id);
-    const notiref = await addDoc(
-      collection(db, "drivers", drivers[0], "notifications"),
-      {
-        title: "New Order",
-        body: "Deliver order to " + Dzone,
-        seen: "false",
-      }
-    );
-    console.log("notification  add ID: ", notiref.id);
-
+    if (user != undefined) {
+      //Asma: I added this
+      const docRefDriver = await addDoc(
+        collection(db, "drivers", "sim@mail.com", "orders"),
+        {
+          phone: phone,
+          userId: email,
+          location: "khor",
+          timeSlot: route.params.time,
+          dateSlot: route.params.date,
+          trackId: trackId,
+          time: route.params.time,
+          date: route.params.date,
+          trackId: trackId,
+          status: "pending",
+          type: "pickup",
+        }
+      );
+      console.log("driver orders add ID: ", docRefDriver.id);
+      const notiref = await addDoc(
+        collection(db, "drivers", drivers[0], "notifications"),
+        {
+          title: "New Order",
+          body: "Deliver order to " + Dzone,
+          seen: "false",
+        }
+      );
+      console.log("notification  add ID: ", notiref.id);
+    }
     // confirm.map(async (item) => {
     //     console.log(docRef.id)
     //     const docRef2 = await addDoc(collection(db, "donorDonation", docRef.id, "Items"), {

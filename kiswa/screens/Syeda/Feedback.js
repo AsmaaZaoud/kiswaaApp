@@ -1,52 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from "react-native";
 import { db } from "../../config";
 import { auth } from "../../config";
-import {addDoc, collection} from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
 const feedbackEmojis = [
-  { id: 1, name: 'very-bad', link: 'https://cdn-icons-png.flaticon.com/512/2691/2691051.png', value: 1 },
-  { id: 2, name: 'bad', link: 'https://cdn-icons-png.flaticon.com/512/2461/2461878.png', value: 2 },
-  { id: 3, name: 'neutral', link: 'https://cdn-icons-png.flaticon.com/512/1933/1933511.png', value: 3 },
-  { id: 4, name: 'good', link: 'https://cdn-icons-png.flaticon.com/512/3129/3129282.png', value: 4 },
-  { id: 5, name: 'very-good', link: 'https://cdn-icons-png.flaticon.com/512/2584/2584606.png', value: 5 },
+  {
+    id: 1,
+    name: "very-bad",
+    link: "https://cdn-icons-png.flaticon.com/512/2691/2691051.png",
+    value: 1,
+  },
+  {
+    id: 2,
+    name: "bad",
+    link: "https://cdn-icons-png.flaticon.com/512/2461/2461878.png",
+    value: 2,
+  },
+  {
+    id: 3,
+    name: "neutral",
+    link: "https://cdn-icons-png.flaticon.com/512/1933/1933511.png",
+    value: 3,
+  },
+  {
+    id: 4,
+    name: "good",
+    link: "https://cdn-icons-png.flaticon.com/512/3129/3129282.png",
+    value: 4,
+  },
+  {
+    id: 5,
+    name: "very-good",
+    link: "https://cdn-icons-png.flaticon.com/512/2584/2584606.png",
+    value: 5,
+  },
 ];
 
 const Feedback = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
-  const [feedbackText, setFeedbackText] = useState('');
+  const [feedbackText, setFeedbackText] = useState("");
 
   useEffect(() => {
     setModalVisible(true);
   }, []);
 
-
   const handleSelectEmoji = (emoji) => {
     setSelectedEmoji(emoji);
-    setFeedbackText('');
+    setFeedbackText("");
   };
 
   const exit = () => {
     setModalVisible(false);
-    navigation.navigate("Home")
-  }
+    navigation.navigate("App");
+  };
 
   const handleSubmit = () => {
-    console.log('Selected Emoji:', selectedEmoji);
-    console.log('Feedback Text:', feedbackText);
-    add()
+    console.log("Selected Emoji:", selectedEmoji);
+    console.log("Feedback Text:", feedbackText);
+    add();
     setModalVisible(false);
-    navigation.navigate("Home")
+    navigation.navigate("App");
   };
 
   const add = async () => {
     const docRef = await addDoc(collection(db, "donorFeedback"), {
-    rating: selectedEmoji.name,
-    feedbackText: feedbackText
+      rating: selectedEmoji.name,
+      feedbackText: feedbackText,
     });
     console.log("Document written with ID: ", docRef.id);
-    }
+  };
 
   const renderFeedbackInput = () => {
     if (!selectedEmoji || selectedEmoji.value >= 4) {
@@ -102,7 +134,10 @@ const Feedback = ({ navigation }) => {
             <TouchableOpacity
               style={styles.submitButton}
               onPress={handleSubmit}
-              disabled={!selectedEmoji || (selectedEmoji.value < 4 && feedbackText === '')}
+              disabled={
+                !selectedEmoji ||
+                (selectedEmoji.value < 4 && feedbackText === "")
+              }
             >
               <Text style={styles.submitButtonText}>Submit</Text>
             </TouchableOpacity>
@@ -116,47 +151,47 @@ const Feedback = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     padding: 10,
-    backgroundColor: 'purple',
+    backgroundColor: "purple",
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 20,
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
-    width: '80%',
-    alignItems: 'center',
+    width: "80%",
+    alignItems: "center",
   },
   modalText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 20,
   },
   emojiContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 20,
-    width: '100%',
+    width: "100%",
   },
   emojiButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 10,
     padding: 10,
   },
@@ -165,50 +200,50 @@ const styles = StyleSheet.create({
     height: 35,
   },
   selectedIndicator: {
-    position: 'absolute',
+    position: "absolute",
     width: 20,
     height: 20,
-    backgroundColor: 'purple',
+    backgroundColor: "purple",
     borderRadius: 10,
     bottom: -5,
     right: -5,
   },
   feedbackInputContainer: {
-    width: '100%',
+    width: "100%",
     marginBottom: 20,
   },
   feedbackInput: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 5,
     padding: 10,
     height: 100,
   },
   submitButton: {
-    backgroundColor: 'purple',
+    backgroundColor: "purple",
     padding: 10,
     borderRadius: 5,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
   },
   submitButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 20,
   },
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 10,
     right: 10,
     padding: 10,
     zIndex: 1,
   },
   closeButtonText: {
-    color: 'black',
+    color: "black",
     fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 
