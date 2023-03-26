@@ -46,7 +46,13 @@ import { auth } from "../../config";
 import { object } from "prop-types";
 
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-
+import {
+  Fontisto,
+  AntDesign,
+  FontAwesome5,
+  Feather,
+  Entypo,
+} from "react-native-vector-icons";
 import { useIsFocused } from "@react-navigation/native";
 
 const Home = ({ route, navigation }) => {
@@ -412,15 +418,6 @@ const Home = ({ route, navigation }) => {
                         : image,
                   }}
                 ></Image>
-                {user == undefined ? (
-                  <Pressable onPress={() => navigation.navigate("LoginDonor")}>
-                    <Text style={{ color: "blue" }}>Login/SigUp</Text>
-                  </Pressable>
-                ) : (
-                  <Pressable onPress={onSignOut}>
-                    <Text style={{ color: "blue" }}>Sign Out</Text>
-                  </Pressable>
-                )}
               </Block>
               <Block center style={{ borderWidth: 0 }}>
                 <Text
@@ -528,7 +525,68 @@ const Home = ({ route, navigation }) => {
   // const { navigation } = this.props;
   return (
     <Block flex center style={styles.home}>
+      <View
+        style={{
+          backgroundColor: "#5e1e7f",
+          width: width,
+          height: height * 0.1,
+        }}
+      >
+        <View style={styles.topl}>
+          <Image
+            source={require("../../assets/Fatima/WhiteLogo.png")}
+            style={{ width: 150, height: 50 }}
+            width={width * 0.35}
+            height={height * 0.05}
+          />
+          {user != undefined ? (
+            <Pressable onPress={onSignOut}>
+              <Feather name="log-out" size={35} color="white" />
+            </Pressable>
+          ) : (
+            <Pressable onPress={() => navigation.navigate("LoginDonor")}>
+              <Feather name="log-in" size={35} color="white" />
+            </Pressable>
+          )}
+        </View>
+      </View>
       {renderArticles()}
+      <Block
+        style={{
+          height: "10%",
+          backgroundColor: "#FFFAFA",
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          borderColor: "lightgray",
+          borderWidth: 1,
+          marginBottom: "2%",
+          alignItems: "center",
+          // paddingLeft: "1%",
+        }}
+      >
+        <Pressable
+          style={{ width: "14%" }}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
+        </Pressable>
+
+        <Pressable
+          style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
+          onPress={() => navigation.navigate("Donate")}
+        >
+          <FontAwesome5 name="shopping-cart" color="#4C4AAB" size={40} />
+        </Pressable>
+        {user != undefined ? (
+          <Pressable
+            style={{ width: "14%" }}
+            onPress={() => navigation.navigate("FamilyProfile")}
+          >
+            <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
+          </Pressable>
+        ) : null}
+      </Block>
     </Block>
   );
 };
@@ -592,7 +650,7 @@ const styles = StyleSheet.create({
   },
   home: {
     width: width,
-    // backgroundColor: '#490066'
+    backgroundColor: "#FFF",
   },
   articles: {
     width: width - theme.SIZES.BASE * 2,
@@ -662,6 +720,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
+  },
+  topl: {
+    width: width,
+    padding: "4%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#5e1e7f",
+    marginTop: "6%",
   },
 });
 

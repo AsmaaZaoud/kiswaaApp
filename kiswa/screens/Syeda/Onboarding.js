@@ -63,7 +63,7 @@ const Onboarding = ({ navigation }) => {
           }}
         >
           <Block style={{ marginLeft: "3%" }}>
-            <TouchableOpacity onPress={() => navigation.replace("App")}>
+            <TouchableOpacity onPress={() => navigation.replace("Home")}>
               <Image
                 style={
                   deviceType == "mobile" ? styles.images : styles.imagesIpad

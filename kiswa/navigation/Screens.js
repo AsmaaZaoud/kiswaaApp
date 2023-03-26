@@ -27,6 +27,7 @@ import DonorHistory from "../screens/Syeda/DonorHistory";
 import Profile from "../screens/Syeda/Profile";
 import AboutUs from "../screens/Syeda/AboutUs";
 import AppOnboard from "../screens/Syeda/AppOnboard";
+import DonorDash from "../screens/Syeda/DonorDash";
 
 // Fatima Inventory
 import InventoryClerkHomePage from "../screens/Fatima/InventoryClerckHomePage";
@@ -539,7 +540,16 @@ export default function OnboardingStack(props) {
         {/* /*********  Login - Register **********/}
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
-        {/* <Stack.Screen name="Donate" component={Donate} /> */}
+        <Stack.Screen
+          name="Donate"
+          component={Donate}
+          options={{
+            headerShown: true,
+            title: "",
+            headerBackTitle: "Back",
+            // headerTintColor: "#5e1e7f",
+          }}
+        />
         <Stack.Screen name="CheckOut" component={CheckOut} />
         <Stack.Screen name="Feedback" component={Feedback} />
         <Stack.Screen name="DonorHistory" component={DonorHistory} />
@@ -548,7 +558,7 @@ export default function OnboardingStack(props) {
           name="Home"
           component={Home}
           options={{
-            headerShown: true,
+            headerShown: false,
             title: "",
             headerBackTitle: "Back",
             // headerTintColor: "#5e1e7f",
@@ -583,6 +593,7 @@ export default function OnboardingStack(props) {
         />
         <Stack.Screen name="FamilyProfile" component={FamilyProfile} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="DonorDash" component={DonorDash} />
       </Stack.Navigator>
     )
   );
