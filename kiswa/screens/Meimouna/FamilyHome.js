@@ -14,7 +14,8 @@ import {
   AntDesign,
   FontAwesome5,
   FontAwesome,
-  Entypo,
+  EvilIcons,
+  Ionicons,
 } from "react-native-vector-icons";
 
 import React from "react";
@@ -255,14 +256,14 @@ const FamilyHome = ({ route, navigation }) => {
       {renderArticles()}
       <Block
         style={{
-          height: "10%",
+          height: "8%",
           backgroundColor: "#FFFAFA",
           width: "100%",
           flexDirection: "row",
           justifyContent: "space-evenly",
           borderColor: "lightgray",
           borderWidth: 1,
-          marginBottom: "2%",
+          marginBottom: "1%",
           alignItems: "center",
           // paddingLeft: "1%",
         }}
@@ -271,21 +272,21 @@ const FamilyHome = ({ route, navigation }) => {
           style={{ width: "14%" }}
           onPress={() => navigation.navigate("FamilyHome", id)}
         >
-          <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
+          <Ionicons name="home-outline" color={"#f8a069"} size={40} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
           onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
         >
-          <FontAwesome5 name="shopping-cart" color="#4C4AAB" size={40} />
+          <Ionicons name="cart-outline" color="#1a1f87" size={45} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
           onPress={() => navigation.navigate("FamilyProfile", id)}
         >
-          <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
+          <EvilIcons name="user" color="#1a1f87" size={50} />
         </Pressable>
       </Block>
     </Block>
@@ -314,7 +315,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginLeft: "6%",
     height: "15%",
-    backgroundColor: "#4C4AAB",
+    backgroundColor: "#1a1f87",
     borderRadius: 10,
     width: "86%",
     marginBottom: "8%",

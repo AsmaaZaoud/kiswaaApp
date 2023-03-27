@@ -192,237 +192,190 @@ export default function RegisterFamily({ navigation }) {
   };
 
   return (
-    <Block flex middle>
+    <Block flex middle style={{ backgroundColor: "#1a1f87" }}>
       <StatusBar hidden />
-      <ImageBackground
+      {/* <ImageBackground
         source={Images.RegisterBackground}
         style={{ width, height, zIndex: 1 }}
-      >
-        <Block safe flex middle>
-          <Block style={styles.registerContainer}>
-            <Block flex>
-              <Block flex={0.19}>
-                <Text
-                  style={{ padding: 20, color: "blue" }}
-                  onPress={() => navigation.navigate("Onboarding")}
-                >
-                  Go Back
-                </Text>
+      > */}
+      <Block safe flex middle>
+        <Block style={styles.registerContainer}>
+          <Block flex>
+            <Block flex={0.19}>
+              <Text
+                style={{ padding: 20, color: "blue" }}
+                onPress={() => navigation.navigate("Onboarding")}
+              >
+                Go Back
+              </Text>
 
-                <Block flex={0.17} middle>
-                  <Image
-                    source={require("../../assets/Fatima/BlackLogo.png")}
-                    style={{
-                      width: width - theme.SIZES.BASE,
-                      height: theme.SIZES.BASE * 5,
-                      position: "relative",
-                      resizeMode: "contain",
-                      marginTop: "25%",
-                      marginBottom: "10%",
-                    }}
-                  />
-                </Block>
-              </Block>
-              <Block flex center style={{ marginTop: "5%" }}>
-                <Text
+              <Block flex={0.17} middle>
+                <Image
+                  source={require("../../assets/Fatima/BlackLogo.png")}
                   style={{
-                    justifyContent: "flex-start",
-                    alignSelf: "center",
-                    fontSize: 18,
-                    margin: "2%",
+                    width: width - theme.SIZES.BASE,
+                    height: theme.SIZES.BASE * 5,
+                    position: "relative",
+                    resizeMode: "contain",
+                    marginTop: "25%",
+                    marginBottom: "10%",
                   }}
-                >
-                  Register as Family
-                </Text>
-                <KeyboardAvoidingView
-                  style={{ flex: 1 }}
-                  behavior="padding"
-                  enabled
-                >
-                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
-                    <Input
-                      borderless
-                      placeholder="User Name"
-                      value={userName}
-                      onChangeText={(name) => {
-                        setUserName(name);
-                        userNameValidate();
-                      }}
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={argonTheme.COLORS.ICON}
-                          name="ic_mail_24px"
-                          family="ArgonExtra"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "red",
-                        fontSize: 12,
-                      }}
-                    >
-                      {userNameError}
-                    </Text>
-                  </Block>
-                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
-                    <Input
-                      phone-pad
-                      borderless
-                      placeholder="Phone Number"
-                      value={phone}
-                      maxLength={8}
-                      onChangeText={(pho) => {
-                        setPhone(pho);
-                        phoneValidate();
-                      }}
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={argonTheme.COLORS.ICON}
-                          name="ic_mail_24px"
-                          family="ArgonExtra"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "red",
-                        fontSize: 12,
-                      }}
-                    >
-                      {phoneError}
-                    </Text>
-                  </Block>
-
-                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
-                    <Input
-                      borderless
-                      placeholder="Email"
-                      value={email}
-                      onChangeText={(em) => {
-                        setEmail(em);
-                        emailValidate();
-                      }}
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={argonTheme.COLORS.ICON}
-                          name="ic_mail_24px"
-                          family="ArgonExtra"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "red",
-                        fontSize: 12,
-                      }}
-                    >
-                      {emailErro}
-                    </Text>
-                  </Block>
-                  <Block width={width * 0.8} style={{ marginBottom: 10 }}>
-                    <Input
-                      password
-                      borderless
-                      placeholder="Password"
-                      value={password}
-                      onChangeText={(pass) => {
-                        setPassword(pass);
-                        passValidate();
-                      }}
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={argonTheme.COLORS.ICON}
-                          name="padlock-unlocked"
-                          family="ArgonExtra"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "red",
-                        fontSize: 12,
-                      }}
-                    >
-                      {passError}
-                    </Text>
-                  </Block>
-                  <View
+                />
+              </Block>
+            </Block>
+            <Block flex center style={{ marginTop: "5%" }}>
+              <Text
+                style={{
+                  justifyContent: "flex-start",
+                  alignSelf: "center",
+                  fontSize: 18,
+                  margin: "2%",
+                }}
+              >
+                Register as Family
+              </Text>
+              <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior="padding"
+                enabled
+              >
+                <Block width={width * 0.8} style={{ marginBottom: 10 }}>
+                  <Input
+                    borderless
+                    placeholder="User Name"
+                    value={userName}
+                    onChangeText={(name) => {
+                      setUserName(name);
+                      userNameValidate();
+                    }}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="ic_mail_24px"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                  <Text
                     style={{
-                      alignItems: "center",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
                     }}
                   >
-                    <Block width={width * 0.35} style={{ marginBottom: 10 }}>
-                      <Button
-                        color={stat !== "granted" ? "default" : "primary"}
-                        style={styles.createButton}
-                        onPress={() => {
-                          getLocation();
-                        }}
-                      >
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Location
-                        </Text>
-                      </Button>
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          color: "red",
-                          fontSize: 12,
-                        }}
-                      >
-                        {locationError}
-                      </Text>
-                    </Block>
-                    <Block width={width * 0.35} style={{ marginBottom: 0 }}>
-                      <Dropdown
-                        style={styles.dropdown}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        data={zones}
-                        maxHeight={160}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={zone}
-                        value={zone}
-                        onChange={(item) => {
-                          setZone(item.label);
-                        }}
-                      ></Dropdown>
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          color: "red",
-                          fontSize: 12,
-                        }}
-                      >
-                        {ZoneError}
-                      </Text>
-                    </Block>
-                  </View>
+                    {userNameError}
+                  </Text>
+                </Block>
+                <Block width={width * 0.8} style={{ marginBottom: 10 }}>
+                  <Input
+                    phone-pad
+                    borderless
+                    placeholder="Phone Number"
+                    value={phone}
+                    maxLength={8}
+                    onChangeText={(pho) => {
+                      setPhone(pho);
+                      phoneValidate();
+                    }}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="ic_mail_24px"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
+                    }}
+                  >
+                    {phoneError}
+                  </Text>
+                </Block>
 
-                  <Block middle>
+                <Block width={width * 0.8} style={{ marginBottom: 10 }}>
+                  <Input
+                    borderless
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={(em) => {
+                      setEmail(em);
+                      emailValidate();
+                    }}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="ic_mail_24px"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
+                    }}
+                  >
+                    {emailErro}
+                  </Text>
+                </Block>
+                <Block width={width * 0.8} style={{ marginBottom: 10 }}>
+                  <Input
+                    password
+                    borderless
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={(pass) => {
+                      setPassword(pass);
+                      passValidate();
+                    }}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="padlock-unlocked"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
+                    }}
+                  >
+                    {passError}
+                  </Text>
+                </Block>
+                <View
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Block width={width * 0.35} style={{ marginBottom: 10 }}>
                     <Button
-                      color="primary"
-                      style={styles.createButton}
-                      onPress={validation}
+                      color={stat !== "granted" ? "warning" : "success"}
+                      style={{ width: width * 0.4 }}
+                      onPress={() => {
+                        getLocation();
+                      }}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        CREATE ACCOUNT
+                        Location
                       </Text>
                     </Button>
                     <Text
@@ -432,15 +385,62 @@ export default function RegisterFamily({ navigation }) {
                         fontSize: 12,
                       }}
                     >
-                      {registerError}
+                      {locationError}
                     </Text>
                   </Block>
-                </KeyboardAvoidingView>
-              </Block>
+                  <Block width={width * 0.35} style={{ marginBottom: 0 }}>
+                    <Dropdown
+                      style={styles.dropdown}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      data={zones}
+                      maxHeight={160}
+                      labelField="label"
+                      valueField="value"
+                      placeholder={zone}
+                      value={zone}
+                      onChange={(item) => {
+                        setZone(item.label);
+                      }}
+                    ></Dropdown>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {ZoneError}
+                    </Text>
+                  </Block>
+                </View>
+
+                <Block middle>
+                  <Button
+                    // color="primary"
+                    style={styles.createButton}
+                    onPress={validation}
+                  >
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                      CREATE ACCOUNT
+                    </Text>
+                  </Button>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
+                    }}
+                  >
+                    {registerError}
+                  </Text>
+                </Block>
+              </KeyboardAvoidingView>
             </Block>
           </Block>
         </Block>
-      </ImageBackground>
+      </Block>
+      {/* </ImageBackground> */}
     </Block>
   );
 }
@@ -495,6 +495,7 @@ const styles = StyleSheet.create({
   createButton: {
     width: width * 0.4,
     // marginTop: 25,
+    backgroundColor: "#1a1f87",
   },
   dropdown: {
     marginBottom: 10,

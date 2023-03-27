@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
-    width: "80%",
+    width: "97%",
     alignItems: "center",
   },
   modalText: {
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   submitButton: {
-    backgroundColor: "purple",
+    backgroundColor: "#1a1f87",
     padding: 10,
     borderRadius: 5,
     width: "100%",

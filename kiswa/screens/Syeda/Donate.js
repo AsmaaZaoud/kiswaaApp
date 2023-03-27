@@ -623,19 +623,19 @@ const Donate = ({ route, navigation }) => {
             >
               <Button
                 onPress={changeColor1}
-                style={{ backgroundColor: flag1 === 0 ? "purple" : "#F8B88B" }}
+                style={{ backgroundColor: flag1 === 0 ? "#1a1f87" : "#f8a069" }}
               >
                 8AM - 12PM
               </Button>
               <Button
                 onPress={changeColor2}
-                style={{ backgroundColor: flag2 === 0 ? "purple" : "#F8B88B" }}
+                style={{ backgroundColor: flag2 === 0 ? "#1a1f87" : "#f8a069" }}
               >
                 12PM - 6PM
               </Button>
               <Button
                 onPress={changeColor3}
-                style={{ backgroundColor: flag3 === 0 ? "purple" : "#F8B88B" }}
+                style={{ backgroundColor: flag3 === 0 ? "#1a1f87" : "#f8a069" }}
               >
                 6PM - 10PM
               </Button>
@@ -652,7 +652,9 @@ const Donate = ({ route, navigation }) => {
             >
               <Button
                 onPress={checkColor1}
-                style={{ backgroundColor: check1 === 0 ? "purple" : "#F8B88B" }}
+                style={{
+                  backgroundColor: check1 === 0 ? "#1a1f87" : "#f8a069",
+                }}
               >
                 <Text style={{ color: "white" }}>
                   {dateString} - {first2date}
@@ -660,7 +662,9 @@ const Donate = ({ route, navigation }) => {
               </Button>
               <Button
                 onPress={checkColor2}
-                style={{ backgroundColor: check2 === 0 ? "purple" : "#F8B88B" }}
+                style={{
+                  backgroundColor: check2 === 0 ? "#1a1f87" : "#f8a069",
+                }}
               >
                 <Text style={{ color: "white" }}>
                   {sec1date} - {sec2date}
@@ -668,7 +672,9 @@ const Donate = ({ route, navigation }) => {
               </Button>
               <Button
                 onPress={checkColor3}
-                style={{ backgroundColor: check3 === 0 ? "purple" : "#F8B88B" }}
+                style={{
+                  backgroundColor: check3 === 0 ? "#1a1f87" : "#f8a069",
+                }}
               >
                 <Text style={{ color: "white" }}>
                   {third1date} - {third2date}
@@ -776,7 +782,7 @@ const styles = StyleSheet.create({
     padding: 15,
     // paddingHorizontal: 30,
     borderRadius: 90,
-    backgroundColor: "#842DCE",
+    backgroundColor: "#3C4DBD",
     // position: "relative",
     // overflow: "hidden",
     width: "70%",
@@ -788,7 +794,7 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 30,
     borderRadius: 50,
-    backgroundColor: "#842DCE",
+    backgroundColor: "#3c4dbd",
     position: "relative",
     overflow: "hidden",
     width: "45%",

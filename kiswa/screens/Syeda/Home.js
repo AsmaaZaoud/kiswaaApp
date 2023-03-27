@@ -50,8 +50,10 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import {
   Fontisto,
   AntDesign,
+  MaterialCommunityIcons,
   FontAwesome5,
   Feather,
+  Ionicons,
   Entypo,
 } from "react-native-vector-icons";
 import { useIsFocused } from "@react-navigation/native";
@@ -530,14 +532,14 @@ const Home = ({ route, navigation }) => {
     <Block flex center style={styles.home}>
       <View
         style={{
-          backgroundColor: "#5e1e7f",
+          backgroundColor: "#3C4DBD",
           width: width,
           height: height * 0.1,
         }}
       >
         <View style={styles.topl}>
           <Image
-            source={require("../../assets/Fatima/WhiteLogo.png")}
+            source={require("../../assets/Fatima/white.png")}
             style={{ width: 150, height: 50 }}
             width={width * 0.35}
             height={height * 0.05}
@@ -576,8 +578,8 @@ const Home = ({ route, navigation }) => {
       {renderArticles()}
       <Block
         style={{
-          height: "10%",
-          backgroundColor: "#FFFAFA",
+          height: "8%",
+          backgroundColor: "#F2F8FF",
           width: "100%",
           flexDirection: "row",
           justifyContent: "space-evenly",
@@ -595,11 +597,7 @@ const Home = ({ route, navigation }) => {
             setSelected("Home");
           }}
         >
-          <FontAwesome5
-            name="home"
-            color={selected == "Home" ? "#5e1e7f" : ""}
-            size={40}
-          />
+          <Ionicons name="home-outline" color={"#f8a069"} size={40} />
         </Pressable>
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
@@ -608,9 +606,9 @@ const Home = ({ route, navigation }) => {
             setSelected("Donate");
           }}
         >
-          <FontAwesome5
-            name="plus-circle"
-            color={selected == "Home" ? "#5e1e7f" : ""}
+          <MaterialCommunityIcons
+            name="heart-plus-outline"
+            // color={selected == "Home" ? "#f8a069" : ""}
             size={40}
           />
         </Pressable>
@@ -619,14 +617,14 @@ const Home = ({ route, navigation }) => {
             style={{ width: "14%" }}
             onPress={() => navigation.navigate("FamilyProfile")}
           >
-            <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
+            <FontAwesome5 name="user-alt" size={40} />
           </Pressable>
         ) : (
           <Pressable
             style={{ width: "14%" }}
             onPress={() => navigation.navigate("AboutUs")}
           >
-            <FontAwesome5 name="info-circle" color="#5e1e7f" size={40} />
+            <Feather name="info" size={40} />
           </Pressable>
         )}
       </Block>
@@ -709,7 +707,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width * 0.95,
     height: height * 0.18,
-    backgroundColor: "#F1ECFF",
+    backgroundColor: "#F2F8FF",
     alignSelf: "center",
     // borderWidth: 1,
     flexDirection: "row",
@@ -729,7 +727,7 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 30,
     borderRadius: 30,
-    backgroundColor: "#842DCE",
+    backgroundColor: "#3C4DBD",
     position: "relative",
     overflow: "hidden",
     width: width * 0.7,
@@ -769,7 +767,7 @@ const styles = StyleSheet.create({
     padding: "4%",
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#5e1e7f",
+    backgroundColor: "#3C4DBD",
     marginTop: "6%",
   },
 });

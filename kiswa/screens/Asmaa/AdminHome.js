@@ -82,7 +82,7 @@ const AdminHome = ({ route, navigation }) => {
   const [index, setIndex] = useState(0);
 
   return (
-    <View style={{ backgroundColor: "#4B0095" }}>
+    <View style={{ backgroundColor: "#162378" }}>
       <View style={styles.top}>
         <Image
           source={require("../../assets/Fatima/WhiteLogo.png")}

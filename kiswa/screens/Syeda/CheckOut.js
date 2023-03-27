@@ -331,7 +331,7 @@ const CheckOut = ({ route, navigation }) => {
             >
               <Block row>
                 <Pressable
-                  style={{ margin: "3%" }}
+                  style={{ marginHorizontal: "3%" }}
                   onPress={() => navigation.navigate("Donate")}
                 >
                   {/* <Image
@@ -355,12 +355,12 @@ const CheckOut = ({ route, navigation }) => {
 
               <Block style={{ marginLeft: "5%" }}>
                 <Text style={{ fontSize: 20, margin: "5%" }}>
-                  <Ionicons name="time-outline" size={30} color="#842DCE" />{" "}
+                  <Ionicons name="time-outline" size={30} color="#1a1f87" />{" "}
                   {route.params.time}
                 </Text>
 
                 <Text style={{ fontSize: 20, margin: "5%" }}>
-                  <Ionicons name="md-today-sharp" size={30} color="#842DCE" />
+                  <Ionicons name="md-today-sharp" size={30} color="#1a1f87" />
                   {route.params.date}
                 </Text>
                 <Block
@@ -455,13 +455,19 @@ const CheckOut = ({ route, navigation }) => {
                   <Text style={styles.error}>{locationError}</Text>
                   <Block width={width * 0.35}>
                     <Button
-                      color={stat !== "granted" ? "default" : "primary"}
+                      color={stat !== "granted" ? "default" : "success"}
                       style={styles.createButton}
                       onPress={getLocation}
                     >
-                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Get Location
-                      </Text>
+                      {stat != "granted" ? (
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Get Location
+                        </Text>
+                      ) : (
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          Location Done
+                        </Text>
+                      )}
                     </Button>
                   </Block>
 
@@ -606,7 +612,7 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 30,
     borderRadius: 80,
-    backgroundColor: "#842DCE",
+    backgroundColor: "#1a1f87",
     position: "relative",
     overflow: "hidden",
     width: "70%",

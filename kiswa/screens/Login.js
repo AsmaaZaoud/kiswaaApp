@@ -159,126 +159,126 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <Block flex middle>
+    <Block flex middle style={{ backgroundColor: "#1a1f87" }}>
       <StatusBar hidden />
-      <ImageBackground
+      {/* <ImageBackground
         source={require("../assets/Fatima/background.png")}
         style={{ width, height, zIndex: 1 }}
-      >
-        <Block safe flex middle>
-          <Block
-            style={
-              deviceType == "mobile"
-                ? styles.registerContainer
-                : styles.registerContainerLarge
-            }
+      > */}
+      <Block safe flex middle>
+        <Block
+          style={
+            deviceType == "mobile"
+              ? styles.registerContainer
+              : styles.registerContainerLarge
+          }
+        >
+          <Text
+            style={{ padding: 20, color: "blue" }}
+            onPress={() => navigation.navigate("Onboarding")}
           >
-            <Text
-              style={{ padding: 20, color: "blue" }}
-              onPress={() => navigation.navigate("Onboarding")}
-            >
-              Go Back
-            </Text>
-            {/* comment */}
-            <Block flex style={{ marginTop: "10%" }}>
-              <Block flex={0.17} middle>
-                <Image
-                  source={require("../assets/Fatima/BlackLogo.png")}
-                  style={
-                    deviceType == "mobile" ? styles.logoSmall : styles.logoLarge
-                  }
-                />
-              </Block>
-              <Block flex center style={{ marginTop: "40%" }}>
-                <KeyboardAvoidingView
-                  style={{ flex: 1 }}
-                  behavior="padding"
-                  enabled
-                >
-                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                    <Input
-                      borderless
-                      placeholder="Email"
-                      value={email}
-                      style={EmailErrorStyle()}
-                      onChangeText={setEmail}
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={"#5A9DA0"}
-                          name="ic_mail_24px"
-                          family="ArgonExtra"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                  </Block>
-                  <Block width={width * 0.8}>
-                    <Input
-                      password
-                      borderless
-                      placeholder="Password"
-                      value={password}
-                      style={PasswordErrorStyle()}
-                      onChangeText={setPassword}
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={"#5A9DA0"}
-                          name="padlock-unlocked"
-                          family="ArgonExtra"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                    {error.key == "email&pass" && error.satus && (
-                      <Text style={styles.errorMessage}>{error.msg}</Text>
-                    )}
-                    {error.key == "pass" && error.satus && (
-                      <Text style={styles.errorMessage}>{error.msg}</Text>
-                    )}
-                    {error.key == "db" && error.satus && (
-                      <Text style={styles.errorMessage}>{error.msg}</Text>
-                    )}
-                    {error.key == "email" && error.satus && (
-                      <Text style={styles.errorMessage}>{error.msg}</Text>
-                    )}
-                  </Block>
+            Go Back
+          </Text>
+          {/* comment */}
+          <Block flex style={{ marginTop: "4%" }}>
+            <Block flex={0.17} middle>
+              <Image
+                source={require("../assets/Fatima/BlackLogo.png")}
+                style={
+                  deviceType == "mobile" ? styles.logoSmall : styles.logoLarge
+                }
+              />
+            </Block>
+            <Block flex center style={{ marginTop: "40%" }}>
+              <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior="padding"
+                enabled
+              >
+                <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                  <Input
+                    borderless
+                    placeholder="Email"
+                    value={email}
+                    style={EmailErrorStyle()}
+                    onChangeText={setEmail}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={"#5A9DA0"}
+                        name="ic_mail_24px"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                </Block>
+                <Block width={width * 0.8}>
+                  <Input
+                    password
+                    borderless
+                    placeholder="Password"
+                    value={password}
+                    style={PasswordErrorStyle()}
+                    onChangeText={setPassword}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={"#5A9DA0"}
+                        name="padlock-unlocked"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                  {error.key == "email&pass" && error.satus && (
+                    <Text style={styles.errorMessage}>{error.msg}</Text>
+                  )}
+                  {error.key == "pass" && error.satus && (
+                    <Text style={styles.errorMessage}>{error.msg}</Text>
+                  )}
+                  {error.key == "db" && error.satus && (
+                    <Text style={styles.errorMessage}>{error.msg}</Text>
+                  )}
+                  {error.key == "email" && error.satus && (
+                    <Text style={styles.errorMessage}>{error.msg}</Text>
+                  )}
+                </Block>
 
-                  <Block middle>
-                    <Button
-                      color="primary"
-                      style={
-                        deviceType == "mobile"
-                          ? styles.loginSmall
-                          : styles.loginLarge
-                      }
-                      onPress={handleLogin}
-                    >
-                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Log In
-                      </Text>
-                    </Button>
-                    <Button
-                      color={"#F0936F"}
-                      style={
-                        deviceType == "mobile"
-                          ? styles.signUpSmall
-                          : styles.signUpLarge
-                      }
-                      onPress={() => navigation.navigate("RegisterFamily")}
-                    >
-                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Sign Up
-                      </Text>
-                    </Button>
-                  </Block>
-                </KeyboardAvoidingView>
-              </Block>
+                <Block middle>
+                  <Button
+                    color="primary"
+                    style={
+                      deviceType == "mobile"
+                        ? styles.loginSmall
+                        : styles.loginLarge
+                    }
+                    onPress={handleLogin}
+                  >
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                      Log In
+                    </Text>
+                  </Button>
+                  <Button
+                    color={"#F0936F"}
+                    style={
+                      deviceType == "mobile"
+                        ? styles.signUpSmall
+                        : styles.signUpLarge
+                    }
+                    onPress={() => navigation.navigate("RegisterFamily")}
+                  >
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                      Sign Up
+                    </Text>
+                  </Button>
+                </Block>
+              </KeyboardAvoidingView>
             </Block>
           </Block>
         </Block>
-      </ImageBackground>
+      </Block>
+      {/* </ImageBackground> */}
     </Block>
   );
 };

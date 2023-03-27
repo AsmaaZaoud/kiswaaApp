@@ -460,7 +460,7 @@ export default function OnboardingStack(props) {
       } else {
         //setFirstLaunch(true); //i am changing it to true to see the onboarding screen
         //this is what it should be //setFirstLaunch(false);
-        setFirstLaunch(false);
+        setFirstLaunch(true);
       }
     }
     setData();
