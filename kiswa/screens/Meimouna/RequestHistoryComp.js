@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Card, ListItem, Button, Icon } from "react-native-elements";
 import { useState, useEffect } from "react";
@@ -40,16 +40,38 @@ export default function RequestHistoryComp({ itemsid, navigation }) {
     <View>
       {cart.map((elem, i) => (
         <DataTable.Row style={{ textAlign: "center" }} key={i}>
-          <DataTable.Cell style={{}}>{elem.data.quantity}</DataTable.Cell>
-          <DataTable.Cell style={{}}>{elem.data.size}</DataTable.Cell>
-          <DataTable.Cell style={{}}>{elem.data.ageGroup}</DataTable.Cell>
+          <DataTable.Cell style={{}}>
+            <Image
+              style={{ width: 30, height: 30, position: "relative" }}
+              source={{ uri: elem.data.icon }}
+            />
+          </DataTable.Cell>
+          <DataTable.Cell numeric style={{}}>
+            {elem.data.type}
+          </DataTable.Cell>
+          <DataTable.Cell numeric style={{}}>
+            {elem.data.color}
+          </DataTable.Cell>
+          <DataTable.Cell numeric style={{}}>
+            {elem.data.ageGroup}
+          </DataTable.Cell>
 
-          <DataTable.Cell style={{}}>{elem.data.color}</DataTable.Cell>
-          <DataTable.Cell style={{}}>{elem.data.type}</DataTable.Cell>
+          <DataTable.Cell numeric style={{}}>
+            {elem.data.size}
+          </DataTable.Cell>
+          <DataTable.Cell numeric style={{}}>
+            {elem.data.quantity}
+          </DataTable.Cell>
         </DataTable.Row>
       ))}
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  smallImage: {
+    width: 60,
+    height: 60,
+    //borderRadius: 10,
+  },
+});

@@ -70,7 +70,10 @@ export default function RequestHistory({ route, navigation }) {
     return () => unsubscribe();
   }, [id]);
   const [cart, setCart] = useState([]);
+  const [stat, setStat] = useState("pending");
+
   const filterStatus = (stat) => {
+    setStat(stat);
     var temp = [...allRequest];
     if (stat == "done") {
       temp = temp.filter((x) => x.status == "fullfied");
@@ -153,7 +156,7 @@ export default function RequestHistory({ route, navigation }) {
               marginLeft: "5%",
             }}
           >
-            {request.length} Completed Requests
+            {request.length} {stat} Requests
           </Text>
           <Text></Text>
           {request.length == 0 ? (
@@ -179,7 +182,7 @@ export default function RequestHistory({ route, navigation }) {
                     width: "100%",
                   }}
                 >
-                  <Text style={{ marginBottom: 10 }}> {elem.familyID}</Text>
+                  <Text style={{ marginBottom: 10 }}> {elem.day}</Text>
                   {/* elem.nameoftheattrbiteinDB.toDate().toDateString() */}
                   {/* <Text style={{ marginBottom: 10 }}>Mon Oct 31 2022</Text> */}
                   <Text style={{ marginBottom: 10 }}>{elem.dateSlot}</Text>
@@ -190,27 +193,37 @@ export default function RequestHistory({ route, navigation }) {
                     <DataTable.Title
                       textStyle={{ color: "white", fontSize: 15 }}
                     >
-                      Qty
+                      Icon
                     </DataTable.Title>
                     <DataTable.Title
+                      numeric
                       textStyle={{ color: "white", fontSize: 15 }}
                     >
-                      Size
+                      Type
                     </DataTable.Title>
                     <DataTable.Title
-                      textStyle={{ color: "white", fontSize: 15 }}
-                    >
-                      Age
-                    </DataTable.Title>
-                    <DataTable.Title
+                      numeric
                       textStyle={{ color: "white", fontSize: 15 }}
                     >
                       Color
                     </DataTable.Title>
                     <DataTable.Title
+                      numeric
                       textStyle={{ color: "white", fontSize: 15 }}
                     >
-                      Type
+                      Age
+                    </DataTable.Title>
+                    <DataTable.Title
+                      numeric
+                      textStyle={{ color: "white", fontSize: 15 }}
+                    >
+                      Size
+                    </DataTable.Title>
+                    <DataTable.Title
+                      numeric
+                      textStyle={{ color: "white", fontSize: 15 }}
+                    >
+                      Qty
                     </DataTable.Title>
                   </DataTable.Header>
                   <RequestHistoryComp itemsid={elem.id} />
@@ -292,5 +305,6 @@ const styles = StyleSheet.create({
   tableHeader: {
     backgroundColor: "#F9966B",
     borderRadius: 10,
+    width: width * 0.86,
   },
 });

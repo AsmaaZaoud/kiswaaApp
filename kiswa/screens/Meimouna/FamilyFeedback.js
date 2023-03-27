@@ -133,13 +133,13 @@ const FamilyFeedback = ({ route, navigation }) => {
               <View
                 style={{
                   width: "100%",
-                  height: "16%",
+                  // height: "16%",
                   //backgroundColor: "red",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <Image
+                {/* <Image
                   source={require("../../assets/imgs/feedback2.png")}
                   style={{
                     width: "35%",
@@ -147,10 +147,12 @@ const FamilyFeedback = ({ route, navigation }) => {
                     zIndex: 999,
                     marginBottom: "5%",
                   }}
-                ></Image>
+                ></Image> */}
               </View>
               <Text></Text>
-              <Text style={{ fontSize: 18, marginBottom: "6%" }}>
+              <Text
+                style={{ fontSize: 18, marginBottom: "6%", fontWeight: "bold" }}
+              >
                 How satisfied are you with Rahma?
               </Text>
               {/* <Text></Text> */}
@@ -262,7 +264,7 @@ const FamilyFeedback = ({ route, navigation }) => {
                 // textAlignVertical={"top"}
                 style={{
                   height: 40,
-                  margin: 8,
+                  // margin: 8,
                   borderWidth: 2,
                   padding: 10,
                   borderRadius: 20,

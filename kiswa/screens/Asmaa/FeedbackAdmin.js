@@ -47,10 +47,13 @@ const FeedbackAdmin = (props, { navigation }) => {
     const q = query(collectionRef);
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("snapshot");
-      setFeedback(querySnapshot.docs.map((doc) => doc.data()));
-      // setAllDonors(querySnapshot.docs.map((doc) => doc.data()));
+      setFeedback(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
     });
-
     return () => unsubscribe();
   };
 
@@ -86,7 +89,7 @@ const FeedbackAdmin = (props, { navigation }) => {
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => {
                 return (
-                  <View style={styles.notificationBox} key={item.type}>
+                  <View style={styles.notificationBox} key={item.id}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -95,8 +98,10 @@ const FeedbackAdmin = (props, { navigation }) => {
                         paddingVertical: "1%",
                       }}
                     >
-                      <Text style={styles.description}>{item.user} </Text>
-                      <Text style={styles.description}>{item.dateTime}</Text>
+                      <Text style={styles.description}>{item.data.user} </Text>
+                      <Text style={styles.description}>
+                        {item.data.dateTime}
+                      </Text>
                     </View>
 
                     <View
@@ -116,7 +121,7 @@ const FeedbackAdmin = (props, { navigation }) => {
                         marginBottom: "1%",
                       }}
                     >
-                      {item.type == "donor" ? (
+                      {item.data.type == "donor" ? (
                         <Image
                           style={styles.icon}
                           source={require("../../assets/Asmaa/donorFeedback.png")}
@@ -146,7 +151,9 @@ const FeedbackAdmin = (props, { navigation }) => {
                           {/* <MaterialIcons name="location-pin" size={25} />
                         <Text style={styles.description}>{item.location}</Text>
                         <Text style={styles.description}>{item.location}</Text> */}
-                          <Text style={styles.description}>{item.comment}</Text>
+                          <Text style={styles.description}>
+                            {item.data.comment}
+                          </Text>
                         </View>
 
                         <View

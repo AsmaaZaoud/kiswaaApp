@@ -9,6 +9,7 @@ import {
   Animated,
   SafeAreaView,
   Pressable,
+  PixelRatio,
 } from "react-native";
 import { Block, theme, Text, Button } from "galio-framework";
 import LilacCard from "../../components/Syeda/LilacCard";
@@ -31,7 +32,7 @@ import {
 import { db } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
-const scale = width / 834;
+const scale = width / 430;
 export function normalize(size) {
   const newSize = size * scale;
   if (Platform.OS === "ios") {
@@ -384,6 +385,8 @@ const Home = ({ route, navigation }) => {
       .catch((error) => console.log("Error logging out: ", error));
   };
 
+  const [selected, setSelected] = useState("Home");
+
   //animated text
   const animatedValue = useRef(new Animated.Value(-100)).current;
 
@@ -540,12 +543,32 @@ const Home = ({ route, navigation }) => {
             height={height * 0.05}
           />
           {user != undefined ? (
-            <Pressable onPress={onSignOut}>
-              <Feather name="log-out" size={35} color="white" />
+            <Pressable
+              style={{
+                justifyContent: "center",
+                marginTop: "3%",
+                marginRight: "2%",
+              }}
+              onPress={onSignOut}
+            >
+              {/* <Feather name="log-out" size={35} color="white" /> */}
+              <Text style={{ color: "#FFF", fontSize: normalize(17) }}>
+                Log Out
+              </Text>
             </Pressable>
           ) : (
-            <Pressable onPress={() => navigation.navigate("LoginDonor")}>
-              <Feather name="log-in" size={35} color="white" />
+            <Pressable
+              style={{
+                justifyContent: "center",
+                marginTop: "3%",
+                marginRight: "2%",
+              }}
+              onPress={() => navigation.navigate("Login")}
+            >
+              {/* <Feather name="log-in" size={35} color="white" /> */}
+              <Text style={{ color: "#FFF", fontSize: normalize(17) }}>
+                Login
+              </Text>
             </Pressable>
           )}
         </View>
@@ -567,16 +590,29 @@ const Home = ({ route, navigation }) => {
       >
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => {
+            navigation.navigate("Home");
+            setSelected("Home");
+          }}
         >
-          <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
+          <FontAwesome5
+            name="home"
+            color={selected == "Home" ? "#5e1e7f" : ""}
+            size={40}
+          />
         </Pressable>
-
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
-          onPress={() => navigation.navigate("Donate")}
+          onPress={() => {
+            navigation.navigate("Donate");
+            setSelected("Donate");
+          }}
         >
-          <FontAwesome5 name="shopping-cart" color="#4C4AAB" size={40} />
+          <FontAwesome5
+            name="plus-circle"
+            color={selected == "Home" ? "#5e1e7f" : ""}
+            size={40}
+          />
         </Pressable>
         {user != undefined ? (
           <Pressable
@@ -585,7 +621,14 @@ const Home = ({ route, navigation }) => {
           >
             <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
           </Pressable>
-        ) : null}
+        ) : (
+          <Pressable
+            style={{ width: "14%" }}
+            onPress={() => navigation.navigate("AboutUs")}
+          >
+            <FontAwesome5 name="info-circle" color="#5e1e7f" size={40} />
+          </Pressable>
+        )}
       </Block>
     </Block>
   );

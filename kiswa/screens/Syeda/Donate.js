@@ -18,6 +18,13 @@ import {
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
 import { auth } from "../../config";
+import {
+  Fontisto,
+  AntDesign,
+  FontAwesome5,
+  Feather,
+  Entypo,
+} from "react-native-vector-icons";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -31,6 +38,8 @@ export function normalize(size) {
 }
 
 const Donate = ({ route, navigation }) => {
+  const [selected, setSelected] = useState("Donate");
+
   useEffect(() => {
     // alert("donate");
     if (
@@ -468,19 +477,20 @@ const Donate = ({ route, navigation }) => {
   const [nextFlag, setNextFlag] = useState(false);
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.articles}
-    >
-      {!showTime ? (
-        <Block style={styles.container}>
-          <ImageBackground
-            style={styles.Image}
-            source={{
-              uri: "https://di-uploads-pod14.dealerinspire.com/thekiastores/uploads/2020/11/Donate-Clothes-Banner-768x252.jpg",
-            }}
-          >
-            {/* <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+    <Block>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.articles}
+      >
+        {!showTime ? (
+          <Block style={styles.container}>
+            <ImageBackground
+              style={styles.Image}
+              source={{
+                uri: "https://di-uploads-pod14.dealerinspire.com/thekiastores/uploads/2020/11/Donate-Clothes-Banner-768x252.jpg",
+              }}
+            >
+              {/* <TouchableOpacity onPress={() => navigation.navigate("Home")}>
             <Image
               style={styles.backButton}
               source={{
@@ -488,53 +498,88 @@ const Donate = ({ route, navigation }) => {
               }}
             ></Image>
           </TouchableOpacity> */}
-          </ImageBackground>
+            </ImageBackground>
 
-          <Text style={{ fontSize: 15, color: "red" }}>{dropError}</Text>
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={ClothTypeData}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder="Select Clothing Item"
-            searchPlaceholder="Search..."
-            value={cloth === "" ? "Select Clothing Item" : cloth}
-            onChange={(item) => {
-              changeCloth(item.value);
-            }}
-          />
-
-          <Text style={{ fontSize: 15, color: "red" }}>{amountError}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={"Enter Quantity"}
-            value={amount}
-            onChangeText={handleNumberChange}
-            keyboardType="numeric"
-          />
-
-          <Pressable style={styles.button} onPress={() => add(cloth, amount)}>
-            <Text style={styles.buttonText}>
-              {confirm.length === 0 ? "Add" : "Add more Items"}
-            </Text>
-          </Pressable>
-          {confirm.length > 0 ? (
-            <Block
-              style={{
-                borderWidth: 0.5,
-                borderColor: "black",
-                margin: 10,
-                width: "100%",
+            <Text style={{ fontSize: 15, color: "red" }}>{dropError}</Text>
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={ClothTypeData}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder="Select Clothing Item"
+              searchPlaceholder="Search..."
+              value={cloth === "" ? "Select Clothing Item" : cloth}
+              onChange={(item) => {
+                changeCloth(item.value);
               }}
-            ></Block>
-          ) : null}
-          {confirm.length > 0 ? (
+            />
+
+            <Text style={{ fontSize: 15, color: "red" }}>{amountError}</Text>
+            <TextInput
+              style={styles.input}
+              placeholder={"Enter Quantity"}
+              value={amount}
+              onChangeText={handleNumberChange}
+              keyboardType="numeric"
+            />
+
+            <Pressable style={styles.button} onPress={() => add(cloth, amount)}>
+              <Text style={styles.buttonText}>
+                {confirm.length === 0 ? "Add" : "Add more Items"}
+              </Text>
+            </Pressable>
+            {confirm.length > 0 ? (
+              <Block
+                style={{
+                  borderWidth: 0.5,
+                  borderColor: "black",
+                  margin: 10,
+                  width: "100%",
+                }}
+              ></Block>
+            ) : null}
+            {confirm.length > 0 ? (
+              <Block
+                style={{
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  height: height * 0.15,
+                  // borderWidth: 1,
+                  width: width,
+                }}
+              >
+                <ScrollView horizontal>
+                  {confirm.map((item, index) => (
+                    <View key={index} style={styles.smallContainer}>
+                      <View style={styles.smallSquare}>
+                        <Image
+                          style={styles.smallImage}
+                          source={{ uri: item.icon }}
+                        />
+                        <Text style={styles.smallText}>{item.cloth}</Text>
+                        <Text style={styles.smallText}>x{item.amount}</Text>
+                        <TouchableOpacity
+                          style={styles.smallCloseButton}
+                          onPress={() => handleRemoveItem(index)}
+                        >
+                          <Text style={styles.smallCloseButtonText}>X</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  ))}
+                </ScrollView>
+              </Block>
+            ) : null}
+          </Block>
+        ) : (
+          <Block style={{ marginTop: "9%", width: width }}>
+            <Text style={{ fontSize: 20, marginLeft: 6 }}>My cart</Text>
             <Block
               style={{
                 flexDirection: "row",
@@ -565,141 +610,111 @@ const Donate = ({ route, navigation }) => {
                 ))}
               </ScrollView>
             </Block>
-          ) : null}
-        </Block>
-      ) : (
-        <Block style={{ marginTop: "9%", width: width }}>
-          <Text style={{ fontSize: 20, marginLeft: 6 }}>My cart</Text>
-          <Block
+
+            <Text style={{ fontSize: 20, marginLeft: 15 }}>
+              Select pick-up time interval:
+            </Text>
+
+            <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
+              {timeError}
+            </Text>
+            <Block
+              style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}
+            >
+              <Button
+                onPress={changeColor1}
+                style={{ backgroundColor: flag1 === 0 ? "purple" : "#F8B88B" }}
+              >
+                8AM - 12PM
+              </Button>
+              <Button
+                onPress={changeColor2}
+                style={{ backgroundColor: flag2 === 0 ? "purple" : "#F8B88B" }}
+              >
+                12PM - 6PM
+              </Button>
+              <Button
+                onPress={changeColor3}
+                style={{ backgroundColor: flag3 === 0 ? "purple" : "#F8B88B" }}
+              >
+                6PM - 10PM
+              </Button>
+            </Block>
+
+            <Text style={{ fontSize: 20, marginLeft: 15 }}>
+              Select pick-up date interval:
+            </Text>
+            <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
+              {dateError}
+            </Text>
+            <Block
+              style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}
+            >
+              <Button
+                onPress={checkColor1}
+                style={{ backgroundColor: check1 === 0 ? "purple" : "#F8B88B" }}
+              >
+                <Text style={{ color: "white" }}>
+                  {dateString} - {first2date}
+                </Text>
+              </Button>
+              <Button
+                onPress={checkColor2}
+                style={{ backgroundColor: check2 === 0 ? "purple" : "#F8B88B" }}
+              >
+                <Text style={{ color: "white" }}>
+                  {sec1date} - {sec2date}
+                </Text>
+              </Button>
+              <Button
+                onPress={checkColor3}
+                style={{ backgroundColor: check3 === 0 ? "purple" : "#F8B88B" }}
+              >
+                <Text style={{ color: "white" }}>
+                  {third1date} - {third2date}
+                </Text>
+              </Button>
+            </Block>
+          </Block>
+        )}
+
+        {!showTime ? (
+          confirm.length > 0 ? (
+            <TouchableOpacity
+              style={styles.button}
+              // onPress={() => error()}
+              onPress={() => setShowTime(!showTime)}
+            >
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+          ) : null
+        ) : (
+          <View
             style={{
               flexDirection: "row",
-              flexWrap: "wrap",
-              height: height * 0.15,
-              // borderWidth: 1,
-              width: width,
+              justifyContent: "space-between",
+              padding: "3%",
+              paddingHorizontal: "5%",
             }}
           >
-            <ScrollView horizontal>
-              {confirm.map((item, index) => (
-                <View key={index} style={styles.smallContainer}>
-                  <View style={styles.smallSquare}>
-                    <Image
-                      style={styles.smallImage}
-                      source={{ uri: item.icon }}
-                    />
-                    <Text style={styles.smallText}>{item.cloth}</Text>
-                    <Text style={styles.smallText}>x{item.amount}</Text>
-                    <TouchableOpacity
-                      style={styles.smallCloseButton}
-                      onPress={() => handleRemoveItem(index)}
-                    >
-                      <Text style={styles.smallCloseButtonText}>X</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              ))}
-            </ScrollView>
-          </Block>
+            <TouchableOpacity
+              style={[styles.buttonSmall, { backgroundColor: "#ACACAC" }]}
+              // onPress={() => error()}
+              onPress={() => setShowTime(!showTime)}
+            >
+              <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
 
-          <Text style={{ fontSize: 20, marginLeft: 15 }}>
-            Select pick-up time interval:
-          </Text>
-
-          <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
-            {timeError}
-          </Text>
-          <Block style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}>
-            <Button
-              onPress={changeColor1}
-              style={{ backgroundColor: flag1 === 0 ? "purple" : "#F8B88B" }}
+            <Pressable
+              style={[styles.buttonSmall, { borderRadius: 30 }]}
+              onPress={() => error()}
             >
-              8AM - 12PM
-            </Button>
-            <Button
-              onPress={changeColor2}
-              style={{ backgroundColor: flag2 === 0 ? "purple" : "#F8B88B" }}
-            >
-              12PM - 6PM
-            </Button>
-            <Button
-              onPress={changeColor3}
-              style={{ backgroundColor: flag3 === 0 ? "purple" : "#F8B88B" }}
-            >
-              6PM - 10PM
-            </Button>
-          </Block>
-
-          <Text style={{ fontSize: 20, marginLeft: 15 }}>
-            Select pick-up date interval:
-          </Text>
-          <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
-            {dateError}
-          </Text>
-          <Block style={{ flexDirection: "row", flexWrap: "wrap", margin: 10 }}>
-            <Button
-              onPress={checkColor1}
-              style={{ backgroundColor: check1 === 0 ? "purple" : "#F8B88B" }}
-            >
-              <Text style={{ color: "white" }}>
-                {dateString} - {first2date}
-              </Text>
-            </Button>
-            <Button
-              onPress={checkColor2}
-              style={{ backgroundColor: check2 === 0 ? "purple" : "#F8B88B" }}
-            >
-              <Text style={{ color: "white" }}>
-                {sec1date} - {sec2date}
-              </Text>
-            </Button>
-            <Button
-              onPress={checkColor3}
-              style={{ backgroundColor: check3 === 0 ? "purple" : "#F8B88B" }}
-            >
-              <Text style={{ color: "white" }}>
-                {third1date} - {third2date}
-              </Text>
-            </Button>
-          </Block>
-        </Block>
-      )}
-
-      {!showTime ? (
-        confirm.length > 0 ? (
-          <TouchableOpacity
-            style={styles.button}
-            // onPress={() => error()}
-            onPress={() => setShowTime(!showTime)}
-          >
-            <Text style={styles.buttonText}>Next</Text>
-          </TouchableOpacity>
-        ) : null
-      ) : (
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            padding: "3%",
-            paddingHorizontal: "5%",
-          }}
-        >
-          <TouchableOpacity
-            style={[styles.buttonSmall, { backgroundColor: "#ACACAC" }]}
-            // onPress={() => error()}
-            onPress={() => setShowTime(!showTime)}
-          >
-            <Text style={styles.buttonText}>Back</Text>
-          </TouchableOpacity>
-
-          <Pressable
-            style={[styles.buttonSmall, { borderRadius: 30 }]}
-            onPress={() => error()}
-          >
-            <Text style={styles.buttonText}>Next</Text>
-          </Pressable>
-        </View>
-      )}
-    </ScrollView>
+              <Text style={styles.buttonText}>Next</Text>
+            </Pressable>
+          </View>
+        )}
+      </ScrollView>
+    </Block>
   );
 };
 

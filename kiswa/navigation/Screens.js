@@ -249,6 +249,7 @@ function HomeStack(props) {
         name="Home"
         component={Home}
         options={{
+          headerShown: false,
           header: ({ navigation, scene }) => (
             <Header
               title="Home"
@@ -553,7 +554,13 @@ export default function OnboardingStack(props) {
         <Stack.Screen name="CheckOut" component={CheckOut} />
         <Stack.Screen name="Feedback" component={Feedback} />
         <Stack.Screen name="DonorHistory" component={DonorHistory} />
-        <Stack.Screen name="AboutUs" component={AboutUs} />
+        <Stack.Screen
+          name="AboutUs"
+          component={AboutUs}
+          options={{
+            headerShown: true,
+          }}
+        />
         <Stack.Screen
           name="Home"
           component={Home}

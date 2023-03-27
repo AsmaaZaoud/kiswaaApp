@@ -15,6 +15,7 @@ import {
   SafeAreaView,
   ScrollView,
   Alert,
+  Pressable,
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
@@ -329,14 +330,18 @@ const CheckOut = ({ route, navigation }) => {
               contentContainerStyle={styles.articles}
             >
               <Block row>
-                <TouchableOpacity onPress={() => navigation.navigate("Donate")}>
-                  <Image
+                <Pressable
+                  style={{ margin: "3%" }}
+                  onPress={() => navigation.navigate("Donate")}
+                >
+                  {/* <Image
                     style={styles.backButton}
                     source={{
                       uri: "https://cdn-icons-png.flaticon.com/512/54/54623.png",
                     }}
-                  ></Image>
-                </TouchableOpacity>
+                  ></Image> */}
+                  <Ionicons name="arrow-back" size={40} />
+                </Pressable>
               </Block>
               <Text
                 style={{
@@ -348,19 +353,7 @@ const CheckOut = ({ route, navigation }) => {
                 Checkout
               </Text>
 
-              <Block style={{ marginTop: "5%" }}></Block>
-
               <Block style={{ marginLeft: "5%" }}>
-                <Text
-                  style={{
-                    fontSize: 30,
-                    alignSelf: "center",
-                    marginBottom: 20,
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  Donation Summary
-                </Text>
                 <Text style={{ fontSize: 20, margin: "5%" }}>
                   <Ionicons name="time-outline" size={30} color="#842DCE" />{" "}
                   {route.params.time}
@@ -619,7 +612,7 @@ const styles = StyleSheet.create({
     width: "70%",
     alignItems: "center",
     alignSelf: "center",
-    marginTop: 30,
+    marginTop: 20,
   },
   donateButtonText: {
     fontSize: 20,
