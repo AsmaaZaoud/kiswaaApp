@@ -644,13 +644,13 @@ function AppStack(props) {
           headerShown: false,
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="AboutUs"
         component={AboutUsStack}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
       {/* <Drawer.Screen
         name="Donate"
         component={DonateStack}

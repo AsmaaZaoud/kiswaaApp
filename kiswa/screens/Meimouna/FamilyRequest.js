@@ -329,7 +329,7 @@ const FamilyRequest = ({ route, navigation }) => {
                 setAgeGroup(groups[e]);
               }}
               // indicatorStyle={{
-              //   backgroundColor: "#842DCE",
+              //   backgroundColor: "#3042BA",
               //   height: 3,
               // }}
               // variant="defualt"
@@ -534,7 +534,7 @@ const FamilyRequest = ({ route, navigation }) => {
                     <Pressable onPress={() => setModalVisible(!modalVisible)}>
                       <Entypo
                         name="chevron-with-circle-left"
-                        color="#F9966B"
+                        color="#3c4dbd"
                         size={40}
                       />
                     </Pressable>
@@ -573,24 +573,36 @@ const FamilyRequest = ({ route, navigation }) => {
                             styles.size,
                             {
                               backgroundColor:
-                                gender == "Male" ? "#842DCE" : "#DCD0FF",
+                                gender == "Male" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setGender("Male")}
                         >
-                          <Text>M</Text>
+                          <Text
+                            style={{
+                              color: gender == "Male" ? "white" : "black",
+                            }}
+                          >
+                            M
+                          </Text>
                         </Pressable>
                         <Pressable
                           style={[
                             styles.size,
                             {
                               backgroundColor:
-                                gender == "Female" ? "#842DCE" : "#DCD0FF",
+                                gender == "Female" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setGender("Female")}
                         >
-                          <Text>F</Text>
+                          <Text
+                            style={{
+                              color: gender == "Female" ? "white" : "black",
+                            }}
+                          >
+                            F
+                          </Text>
                         </Pressable>
                       </View>
                       <Text
@@ -613,8 +625,8 @@ const FamilyRequest = ({ route, navigation }) => {
                         // initValue={null}
                         onChange={setQuantity}
                         rounded
-                        rightButtonBackgroundColor="#DCD0FF"
-                        leftButtonBackgroundColor="#DCD0FF"
+                        rightButtonBackgroundColor="#BAD9FC"
+                        leftButtonBackgroundColor="#BAD9FC"
                         totalWidth={280}
                         totalHeight={40}
                         iconSize={20}
@@ -663,48 +675,64 @@ const FamilyRequest = ({ route, navigation }) => {
                             styles.size,
                             {
                               backgroundColor:
-                                size == "S" ? "#842DCE" : "#DCD0FF",
+                                size == "S" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setSize("S")}
                         >
-                          <Text>S</Text>
+                          <Text
+                            style={{ color: size == "S" ? "white" : "black" }}
+                          >
+                            S
+                          </Text>
                         </Pressable>
                         <Pressable
                           style={[
                             styles.size,
                             {
                               backgroundColor:
-                                size == "M" ? "#842DCE" : "#DCD0FF",
+                                size == "M" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setSize("M")}
                         >
-                          <Text>M</Text>
+                          <Text
+                            style={{ color: size == "M" ? "white" : "black" }}
+                          >
+                            M
+                          </Text>
                         </Pressable>
                         <Pressable
                           style={[
                             styles.size,
                             {
                               backgroundColor:
-                                size == "L" ? "#842DCE" : "#DCD0FF",
+                                size == "L" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setSize("L")}
                         >
-                          <Text>L</Text>
+                          <Text
+                            style={{ color: size == "L" ? "white" : "black" }}
+                          >
+                            L
+                          </Text>
                         </Pressable>
                         <Pressable
                           style={[
                             styles.size,
                             {
                               backgroundColor:
-                                size == "XL" ? "#842DCE" : "#DCD0FF",
+                                size == "XL" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setSize("XL")}
                         >
-                          <Text>XL</Text>
+                          <Text
+                            style={{ color: size == "XL" ? "white" : "black" }}
+                          >
+                            XL
+                          </Text>
                         </Pressable>
                       </View>
                     </Block>
@@ -867,7 +895,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: "5%",
     alignItems: "center",
-    shadowColor: "#842DCE",
+    shadowColor: "#1a1f87",
     // shadowOffset: {
     //   width: 5,
     //   height: 10,
@@ -875,7 +903,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 3,
     shadowRadius: 10,
     elevation: 10,
-    borderColor: "#842DCE",
+    borderColor: "#1a1f87",
     borderWidth: 2,
   },
   button: {
@@ -887,7 +915,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: "#FFA07A",
+    backgroundColor: "#1a1f87",
   },
   textStyle: {
     color: "white",
@@ -900,7 +928,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     fontWeight: "bold",
-    color: "#842DCE",
+    color: "#1a1f87",
   },
   modalText1: {
     marginBottom: 15,
@@ -957,7 +985,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: argonTheme.COLORS.INPUT_ERROR,
     height: 44,
-    backgroundColor: "#DCD0FF",
+    backgroundColor: "#BAD9FC",
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 2,
@@ -985,7 +1013,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   size: {
-    backgroundColor: "#DCD0FF",
+    backgroundColor: "#BAD9FC",
     width: 60,
     height: 60,
     alignItems: "center",
