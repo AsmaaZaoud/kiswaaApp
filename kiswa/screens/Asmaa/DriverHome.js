@@ -157,7 +157,11 @@ const DriverHome = (props) => {
                       <Text style={styles.cardTitle}>#{x.num}</Text>
                     </View>
                     <View style={styles.userCard}>
-                      <FontAwesome name="user-circle-o" size={50} />
+                      <FontAwesome
+                        name="user-circle-o"
+                        size={50}
+                        color="#1a1f87"
+                      />
                       <View style={{ marginLeft: 10 }}>
                         <Text
                           style={{
@@ -208,7 +212,7 @@ const DriverHome = (props) => {
                         <Ionicons
                           name="md-today-sharp"
                           size={30}
-                          color="#5e1e7f"
+                          color="#3C4DBD"
                         />
                         <Text style={styles.dataTitles}>{x.data.date}</Text>
                       </View>
@@ -216,7 +220,7 @@ const DriverHome = (props) => {
                         <Ionicons
                           name="time-outline"
                           size={30}
-                          color="#5e1e7f"
+                          color="#3C4DBD"
                         />
                         <Text style={styles.dataTitles}>{x.data.timeSlot}</Text>
                       </View>
@@ -233,7 +237,7 @@ const DriverHome = (props) => {
                         <Ionicons
                           name="location-outline"
                           size={30}
-                          color="#5e1e7f"
+                          color="#3C4DBD"
                         />
                         <Text style={styles.dataTitles}>{x.data.location}</Text>
                       </View>
@@ -241,7 +245,7 @@ const DriverHome = (props) => {
                         <Ionicons
                           name="map-outline"
                           size={30}
-                          color="#5e1e7f"
+                          color="#3C4DBD"
                         />
                         <Text
                           style={[
@@ -317,7 +321,7 @@ const styles = StyleSheet.create({
     fontSize: normalize(19),
   },
   selected: {
-    color: "#5e1e7f",
+    color: "#3C4DBD",
     fontSize: normalize(19),
     fontWeight: "bold",
   },
@@ -335,7 +339,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: normalize(20),
     marginBottom: "6%",
-    // color:"#5e1e7f"
+    // color:"#3C4DBD"
   },
   userCard: {
     borderWidth: 1,
@@ -365,7 +369,7 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
   },
   pickupButtonContainer: {
-    backgroundColor: "#5e1e7f",
+    backgroundColor: "#1a1f87",
     borderRadius: "27%",
     width: width * 0.4,
     margin: "6%",

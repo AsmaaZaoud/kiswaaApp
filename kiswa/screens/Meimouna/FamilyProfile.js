@@ -14,7 +14,8 @@ import {
   FontAwesome5,
   FontAwesome,
   Entypo,
-  Feather,
+  Ionicons,
+  EvilIcons,
 } from "react-native-vector-icons";
 import { TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
@@ -211,12 +212,12 @@ export default function FamilyProfile({ route, navigation }) {
                     fontSize: 18,
                     color: "#F9966B",
                     fontWeight: "bold",
-                    marginRight: "7%",
+                    textAlign: "center",
                   }}
                 >
                   Edit Profile
                 </Text>
-                <Avatar.Accessory size={25} />
+                {/* <Avatar.Accessory size={25} /> */}
               </Pressable>
             </View>
           </View>
@@ -234,7 +235,7 @@ export default function FamilyProfile({ route, navigation }) {
               <View
                 style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Entypo name="user" color="#F9966B" size={29} />
+                <Entypo name="user" color="#1a1f87" size={29} />
                 <Text
                   style={{ marginLeft: "7%", fontSize: 20, marginTop: "1%" }}
                 >
@@ -258,7 +259,7 @@ export default function FamilyProfile({ route, navigation }) {
               <View
                 style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Entypo name="location" color="#F9966B" size={29} />
+                <Entypo name="location" color="#1a1f87" size={29} />
                 <Text style={{ margin: "7%", fontSize: 20, marginTop: "1%" }}>
                   Zone:{"  "}
                   <Text
@@ -279,7 +280,7 @@ export default function FamilyProfile({ route, navigation }) {
               <View
                 style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Entypo name="old-mobile" color="#F9966B" size={29} />
+                <Entypo name="old-mobile" color="#1a1f87" size={29} />
                 <Text style={{ margin: "7%", fontSize: 20, marginTop: "1%" }}>
                   Number:{"  "}
                   <Text
@@ -318,7 +319,7 @@ export default function FamilyProfile({ route, navigation }) {
                 <Pressable onPress={() => setModalVisible(!modalVisible)}>
                   <Entypo
                     name="chevron-with-circle-left"
-                    color="#F9966B"
+                    color="#1a1f92"
                     size={40}
                   />
                 </Pressable>
@@ -355,6 +356,7 @@ export default function FamilyProfile({ route, navigation }) {
                     {phoneError}
                   </Text>
                   <TextInput
+                    style={{ backgroundColor: "#CDE5FF" }}
                     label="Phone Number"
                     value={phonenum}
                     onChangeText={(text) => setPhoneNum(text)}
@@ -370,6 +372,7 @@ export default function FamilyProfile({ route, navigation }) {
                     {nameError}
                   </Text>
                   <TextInput
+                    style={{ backgroundColor: "#CDE5FF" }}
                     label="User Name"
                     value={userName}
                     onChangeText={(userName) => setUserName(userName)}
@@ -423,7 +426,7 @@ export default function FamilyProfile({ route, navigation }) {
       {renderArticles()}
       <Block
         style={{
-          height: "10%",
+          height: "8%",
           backgroundColor: "#FFFAFA",
           width: "100%",
           flexDirection: "row",
@@ -431,30 +434,29 @@ export default function FamilyProfile({ route, navigation }) {
           borderColor: "lightgray",
           borderWidth: 1,
           marginBottom: "1%",
-          // marginTop: "1%",
           alignItems: "center",
           // paddingLeft: "1%",
         }}
       >
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.replace("FamilyHome", id)}
+          onPress={() => navigation.navigate("FamilyHome", id)}
         >
-          <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
+          <Ionicons name="home-outline" color={"#1a1f87"} size={40} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
-          onPress={() => navigation.replace("FamilyRequest", id)}
+          onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
         >
-          <Feather name="plus-circle" color="#4C4AAB" size={50} />
+          <Ionicons name="cart-outline" color="#1a1f87" size={45} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.replace("FamilyProfile", id)}
+          onPress={() => navigation.navigate("FamilyProfile", id)}
         >
-          <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
+          <EvilIcons name="user" color="#f8a069" size={55} />
         </Pressable>
       </Block>
     </Block>
@@ -547,7 +549,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 35,
     alignItems: "center",
-    shadowColor: "#842DCE",
+    shadowColor: "#1a1f87",
     // shadowOffset: {
     //   width: 5,
     //   height: 10,
@@ -555,7 +557,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 3,
     shadowRadius: 10,
     elevation: 10,
-    borderColor: "#842DCE",
+    borderColor: "#1a1f87",
     borderWidth: 2,
   },
   modalblock: {
@@ -580,7 +582,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     fontWeight: "bold",
-    color: "#842DCE",
+    color: "#1a1f87",
   },
   button: {
     borderRadius: 20,
@@ -603,7 +605,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     // borderColor: argonTheme.COLORS.INPUT_ERROR,
     height: 60,
-    backgroundColor: "#e7dfec",
+    backgroundColor: "#CDE5FF",
     // shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 2,
@@ -619,7 +621,7 @@ const styles = StyleSheet.create({
   },
   createButton: {
     width: "100%",
-    backgroundColor: "#e7dfec",
+    backgroundColor: "#CDE5FF",
     height: 50,
     justifyContent: "center",
     // marginTop: 25,

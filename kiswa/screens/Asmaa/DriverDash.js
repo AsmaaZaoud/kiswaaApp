@@ -114,17 +114,17 @@ const DriverDash = ({ route, navigation }) => {
     <Block flex>
       <View
         style={{
-          backgroundColor: "#5e1e7f",
+          backgroundColor: "#3C4DBD",
           width: width,
           height: height * 0.1,
         }}
       >
         <View style={styles.topl}>
           <Image
-            source={require("../../assets/Fatima/WhiteLogo.png")}
+            source={require("../../assets/Fatima/white.png")}
             style={{ width: 150, height: 50 }}
             width={width * 0.35}
-            height={height * 0.05}
+            height={height * 0.062}
           />
           <Pressable onPress={onSignOut}>
             <Feather
@@ -174,41 +174,24 @@ const DriverDash = ({ route, navigation }) => {
           }}
         >
           <FontAwesome
-            color={index == 0 ? "#5e1e7f" : "black"}
+            color={index == 0 ? "#3C4DBD" : "black"}
             name="home"
             size={deviceType == "mobile" ? 45 : 45}
           />
-          {/* <Text style={{ fontSize: normalize(19) }}>Families</Text> */}
         </Tab.Item>
-        {/* <Tab.Item
-          onChange={setIndex}
-          value={3}
-          title="Girls"
-          style={{
-            borderBottomColor: index == 1 ? "#5e1e7f" : "white",
-            borderBottomWidth: 0,
-            backgroundColor: "white",
-          }}
-        >
-          <Feather
-            color={index == 1 ? "#5e1e7f" : "black"}
-            name="list"
-            size={deviceType == "mobile" ? 40 : 45}
-          />
-          <Text style={{ fontSize: normalize(19) }}>Donors</Text>
-        </Tab.Item> */}
+
         <Tab.Item
           onChange={setIndex}
           value={4}
           title="Girls"
           style={{
-            borderBottomColor: index == 2 ? "#af9ec6" : "white",
+            borderBottomColor: index == 1 ? "#af9ec6" : "white",
             borderBottomWidth: 0,
             backgroundColor: "white",
           }}
         >
           <FontAwesome
-            color={index == 2 ? "#5e1e7f" : "black"}
+            color={index == 1 ? "#3C4DBD" : "black"}
             name="history"
             size={deviceType == "mobile" ? 45 : 45}
           />
@@ -225,7 +208,7 @@ const DriverDash = ({ route, navigation }) => {
           }}
         >
           <FontAwesome
-            color={index == 3 ? "#5e1e7f" : "black"}
+            color={index == 2 ? "#3C4DBD" : "black"}
             name="user-circle"
             size={deviceType == "mobile" ? 40 : 45}
           />
@@ -241,7 +224,7 @@ const styles = StyleSheet.create({
     padding: "4%",
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#5e1e7f",
+    backgroundColor: "#3C4DBD",
     marginTop: "3%",
   },
   comp: {

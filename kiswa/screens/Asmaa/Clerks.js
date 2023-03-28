@@ -142,10 +142,11 @@ const Clerks = ({ navigation }) => {
             </View>
             <View style={{ flexDirection: "row" }}>
               <Searchbar
-                placeholder="Search"
+                placeholder={width > 500 ? "Search" : ""}
                 onChangeText={handleSearch}
                 value={searchQuery}
                 style={{
+                  backgroundColor: "#D2E6FA",
                   width: width * 0.33,
                   borderRadius: "10%",
                   height:

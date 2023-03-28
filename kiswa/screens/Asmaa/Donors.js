@@ -133,14 +133,14 @@ const Donors = ({ navigation }) => {
                       paddingVertical: "1%",
                     }}
                   >
-                    <Text style={styles.description}>{item.status} </Text>
+                    <Text style={styles.description}>Picked </Text>
                     {/* <Text style={styles.description}>{item.dateTime}</Text> */}
                   </View>
 
                   <View
                     style={{
                       borderWidth: 0.6,
-                      width: width > 550 ? width * 0.4 : width * 0.8,
+                      width: width > 550 ? width * 0.43 : width * 0.8,
                       marginBottom: "1%",
                       // borderWidth: 1,
                     }}
@@ -254,7 +254,7 @@ const Donors = ({ navigation }) => {
           </Text>
         </View>
         <Searchbar
-          placeholder="Search"
+          placeholder={width > 500 ? "Search" : ""}
           onChangeText={handleSearch}
           value={searchQuery}
           style={{
@@ -262,6 +262,7 @@ const Donors = ({ navigation }) => {
             borderRadius: "10%",
             height: "77%",
             marginTop: "2%",
+            backgroundColor: "#D2E6FA",
           }}
           autoCorrect={false}
         />
@@ -315,7 +316,7 @@ const Donors = ({ navigation }) => {
                   width: "90%",
                   // height: "12%",
                   marginLeft: "3%",
-                  backgroundColor: hover == x.email ? "#f3e5f5" : "white",
+                  backgroundColor: hover == x.email ? "#C6E1FC" : "white",
                 }}
               >
                 <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
@@ -473,7 +474,7 @@ const styles = StyleSheet.create({
     marginBottom: "3%",
     marginLeft: width > 550 ? "3%" : "8%",
     // marginHorizontal: width < 550 ? "5%" : 0,
-    backgroundColor: "#F1EEFF",
+    backgroundColor: "#E9F2FA",
     // flexDirection: "row",
     borderRadius: "15%",
     borderWidth: 0.3,

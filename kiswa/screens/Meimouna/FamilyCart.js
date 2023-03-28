@@ -10,10 +10,10 @@ import {
   Image,
 } from "react-native";
 import {
-  Fontisto,
+  Ionicons,
   AntDesign,
   FontAwesome5,
-  FontAwesome,
+  EvilIcons,
   Entypo,
   Feather,
 } from "react-native-vector-icons";
@@ -287,7 +287,7 @@ const FamilyCart = ({ route, navigation }) => {
                 style={{
                   // marginBottom: "10%",
                   marginTop: "1%",
-                  backgroundColor: "#4C4AAB",
+                  backgroundColor: "#1a1f87",
                   height: 50,
                   width: "75%",
                   alignItems: "center",
@@ -356,7 +356,7 @@ const FamilyCart = ({ route, navigation }) => {
                     <Pressable onPress={() => setModalVisible(!modalVisible)}>
                       <Entypo
                         name="chevron-with-circle-left"
-                        color="#842DCE"
+                        color="#3c4dbd"
                         size={40}
                       />
                     </Pressable>
@@ -401,8 +401,8 @@ const FamilyCart = ({ route, navigation }) => {
                         // initValue={null}
                         onChange={setQuantity}
                         rounded
-                        rightButtonBackgroundColor="#DCD0FF"
-                        leftButtonBackgroundColor="#DCD0FF"
+                        rightButtonBackgroundColor="#BAD9FC"
+                        leftButtonBackgroundColor="#BAD9FC"
                         totalWidth={280}
                         totalHeight={40}
                         iconSize={20}
@@ -449,48 +449,64 @@ const FamilyCart = ({ route, navigation }) => {
                             styles.size,
                             {
                               backgroundColor:
-                                size == "S" ? "#842DCE" : "#DCD0FF",
+                                size == "S" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setSize("S")}
                         >
-                          <Text>S</Text>
+                          <Text
+                            style={{ color: size == "S" ? "white" : "black" }}
+                          >
+                            S
+                          </Text>
                         </Pressable>
                         <Pressable
                           style={[
                             styles.size,
                             {
                               backgroundColor:
-                                size == "M" ? "#842DCE" : "#DCD0FF",
+                                size == "M" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setSize("M")}
                         >
-                          <Text>M</Text>
+                          <Text
+                            style={{ color: size == "M" ? "white" : "black" }}
+                          >
+                            M
+                          </Text>
                         </Pressable>
                         <Pressable
                           style={[
                             styles.size,
                             {
                               backgroundColor:
-                                size == "L" ? "#842DCE" : "#DCD0FF",
+                                size == "L" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setSize("L")}
                         >
-                          <Text>L</Text>
+                          <Text
+                            style={{ color: size == "L" ? "white" : "black" }}
+                          >
+                            L
+                          </Text>
                         </Pressable>
                         <Pressable
                           style={[
                             styles.size,
                             {
                               backgroundColor:
-                                size == "XL" ? "#842DCE" : "#DCD0FF",
+                                size == "XL" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
                           onPress={() => setSize("XL")}
                         >
-                          <Text>XL</Text>
+                          <Text
+                            style={{ color: size == "XL" ? "white" : "black" }}
+                          >
+                            XL
+                          </Text>
                         </Pressable>
                       </View>
                     </Block>
@@ -569,7 +585,7 @@ const FamilyCart = ({ route, navigation }) => {
       {renderArticles()}
       <Block
         style={{
-          height: "10%",
+          height: "8%",
           backgroundColor: "#FFFAFA",
           width: "100%",
           flexDirection: "row",
@@ -583,23 +599,23 @@ const FamilyCart = ({ route, navigation }) => {
       >
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.replace("FamilyHome", id)}
+          onPress={() => navigation.navigate("FamilyHome", id)}
         >
-          <FontAwesome5 name="house-user" color="#4C4AAB" size={40} />
+          <Ionicons name="home-outline" color={"#1a1f87"} size={40} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
           onPress={() => navigation.replace("FamilyRequest", id)}
         >
-          <Feather name="plus-circle" color="#4C4AAB" size={50} />
+          <Feather name="plus-circle" color="#4C4AAB" size={45} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.replace("FamilyProfile", id)}
+          onPress={() => navigation.navigate("FamilyProfile", id)}
         >
-          <FontAwesome5 name="user-alt" color="#4C4AAB" size={40} />
+          <EvilIcons name="user" color="#1a1f87" size={55} />
         </Pressable>
       </Block>
     </Block>
@@ -627,7 +643,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     // backgroundColor: "#fbe5ff",
-    backgroundColor: "#debee3",
+    backgroundColor: "#e2eafc",
     marginHorizontal: 20,
     borderRadius: 10,
   },
@@ -639,7 +655,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text1: {
-    color: "#842DCE",
+    color: "#1a1f87",
     fontSize: 24,
     fontWeight: "bold",
   },
@@ -687,7 +703,7 @@ const styles = StyleSheet.create({
     //borderRadius: 10,
   },
   ct: {
-    color: "#842DCE",
+    color: "#1a1f87",
     fontSize: 18,
     // fontWeight: "bold",
   },
@@ -703,7 +719,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 35,
     alignItems: "center",
-    shadowColor: "#842DCE",
+    shadowColor: "#1a1f87",
     // shadowOffset: {
     //   width: 5,
     //   height: 10,
@@ -711,7 +727,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 3,
     shadowRadius: 10,
     elevation: 10,
-    borderColor: "#842DCE",
+    borderColor: "#1a1f87",
     borderWidth: 2,
   },
   modalView2: {
@@ -728,7 +744,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 3,
     shadowRadius: 10,
     elevation: 10,
-    borderColor: "#842DCE",
+    borderColor: "#1a1f87",
     borderWidth: 2,
     marginLeft: "10%",
   },
@@ -741,7 +757,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: "#842DCE",
+    backgroundColor: "#1a1f87",
   },
   textStyle: {
     color: "white",
@@ -754,7 +770,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     fontWeight: "bold",
-    color: "#842DCE",
+    color: "#1a1f87",
   },
   modalText1: {
     marginBottom: 15,
@@ -788,12 +804,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   dropdown: {
+    width: width * 0.73,
     marginBottom: 20,
     padding: 7,
     // borderRadius: 4,
     // borderColor: argonTheme.COLORS.INPUT_ERROR,
     height: 44,
-    backgroundColor: "#DCD0FF",
+    backgroundColor: "#BAD9FC",
     // shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 2,
@@ -802,7 +819,7 @@ const styles = StyleSheet.create({
     // margin: 16,
     // height: 50,
     // backgroundColor: "white",
-    // borderRadius: 12,
+    borderRadius: 12,
     // padding: 12,
     // shadowColor: "#000",
     // shadowOffset: {

@@ -32,7 +32,7 @@ const Onboarding = ({ navigation }) => {
     <Block flex style={styles.container}>
       <ImageBackground
         resizeMode="cover"
-        source={require("../../assets/Fatima/background.png")}
+        source={require("../../assets/Fatima/back.png")}
         style={{ width, height, zIndex: 1 }}
       >
         <TouchableOpacity onPress={() => navigation.replace("Login")}>

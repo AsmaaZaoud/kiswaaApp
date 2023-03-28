@@ -185,7 +185,7 @@ const Drivers = ({ navigation }) => {
                 <View
                   style={{
                     borderWidth: 0.6,
-                    width: width * 0.4,
+                    width: width * 0.84,
                     marginBottom: "1%",
                     // borderWidth: 1,
                   }}
@@ -309,10 +309,11 @@ const Drivers = ({ navigation }) => {
             </View>
             <View style={{ flexDirection: "row" }}>
               <Searchbar
-                placeholder="Search"
+                placeholder={width > 500 ? "Search" : ""}
                 onChangeText={handleSearch}
                 value={searchQuery}
                 style={{
+                  backgroundColor: "#D2E6FA",
                   width: width * 0.33,
                   borderRadius: "10%",
                   height:
@@ -379,7 +380,7 @@ const Drivers = ({ navigation }) => {
                       width: "100%",
                       height: "10%",
                       // marginLeft: "3%",
-                      backgroundColor: hover == x.email ? "#f3e5f5" : "white",
+                      backgroundColor: hover == x.email ? "#C6E1FC" : "white",
                     }}
                   >
                     <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
@@ -573,13 +574,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   notificationBox: {
-    width: width * 0.4,
+    width: width * 0.84,
     // padding: "5%",
     // paddingTop: "1%",
     marginTop: "2%",
     marginBottom: "3%",
     marginLeft: "4%",
-    backgroundColor: "#F1EEFF",
+    backgroundColor: "#E9F2FA",
     // flexDirection: "row",
     borderRadius: "15%",
     borderWidth: 0.3,
@@ -589,7 +590,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   description: {
-    fontSize: normalize(20),
+    fontSize: normalize(26),
     // color: "#3498db",
     marginLeft: "3%",
     // textAlign: "center",

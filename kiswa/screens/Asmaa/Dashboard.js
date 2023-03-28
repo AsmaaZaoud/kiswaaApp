@@ -274,13 +274,13 @@ const Dashboard = () => {
           daysSt.Friday,
         ],
 
-        color: (opacity = 3) => `rgba(233, 162, 134, ${opacity})`, // optional
+        color: (opacity = 3) => `rgba(85, 105, 231, ${opacity})`, // optional
         strokeWidth: 4, // optional
       },
       {
         data: [0, 1, 1, 2, 3, 4],
 
-        color: (opacity = 3) => `rgba(181, 136, 237, ${opacity})`, // optional
+        color: (opacity = 3) => `rgba(233, 162, 134, ${opacity})`, // optional
         strokeWidth: 4, // optional
       },
     ],

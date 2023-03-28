@@ -159,7 +159,7 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <Block flex middle style={{ backgroundColor: "#1a1f87" }}>
+    <Block flex middle style={{ backgroundColor: "#3C4DBD" }}>
       <StatusBar hidden />
       {/* <ImageBackground
         source={require("../assets/Fatima/background.png")}
@@ -183,7 +183,7 @@ const Login = ({ navigation }) => {
           <Block flex style={{ marginTop: "4%" }}>
             <Block flex={0.17} middle>
               <Image
-                source={require("../assets/Fatima/BlackLogo.png")}
+                source={require("../assets/Fatima/black.png")}
                 style={
                   deviceType == "mobile" ? styles.logoSmall : styles.logoLarge
                 }

@@ -181,11 +181,12 @@ const InventoryTable = ({ navigation }) => {
               </View>
               <View style={{ flexDirection: "row" }}>
                 <Searchbar
-                  placeholder="Search"
+                  placeholder={width > 500 ? "Search" : ""}
                   onChangeText={handleSearch}
                   value={searchQuery}
                   fontSize={deviceType == "mobile" ? 17 : normalize(25)}
                   style={{
+                    backgroundColor: "#D2E6FA",
                     fontSize: 50,
                     width: normalize(300),
                     height: deviceType == "mobile" ? 45 : 50,
@@ -209,7 +210,7 @@ const InventoryTable = ({ navigation }) => {
             </View>
           </Block>
           <DataTable.Header
-            style={{ borderWidth: 0, backgroundColor: "#4b0095" }}
+            style={{ borderWidth: 0, backgroundColor: "#1a1f87" }}
           >
             <DataTable.Title textStyle={styles.title}>ID</DataTable.Title>
             <DataTable.Title textStyle={styles.title}>

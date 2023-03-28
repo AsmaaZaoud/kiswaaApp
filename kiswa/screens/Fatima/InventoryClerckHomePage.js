@@ -235,7 +235,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
     >
       <View
         style={{
-          backgroundColor: "#44088F",
+          backgroundColor: "#3C4DBD",
           height: height / 10,
           padding: "5%",
           flexDirection: "row",
@@ -243,10 +243,10 @@ const InventoryClerkHomePage = ({ navigation }) => {
       >
         <Block>
           <Image
-            source={require("../../assets/Fatima/WhiteLogo.png")}
+            source={require("../../assets/Fatima/white.png")}
             style={{ width: "1%", height: "2%" }}
-            width={width * 0.2}
-            height={height * 0.04}
+            width={width * 0.23}
+            height={height * 0.05}
           />
         </Block>
         <Block style={{ justifyContent: "center", marginLeft: "21%" }}>
@@ -284,7 +284,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
             <DataTable.Title>Gender</DataTable.Title>
             <DataTable.Title>Age</DataTable.Title>
             <DataTable.Title>Quality</DataTable.Title>
-            <DataTable.Title></DataTable.Title>
+            <DataTable.Title>Edit</DataTable.Title>
           </DataTable.Header>
           <ScrollView vertical="true" style={{ height: height / 1.35 }}>
             {items.map((i, x) =>
@@ -297,14 +297,15 @@ const InventoryClerkHomePage = ({ navigation }) => {
                   <DataTable.Cell id={i.id}>{i.gender}</DataTable.Cell>
                   <DataTable.Cell id={i.id}>{i.age}</DataTable.Cell>
                   <DataTable.Cell id={i.id}>{i.quality}</DataTable.Cell>
-                  <DataTable.Cell numeric>
+                  <DataTable.Cell>
                     <Button
                       shadowless
-                      color={Theme.COLORS.ERROR}
+                      color={Theme.COLORS.WARNING}
                       onPress={() => changeEdit(i)}
                       style={{
                         alignSelf: "center",
                         marginTop: "9%",
+                        borderRadius: 20,
                       }}
                     >
                       Edit
@@ -463,25 +464,15 @@ const InventoryClerkHomePage = ({ navigation }) => {
             {error.key == "quality" && error.satus && (
               <Text style={styles.errorMessage}>{error.msg}</Text>
             )}
-            <Block style={{ flexDirection: "row", alignSelf: "center" }}>
-              <Pressable
-                color={Theme.COLORS.PRIMARY}
-                style={[styles.button]}
-                onPress={() => {
-                  submit();
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    alignSelf: "center",
-                    fontSize: 15,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Done
-                </Text>
-              </Pressable>
+            <Block
+              style={{
+                // borderWidth: 1,
+                width: width * 0.6,
+                flexDirection: "row",
+                alignSelf: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <Pressable
                 color={Theme.COLORS.PRIMARY}
                 style={[styles.cancelButton]}
@@ -498,6 +489,24 @@ const InventoryClerkHomePage = ({ navigation }) => {
                   }}
                 >
                   Cancel
+                </Text>
+              </Pressable>
+              <Pressable
+                color={Theme.COLORS.PRIMARY}
+                style={[styles.button]}
+                onPress={() => {
+                  submit();
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    alignSelf: "center",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                  }}
+                >
+                  Done
                 </Text>
               </Pressable>
             </Block>
@@ -655,24 +664,51 @@ const InventoryClerkHomePage = ({ navigation }) => {
             {error.key == "quality" && error.satus && (
               <Text style={styles.errorMessage}>{error.msg}</Text>
             )}
-            <Pressable
-              color={Theme.COLORS.PRIMARY}
-              style={[styles.button]}
-              onPress={() => {
-                update(selectedItem);
+
+            <Block
+              style={{
+                // borderWidth: 1,
+                width: width * 0.6,
+                flexDirection: "row",
+                alignSelf: "center",
+                justifyContent: "space-between",
               }}
             >
-              <Text
-                style={{
-                  color: "white",
-                  alignSelf: "center",
-                  fontSize: 15,
-                  fontWeight: "bold",
+              <Pressable
+                color={Theme.COLORS.PRIMARY}
+                style={[styles.cancelButton]}
+                onPress={() => setEditModalVisible(false)}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    alignSelf: "center",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                  }}
+                >
+                  Cancel
+                </Text>
+              </Pressable>
+              <Pressable
+                color={Theme.COLORS.PRIMARY}
+                style={[styles.button]}
+                onPress={() => {
+                  update(selectedItem);
                 }}
               >
-                Done
-              </Text>
-            </Pressable>
+                <Text
+                  style={{
+                    color: "white",
+                    alignSelf: "center",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                  }}
+                >
+                  Done
+                </Text>
+              </Pressable>
+            </Block>
           </View>
         </View>
       </Modal>
@@ -720,7 +756,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 100,
     padding: 10,
-    backgroundColor: "#5E72E4",
+    backgroundColor: "#1a1f87",
     alignSelf: "center",
     marginTop: "10%",
   },
@@ -730,7 +766,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#F5365C",
     alignSelf: "center",
-    marginLeft: "30%",
+    // marginLeft: "30%",
     marginTop: "10%",
   },
   dropdown: {

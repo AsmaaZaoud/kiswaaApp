@@ -331,7 +331,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   height: "30%",
                 }}
               >
-                <Entypo name="location" color="red" size={32} />
+                <Entypo name="location" color="#5569e7" size={32} />
                 <Text style={{ marginLeft: "5%", fontSize: 19 }}> {zone}</Text>
               </View>
 
@@ -343,7 +343,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   height: "30%",
                 }}
               >
-                <Entypo name="phone" color="green" size={32} />
+                <Entypo name="phone" color="#5569e7" size={32} />
                 <Text style={{ marginLeft: "5%", fontSize: 19 }}>
                   {" "}
                   +974 {phone}
@@ -356,7 +356,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   height: "30%",
                 }}
               >
-                <Entypo name="email" color="green" size={29} />
+                <Entypo name="email" color="#5569e7" size={29} />
                 <Text style={{ marginLeft: "5%", fontSize: 19 }}> {id}</Text>
               </View>
             </View>
@@ -394,7 +394,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   onPress={() => setTime("8AM - 12PM")}
                   style={{
                     backgroundColor:
-                      time == "8AM - 12PM" ? "#F8B88B" : "purple",
+                      time == "8AM - 12PM" ? "#F9966B" : "#1a1f87",
                     margin: "1.5%",
                     height: "85%",
                     width: "30%",
@@ -410,7 +410,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   onPress={() => setTime("12PM - 6PM")}
                   style={{
                     backgroundColor:
-                      time == "12PM - 6PM" ? "#F8B88B" : "purple",
+                      time == "12PM - 6PM" ? "#F9966B" : "#1a1f87",
                     margin: "1.5%",
                     height: "85%",
                     width: "30%",
@@ -426,7 +426,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   onPress={() => setTime("6PM - 10PM")}
                   style={{
                     backgroundColor:
-                      time == "6PM - 10PM" ? "#F8B88B" : "purple",
+                      time == "6PM - 10PM" ? "#F9966B" : "#1a1f87",
                     margin: "1.5%",
                     height: "85%",
                     width: "30%",
@@ -461,8 +461,8 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   style={{
                     backgroundColor:
                       date == `${dateString} - ${first2date}`
-                        ? "#F8B88B"
-                        : "purple",
+                        ? "#F9966B"
+                        : "#1a1f87",
                     marginBottom: "4%",
                     height: "27%",
                     borderRadius: 4,
@@ -478,8 +478,8 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   style={{
                     backgroundColor:
                       date == `${sec1date} - ${sec2date}`
-                        ? "#F8B88B"
-                        : "purple",
+                        ? "#F9966B"
+                        : "#1a1f87",
                     marginBottom: "4%",
                     height: "27%",
                     justifyContent: "center",
@@ -495,8 +495,8 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   style={{
                     backgroundColor:
                       date == `${third1date} - ${third2date}`
-                        ? "#F8B88B"
-                        : "purple",
+                        ? "#F9966B"
+                        : "#1a1f87",
                     marginBottom: "3%",
                     height: "27%",
                     justifyContent: "center",
@@ -516,7 +516,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                 style={{
                   marginBottom: "1%",
                   marginTop: "9%",
-                  backgroundColor: "#F9966B",
+                  backgroundColor: "#26753F",
                   height: 50,
                   width: "75%",
                   alignItems: "center",
@@ -603,7 +603,7 @@ const styles = StyleSheet.create({
     marginBottom: "1%",
   },
   text1: {
-    color: "#842DCE",
+    color: "#1a1f87",
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",

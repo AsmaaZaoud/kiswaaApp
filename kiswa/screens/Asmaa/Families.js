@@ -7,6 +7,7 @@ import {
   PixelRatio,
   Platform,
   Pressable,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -44,6 +45,7 @@ import { Card, Header } from "../../components";
 
 import { Icon, AntDesign, FontAwesome } from "react-native-vector-icons";
 import ArButton from "../../components/Button";
+import { deviceName } from "expo-device";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 830;
@@ -131,249 +133,269 @@ const Families = ({ navigation }) => {
   };
   const renderCards = () => {
     return (
-      <Block
-        // height={height * 0.6}
-        style={{
-          borderWidth: 1,
-          height: height,
-          marginTop: "5%",
-        }}
-      >
-        <ScrollView>
-          {/* <Text
+      <SafeAreaView style={{ height: 600, width: width }}>
+        <Block
+          // height={height * 0.6}
+          style={{
+            borderWidth: 1,
+            height: height,
+            marginTop: "5%",
+          }}
+        >
+          {/* <ScrollView> */}
+          <Text
             style={{
-              fontSize: normalize(20),
+              fontSize: normalize(28),
               marginLeft: "5%",
               marginTop: "3%",
             }}
-          > */}
-          {/* Requests
-          </Text> */}
+          >
+            Requests
+          </Text>
           <View
             style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
               width: width,
+              height: 400,
             }}
           >
-            {/* <ScrollView> */}
-            {requests.length > 0
-              ? requests.map((item) => (
-                  <Pressable
-                    style={styles.notificationBox}
-                    key={item.id}
-                    onPress={() =>
-                      navigation.navigate("FamilyCartDetails", {
-                        cartId: item.id,
-                      })
-                    }
-                  >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        paddingHorizontal: "2%",
-                        paddingVertical: "1%",
-                      }}
+            <ScrollView>
+              {requests.length > 0
+                ? requests.map((item) => (
+                    <Pressable
+                      style={styles.notificationBox}
+                      key={item.id}
+                      onPress={() =>
+                        navigation.navigate("FamilyCartDetails", {
+                          cartId: item.id,
+                        })
+                      }
                     >
-                      <Text style={styles.description}>{item.data.status}</Text>
-                    </View>
-
-                    <View
-                      style={{
-                        borderWidth: 0.6,
-                        width: width * 0.4,
-                        marginBottom: "1%",
-                        // borderWidth: 1,
-                      }}
-                    ></View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        margin: "5%",
-                        marginTop: "2%",
-                        // borderWidth: 1,
-                        marginBottom: "1%",
-                      }}
-                    >
-                      {item.data.status == "pending" ? (
-                        <Image
-                          style={styles.icon}
-                          source={require("../../assets/Asmaa/pendingDon.png")}
-                        />
-                      ) : (
-                        <Image
-                          style={styles.icon}
-                          source={require("../../assets/Asmaa/fullfied.png")}
-                        />
-                      )}
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          paddingHorizontal: "2%",
+                          paddingVertical: "1%",
+                        }}
+                      >
+                        <Text style={styles.description}>
+                          {item.data.status}
+                        </Text>
+                      </View>
 
                       <View
                         style={{
-                          width: "67%",
+                          borderWidth: 0.6,
+                          width: width * 0.84,
+                          marginBottom: "1%",
+                          // borderWidth: 1,
+                        }}
+                      ></View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          margin: "5%",
+                          marginTop: "2%",
+                          // borderWidth: 1,
+                          marginBottom: "1%",
                         }}
                       >
-                        <View
-                          style={{
-                            width: "120%",
-                            padding: "1%",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <Text style={styles.description}>
-                            {item.data.dateSlot}
-                          </Text>
-                          <Text style={styles.description}>
-                            {item.data.timeSlot}
-                          </Text>
-                        </View>
+                        {item.data.status == "pending" ? (
+                          <Image
+                            style={styles.icon}
+                            source={require("../../assets/Asmaa/pendingDon.png")}
+                          />
+                        ) : (
+                          <Image
+                            style={styles.icon}
+                            source={require("../../assets/Asmaa/fullfied.png")}
+                          />
+                        )}
 
                         <View
                           style={{
-                            flexDirection: "row",
-                            width: "75%",
-                            // borderWidth: 1,
-                            justifyContent: "space-between",
+                            width: "67%",
                           }}
-                        ></View>
+                        >
+                          <View
+                            style={{
+                              width: "120%",
+                              padding: "1%",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Text style={styles.description}>
+                              {item.data.dateSlot}
+                            </Text>
+                            <Text style={styles.description}>
+                              {item.data.timeSlot}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: normalize(22),
+                                textAlign: "right",
+                                color: "#1a1f87",
+                                fontWeight: "bold",
+                                width:
+                                  deviceType == "mobile"
+                                    ? width * 0.6
+                                    : width * 0.68,
+                              }}
+                            >
+                              View Items
+                            </Text>
+                          </View>
+
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              width: "75%",
+                              // borderWidth: 1,
+                              justifyContent: "space-between",
+                            }}
+                          ></View>
+                        </View>
                       </View>
-                    </View>
-                  </Pressable>
-                ))
-              : null}
+                    </Pressable>
+                  ))
+                : null}
+            </ScrollView>
           </View>
-        </ScrollView>
-      </Block>
+        </Block>
+      </SafeAreaView>
     );
   };
 
   return (
     <DataTable style={{ height: 100 }}>
-      <Block
-        style={[
-          styles.head,
-          { height: height * 0.08, justifyContent: "space-between" },
-        ]}
-      >
-        <View style={{ flexDirection: "row" }}>
-          <FontAwesome name="user" size={deviceType == "mobile" ? 30 : 45} />
-          <Text
+      <SafeAreaView style={{ height: 200, width: width }}>
+        <Block
+          style={[
+            styles.head,
+            { height: height * 0.08, justifyContent: "space-between" },
+          ]}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <FontAwesome name="user" size={deviceType == "mobile" ? 30 : 45} />
+            <Text
+              style={{
+                fontSize: deviceType == "mobile" ? 20 : 30,
+                marginLeft: "5%",
+              }}
+            >
+              Families
+            </Text>
+          </View>
+          <Searchbar
+            placeholder={width > 500 ? "Search" : ""}
+            onChangeText={handleSearch}
+            value={searchQuery}
             style={{
-              fontSize: deviceType == "mobile" ? 20 : 30,
-              marginLeft: "5%",
+              width: width * 0.38,
+              borderRadius: "10%",
+              height: "77%",
+              marginTop: "2%",
+              backgroundColor: "#D2E6FA",
+            }}
+            autoCorrect={false}
+          />
+        </Block>
+
+        <DataTable.Header
+          key={1}
+          style={{
+            borderTopWidth: 0,
+            borderBottomWidth: 2,
+            borderColor: "black",
+            width: "90%",
+            marginLeft: "3%",
+            backgroundColor: "white",
+          }}
+        >
+          <DataTable.Title
+            textStyle={{
+              fontSize: normalize(20),
+              fontWeight: "bold",
             }}
           >
-            Families
-          </Text>
-        </View>
-        <Searchbar
-          placeholder="Search"
-          onChangeText={handleSearch}
-          value={searchQuery}
-          style={{
-            width: width * 0.38,
-            borderRadius: "10%",
-            height: "77%",
-            marginTop: "2%",
-          }}
-          autoCorrect={false}
-        />
-      </Block>
-
-      <DataTable.Header
-        key={1}
-        style={{
-          borderTopWidth: 0,
-          borderBottomWidth: 2,
-          borderColor: "black",
-          width: "90%",
-          marginLeft: "3%",
-          backgroundColor: "white",
-        }}
-      >
-        <DataTable.Title
-          textStyle={{
-            fontSize: normalize(20),
-            fontWeight: "bold",
-          }}
-        >
-          NickName
-        </DataTable.Title>
-        <DataTable.Title
-          textStyle={{
-            fontSize: normalize(20),
-            fontWeight: "bold",
-          }}
-        >
-          Email
-        </DataTable.Title>
-        <DataTable.Title
-          numeric
-          textStyle={{
-            fontSize: normalize(20),
-            fontWeight: "bold",
-          }}
-        >
-          Phone
-        </DataTable.Title>
-      </DataTable.Header>
-      <View height={flag ? height * 0.2 : height * 0.5}>
-        <ScrollView>
-          {families.length > 0
-            ? families.map((x) => (
-                <DataTable.Row
-                  key={x.email}
-                  onPress={() => readOne(x.email)}
-                  style={{
-                    width: "90%",
-                    height: "12%",
-                    marginLeft: "3%",
-                    backgroundColor: hover == x.email ? "#f3e5f5" : "white",
-                  }}
-                >
-                  <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                    {x.userName}
-                  </DataTable.Cell>
-                  <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
-                    {x.email}
-                  </DataTable.Cell>
-                  <DataTable.Cell
-                    numeric
-                    textStyle={{ fontSize: normalize(25) }}
+            NickName
+          </DataTable.Title>
+          <DataTable.Title
+            textStyle={{
+              fontSize: normalize(20),
+              fontWeight: "bold",
+            }}
+          >
+            Email
+          </DataTable.Title>
+          <DataTable.Title
+            numeric
+            textStyle={{
+              fontSize: normalize(20),
+              fontWeight: "bold",
+            }}
+          >
+            Phone
+          </DataTable.Title>
+        </DataTable.Header>
+        <View height={flag ? height * 0.2 : height * 0.5}>
+          <ScrollView>
+            {families.length > 0
+              ? families.map((x) => (
+                  <DataTable.Row
+                    key={x.email}
+                    onPress={() => readOne(x.email)}
+                    style={{
+                      width: "90%",
+                      height: "12%",
+                      marginLeft: "3%",
+                      backgroundColor: hover == x.email ? "#C6E1FC" : "white",
+                    }}
                   >
-                    {x.phone}
-                  </DataTable.Cell>
-                </DataTable.Row>
-              ))
-            : null}
-        </ScrollView>
-      </View>
+                    <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
+                      {x.userName}
+                    </DataTable.Cell>
+                    <DataTable.Cell textStyle={{ fontSize: normalize(25) }}>
+                      {x.email}
+                    </DataTable.Cell>
+                    <DataTable.Cell
+                      numeric
+                      textStyle={{ fontSize: normalize(25) }}
+                    >
+                      {x.phone}
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                ))
+              : null}
+          </ScrollView>
+        </View>
 
-      {flag && requests.length == 0 ? (
-        <View
-          style={{
-            width: width * 0.9,
-            // height: height * 0.5,
-            // borderWidth: 2,
-            justifyContent: "center",
-            marginTop: "6%",
-            alignContent: "center",
-            textAlign: "center",
-          }}
-        >
-          <Text
+        {flag && requests.length == 0 ? (
+          <View
             style={{
+              width: width * 0.9,
+              // height: height * 0.5,
+              // borderWidth: 2,
+              justifyContent: "center",
+              marginTop: "6%",
+              alignContent: "center",
               textAlign: "center",
-              fontSize: normalize(50),
-              color: "#5e1e7f",
             }}
           >
-            No Requests Yet
-          </Text>
-        </View>
-      ) : flag && requests.length != 0 ? (
-        renderCards()
-      ) : null}
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: normalize(50),
+                color: "#1a1f87",
+              }}
+            >
+              No Requests Yet
+            </Text>
+          </View>
+        ) : flag && requests.length != 0 ? (
+          renderCards()
+        ) : null}
+      </SafeAreaView>
     </DataTable>
   );
 };
@@ -472,23 +494,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   notificationBox: {
-    width: width * 0.4,
+    width: width * 0.84,
     // padding: "5%",
     // paddingTop: "1%",
     marginTop: "2%",
     marginBottom: "3%",
-    marginLeft: "8%",
-    backgroundColor: "#F1EEFF",
+    marginLeft: "5%",
+    backgroundColor: "#E9F2FA",
     // flexDirection: "row",
     borderRadius: "15%",
     borderWidth: 0.3,
   },
   icon: {
-    width: 50,
-    height: 50,
+    width: width > 500 ? 70 : 50,
+    height: width > 500 ? 70 : 50,
   },
   description: {
-    fontSize: normalize(20),
+    fontSize: normalize(25),
     // color: "#3498db",
     marginLeft: "3%",
     // textAlign: "center",

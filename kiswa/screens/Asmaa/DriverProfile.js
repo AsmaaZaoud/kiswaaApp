@@ -457,9 +457,9 @@ const DriverProfile = (props, { navigation }) => {
                     <Pressable
                       style={[
                         styles.pickedDateContainer,
-                        { borderWidth: editFlag ? 0.3 : 0 },
+                        { borderWidth: editFlag ? 0 : 0 },
                       ]}
-                      onPress={editFlag ? showPicker : null}
+                      // onPress={editFlag ? showPicker : null}
                     >
                       <Text style={styles.pickedDate}>
                         {dob
@@ -632,6 +632,7 @@ const styles = StyleSheet.create({
     width: width * 0.3,
     // height:"100%"
     //marginBottom: "4%",
+    backgroundColor: "#1a1f87",
   },
   cancelButton: {
     width: width * 0.3,
@@ -739,7 +740,8 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     width: 100,
     padding: 10,
-    backgroundColor: "#5E72E4",
+    backgroundColor: "#1a1f87",
+    // color: "#1a1f87",
 
     alignSelf: "center",
   },

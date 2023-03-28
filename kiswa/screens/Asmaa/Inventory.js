@@ -174,7 +174,7 @@ const Inventory = ({ navigation }) => {
               />
               <Text
                 style={{
-                  fontSize: normalize(18),
+                  fontSize: deviceType == "mobile" ? 13 : 18,
                   marginLeft: "3%",
                   marginTop: "3%",
                 }}
@@ -185,7 +185,11 @@ const Inventory = ({ navigation }) => {
             <Pressable
               onPress={() => navigation.navigate("AdminHome", "table")}
             >
-              <AntDesign name="table" color="#80B84B" size={normalize(40)} />
+              <AntDesign
+                name="table"
+                color="#80B84B"
+                size={deviceType == "mobile" ? 40 : 45}
+              />
             </Pressable>
           </View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>

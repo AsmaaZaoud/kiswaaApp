@@ -280,18 +280,6 @@ const FamilyCartDetails = ({ route, navigation }) => {
           style={{ backgroundColor: "white", width: "100%", height: "100%" }}
         >
           <View style={styles.main}>
-            <Pressable onPress={() => navigation.goBack()}>
-              <Text
-                style={{
-                  fontSize: normalize(25),
-                  marginHorizontal: "3%",
-                  color: "blue",
-                }}
-              >
-                Back
-              </Text>
-            </Pressable>
-
             <Block style={styles.hed1}>
               <Text style={styles.text1}>Cart Items</Text>
             </Block>
@@ -369,7 +357,7 @@ const styles = StyleSheet.create({
   },
   main: {
     // backgroundColor: "#F3E8EA",
-    backgroundColor: "#F8F6F0",
+    // backgroundColor: "#F7F3F0",
     margin: "5%",
     marginTop: "3%",
     paddingTop: "2%",
@@ -377,7 +365,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     // backgroundColor: "#fbe5ff",
-    backgroundColor: "#E9DBF7",
+    backgroundColor: "#E9F2FA",
     marginHorizontal: 20,
     borderRadius: 10,
     height: height * 0.7,
@@ -390,7 +378,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text1: {
-    color: "#842DCE",
+    color: "#1a1f87",
     fontSize: normalize(35),
     fontWeight: "bold",
   },
@@ -421,7 +409,7 @@ const styles = StyleSheet.create({
   },
 
   ct: {
-    color: "#842DCE",
+    color: "#1a1f87",
     fontSize: normalize(24),
     // fontWeight: "bold",
   },

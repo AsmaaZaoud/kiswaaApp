@@ -264,7 +264,7 @@ const InventoryClerkProfile = ({ navigation }) => {
     <SafeAreaView>
       <View
         style={{
-          backgroundColor: "#44088F",
+          backgroundColor: "#3C4DBD",
           height: height / 10,
           padding: "5%",
           flexDirection: "row",
@@ -315,6 +315,10 @@ const InventoryClerkProfile = ({ navigation }) => {
       >
         <Block style={[styles.registerContainer]}>
           <Block flex>
+            <Pressable onPress={() => navigation.goBack()}>
+              <Text style={{ color: "blue", fontSize: 20 }}> Back</Text>
+            </Pressable>
+
             <Block center width={width * 0.4} style={styles.box}>
               <Pressable onPress={editFlag ? pickImage : null}>
                 <Image
@@ -538,8 +542,12 @@ const InventoryClerkProfile = ({ navigation }) => {
                         </Pressable>
                       </View>
                     ) : (
-                      <View style={{ flexDirection: "row" }}>
-                        <Pressable
+                      <View
+                        style={{
+                          marginLeft: "60%",
+                        }}
+                      >
+                        {/* <Pressable
                           color={Theme.COLORS.SUCCESS}
                           style={[styles.CancelButton]}
                           onPress={() =>
@@ -547,7 +555,7 @@ const InventoryClerkProfile = ({ navigation }) => {
                           }
                         >
                           <Text style={styles.ButtonText}>Cancel</Text>
-                        </Pressable>
+                        </Pressable> */}
                         <Pressable
                           style={styles.EditButton}
                           onPress={() => setEditFlag(!editFlag)}
@@ -653,7 +661,7 @@ const styles = StyleSheet.create({
   // Buttons
   DoneButton: {
     borderRadius: 50,
-    width: 100,
+    width: 120,
     padding: 10,
     backgroundColor: Theme.COLORS.SUCCESS,
     marginLeft: "40%",
@@ -661,7 +669,7 @@ const styles = StyleSheet.create({
   },
   CancelButton: {
     borderRadius: 50,
-    width: 100,
+    width: 120,
     padding: 10,
     backgroundColor: Theme.COLORS.ERROR,
     alignSelf: "center",
@@ -669,13 +677,13 @@ const styles = StyleSheet.create({
   },
   EditButton: {
     borderRadius: 50,
-    width: 100,
+    width: 130,
     padding: 10,
-    marginLeft: "40%",
-    backgroundColor: "#6D4E93",
+    // marginLeft: "40%",
+    backgroundColor: "#3C4DBD",
     alignSelf: "center",
   },
-  ButtonText: { color: "white", alignSelf: "center", fontSize: 18 },
+  ButtonText: { color: "white", alignSelf: "center", fontSize: 22 },
 });
 
 export default InventoryClerkProfile;

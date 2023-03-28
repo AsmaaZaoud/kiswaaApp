@@ -532,7 +532,7 @@ export default function OnboardingStack(props) {
             headerShown: true,
             title: "",
             headerBackTitle: "Back",
-            headerTintColor: "#5e1e7f",
+            headerTintColor: "#3C4DBD",
           }}
         />
 

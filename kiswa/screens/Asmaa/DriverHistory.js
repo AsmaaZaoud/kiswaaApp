@@ -87,7 +87,7 @@ const DriverHistory = (props, { navigation }) => {
     <Block
       flex
       middle
-      style={{ backgroundColor: "#FFF", flex: 1, width: width }}
+      style={{ backgroundColor: "#F0F4F8", flex: 1, width: width }}
     >
       <Block>
         <Block flex>
@@ -158,7 +158,7 @@ const DriverHistory = (props, { navigation }) => {
                           <MaterialIcons
                             name="location-pin"
                             size={25}
-                            color="#5e1e7f"
+                            color="#1a1f87"
                           />
                           <Text style={styles.description}>
                             {item.location}
@@ -178,7 +178,7 @@ const DriverHistory = (props, { navigation }) => {
                           <MaterialIcons
                             name="date-range"
                             size={25}
-                            color="#5e1e7f"
+                            color="#1a1f87"
                           />
                           <Text style={styles.description}>{item.date}</Text>
                           <Text style={styles.description}>
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     padding: "2%",
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#5e1e7f",
+    backgroundColor: "#1a1f87",
     marginTop: "3%",
   },
   title: {
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     marginTop: "1%",
     padding: "3%",
     // borderWidth: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: "#F0F4F8",
   },
   notificationBox: {
     width: width * 0.9,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     paddingTop: "1%",
     marginTop: "2%",
     marginBottom: "3%",
-    backgroundColor: "#F8F1FF",
+    backgroundColor: "#FFF",
     // flexDirection: "row",
     borderRadius: "15%",
     borderWidth: 0.3,

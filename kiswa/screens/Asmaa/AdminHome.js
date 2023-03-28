@@ -82,11 +82,11 @@ const AdminHome = ({ route, navigation }) => {
   const [index, setIndex] = useState(0);
 
   return (
-    <View style={{ backgroundColor: "#162378" }}>
+    <View style={{ backgroundColor: "#3C4DBD" }}>
       <View style={styles.top}>
         <Image
-          source={require("../../assets/Fatima/WhiteLogo.png")}
-          style={{ width: normalize(230), height: normalize(80) }}
+          source={require("../../assets/Fatima/white.png")}
+          style={{ width: normalize(250), height: normalize(80) }}
         />
         <Pressable onPress={onSignOut}>
           <MaterialCommunityIcons
@@ -98,12 +98,19 @@ const AdminHome = ({ route, navigation }) => {
         </Pressable>
       </View>
 
-      <NavBar
+      {/* <NavBar
         //title="Reques Clothes"
         style={{ height: 0, borderWidth: 0, marginTop: 0, marginBottom: 0 }}
-      />
+      /> */}
 
-      <Block style={{ backgroundColor: "white", flexDirection: "colum" }}>
+      <Block
+        style={{
+          backgroundColor: "white",
+          flexDirection: "colum",
+          // marginTop: "1%",
+          paddingTop: "1%",
+        }}
+      >
         <Tab
           // scrollable={true}
           value={index}
@@ -210,17 +217,29 @@ const AdminHome = ({ route, navigation }) => {
                   marginTop: "5%",
                 }}
               >
-                <Button size="small" onPress={() => setUsers("families")}>
+                <Button
+                  style={{ backgroundColor: "#1a1f87" }}
+                  size="small"
+                  onPress={() => setUsers("families")}
+                >
                   <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
                     Families
                   </Text>
                 </Button>
-                <Button size="small" onPress={() => setUsers("donors")}>
+                <Button
+                  style={{ backgroundColor: "#1a1f87" }}
+                  size="small"
+                  onPress={() => setUsers("donors")}
+                >
                   <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
                     Donors
                   </Text>
                 </Button>
-                <Button size="small" onPress={() => setUsers("feedback")}>
+                <Button
+                  style={{ backgroundColor: "#1a1f87" }}
+                  size="small"
+                  onPress={() => setUsers("feedback")}
+                >
                   <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
                     Feedback
                   </Text>
@@ -252,12 +271,18 @@ const AdminHome = ({ route, navigation }) => {
                   marginTop: "5%",
                 }}
               >
-                <Button onPress={() => setUsers("drivers")}>
+                <Button
+                  style={{ backgroundColor: "#1a1f87" }}
+                  onPress={() => setUsers("drivers")}
+                >
                   <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
                     Drivers
                   </Text>
                 </Button>
-                <Button onPress={() => setUsers("clerks")}>
+                <Button
+                  style={{ backgroundColor: "#1a1f87" }}
+                  onPress={() => setUsers("clerks")}
+                >
                   <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
                     Inventory Workers
                   </Text>
@@ -274,27 +299,6 @@ const AdminHome = ({ route, navigation }) => {
           {/*--------- Donors -------------*/}
           <TabView.Item disableTransition style={styles.comp}>
             <View style={styles.board}>
-              {/* <View
-                style={{
-                  width: width * 0.5,
-                  // borderWidth: 2,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginHorizontal: "6%",
-                  marginTop: "5%",
-                }}
-              >
-                <Button onPress={() => setUsers("graph")}>
-                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
-                    Graphs
-                  </Text>
-                </Button>
-                <Button onPress={() => setUsers("table")}>
-                  <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
-                    Table
-                  </Text>
-                </Button>
-              </View> */}
               {invType == "graph" ? (
                 <View>
                   <Inventory navigation={navigation} />

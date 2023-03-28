@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     // paddingTop: "1%",
     marginTop: "2%",
     marginBottom: "3%",
-    backgroundColor: "#F1EEFF",
+    backgroundColor: "#E9F2FA",
     // flexDirection: "row",
     borderRadius: "15%",
     borderWidth: 0.3,

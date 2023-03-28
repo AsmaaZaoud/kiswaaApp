@@ -144,7 +144,7 @@ const OrderDetails = ({ route, navigation }) => {
               style={{
                 borderWidth: 1.3,
                 width: width * 0.79,
-                borderColor: "#cBc",
+                borderColor: "#3C4DBD",
               }}
             ></View>
             <View style={{ margin: "7%" }}>
@@ -157,7 +157,7 @@ const OrderDetails = ({ route, navigation }) => {
               >
                 {data.type == "pickup" ? (
                   <View style={[styles.dataView, { flexDirection: "row" }]}>
-                    <Entypo name="home" size={30} color="#5e1e7f" />
+                    <Entypo name="home" size={30} color="#1a1f87" />
                     <Text style={styles.dataTitles}>
                       From: {userName} {zone}
                     </Text>
@@ -167,7 +167,7 @@ const OrderDetails = ({ route, navigation }) => {
                     <MaterialCommunityIcons
                       name="storefront"
                       size={30}
-                      color="#5e1e7f"
+                      color="#1a1f87"
                     />
                     <Text style={styles.dataTitles}>
                       From: Wherehouse - Duhail
@@ -196,13 +196,13 @@ const OrderDetails = ({ route, navigation }) => {
                     <MaterialCommunityIcons
                       name="storefront"
                       size={30}
-                      color="#5e1e7f"
+                      color="#1a1f87"
                     />
                     <Text style={styles.dataTitles}>To: Store- Duhail </Text>
                   </View>
                 ) : (
                   <View style={[styles.dataView, { flexDirection: "row" }]}>
-                    <Entypo name="home" size={30} color="#5e1e7f" />
+                    <Entypo name="home" size={30} color="#1a1f87" />
                     <Text style={styles.dataTitles}>
                       To: {data.userName} {data.zone}
                     </Text>
@@ -218,7 +218,7 @@ const OrderDetails = ({ route, navigation }) => {
                 }}
               >
                 <View style={[styles.dataView, { flexDirection: "row" }]}>
-                  <Ionicons name="time-outline" size={30} color="#5e1e7f" />
+                  <Ionicons name="time-outline" size={30} color="#1a1f87" />
                   <Text
                     style={styles.dataTitles}
                     onPress={() => Linking.openURL(`tel:${phone}`)}
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     fontSize: normalize(19),
   },
   selected: {
-    color: "#5e1e7f",
+    color: "#1a1f87",
     fontSize: normalize(19),
     fontWeight: "bold",
   },
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
   },
   card: {
     borderWidth: 2,
-    borderColor: "#cBc",
+    borderColor: "#3C4DBD",
     borderRadius: "10%",
     height: height * 0.55,
     // backgroundColor: "#FFF",
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: normalize(20),
     marginBottom: "6%",
-    // color:"#5e1e7f"
+    // color:"#1a1f87"
   },
   userCard: {
     borderWidth: 1,
