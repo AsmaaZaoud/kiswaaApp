@@ -315,7 +315,7 @@ const Drivers = ({ navigation }) => {
                 style={{
                   backgroundColor: "#D2E6FA",
                   width: width * 0.33,
-                  borderRadius: "10%",
+                  borderRadius: 20,
                   height:
                     deviceType == "mobile" ? height * 0.039 : height * 0.043,
                   marginTop: "2%",
@@ -498,7 +498,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: width * 0.03,
     height: width * 0.03,
-    borderRadius: "30%",
+    borderRadius: 40,
   },
   tabletitle: {
     fontWeight: "bold",
@@ -582,7 +582,7 @@ const styles = StyleSheet.create({
     marginLeft: "4%",
     backgroundColor: "#E9F2FA",
     // flexDirection: "row",
-    borderRadius: "15%",
+    borderRadius: 20,
     borderWidth: 0.3,
   },
   icon: {

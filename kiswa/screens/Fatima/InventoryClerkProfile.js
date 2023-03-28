@@ -626,7 +626,7 @@ const styles = StyleSheet.create({
     width: width * 0.2,
     height: width * 0.2,
     marginBottom: 0,
-    borderRadius: "85%",
+    borderRadius: 100,
     borderWidth: 0.3,
   },
   con: {

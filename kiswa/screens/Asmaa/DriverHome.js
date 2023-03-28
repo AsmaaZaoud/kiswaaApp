@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
     padding: "7%",
     borderWidth: 1,
     borderColor: "#cbc",
-    borderRadius: "10%",
+    borderRadius: 20,
   },
   cardTitle: {
     fontSize: normalize(20),
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "lightgrey",
     margin: "2%",
-    borderRadius: "7%",
+    borderRadius: 15,
     flexDirection: "row",
     padding: "3%",
     marginBottom: "9%",
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
   },
   pickupButtonContainer: {
     backgroundColor: "#1a1f87",
-    borderRadius: "27%",
+    borderRadius: 35,
     width: width * 0.4,
     margin: "6%",
   },

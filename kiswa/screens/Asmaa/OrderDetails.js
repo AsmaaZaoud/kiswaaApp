@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
   card: {
     borderWidth: 2,
     borderColor: "#3C4DBD",
-    borderRadius: "10%",
+    borderRadius: 15,
     height: height * 0.55,
     // backgroundColor: "#FFF",
   },
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "lightgrey",
     margin: "2%",
-    borderRadius: "7%",
+    borderRadius: 12,
     flexDirection: "row",
     padding: "3%",
     shadowColor: "#666",
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   pickupButtonContainer: {
     // backgroundColor: "#7CB673",
     // backgroundColor: "lightgrey",
-    borderRadius: "7%",
+    borderRadius: 12,
     width: width * 0.4,
     margin: "6%",
   },

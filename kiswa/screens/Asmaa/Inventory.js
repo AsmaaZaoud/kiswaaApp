@@ -468,7 +468,7 @@ const Inventory = ({ navigation }) => {
               marginHorizontal: "5%",
               borderWidth: 1,
               height: height * 0.36,
-              borderRadius: "15%",
+              borderRadius: 20,
             }}
           >
             <Text style={{ fontSize: normalize(23), marginLeft: "3%" }}>
@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
   status: {
     height: height * 0.25,
     borderWidth: 1,
-    borderRadius: "20%",
+    borderRadius: 30,
     marginVertical: "1%",
     margin: "1%",
   },

@@ -156,7 +156,7 @@ const AppOnboard = ({ route, navigation }) => {
                 backgroundColor: "#ff9d76",
                 alignContent: "center",
                 justifyContent: "center",
-                borderRadius: "10%",
+                borderRadius: 20,
                 marginTop: "3%",
                 // borderWidth: 1,
               }}

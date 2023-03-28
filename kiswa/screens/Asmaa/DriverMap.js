@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
     padding: "5%",
     paddingBottom: 0,
     paddingTop: "4%",
-    borderRadius: "4%",
+    borderRadius: 9,
     // borderWidth: 1,
   },
   icon: {

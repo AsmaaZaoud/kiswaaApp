@@ -508,16 +508,16 @@ const Home = ({ route, navigation }) => {
                 donate and the preferred pickup time. After that, we will
                 collect and deliver the items to those in need within Qatar.
               </Text>
-              <Animated.View
+              {/* <Animated.View
                 style={{ transform: [{ translateY: animatedValue }] }}
+              > */}
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate("Donate")}
               >
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => navigation.navigate("Donate")}
-                >
-                  <Text style={styles.buttonText}>DONATE</Text>
-                </TouchableOpacity>
-              </Animated.View>
+                <Text style={styles.buttonText}>DONATE</Text>
+              </TouchableOpacity>
+              {/* </Animated.View> */}
             </Block>
           </View>
         </ScrollView>
@@ -633,6 +633,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    // borderWidth: 1,
   },
   header1: {
     alignItems: "center",
@@ -641,6 +642,7 @@ const styles = StyleSheet.create({
     marginLeft: "6%",
     marginBottom: "7%",
     width: "85%",
+    borderWidth: 1,
   },
   header3: {
     alignItems: "center",
@@ -675,7 +677,7 @@ const styles = StyleSheet.create({
   },
   box3: {
     width: width * 0.8,
-    height: 150,
+    // height: 150,
     marginLeft: "7%",
     marginTop: "15%",
     // backgroundColor: "#EDFDF9",
@@ -700,12 +702,12 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   header: {
-    flex: 1,
+    // flex: 1,
     width: width * 0.95,
     height: height * 0.18,
     backgroundColor: "#F2F8FF",
     alignSelf: "center",
-    // borderWidth: 1,
+    borderWidth: 1,
     flexDirection: "row",
     // borderColor: "red",
   },

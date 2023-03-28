@@ -259,7 +259,7 @@ const Donors = ({ navigation }) => {
           value={searchQuery}
           style={{
             width: width * 0.38,
-            borderRadius: "10%",
+            borderRadius: 20,
             height: "77%",
             marginTop: "2%",
             backgroundColor: "#D2E6FA",
@@ -476,7 +476,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: width < 550 ? "5%" : 0,
     backgroundColor: "#E9F2FA",
     // flexDirection: "row",
-    borderRadius: "15%",
+    borderRadius: 25,
     borderWidth: 0.3,
   },
   icon: {

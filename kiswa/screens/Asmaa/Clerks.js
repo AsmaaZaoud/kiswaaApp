@@ -148,7 +148,7 @@ const Clerks = ({ navigation }) => {
                 style={{
                   backgroundColor: "#D2E6FA",
                   width: width * 0.33,
-                  borderRadius: "10%",
+                  borderRadius: 25,
                   height:
                     deviceType == "mobile" ? height * 0.039 : height * 0.043,
                   marginTop: "2%",

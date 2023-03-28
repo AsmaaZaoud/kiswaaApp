@@ -190,7 +190,7 @@ const InventoryTable = ({ navigation }) => {
                     fontSize: 50,
                     width: normalize(300),
                     height: deviceType == "mobile" ? 45 : 50,
-                    borderRadius: "19%",
+                    borderRadius: 25,
                     marginRight: "3%",
                   }}
                   autoCorrect={false}

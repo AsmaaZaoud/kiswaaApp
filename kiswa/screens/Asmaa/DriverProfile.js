@@ -577,7 +577,7 @@ const styles = StyleSheet.create({
   xsmalInput: {
     width: "100%",
     backgroundColor: "white",
-    borderRadius: "10%",
+    borderRadius: 20,
     padding: "10%",
     fontSize: normalize(18),
     //borderWidth:0.3
@@ -654,13 +654,13 @@ const styles = StyleSheet.create({
     width: width * 0.4,
     height: width * 0.4,
     marginBottom: 0,
-    borderRadius: "85%",
+    borderRadius: 100,
     borderWidth: 0.3,
   },
   profileImageEdit: {
     width: width * 0.3,
     height: width * 0.3,
-    borderRadius: "85%",
+    borderRadius: 100,
   },
 
   name: {
@@ -697,7 +697,7 @@ const styles = StyleSheet.create({
     width: width * 0.8,
     padding: "9%",
     backgroundColor: "#FFF",
-    borderRadius: "12%",
+    borderRadius: 20,
     borderWidth: 0.3,
     // marginTop:"5%"
   },

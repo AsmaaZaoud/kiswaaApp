@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     marginBottom: "3%",
     backgroundColor: "#E9F2FA",
     // flexDirection: "row",
-    borderRadius: "15%",
+    borderRadius: 20,
     borderWidth: 0.3,
   },
   icon: {
