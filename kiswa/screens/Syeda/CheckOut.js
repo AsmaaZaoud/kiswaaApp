@@ -320,7 +320,8 @@ const CheckOut = ({ route, navigation }) => {
   return (
     <Block flex middle>
       <ImageBackground
-        source={Images.RegisterBackground}
+        resizeMode="cover"
+        source={require("../../assets/Fatima/back.png")}
         style={{ width, height, zIndex: 1 }}
       >
         <Block safe flex middle>
@@ -340,7 +341,7 @@ const CheckOut = ({ route, navigation }) => {
                       uri: "https://cdn-icons-png.flaticon.com/512/54/54623.png",
                     }}
                   ></Image> */}
-                  <Ionicons name="arrow-back" size={40} />
+                  {/* <Ionicons name="arrow-back" size={40} /> */}
                 </Pressable>
               </Block>
               <Text
@@ -348,6 +349,7 @@ const CheckOut = ({ route, navigation }) => {
                   alignSelf: "center",
                   fontSize: 40,
                   fontWeight: "bold",
+                  marginTop: "6%",
                 }}
               >
                 Checkout
@@ -372,7 +374,12 @@ const CheckOut = ({ route, navigation }) => {
                     width: width,
                   }}
                 >
-                  <ScrollView horizontal>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator
+                    indicatorStyle="black"
+                    bounces
+                  >
                     {route.params.itemsArray.map((item, index) => (
                       <View key={index} style={styles.smallContainer}>
                         <View style={styles.smallSquare}>
@@ -387,6 +394,16 @@ const CheckOut = ({ route, navigation }) => {
                     ))}
                   </ScrollView>
                 </Block>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    textAlign: "right",
+                    marginRight: "3%",
+                    color: "blue",
+                  }}
+                >
+                  Edit cart
+                </Text>
               </Block>
 
               {user !== undefined ? (
@@ -397,6 +414,15 @@ const CheckOut = ({ route, navigation }) => {
                       onPress={() => donate()}
                     >
                       <Text style={styles.donateButtonText}>Donate</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[
+                        styles.donateButton,
+                        { backgroundColor: "#ba324f" },
+                      ]}
+                      onPress={() => donate()}
+                    >
+                      <Text style={styles.donateButtonText}>Cencel</Text>
                     </TouchableOpacity>
                     {/* <Button
                                                 style={styles.createButton}

@@ -8,6 +8,7 @@ const Pro = require("../assets/imgs/getPro-bg.png");
 const ArgonLogo = require("../assets/imgs/argonlogo.png");
 const iOSLogo = require("../assets/imgs/ios.png");
 const androidLogo = require("../assets/imgs/android.png");
+const background = require("../assets/Fatima/back.png");
 // internet imgs
 
 const ProfilePicture =
@@ -40,4 +41,5 @@ export default {
   ArgonLogo,
   iOSLogo,
   androidLogo,
+  background,
 };

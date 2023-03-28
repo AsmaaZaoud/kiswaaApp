@@ -19,8 +19,8 @@ import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
 import { auth } from "../../config";
 import {
-  Fontisto,
-  AntDesign,
+  MaterialCommunityIcons,
+  Ionicons,
   FontAwesome5,
   Feather,
   Entypo,
@@ -470,7 +470,7 @@ const Donate = ({ route, navigation }) => {
   const [flag, setFlag] = useState(0);
 
   const handleRemoveItem = (index) => {
-    const newItems = confirm.filter((item, i) => i !== index);
+    const newItems = confirm.filter((item, i) => i !== index).reverse();
     setConfirm(newItems);
   };
   const [showTime, setShowTime] = useState(false);
@@ -554,7 +554,15 @@ const Donate = ({ route, navigation }) => {
                   width: width,
                 }}
               >
-                <ScrollView horizontal>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator
+                  automaticallyAdjustsScrollIndicatorInsets
+                  // bouncesZoom
+                  directionalLockEnabled
+                  invertStickyHeaders
+                  // onContentSizeChange={() => setConfirm(confirm.reverse())}
+                >
                   {confirm.map((item, index) => (
                     <View key={index} style={styles.smallContainer}>
                       <View style={styles.smallSquare}>
@@ -704,18 +712,18 @@ const Donate = ({ route, navigation }) => {
             }}
           >
             <TouchableOpacity
-              style={[styles.buttonSmall, { backgroundColor: "#ACACAC" }]}
+              style={[styles.buttonSmall, { backgroundColor: "#52b69a" }]}
               // onPress={() => error()}
               onPress={() => setShowTime(!showTime)}
             >
-              <Text style={styles.buttonText}>Back</Text>
+              <Text style={styles.buttonText}>Add more</Text>
             </TouchableOpacity>
 
             <Pressable
-              style={[styles.buttonSmall, { borderRadius: 30 }]}
+              style={[styles.buttonSmall, { backgroundColor: "#f8a069" }]}
               onPress={() => error()}
             >
-              <Text style={styles.buttonText}>Next</Text>
+              <Text style={styles.buttonText}>Continue</Text>
             </Pressable>
           </View>
         )}

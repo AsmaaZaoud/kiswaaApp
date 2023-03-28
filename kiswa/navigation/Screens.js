@@ -547,7 +547,7 @@ export default function OnboardingStack(props) {
           options={{
             headerShown: true,
             title: "",
-            headerBackTitle: "Back",
+            headerBackTitle: "Cencel",
             // headerTintColor: "#5e1e7f",
           }}
         />
