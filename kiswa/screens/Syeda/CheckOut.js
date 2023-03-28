@@ -394,16 +394,18 @@ const CheckOut = ({ route, navigation }) => {
                     ))}
                   </ScrollView>
                 </Block>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    textAlign: "right",
-                    marginRight: "3%",
-                    color: "blue",
-                  }}
-                >
-                  Edit cart
-                </Text>
+                <Pressable onPress={() => navigation.goBack()}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      textAlign: "right",
+                      marginRight: "6%",
+                      color: "blue",
+                    }}
+                  >
+                    Edit cart
+                  </Text>
+                </Pressable>
               </Block>
 
               {user !== undefined ? (
@@ -420,9 +422,9 @@ const CheckOut = ({ route, navigation }) => {
                         styles.donateButton,
                         { backgroundColor: "#ba324f" },
                       ]}
-                      onPress={() => donate()}
+                      onPress={() => navigation.navigate("Home")}
                     >
-                      <Text style={styles.donateButtonText}>Cencel</Text>
+                      <Text style={styles.donateButtonText}>Cancel</Text>
                     </TouchableOpacity>
                     {/* <Button
                                                 style={styles.createButton}

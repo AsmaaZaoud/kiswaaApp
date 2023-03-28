@@ -262,7 +262,7 @@ function HomeStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" },
         }}
       />
-      <Stack.Screen name="Donate" component={Donate} />
+      {/* <Stack.Screen name="Donate" component={Donate} /> */}
       <Stack.Screen
         name="Pro"
         component={Pro}
@@ -297,6 +297,7 @@ function DonateStack(props) {
       name="Donate"
       component={Donate}
       options={{
+        headerBackTitle: "fff",
         header: ({ navigation, scene }) => (
           <Header
             title="Donate"
@@ -547,7 +548,7 @@ export default function OnboardingStack(props) {
           options={{
             headerShown: true,
             title: "",
-            headerBackTitle: "Cencel",
+            headerBackTitle: "Cancel",
             // headerTintColor: "#5e1e7f",
           }}
         />
@@ -557,9 +558,11 @@ export default function OnboardingStack(props) {
         <Stack.Screen
           name="AboutUs"
           component={AboutUs}
-          options={{
-            headerShown: true,
-          }}
+          options={
+            {
+              // headerShown: true,
+            }
+          }
         />
         <Stack.Screen
           name="Home"

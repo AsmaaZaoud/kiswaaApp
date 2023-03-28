@@ -13,6 +13,7 @@ import {
   Ionicons,
   AntDesign,
   FontAwesome5,
+  FontAwesome,
   EvilIcons,
   Entypo,
   Feather,
@@ -601,21 +602,21 @@ const FamilyCart = ({ route, navigation }) => {
           style={{ width: "14%" }}
           onPress={() => navigation.navigate("FamilyHome", id)}
         >
-          <Ionicons name="home-outline" color={"#1a1f87"} size={40} />
+          <Entypo name="home" color={"#1a1f87"} size={40} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
           onPress={() => navigation.replace("FamilyRequest", id)}
         >
-          <Feather name="plus-circle" color="#4C4AAB" size={45} />
+          <Feather name="plus-circle" color="#f8a069" size={45} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("FamilyProfile", id)}
+          onPress={() => navigation.navigate("FamilyProfile", { cartId, id })}
         >
-          <EvilIcons name="user" color="#1a1f87" size={55} />
+          <FontAwesome name="user-circle" color="#1a1f87" size={55} />
         </Pressable>
       </Block>
     </Block>

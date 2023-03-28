@@ -40,7 +40,7 @@ import * as Location from "expo-location";
 const { width } = Dimensions.get("screen");
 
 export default function FamilyProfile({ route, navigation }) {
-  const id = route.params;
+  const { id, cartId } = route.params;
   // const [userinforr, setUserinforr] = useState([]);
   console.log("id..", id);
 
@@ -442,21 +442,21 @@ export default function FamilyProfile({ route, navigation }) {
           style={{ width: "14%" }}
           onPress={() => navigation.navigate("FamilyHome", id)}
         >
-          <Ionicons name="home-outline" color={"#1a1f87"} size={40} />
+          <Entypo name="home" color={"#1a1f87"} size={42} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
           onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
         >
-          <Ionicons name="cart-outline" color="#1a1f87" size={45} />
+          <FontAwesome5 name="shopping-cart" color="#1a1f87" size={38} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
           onPress={() => navigation.navigate("FamilyProfile", id)}
         >
-          <EvilIcons name="user" color="#f8a069" size={55} />
+          <FontAwesome name="user-circle" color="#f8a069" size={40} />
         </Pressable>
       </Block>
     </Block>

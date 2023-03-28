@@ -20,9 +20,10 @@ import {
   Ionicons,
   Entypo,
 } from "react-native-vector-icons";
+import Images from "../../constants/Images";
 const { width, height } = Dimensions.get("screen");
 
-const AboutUs = () => {
+const AboutUs = ({ navigation }) => {
   const [fadeAnim] = useState(new Animated.Value(1));
 
   const handleScroll = (event) => {
@@ -40,16 +41,12 @@ const AboutUs = () => {
   };
 
   return (
-    <Block>
-      <ScrollView
-      // onScroll={handleScroll} scrollEventThrottle={16}
-      >
+    <Block flex>
+      <ScrollView>
         <Animated.View style={{ opacity: fadeAnim }}>
           <ImageBackground
-            source={{
-              uri: "https://i.pinimg.com/564x/85/9d/f0/859df063fd05efcd1f022cbdb6983e3a.jpg",
-            }}
-            style={{ width: width * 1, height: height * 0.3 }}
+            source={Images.background}
+            style={{ width: width * 1, height: height * 0.2 }}
           >
             <Block style={styles.textBG}>
               <Text bold size={50} color="#331054">
@@ -63,11 +60,18 @@ const AboutUs = () => {
           </Block>
         </Animated.View>
 
-        <Block style={styles.container}>
+        <View style={styles.container}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: "https://as1.ftcdn.net/v2/jpg/03/00/14/50/1000_F_300145014_WkM7fkKi1n8RbgkWajcNON69Y3pERv7n.jpg",
+            }}
+          ></Image>
           <Text
             style={{
               fontSize: 25,
               marginHorizontal: 20,
+              fontWeight: "300",
             }}
           >
             Rahma is a free platform on which you can either choose to become a
@@ -78,7 +82,7 @@ const AboutUs = () => {
           <Image
             style={styles.image}
             source={{
-              uri: "https://www.maxpixel.net/static/photo/2x/Green-Enormous-Aesthetic-Tree-Log-Leaves-4557948.jpg",
+              uri: "https://harmony1.com/wp-content/uploads/2016/05/shutterstock_19259410.jpg",
             }}
           ></Image>
           <Text bold size={30} color="#32325D">
@@ -98,13 +102,13 @@ const AboutUs = () => {
             clothes. We at Rahma, want to take an initiative towards reducing
             the carbon footprint and help save the environment.
           </Text>
-
           <View style={{ margin: 30 }}></View>
-
           <Image
             style={styles.image}
             source={{
-              uri: "https://borgenproject.org/wp-content/uploads/Qatar-migrant-labour.jpg",
+              uri: "https://as2.ftcdn.net/v2/jpg/03/07/48/99/1000_F_307489964_JQtPHVe3f7h6KYEZnKlYLrk11QZfho9r.jpg",
+
+              // "https://harmony1.com/wp-content/uploads/2016/05/shutterstock_19259410.jpg",
             }}
           ></Image>
           <Text bold size={30} color="#32325D">
@@ -117,10 +121,10 @@ const AboutUs = () => {
             resources. We at Rahma, want to take an initiative and help change
             the lives of people, but, we can't do this without you!
           </Text>
-
           <View style={{ margin: 30 }}></View>
-        </Block>
+        </View>
       </ScrollView>
+
       <Block
         style={{
           height: "8%",
@@ -138,31 +142,25 @@ const AboutUs = () => {
         <Pressable
           style={{ width: "14%" }}
           onPress={() => {
-            navigation.navigate("Home");
-            setSelected("Home");
+            navigation.navigate("Onboarding");
           }}
         >
-          <Ionicons name="home-outline" color={"#f8a069"} size={40} />
+          <Ionicons name="home-outline" size={40} />
         </Pressable>
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
           onPress={() => {
-            navigation.navigate("Donate");
-            setSelected("Donate");
+            navigation.navigate("Home");
           }}
         >
-          <MaterialCommunityIcons
-            name="heart-plus-outline"
-            // color={selected == "Home" ? "#f8a069" : ""}
-            size={40}
-          />
+          <MaterialCommunityIcons name="heart-plus-outline" size={40} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
           onPress={() => navigation.navigate("AboutUs")}
         >
-          <Feather name="info" size={40} color={"#f8a069"} />
+          <Feather name="info" size={40} color="#f8a069" />
         </Pressable>
       </Block>
     </Block>
@@ -174,10 +172,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: "2%",
   },
   textBG: {
     position: "absolute",
-    bottom: -20, // adjust this value as needed to control the overlap
+    bottom: -30, // adjust this value as needed to control the overlap
     height: 100,
     alignSelf: "center",
     // borderWidth: 1,
@@ -188,7 +187,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width * 0.9,
-    height: height * 0.5,
+    height: height * 0.25,
     borderRadius: 20,
   },
 });

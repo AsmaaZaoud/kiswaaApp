@@ -30,6 +30,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../config";
+import Slideshow from "react-native-image-slider-show";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 430;
@@ -59,6 +60,34 @@ import {
 import { useIsFocused } from "@react-navigation/native";
 
 const Home = ({ route, navigation }) => {
+  const [position, setPosition] = useState(0);
+  const dataSource = [
+    {
+      // title: "Burger 1",
+      // caption: "Original  Cheezy Meat",
+      url: "https://rinse-cdn.s3.amazonaws.com/media/filer_public_thumbnails/filer_public/c1/b4/c1b48dac-1c68-48bc-9928-28eb97c96a00/1-header-v1_5.jpg__1170x0_q85_subsampling-2_upscale.jpg",
+    },
+    {
+      // title: "Burger 2",
+      // caption: "100% Original Beef",
+      url: "https://i.pinimg.com/originals/df/08/98/df089890215aa5d83bb695cf17d5b03a.jpg",
+    },
+    {
+      // title: "Burger 3",
+      // caption: "Mouthfull Of Happiness",
+      url: "https://static.wixstatic.com/media/411585c7674442a0a0219371a9993f31.jpeg/v1/fill/w_1000,h_667,al_c,q_90,usm_0.66_1.00_0.01/411585c7674442a0a0219371a9993f31.jpeg",
+    },
+    {
+      url: "https://i.pinimg.com/564x/2c/a9/01/2ca90195ba624c1017bb42c75620ae5b.jpg",
+    },
+  ];
+  useEffect(() => {
+    const toggle = setInterval(() => {
+      setPosition(position === dataSource.length - 1 ? 0 : position + 1);
+    }, 3000);
+
+    return () => clearInterval(toggle);
+  });
   let Currentuser = auth?.currentUser?.email;
 
   useLayoutEffect(() => {
@@ -75,10 +104,9 @@ const Home = ({ route, navigation }) => {
       ),
     });
   }, []);
-  console.log("Currentuser: ", Currentuser);
+  // console.log("Currentuser: ", Currentuser);
 
   const [user, setUser] = useState(auth?.currentUser?.email);
-  console.log("user: ", user);
 
   const isFocused = useIsFocused();
 
@@ -87,7 +115,6 @@ const Home = ({ route, navigation }) => {
   const [image, setImage] = useState("");
 
   const [finalArray, setFinalArray] = useState([]);
-  //console.log('finalArray', finalArray)
 
   //clothes type data
   const ClothTypeData = [
@@ -239,9 +266,7 @@ const Home = ({ route, navigation }) => {
     const docRef = doc(db, "donors", user);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      //console.log("Document data:", docSnap.data());
       setImage(docSnap.data().image);
-      //console.log("read image:", image)
       console.log("EXISTS document!");
     } else {
       console.log("No such document!");
@@ -258,7 +283,6 @@ const Home = ({ route, navigation }) => {
     const collectionRef = collection(db, "donors", user, "notifications");
     const q = query(collectionRef);
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      console.log("snapshot");
       querySnapshot.docs.map((doc) =>
         doc.data().seen == "false"
           ? schedulePushNotification({
@@ -297,7 +321,6 @@ const Home = ({ route, navigation }) => {
   //read from database
 
   useEffect(() => {
-    //console.log("use...");
     readAllWhere();
   }, []);
 
@@ -311,14 +334,9 @@ const Home = ({ route, navigation }) => {
     const itemsArray = [];
 
     docs.forEach((doc) => {
-      //console.log('readAllWhere => ', doc.id, " => ", doc.data());
       const docRef = collection(db, "familyRequests", doc.id, "Items");
       const promise = getDocs(docRef).then((docs2) => {
         docs2.forEach((doc) => {
-          // console.log('getCartItems => ', doc.id, " => ", doc.data());
-          // console.log('quantity: => ', doc.data().quantity, 'type: => ', doc.data().type)
-          // console.log({type: doc.data().type, quantity: doc.data().quantity})
-
           itemsArray.push({
             type: doc.data().type,
             quantity: doc.data().quantity,
@@ -329,8 +347,6 @@ const Home = ({ route, navigation }) => {
     });
 
     await Promise.all(promises);
-
-    //console.log('itemsArray',itemsArray);
 
     setFinalArray(itemsArray);
   };
@@ -359,21 +375,15 @@ const Home = ({ route, navigation }) => {
       // doc.data() is never undefined for query doc snapshots
       counter += 1;
       //setCounter(counter)
-      // console.log("readDonations => ", doc.id, " => ", doc.data());
     });
     setNumber(counter);
-    //console.log("counter: ", counter)
   };
 
   const readName = async () => {
-    // console.log(id);
     const docRef = doc(db, "donors", user);
     const docSnap = await getDoc(docRef);
-    // let temp = [];
     if (docSnap.exists()) {
-      //console.log("Document data:", docSnap.data());
       setNickname(docSnap.data().userName);
-      //   setNanny(temp);
       console.log(nickname);
     } else {
       console.log("No such document!");
@@ -419,8 +429,10 @@ const Home = ({ route, navigation }) => {
                   source={{
                     uri:
                       image === ""
-                        ? "https://vignette.wikia.nocookie.net/tumblr-survivor-athena/images/7/7a/Blank_Avatar.png/revision/latest/scale-to-width-down/477?cb=20161204161729"
-                        : image,
+                        ? "https://vectorified.com/images/generic-avatar-icon-25.jpg"
+                        : // "https://lofrev.net/wp-content/photos/2017/03/user_blue_logo.png"
+                          // "https://vignette.wikia.nocookie.net/tumblr-survivor-athena/images/7/7a/Blank_Avatar.png/revision/latest/scale-to-width-down/477?cb=20161204161729"
+                          image,
                   }}
                 ></Image>
               </Block>
@@ -485,31 +497,17 @@ const Home = ({ route, navigation }) => {
                   </Text>
                 )}
               </Block>
-
-              {/* </Block> */}
             </Block>
-            <Image
-              style={{
-                width: width * 0.99,
-                height: height * 0.18,
-                marginTop: "6%",
-              }}
-              source={{
-                uri: "https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1800&h=900&url=https:%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F13%2F2020%2F09%2F25%2Fwhere-to-donate-clothes-social.jpg",
-              }}
-            />
+
+            <Slideshow position={position} dataSource={dataSource} />
+
             <Block style={styles.box3}>
-              <Pressable
-                onPress={() => navigation.navigate("FamilyFeedback", id)}
-                styles={{ backgroundColor: "gray" }}
-              >
-                <Text style={{ fontSize: 16 }}>
-                  Rahma is a platform that simplifies the process of clothing
-                  donation by allowing users to specify the items they wish to
-                  donate and the preferred pickup time. After that, we will
-                  collect and deliver the items to those in need within Qatar.
-                </Text>
-              </Pressable>
+              <Text style={{ fontSize: 16 }}>
+                Rahma is a platform that simplifies the process of clothing
+                donation by allowing users to specify the items they wish to
+                donate and the preferred pickup time. After that, we will
+                collect and deliver the items to those in need within Qatar.
+              </Text>
               <Animated.View
                 style={{ transform: [{ translateY: animatedValue }] }}
               >
@@ -593,29 +591,27 @@ const Home = ({ route, navigation }) => {
         <Pressable
           style={{ width: "14%" }}
           onPress={() => {
-            navigation.navigate("Home");
-            setSelected("Home");
+            navigation.navigate("Onboarding");
           }}
         >
-          <Ionicons name="home-outline" color={"#f8a069"} size={40} />
+          <Ionicons name="home-outline" size={40} />
         </Pressable>
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
           onPress={() => {
-            navigation.navigate("Donate");
-            setSelected("Donate");
+            // navigation.navigate("Onboarding");
           }}
         >
           <MaterialCommunityIcons
             name="heart-plus-outline"
-            // color={selected == "Home" ? "#f8a069" : ""}
+            color="#f8a069"
             size={40}
           />
         </Pressable>
         {user != undefined ? (
           <Pressable
             style={{ width: "14%" }}
-            onPress={() => navigation.navigate("FamilyProfile")}
+            onPress={() => navigation.navigate("Profile")}
           >
             <FontAwesome5 name="user-alt" size={40} />
           </Pressable>

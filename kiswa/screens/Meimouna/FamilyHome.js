@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import {
   Fontisto,
   AntDesign,
+  Entypo,
   FontAwesome5,
   FontAwesome,
   EvilIcons,
@@ -37,8 +38,9 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config";
 import * as Notifications from "expo-notifications";
+import { normalize } from "../Syeda/Home";
 
-const { width } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 
 const FamilyHome = ({ route, navigation }) => {
   const id = route.params;
@@ -159,19 +161,14 @@ const FamilyHome = ({ route, navigation }) => {
   console.log(cartId);
   const renderArticles = () => {
     return (
-      <View style={{ backgroundColor: "white", width: "100%", height: "90%" }}>
-        <NavBar
-          title="Home"
-          style={{
-            height: "10%",
-            marginBottom: "8%",
-            backgroundColor: "#FFFAFA",
-            borderColor: "lightgray",
-            borderWidth: 1,
-            // marginTop: "8%",
-          }}
-          titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
-        />
+      <View
+        style={{
+          backgroundColor: "white",
+          width: "100%",
+          height: "90%",
+          flex: 1,
+        }}
+      >
         {/* welcome user */}
         <Block style={styles.header1}>
           <Block>
@@ -252,7 +249,36 @@ const FamilyHome = ({ route, navigation }) => {
     );
   };
   return (
-    <Block flex center style={styles.home}>
+    <Block flex style={styles.home}>
+      <Block
+        style={{
+          // flex: 1,
+          backgroundColor: "#3C4DBD",
+          width: width,
+          height: height * 0.1,
+        }}
+      >
+        <View style={styles.topl}>
+          <Image
+            source={require("../../assets/Fatima/white.png")}
+            style={{ width: 150, height: 50 }}
+            width={width * 0.35}
+            height={height * 0.05}
+          />
+
+          <Pressable
+            style={{
+              justifyContent: "center",
+              marginTop: "3%",
+              marginRight: "2%",
+            }}
+          >
+            <Text style={{ color: "#FFF", fontSize: normalize(17) }}>
+              Log Out
+            </Text>
+          </Pressable>
+        </View>
+      </Block>
       {renderArticles()}
       <Block
         style={{
@@ -263,30 +289,29 @@ const FamilyHome = ({ route, navigation }) => {
           justifyContent: "space-evenly",
           borderColor: "lightgray",
           borderWidth: 1,
-          marginBottom: "1%",
+          // marginBottom: "1%",
           alignItems: "center",
-          // paddingLeft: "1%",
         }}
       >
         <Pressable
           style={{ width: "14%" }}
           onPress={() => navigation.navigate("FamilyHome", id)}
         >
-          <Ionicons name="home-outline" color={"#f8a069"} size={40} />
+          <Entypo name="home" color={"#f8a069"} size={42} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
           onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
         >
-          <Ionicons name="cart-outline" color="#1a1f87" size={45} />
+          <FontAwesome5 name="shopping-cart" color="#1a1f87" size={38} />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("FamilyProfile", id)}
+          onPress={() => navigation.navigate("FamilyProfile", { cartId, id })}
         >
-          <EvilIcons name="user" color="#1a1f87" size={50} />
+          <FontAwesome name="user-circle" color="#1a1f87" size={40} />
         </Pressable>
       </Block>
     </Block>
@@ -299,15 +324,25 @@ const styles = StyleSheet.create({
   home: {
     width: width,
     // backgroundColor: "#490066",
-    height: "100%",
+    // height: "100%",
+  },
+  topl: {
+    width: width,
+    padding: "4%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#3C4DBD",
+    marginTop: "6%",
   },
   header1: {
+    // marginTop: "10%",
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginLeft: "6%",
-    marginBottom: "7%",
-    width: "85%",
+    // marginLeft: "6%",
+    margin: "10%",
+    marginBottom: "4%",
+    width: "80%",
   },
   header2: {
     alignItems: "center",

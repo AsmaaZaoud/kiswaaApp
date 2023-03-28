@@ -11,6 +11,8 @@ import {
   Platform,
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 450;
@@ -26,8 +28,16 @@ export function normalize(size) {
 const Onboarding = ({ navigation }) => {
   const [deviceType, setDeviceType] = useState("");
   useEffect(() => {
+    // let user = auth?.currentUser?.email;
+    auth?.currentUser?.email != undefined ? onSignOut() : null;
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
   }, []);
+
+  const onSignOut = () => {
+    signOut(auth)
+      .then(console.log("signedOut"))
+      .catch((error) => console.log("Error in sign out: ", error));
+  };
   return (
     <Block flex style={styles.container}>
       <ImageBackground

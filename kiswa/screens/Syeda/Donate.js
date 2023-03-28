@@ -322,7 +322,7 @@ const Donate = ({ route, navigation }) => {
         });
       }
     }
-    handleDonatePress();
+    // handleDonatePress();
   };
 
   const handleDonatePress = () => {
