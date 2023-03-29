@@ -90,7 +90,7 @@ const DriverDash = ({ route, navigation }) => {
       setNotifications(querySnapshot.docs.map((doc) => doc.id));
     });
 
-    notifications.map((x) => update(x));
+    // notifications.map((x) => update(x));
 
     return () => unsubscribe();
   };

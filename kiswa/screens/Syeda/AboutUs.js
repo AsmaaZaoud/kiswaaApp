@@ -21,9 +21,19 @@ import {
   Entypo,
 } from "react-native-vector-icons";
 import Images from "../../constants/Images";
+import { auth } from "../../config";
+import { normalize } from "./Home";
+import { signOut } from "firebase/auth";
 const { width, height } = Dimensions.get("screen");
 
 const AboutUs = ({ navigation }) => {
+  let user = auth?.currentUser?.email;
+  //sign out
+  const onSignOut = () => {
+    signOut(auth)
+      .then(() => navigation.navigate("Onboarding"))
+      .catch((error) => console.log("Error logging out: ", error));
+  };
   const [fadeAnim] = useState(new Animated.Value(1));
 
   const handleScroll = (event) => {
@@ -42,25 +52,57 @@ const AboutUs = ({ navigation }) => {
 
   return (
     <Block flex>
-      <ScrollView>
-        <Animated.View style={{ opacity: fadeAnim }}>
-          <ImageBackground
-            source={Images.background}
-            style={{ width: width * 1, height: height * 0.2 }}
-          >
-            <Block style={styles.textBG}>
-              <Text bold size={50} color="#331054">
-                About Rahma
+      <View
+        style={{
+          // flex: 1,
+          backgroundColor: "#3C4DBD",
+          width: width,
+          height: height * 0.1,
+        }}
+      >
+        <View style={styles.topl}>
+          <Image
+            source={require("../../assets/Fatima/white.png")}
+            style={{ width: 150, height: 50 }}
+            width={width * 0.35}
+            height={height * 0.05}
+          />
+          {user != undefined ? (
+            <Pressable
+              style={{
+                justifyContent: "center",
+                marginTop: "3%",
+                marginRight: "2%",
+              }}
+              onPress={onSignOut}
+            >
+              {/* <Feather name="log-out" size={35} color="white" /> */}
+              <Text style={{ color: "#FFF", fontSize: normalize(17) }}>
+                Log Out
               </Text>
-            </Block>
-          </ImageBackground>
-
-          <Block style={styles.container}>
-            <Text></Text>
-          </Block>
-        </Animated.View>
-
+            </Pressable>
+          ) : (
+            <Pressable
+              style={{
+                justifyContent: "center",
+                marginTop: "3%",
+                marginRight: "2%",
+              }}
+              onPress={() => navigation.navigate("Login")}
+            >
+              {/* <Feather name="log-in" size={35} color="white" /> */}
+              <Text style={{ color: "#FFF", fontSize: normalize(17) }}>
+                Login
+              </Text>
+            </Pressable>
+          )}
+        </View>
+      </View>
+      <ScrollView>
         <View style={styles.container}>
+          <Text bold size={40} color="#331054">
+            About Rahma
+          </Text>
           <Image
             style={styles.image}
             source={{
@@ -154,15 +196,28 @@ const AboutUs = ({ navigation }) => {
             navigation.navigate("Home");
           }}
         >
-          <MaterialCommunityIcons name="heart-plus-outline" size={40} />
+          <MaterialCommunityIcons
+            name="heart-plus-outline"
+            // color="#f8a069"
+            size={40}
+          />
         </Pressable>
 
         <Pressable
           style={{ width: "14%" }}
           onPress={() => navigation.navigate("AboutUs")}
         >
-          <Feather name="info" size={40} color="#f8a069" />
+          <Feather name="info" color="#f8a069" size={40} />
         </Pressable>
+
+        {user != undefined ? (
+          <Pressable
+            style={{ width: "14%" }}
+            onPress={() => navigation.navigate("Profile")}
+          >
+            <AntDesign name="user" size={40} />
+          </Pressable>
+        ) : null}
       </Block>
     </Block>
   );
@@ -176,10 +231,10 @@ const styles = StyleSheet.create({
     marginTop: "2%",
   },
   textBG: {
-    position: "absolute",
-    bottom: -30, // adjust this value as needed to control the overlap
-    height: 100,
-    alignSelf: "center",
+    // position: "absolute",
+    // bottom: -30, // adjust this value as needed to control the overlap
+    // height: 100,
+    // alignSelf: "center",
     // borderWidth: 1,
     // borderColor: 'red',
     borderRadius: 30,
@@ -190,6 +245,15 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     height: height * 0.25,
     borderRadius: 20,
+  },
+  topl: {
+    flex: 1,
+    width: width,
+    padding: "4%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#3C4DBD",
+    marginTop: "6%",
   },
 });
 

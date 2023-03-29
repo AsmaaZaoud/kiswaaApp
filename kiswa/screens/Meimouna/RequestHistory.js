@@ -255,7 +255,7 @@ export default function RequestHistory({ route, navigation }) {
   return (
     <Block flex center style={styles.home}>
       {renderArticles()}
-      <Block
+      {/* <Block
         style={{
           height: "10%",
           backgroundColor: "#FFFAFA",
@@ -288,6 +288,40 @@ export default function RequestHistory({ route, navigation }) {
           onPress={() => navigation.navigate("FamilyProfile", id)}
         >
           <FontAwesome name="user-circle" color="#4C4AAB" size={40} />
+        </Pressable>
+      </Block> */}
+      <Block
+        style={{
+          height: "8%",
+          backgroundColor: "#FFFAFA",
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          borderColor: "lightgray",
+          borderWidth: 1,
+          // marginBottom: "1%",
+          alignItems: "center",
+        }}
+      >
+        <Pressable
+          style={{ width: "14%" }}
+          onPress={() => navigation.navigate("FamilyHome", id)}
+        >
+          <Entypo name="home" color={"#1a1f87"} size={42} />
+        </Pressable>
+
+        <Pressable
+          style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
+          onPress={() => navigation.navigate("FamilyRequest", id)}
+        >
+          <FontAwesome5 name="shopping-cart" color="#1a1f87" size={38} />
+        </Pressable>
+
+        <Pressable
+          style={{ width: "14%" }}
+          onPress={() => navigation.navigate("FamilyProfile", id)}
+        >
+          <FontAwesome name="user-circle" color="#1a1f87" size={40} />
         </Pressable>
       </Block>
     </Block>

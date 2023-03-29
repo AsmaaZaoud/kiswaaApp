@@ -371,17 +371,7 @@ function ProfileStack(props) {
         name="Profile"
         component={Profile}
         options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              transparent
-              white
-              title="Profile"
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#FFFFFF" },
-          headerTransparent: true,
+          headerShown: false,
         }}
       />
       <Stack.Screen

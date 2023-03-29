@@ -36,9 +36,10 @@ import {
   deleteField,
   onSnapshot,
 } from "firebase/firestore";
-import { db } from "../../config";
+import { auth, db } from "../../config";
 import * as Notifications from "expo-notifications";
 import { normalize } from "../Syeda/Home";
+import { signOut } from "firebase/auth";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -157,6 +158,12 @@ const FamilyHome = ({ route, navigation }) => {
     console.log("NewCart add with ID: ", docRef.id, "for user ", id);
     setCartId(docRef.id);
   };
+  //sign out
+  const onSignOut = () => {
+    signOut(auth)
+      .then(() => navigation.navigate("Onboarding"))
+      .catch((error) => console.log("Error logging out: ", error));
+  };
 
   console.log(cartId);
   const renderArticles = () => {
@@ -272,6 +279,7 @@ const FamilyHome = ({ route, navigation }) => {
               marginTop: "3%",
               marginRight: "2%",
             }}
+            onPress={onSignOut}
           >
             <Text style={{ color: "#FFF", fontSize: normalize(17) }}>
               Log Out

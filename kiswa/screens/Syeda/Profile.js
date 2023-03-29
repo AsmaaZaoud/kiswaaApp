@@ -201,7 +201,7 @@ const Profile = ({ route, navigation }) => {
       .then(() => {
         console.log("data updated");
         Alert.alert("You new information has been recorded.");
-        //navigation.navigate("PersonalInfo");
+        navigation.navigate("Home");
       })
       .catch((error) => {
         console.log("ERROR: ", error.message);
@@ -213,7 +213,7 @@ const Profile = ({ route, navigation }) => {
     <Block flex style={styles.profile}>
       <Block flex>
         <ImageBackground
-          source={Images.ProfileBackground}
+          source={require("../../assets/Fatima/back.png")}
           style={styles.profileContainer}
           imageStyle={styles.profileBackground}
         >
@@ -227,20 +227,17 @@ const Profile = ({ route, navigation }) => {
                   <Image
                     style={styles.avatar}
                     source={{
-                      uri:
-                        image == ""
-                          ? "https://cdn-icons-png.flaticon.com/512/1173/1173817.png"
-                          : image,
+                      uri: "https://vectorified.com/images/generic-avatar-icon-25.jpg",
                     }}
-                  />
-                  <TouchableOpacity onPress={pickImage}>
+                  ></Image>
+                  {/* <TouchableOpacity onPress={pickImage}>
                     <Image
                       style={styles.addImage}
                       source={{
                         uri: "https://cdn-icons-png.flaticon.com/512/61/61183.png",
                       }}
                     />
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </Block>
               <Block style={styles.info}></Block>
@@ -412,12 +409,12 @@ const Profile = ({ route, navigation }) => {
             <Pressable
               style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
               onPress={() => {
-                // navigation.navigate("Onboarding");
+                navigation.navigate("Home");
               }}
             >
               <MaterialCommunityIcons
                 name="heart-plus-outline"
-                color="#f8a069"
+                // color="#f8a069"
                 size={40}
               />
             </Pressable>
@@ -434,7 +431,7 @@ const Profile = ({ route, navigation }) => {
                 style={{ width: "14%" }}
                 onPress={() => navigation.navigate("Profile")}
               >
-                <AntDesign name="user" size={40} />
+                <AntDesign name="user" color="#f8a069" size={40} />
               </Pressable>
             ) : null}
           </Block>
@@ -457,13 +454,13 @@ const styles = StyleSheet.create({
   },
   profileBackground: {
     width: width,
-    height: height / 2,
+    height: height / 3,
   },
   profileCard: {
     // position: "relative",
     padding: theme.SIZES.BASE,
     marginHorizontal: theme.SIZES.BASE,
-    marginTop: 65,
+    marginTop: 35,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
     backgroundColor: theme.COLORS.WHITE,
@@ -478,7 +475,7 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     position: "relative",
-    marginTop: -80,
+    marginTop: -50,
   },
   avatar: {
     width: 124,
