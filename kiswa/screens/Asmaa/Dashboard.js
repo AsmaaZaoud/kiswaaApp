@@ -626,7 +626,6 @@ const Dashboard = () => {
                   style={
                     {
                       // marginVertical: 8,
-                      // borderRadius: 20,
                     }
                   }
                   accessor="population"
@@ -665,7 +664,7 @@ const styles = StyleSheet.create({
     width: width * 0.7,
     height: height * 0.27,
     margin: "1%",
-    borderRadius: "10%",
+    borderRadius: 20,
     paddingBottom: 0,
   },
   blockss: {
@@ -699,7 +698,7 @@ const styles = StyleSheet.create({
     // width: width * 0.5,
     height: height * 0.25,
     borderWidth: 1,
-    borderRadius: "20%",
+    borderRadius: 30,
     // padding: "1%",
     // flexDirection: "row",
     flexWrap: "wrap",

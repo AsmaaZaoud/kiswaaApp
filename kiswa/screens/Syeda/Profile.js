@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  Pressable,
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
@@ -41,6 +42,15 @@ import { Dropdown } from "react-native-element-dropdown";
 import * as Location from "expo-location";
 
 import * as ImagePicker from "expo-image-picker";
+import {
+  Fontisto,
+  AntDesign,
+  MaterialCommunityIcons,
+  FontAwesome5,
+  Feather,
+  Ionicons,
+  Entypo,
+} from "react-native-vector-icons";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -377,6 +387,57 @@ const Profile = ({ route, navigation }) => {
               </Block>
             </Block>
           </ScrollView>
+          <Block
+            style={{
+              height: "8%",
+              backgroundColor: "#F2F8FF",
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              borderColor: "lightgray",
+              borderWidth: 1,
+              marginBottom: "2%",
+              alignItems: "center",
+              // paddingLeft: "1%",
+            }}
+          >
+            <Pressable
+              style={{ width: "14%" }}
+              onPress={() => {
+                navigation.navigate("Onboarding");
+              }}
+            >
+              <Ionicons name="home-outline" size={40} />
+            </Pressable>
+            <Pressable
+              style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
+              onPress={() => {
+                // navigation.navigate("Onboarding");
+              }}
+            >
+              <MaterialCommunityIcons
+                name="heart-plus-outline"
+                color="#f8a069"
+                size={40}
+              />
+            </Pressable>
+
+            <Pressable
+              style={{ width: "14%" }}
+              onPress={() => navigation.navigate("AboutUs")}
+            >
+              <Feather name="info" size={40} />
+            </Pressable>
+
+            {user != undefined ? (
+              <Pressable
+                style={{ width: "14%" }}
+                onPress={() => navigation.navigate("Profile")}
+              >
+                <AntDesign name="user" size={40} />
+              </Pressable>
+            ) : null}
+          </Block>
         </ImageBackground>
       </Block>
     </Block>

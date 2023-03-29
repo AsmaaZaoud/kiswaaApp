@@ -427,12 +427,7 @@ const Home = ({ route, navigation }) => {
                 <Image
                   style={styles.avatar}
                   source={{
-                    uri:
-                      image === ""
-                        ? "https://vectorified.com/images/generic-avatar-icon-25.jpg"
-                        : // "https://lofrev.net/wp-content/photos/2017/03/user_blue_logo.png"
-                          // "https://vignette.wikia.nocookie.net/tumblr-survivor-athena/images/7/7a/Blank_Avatar.png/revision/latest/scale-to-width-down/477?cb=20161204161729"
-                          image,
+                    uri: "https://vectorified.com/images/generic-avatar-icon-25.jpg",
                   }}
                 ></Image>
               </Block>
@@ -608,21 +603,22 @@ const Home = ({ route, navigation }) => {
             size={40}
           />
         </Pressable>
+
+        <Pressable
+          style={{ width: "14%" }}
+          onPress={() => navigation.navigate("AboutUs")}
+        >
+          <Feather name="info" size={40} />
+        </Pressable>
+
         {user != undefined ? (
           <Pressable
             style={{ width: "14%" }}
             onPress={() => navigation.navigate("Profile")}
           >
-            <FontAwesome5 name="user-alt" size={40} />
+            <AntDesign name="user" size={40} />
           </Pressable>
-        ) : (
-          <Pressable
-            style={{ width: "14%" }}
-            onPress={() => navigation.navigate("AboutUs")}
-          >
-            <Feather name="info" size={40} />
-          </Pressable>
-        )}
+        ) : null}
       </Block>
     </Block>
   );
@@ -707,7 +703,7 @@ const styles = StyleSheet.create({
     height: height * 0.18,
     backgroundColor: "#F2F8FF",
     alignSelf: "center",
-    borderWidth: 1,
+    // borderWidth: 1,
     flexDirection: "row",
     // borderColor: "red",
   },

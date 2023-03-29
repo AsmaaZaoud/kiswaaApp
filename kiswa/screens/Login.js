@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
   },
   inputsLarge: {
     width: "70%",
-    alignSelf: "Center",
+    // alignSelf: "Center",
     marginLeft: "16%",
   },
   inputsSmall: {},
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0936F",
   },
   errorMessage: {
-    alignSelf: "center",
+    // alignSelf: "center",
     fontWeight: "bold",
     paddingTop: "4%",
     color: "red",

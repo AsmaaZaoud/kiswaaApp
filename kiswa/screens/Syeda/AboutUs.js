@@ -88,6 +88,7 @@ const AboutUs = ({ navigation }) => {
           <Text bold size={30} color="#32325D">
             You help the environment!
           </Text>
+
           <Text
             style={{
               fontSize: 18,

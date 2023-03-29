@@ -51,7 +51,7 @@ const Onboarding = ({ navigation }) => {
               marginTop: "17%",
               marginLeft: "80%",
               color: "#FAF9F6",
-              fontFamily: "Cochin",
+              fontFamily: Platform.OS === "ios" ? "Cochin" : "",
               fontSize: normalize(18),
             }}
             bold
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   lable: {
     color: "#FAF9F6",
     textAlign: "center",
-    fontFamily: "Cochin",
+    fontFamily: Platform.OS === "ios" ? "Cochin" : "",
     fontSize: normalize(19),
     // justifyContent: "center",
   },

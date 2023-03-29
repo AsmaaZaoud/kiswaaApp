@@ -481,50 +481,65 @@ const CheckOut = ({ route, navigation }) => {
                   </Block>
 
                   <Text style={styles.error}>{locationError}</Text>
-                  <Block width={width * 0.35}>
-                    <Button
-                      color={stat !== "granted" ? "default" : "success"}
-                      style={styles.createButton}
-                      onPress={getLocation}
-                    >
-                      {stat != "granted" ? (
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Get Location
-                        </Text>
-                      ) : (
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Location Done
-                        </Text>
-                      )}
-                    </Button>
+                  <Block
+                    style={{
+                      flexDirection: "row",
+                      width: width * 0.85,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Block width={width * 0.2}>
+                      <Button
+                        small
+                        color={stat !== "granted" ? "default" : "success"}
+                        style={[styles.createButton, { width: width * 0.08 }]}
+                        onPress={getLocation}
+                      >
+                        {stat != "granted" ? (
+                          <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                            Get Location
+                          </Text>
+                        ) : (
+                          <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                            Location Done
+                          </Text>
+                        )}
+                      </Button>
+                    </Block>
+
+                    <Block width={width * 0.4}>
+                      <Dropdown
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        data={zones}
+                        maxHeight={160}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={zone}
+                        value={zone}
+                        onChange={(item) => {
+                          setZone(item.label);
+                        }}
+                      ></Dropdown>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "red",
+                        }}
+                      >
+                        {ZoneError}
+                      </Text>
+                    </Block>
                   </Block>
 
-                  <Block width={width * 0.5}>
-                    <Dropdown
-                      style={styles.dropdown}
-                      placeholderStyle={styles.placeholderStyle}
-                      selectedTextStyle={styles.selectedTextStyle}
-                      data={zones}
-                      maxHeight={160}
-                      labelField="label"
-                      valueField="value"
-                      placeholder={zone}
-                      value={zone}
-                      onChange={(item) => {
-                        setZone(item.label);
-                      }}
-                    ></Dropdown>
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "red",
-                      }}
-                    >
-                      {ZoneError}
-                    </Text>
-                  </Block>
-
-                  <Block width={width * 0.8}>
+                  <Block
+                    width={width * 0.75}
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     {/* <Button
                                                 style={styles.createButton}
                                                 onPress={validation}
@@ -533,6 +548,15 @@ const CheckOut = ({ route, navigation }) => {
                                                     DONE
                                                 </Text>
                                             </Button> */}
+                    <TouchableOpacity
+                      style={[
+                        styles.donateButton,
+                        { backgroundColor: "#ba324f" },
+                      ]}
+                      onPress={() => navigation.navigate("Home")}
+                    >
+                      <Text style={styles.donateButtonText}>Cancel</Text>
+                    </TouchableOpacity>
 
                     <TouchableOpacity
                       style={styles.donateButton}
@@ -575,7 +599,7 @@ const styles = StyleSheet.create({
   createButton: {
     width: width * 0.5,
     marginTop: 25,
-    alignSelf: "center",
+    // alignSelf: "center",
   },
   container: {
     flex: 1,
@@ -640,10 +664,10 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 30,
     borderRadius: 80,
-    backgroundColor: "#1a1f87",
+    backgroundColor: "#52b678",
     position: "relative",
     overflow: "hidden",
-    width: "70%",
+    width: "48%",
     alignItems: "center",
     alignSelf: "center",
     marginTop: 20,
@@ -654,7 +678,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   dropdown: {
-    marginBottom: 10,
+    marginTop: 9,
     padding: 7,
     borderRadius: 4,
     borderColor: argonTheme.COLORS.INPUT_ERROR,
