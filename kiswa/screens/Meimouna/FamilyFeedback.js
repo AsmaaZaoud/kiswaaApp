@@ -81,65 +81,60 @@ const FamilyFeedback = ({ route, navigation }) => {
           fontWeight: "bold",
         }}
       />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ height: "90%" }}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View
+
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text></Text>
+
+          {/* <Text></Text> */}
+          {/* <Text></Text> */}
+          <LinearGradient
+            colors={[
+              "rgba(222,190,299,1)",
+              "rgba(222,190,299,1)",
+              "rgba(222,190,299,1)",
+            ]}
+            style={[
+              StyleSheet.absoluteFill,
+              {
+                height: "100%",
+                flex: 1,
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                // backgroundColor: "#debee3",
+              },
+            ]}
+          />
+          <BlurView
+            // tint="light"
+            intensity={100}
             style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
+              width: 350,
+              height: 700,
+              borderWidth: 2,
+              borderColor: "#fff",
+              padding: 20,
+              //borderRadius: 25,
+              //zIndex: 999,
             }}
           >
-            <Text></Text>
-            <Text></Text>
-            <Text></Text>
-
-            {/* <Text></Text> */}
-            {/* <Text></Text> */}
-            <LinearGradient
-              colors={[
-                "rgba(222,190,299,1)",
-                "rgba(222,190,299,1)",
-                "rgba(222,190,299,1)",
-              ]}
-              style={[
-                StyleSheet.absoluteFill,
-                {
-                  height: 200,
-                  flex: 1,
-                  width: "100%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  // backgroundColor: "#debee3",
-                },
-              ]}
-            />
-            <BlurView
-              // tint="light"
-              intensity={100}
+            <View
               style={{
-                width: 350,
-                height: 700,
-                borderWidth: 2,
-                borderColor: "#fff",
-                padding: 20,
-                //borderRadius: 25,
-                //zIndex: 999,
+                width: "100%",
+                // height: "16%",
+                backgroundColor: "red",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <View
-                style={{
-                  width: "100%",
-                  // height: "16%",
-                  //backgroundColor: "red",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {/* <Image
+              {/* <Image
                   source={require("../../assets/imgs/feedback2.png")}
                   style={{
                     width: "35%",
@@ -148,137 +143,134 @@ const FamilyFeedback = ({ route, navigation }) => {
                     marginBottom: "5%",
                   }}
                 ></Image> */}
-              </View>
-              <Text></Text>
-              <Text
-                style={{ fontSize: 18, marginBottom: "6%", fontWeight: "bold" }}
-              >
-                How satisfied are you with Rahma?
-              </Text>
-              {/* <Text></Text> */}
-              <View
+            </View>
+            <Text></Text>
+            <Text
+              style={{ fontSize: 18, marginBottom: "6%", fontWeight: "bold" }}
+            >
+              How satisfied are you with Rahma?
+            </Text>
+            <Text></Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-around",
+                width: "100%",
+                //justifyContent: "center",
+                //backgroundColor: "red",
+                height: 90,
+              }}
+            >
+              <TouchableOpacity
+                // style={{ width: "30%" }}
                 style={{
-                  flexDirection: "row",
+                  backgroundColor: "white",
+                  width: "31%",
+                  borderRadius: 50,
+                  justifyContent: "center",
                   alignItems: "center",
-                  justifyContent: "space-around",
-                  width: "100%",
-                  //justifyContent: "center",
-                  //backgroundColor: "red",
-                  height: 90,
+                  textAlign: "center",
+                  borderWidth: 2,
+                  borderColor:
+                    feedback == "Excellent" ? "#842DCE" : "lightgray",
+                  padding: "1%",
+                }}
+                onPress={() => setfeedback("Excellent")}
+              >
+                <Image
+                  source={require("../../assets/imgs/Excellent-removebg-preview.png")}
+                  style={{
+                    width: "81%",
+                    height: "100%",
+                  }}
+                ></Image>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "white",
+                  width: "30%",
+                  borderRadius: 50,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                  borderWidth: 2,
+                  borderColor: feedback == "Mid" ? "#842DCE" : "lightgray",
+                  padding: "1%",
+                }}
+                onPress={() => setfeedback("Mid")}
+              >
+                <Image
+                  source={require("../../assets/imgs/medium-removebg-preview.png")}
+                  style={{
+                    width: "82%",
+                    height: "100%",
+                  }}
+                ></Image>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "white",
+                  width: "30%",
+                  borderRadius: 50,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                  borderWidth: 2,
+                  borderColor: feedback == "Verybad" ? "#842DCE" : "lightgray",
+                  padding: "1%",
+                }}
+                onPress={() => setfeedback("Verybad")}
+              >
+                <Image
+                  source={require("../../assets/imgs/veryBad-removebg-preview.png")}
+                  style={{
+                    width: "77%",
+                    height: "100%",
+                    // backgroundColor: "red",
+                  }}
+                ></Image>
+              </TouchableOpacity>
+            </View>
+            {FeedbackErro !== "" ? (
+              <Text
+                style={{
+                  //textAlign: "center",
+                  color: "red",
+                  fontWeight: "bold",
+                  fontSize: 15,
+                  //marginLeft: 20,
                 }}
               >
-                <TouchableOpacity
-                  // style={{ width: "30%" }}
-                  style={{
-                    backgroundColor: "white",
-                    width: "31%",
-                    borderRadius: 50,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                    borderWidth: 2,
-                    borderColor:
-                      feedback == "Excellent" ? "#842DCE" : "lightgray",
-                    padding: "1%",
-                  }}
-                  onPress={() => setfeedback("Excellent")}
-                >
-                  <Image
-                    source={require("../../assets/imgs/Excellent-removebg-preview.png")}
-                    style={{
-                      width: "81%",
-                      height: "100%",
-                    }}
-                  ></Image>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: "white",
-                    width: "30%",
-                    borderRadius: 50,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                    borderWidth: 2,
-                    borderColor: feedback == "Mid" ? "#842DCE" : "lightgray",
-                    padding: "1%",
-                  }}
-                  onPress={() => setfeedback("Mid")}
-                >
-                  <Image
-                    source={require("../../assets/imgs/medium-removebg-preview.png")}
-                    style={{
-                      width: "82%",
-                      height: "100%",
-                    }}
-                  ></Image>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: "white",
-                    width: "30%",
-                    borderRadius: 50,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                    borderWidth: 2,
-                    borderColor:
-                      feedback == "Verybad" ? "#842DCE" : "lightgray",
-                    padding: "1%",
-                  }}
-                  onPress={() => setfeedback("Verybad")}
-                >
-                  <Image
-                    source={require("../../assets/imgs/veryBad-removebg-preview.png")}
-                    style={{
-                      width: "77%",
-                      height: "100%",
-                      // backgroundColor: "red",
-                    }}
-                  ></Image>
-                </TouchableOpacity>
-              </View>
-              {FeedbackErro !== "" ? (
-                <Text
-                  style={{
-                    //textAlign: "center",
-                    color: "red",
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    //marginLeft: 20,
-                  }}
-                >
-                  {FeedbackErro}
-                </Text>
-              ) : null}
-
-              <Text></Text>
-              <Text style={{ fontSize: 18, marginBottom: "2%" }}>
-                Do you have any thoughts you'd like to share?
+                {FeedbackErro}
               </Text>
-              <TextInput
-                value={feedbackText}
-                placeholder="Write something here"
-                onChangeText={setFeedbackText}
-                multiline={true}
-                // textAlignVertical={"top"}
-                style={{
-                  height: 40,
-                  // margin: 8,
-                  borderWidth: 2,
-                  padding: 10,
-                  borderRadius: 20,
-                  backgroundColor: "#e6e3e3",
-                  height: 200,
-                  paddingTop: "5%",
-                  fontSize: 16,
-                  borderColor: "white",
-                }}
-              />
-              {/* <Text style={{ fontSize: 15 }}>
+            ) : null}
+
+            <Text></Text>
+            {/* <Text style={{ fontSize: 18, marginBottom: "2%" }}></Text> */}
+            <TextInput
+              value={feedbackText}
+              placeholder="Do you have any thoughts you'd like to share?"
+              onChangeText={setFeedbackText}
+              multiline={true}
+              // textAlignVertical={"top"}
+              style={{
+                height: 40,
+                // margin: 8,
+                borderWidth: 2,
+                padding: 10,
+                borderRadius: 20,
+                backgroundColor: "#e6e3e3",
+                height: 200,
+                paddingTop: "5%",
+                fontSize: 16,
+                borderColor: "white",
+              }}
+            />
+            {/* <Text style={{ fontSize: 15 }}>
                 {feedbackText.length == 0 ? "" : feedbackText.length + " Characters"}
               </Text> */}
-              {/* <Text
+            {/* <Text
                 style={{
                   //textAlign: "center",
                   color: "red",
@@ -289,60 +281,60 @@ const FamilyFeedback = ({ route, navigation }) => {
               >
                 {FeedbackTextErro}
               </Text> */}
-              <Text></Text>
+            <Text></Text>
+            <Text></Text>
 
-              <View
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Pressable
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  width: "100%",
+                  // marginBottom: "10%",
+                  backgroundColor: "#808080",
+                  height: 50,
+                  width: "40%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  //marginLeft: "10%",
+                  borderRadius: 8,
                 }}
+                onPress={() => navigation.replace("FamilyHome", id)}
               >
-                <Pressable
-                  style={{
-                    // marginBottom: "10%",
-                    backgroundColor: "#808080",
-                    height: 50,
-                    width: "40%",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    //marginLeft: "10%",
-                    borderRadius: 8,
-                  }}
-                  onPress={() => navigation.replace("FamilyHome", id)}
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
                 >
-                  <Text
-                    style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
-                  >
-                    Cancel
-                  </Text>
-                </Pressable>
-                <Pressable
-                  style={{
-                    // marginBottom: "10%",
-                    backgroundColor: "#842DCE",
-                    height: 50,
-                    width: "40%",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    //marginLeft: "10%",
-                    borderRadius: 8,
-                  }}
-                  onPress={() => addvild()}
+                  Cancel
+                </Text>
+              </Pressable>
+              <Pressable
+                style={{
+                  // marginBottom: "10%",
+                  backgroundColor: "#842DCE",
+                  height: 50,
+                  width: "40%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  //marginLeft: "10%",
+                  borderRadius: 8,
+                }}
+                onPress={() => addvild()}
+              >
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
                 >
-                  <Text
-                    style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
-                  >
-                    Send
-                  </Text>
-                </Pressable>
-              </View>
-            </BlurView>
-          </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+                  Send
+                </Text>
+              </Pressable>
+            </View>
+          </BlurView>
+        </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
