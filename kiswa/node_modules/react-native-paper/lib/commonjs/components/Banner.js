@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var React = _interopRequireWildcard(require("react"));
 var _reactNative = require("react-native");
-var _useEventCallback = _interopRequireDefault(require("use-event-callback"));
+var _useLatestCallback = _interopRequireDefault(require("use-latest-callback"));
 var _theming = require("../core/theming");
 var _Button = _interopRequireDefault(require("./Button/Button"));
 var _Icon = _interopRequireDefault(require("./Icon"));
@@ -87,8 +87,8 @@ const Banner = _ref => {
     height: 0,
     measured: false
   });
-  const showCallback = (0, _useEventCallback.default)(onShowAnimationFinished);
-  const hideCallback = (0, _useEventCallback.default)(onHideAnimationFinished);
+  const showCallback = (0, _useLatestCallback.default)(onShowAnimationFinished);
+  const hideCallback = (0, _useLatestCallback.default)(onHideAnimationFinished);
   const {
     scale
   } = theme.animation;

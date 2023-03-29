@@ -14,7 +14,7 @@
     "url": "git+https://github.com/creativetimofficial/argon-react-native.git"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-native-async-storage/async-storage": "1.17.3",
     "@react-native-community/datetimepicker": "6.2.0",
     "@react-native-masked-view/masked-view": "0.2.7",
     "@react-navigation/bottom-tabs": "^6.3.1",
@@ -25,7 +25,7 @@
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.7",
     "@use-expo/font": "^2.0.0",
-    "babel-preset-expo": "^9.3.0",
+    "babel-preset-expo": "~9.2.0",
     "bootstrap": "^5.2.3",
     "expo": "^46.0.0",
     "expo-app-loading": "~2.1.0",

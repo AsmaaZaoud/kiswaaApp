@@ -1,7 +1,7 @@
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 import * as React from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
-import useEventCallback from 'use-event-callback';
+import useLatestCallback from 'use-latest-callback';
 import { useInternalTheme } from '../core/theming';
 import Button from './Button/Button';
 import Icon from './Icon';
@@ -78,8 +78,8 @@ const Banner = _ref => {
     height: 0,
     measured: false
   });
-  const showCallback = useEventCallback(onShowAnimationFinished);
-  const hideCallback = useEventCallback(onHideAnimationFinished);
+  const showCallback = useLatestCallback(onShowAnimationFinished);
+  const hideCallback = useLatestCallback(onHideAnimationFinished);
   const {
     scale
   } = theme.animation;
