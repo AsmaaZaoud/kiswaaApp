@@ -210,7 +210,12 @@ const InventoryTable = ({ navigation }) => {
             </View>
           </Block>
           <DataTable.Header
-            style={{ borderWidth: 0, backgroundColor: "#1a1f87" }}
+            style={{
+              borderWidth: 1,
+              backgroundColor: "#1a1f87",
+              marginTop: 10,
+              height: 50,
+            }}
           >
             <DataTable.Title textStyle={styles.title}>ID</DataTable.Title>
             <DataTable.Title textStyle={styles.title}>
@@ -501,7 +506,7 @@ const styles = StyleSheet.create({
     width: "90%",
     // marginLeft: "3%",
     alignItems: "center",
-    // borderWidth:2,
+    // borderWidth: 2,
     justifyContent: "space-between",
   },
   title: {

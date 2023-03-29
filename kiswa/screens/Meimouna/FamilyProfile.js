@@ -74,7 +74,7 @@ export default function FamilyProfile({ route, navigation }) {
 
   const [modalVisible, setModalVisible] = useState(false);
   const zones = [
-    { label: "Doha", value: "1" },
+    { label: "Duhail", value: "1" },
     { label: "Al Rayyan", value: "2" },
     { label: "Rumeilah", value: "3" },
     { label: "Wadi Al Sail", value: "4" },

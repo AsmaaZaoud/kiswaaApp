@@ -474,38 +474,6 @@ const Dashboard = () => {
                 height: height * 0.4,
               }}
             >
-              {/* <View
-                style={[
-                  styles.status,
-                  { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
-                ]}
-              >
-                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-                  Todays Orders
-                </Text>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: "100%",
-                  }}
-                ></View>
-                <View style={{ padding: "6%", flexDirection: "row" }}>
-                  <CircularProgress
-                    radius={deviceType == "mobile" ? 80 : 100}
-                    value={(4 / 6) * 100}
-                    textColor="222"
-                    fontSize={30}
-                    valueSuffix={"%"}
-                    inActiveStrokeColor={"#2ecc71"}
-                    inActiveStrokeOpacity={0.2}
-                    inActiveStrokeWidth={6}
-                    duration={1000}
-                    onAnimationComplete={() => setValue(50)}
-                  />
-
-                  <Text>3/6</Text>
-                </View>
-              </View> */}
               <View
                 style={[
                   styles.status,
@@ -537,7 +505,7 @@ const Dashboard = () => {
                       population: requests.filter(
                         (item) => item.status === "fullfied"
                       ).length,
-                      color: "#abcdFF",
+                      color: "#7ae582",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -584,11 +552,11 @@ const Dashboard = () => {
                 <PieChart
                   data={[
                     {
-                      name: "Doha",
+                      name: "Duhail",
                       population: families.filter(
-                        (item) => item.zone === "Doha"
+                        (item) => item.zone === "Duhail"
                       ).length,
-                      color: "#AFC3E7",
+                      color: "#4cc9f0",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -597,16 +565,16 @@ const Dashboard = () => {
                       population: families.filter(
                         (item) => item.zone === "Al Rayyan"
                       ).length,
-                      color: "#ECEC91",
+                      color: "#ffd166",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
                     {
-                      name: "Al Wakra",
+                      name: "Rumeilah",
                       population: families.filter(
-                        (item) => item.zone === "Al Wakra"
+                        (item) => item.zone === "Rumeilah"
                       ).length,
-                      color: "#FCB077",
+                      color: "#06d6a0",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },

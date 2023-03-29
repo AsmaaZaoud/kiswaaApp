@@ -224,7 +224,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.quality === "Good"
                       ).length,
-                      color: "#90DF8C",
+                      color: "#4ba3c3",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -233,7 +233,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.quality === "New"
                       ).length,
-                      color: "#82C9CC",
+                      color: "#76c893",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -242,7 +242,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.quality === "Bad"
                       ).length,
-                      color: "#F7C3F0",
+                      color: "#f26a4f",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -291,7 +291,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.age === "Kids"
                       ).length,
-                      color: "#F7A17F",
+                      color: "#aed9e0",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -300,7 +300,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.age === "Adults"
                       ).length,
-                      color: "#D7C3F0",
+                      color: "#ffa69e",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -309,7 +309,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.age === "Baby"
                       ).length,
-                      color: "#F7C3F0",
+                      color: "#b8f2e6",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -318,7 +318,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.age === "Teenagers"
                       ).length,
-                      color: "#eaaeF0",
+                      color: "#d4e09b",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -369,7 +369,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "T-Shirt"
                       ).length,
-                      color: "#A8F7D8",
+                      color: "#9d80cb",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -378,7 +378,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Blouse"
                       ).length,
-                      color: "#E6A8F7",
+                      color: "#ec8c74",
                       legendFontColor: "#7F7F7F",
                       legendFontSize: 15,
                     },
@@ -387,7 +387,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Pajamas"
                       ).length,
-                      color: "#A7D4F7",
+                      color: "#caa1d9",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -396,7 +396,7 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Abaya"
                       ).length,
-                      color: "#F7BDA8",
+                      color: "#f4a261",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
@@ -405,19 +405,19 @@ const Inventory = ({ navigation }) => {
                       population: inventory.filter(
                         (item) => item.type === "Jacket"
                       ).length,
-                      color: "#F3F7A8",
+                      color: "#e9c46a",
                       legendFontColor: "#727F7F",
                       legendFontSize: 15,
                     },
-                    {
-                      name: "Leggings",
-                      population: inventory.filter(
-                        (item) => item.type === "Leggings"
-                      ).length,
-                      color: "#F56464",
-                      legendFontColor: "#727F7F",
-                      legendFontSize: 15,
-                    },
+                    // {
+                    //   name: "Leggings",
+                    //   population: inventory.filter(
+                    //     (item) => item.type === "Leggings"
+                    //   ).length,
+                    //   color: "#2a9d8f",
+                    //   legendFontColor: "#727F7F",
+                    //   legendFontSize: 15,
+                    // },
                     {
                       name: "Pants",
                       population: inventory.filter(
