@@ -16,6 +16,7 @@ import {
   Entypo,
   Ionicons,
   EvilIcons,
+  Feather,
 } from "react-native-vector-icons";
 import { TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
@@ -40,7 +41,7 @@ import * as Location from "expo-location";
 const { width } = Dimensions.get("screen");
 
 export default function FamilyProfile({ route, navigation }) {
-  const { id, cartId } = route.params;
+  const id = route.params;
   // const [userinforr, setUserinforr] = useState([]);
   console.log("id..", id);
 
@@ -447,9 +448,9 @@ export default function FamilyProfile({ route, navigation }) {
 
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
-          onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
+          onPress={() => navigation.replace("FamilyRequest", id)}
         >
-          <FontAwesome5 name="shopping-cart" color="#1a1f87" size={38} />
+          <Feather name="plus-circle" color="#1a1f87" size={45} />
         </Pressable>
 
         <Pressable

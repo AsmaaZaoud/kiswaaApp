@@ -30,6 +30,7 @@ import {
   FontAwesome5,
   Entypo,
   Feather,
+  FontAwesome,
 } from "react-native-vector-icons";
 import { DataTable } from "react-native-paper";
 import { db } from "../../config";

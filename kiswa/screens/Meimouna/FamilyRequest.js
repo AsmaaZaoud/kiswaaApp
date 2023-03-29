@@ -320,9 +320,16 @@ const FamilyRequest = ({ route, navigation }) => {
             </Text>
           </Block>
 
-          <Block style={{ height: "60%", marginTop: "2%", width: "100%" }}>
+          <Block
+            style={{
+              height: "60%",
+              marginTop: "2%",
+              width: "100%",
+              // backgroundColor: "red",
+            }}
+          >
             <Tab
-              style={{ width: "100%", height: "26%", marginBottom: "6%" }}
+              style={{ width: "100%", height: "26%", marginBottom: "5%" }}
               value={index}
               onChange={(e) => {
                 setIndex(e);
@@ -425,16 +432,16 @@ const FamilyRequest = ({ route, navigation }) => {
                 </Text>
               </Tab.Item>
             </Tab>
-
+            {/* ..............tab View..................... */}
             <TabView value={index} onChange={setIndex} animationType="spring">
               <TabView.Item
                 style={{
                   width: "100%",
-                  height: "96%",
+                  height: "83%",
                   // backgroundColor: "lightgray",
                 }}
               >
-                <View style={{ paddingBottom: "2%" }}>
+                <View>
                   <ScrollView style={{}}>
                     <View style={styles.board}>
                       {data.map((x, i) => (
@@ -454,7 +461,7 @@ const FamilyRequest = ({ route, navigation }) => {
                   </ScrollView>
                 </View>
               </TabView.Item>
-              <TabView.Item style={{ width: "100%", height: "96%" }}>
+              <TabView.Item style={{ width: "100%", height: "83%" }}>
                 <View>
                   <ScrollView>
                     <View style={styles.board}>
@@ -475,7 +482,7 @@ const FamilyRequest = ({ route, navigation }) => {
                   </ScrollView>
                 </View>
               </TabView.Item>
-              <TabView.Item style={{ width: "100%", height: "96%" }}>
+              <TabView.Item style={{ width: "100%", height: "83%" }}>
                 <View>
                   <ScrollView>
                     <View style={styles.board}>
@@ -496,7 +503,7 @@ const FamilyRequest = ({ route, navigation }) => {
                   </ScrollView>
                 </View>
               </TabView.Item>
-              <TabView.Item style={{ width: "100%", height: "96%" }}>
+              <TabView.Item style={{ width: "100%", height: "83%" }}>
                 <View>
                   <ScrollView>
                     <View style={styles.board}>
@@ -518,6 +525,7 @@ const FamilyRequest = ({ route, navigation }) => {
                 </View>
               </TabView.Item>
             </TabView>
+
             {/*............ add item modual................................................... */}
             <Modal
               animationType="slide"
@@ -758,10 +766,10 @@ const FamilyRequest = ({ route, navigation }) => {
             <Pressable
               onPress={() => navigation.navigate("FamilyCart", { cartId, id })}
               style={{
-                marginTop: "12%",
-                marginBottom: "10%",
+                // marginTop: "1%",
+                marginBottom: "1%",
                 backgroundColor: "#F9966B",
-                height: "18%",
+                height: "15%",
                 width: "60%",
                 alignItems: "center",
                 justifyContent: "center",
@@ -774,6 +782,27 @@ const FamilyRequest = ({ route, navigation }) => {
                 style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
               >
                 View Cart
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => navigation.navigate("FamilyHome", id)}
+              style={{
+                marginTop: "2%",
+                marginBottom: "1%",
+                backgroundColor: "#1a1f87",
+                height: "15%",
+                width: "60%",
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: "20%",
+                borderRadius: 8,
+                // padding: 5,
+              }}
+            >
+              <Text
+                style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
+              >
+                Home
               </Text>
             </Pressable>
           </Block>

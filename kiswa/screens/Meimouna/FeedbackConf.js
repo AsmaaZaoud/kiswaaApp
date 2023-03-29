@@ -81,7 +81,7 @@ const FeedbackConf = ({ route, navigation }) => {
         style={[
           StyleSheet.absoluteFill,
           {
-            height: 485,
+            height: "100%",
             flex: 1,
             width: "100%",
             justifyContent: "center",

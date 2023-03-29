@@ -309,7 +309,7 @@ const FamilyHome = ({ route, navigation }) => {
 
         <Pressable
           style={{ width: "14%" }}
-          onPress={() => navigation.navigate("FamilyProfile", { cartId, id })}
+          onPress={() => navigation.navigate("FamilyProfile", id)}
         >
           <FontAwesome name="user-circle" color="#1a1f87" size={40} />
         </Pressable>
