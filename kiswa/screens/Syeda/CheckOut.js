@@ -257,6 +257,7 @@ const CheckOut = ({ route, navigation }) => {
       } else {
         console.log("permitted");
         Alert.alert("Your location has been recorded.");
+        setLocationError("");
       }
 
       let currentLocation = await Location.getCurrentPositionAsync({});
@@ -272,8 +273,8 @@ const CheckOut = ({ route, navigation }) => {
   };
 
   const validation = () => {
-    if (!phone) {
-      setPhoneError("Please enter a valid phone number that is 8 digits long");
+    if (!phone || phone.length != 8) {
+      setPhoneError("Please enter a valid phone number");
       return;
     } else {
       setPhoneError("");
@@ -294,7 +295,7 @@ const CheckOut = ({ route, navigation }) => {
     }
 
     if (stat !== "granted") {
-      setLocationError("Please Allow Location");
+      setLocationError("Location");
     } else {
       setLocationError("");
     }
@@ -438,6 +439,8 @@ const CheckOut = ({ route, navigation }) => {
                 </View>
               ) : (
                 <View style={styles.container}>
+                  <Text></Text>
+
                   <Text style={styles.error}>{phoneError}</Text>
                   <Block width={width * 0.8}>
                     <Input
@@ -458,7 +461,7 @@ const CheckOut = ({ route, navigation }) => {
                       }
                     />
                   </Block>
-
+                  <Text></Text>
                   <Text style={styles.error}>{emailError}</Text>
                   <Block width={width * 0.8}>
                     <Input
@@ -480,7 +483,6 @@ const CheckOut = ({ route, navigation }) => {
                     />
                   </Block>
 
-                  <Text style={styles.error}>{locationError}</Text>
                   <Block
                     style={{
                       flexDirection: "row",
@@ -505,6 +507,7 @@ const CheckOut = ({ route, navigation }) => {
                           </Text>
                         )}
                       </Button>
+                      <Text style={styles.error}>{locationError}</Text>
                     </Block>
 
                     <Block width={width * 0.4}>
@@ -520,6 +523,7 @@ const CheckOut = ({ route, navigation }) => {
                         value={zone}
                         onChange={(item) => {
                           setZone(item.label);
+                          setZoneError("");
                         }}
                       ></Dropdown>
                       <Text
@@ -617,6 +621,7 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
+    textAlign: "center",
   },
   button: {
     width: width - theme.SIZES.BASE * 4,

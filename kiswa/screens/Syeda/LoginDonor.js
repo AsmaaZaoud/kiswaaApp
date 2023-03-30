@@ -6,8 +6,6 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   Image,
-  TouchableOpacity,
-  Pressable,
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -36,170 +34,275 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { db } from "../../config";
+import { async } from "@firebase/util";
+import { set } from "react-native-reanimated";
 
 const { width, height } = Dimensions.get("screen");
 
 const LoginDonor = ({ navigation }) => {
-  const [error, setError] = useState();
+  const [deviceType, setDeviceType] = useState("");
+  useEffect(() => {
+    width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
+  }, []);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userr, setUserr] = useState("");
 
-  const [email, setEmail] = useState();
-  //const [emailError, setEmailError] = useState()
+  // reformat
+  const reformat = (doc) => {
+    return { id: doc.id, ...doc.data() };
+  };
 
-  const [password, setPassword] = useState();
-  const [passwordError, setPasswordError] = useState();
+  const getUser = async () => {
+    if (email == "admin@admin.com") {
+      navigation.navigate("AdminHome");
+      return;
+    }
+    const driver = doc(db, "drivers", email.toLowerCase());
+    const clerk = doc(db, "inventoryWorkers", email.toLowerCase());
+    const family = doc(db, "families", email);
+    const donor = doc(db, "donors", email.toLowerCase());
 
-  const [signedIn, setSignedIn] = useState(false);
+    const driverSnap = await getDoc(driver);
+    const clerkSnap = await getDoc(clerk);
+    const familySnap = await getDoc(family);
+    const donorSnap = await getDoc(donor);
 
-  // const reformat = (doc) => {
-  //   console.log({ id: doc.id, ...doc.data() });
-
-  //   return { id: doc.id, ...doc.data() };
-  // };
-
+    if (driverSnap.exists()) {
+      navigation.navigate("DriverDash", email);
+    } else if (clerkSnap.exists()) {
+      navigation.navigate("InventoryClerkHomePage");
+    } else if (familySnap.exists()) {
+      navigation.navigate("FamilyHome", email);
+    } else if (donorSnap.exists()) {
+      navigation.navigate("App");
+    }
+  };
+  const EmailErrorStyle = () => {
+    if (deviceType == "mobile" && error.key == "email") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "email") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile" && error.key == "email&pass") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "email&pass") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile" && error.key == "db") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "db") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile") {
+      return styles.inputsSmall;
+    } else if (deviceType == "ipad") {
+      return styles.inputsLarge;
+    }
+  };
+  const PasswordErrorStyle = () => {
+    if (deviceType == "mobile" && error.key == "pass") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "pass") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile" && error.key == "email&pass") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "email&pass") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile" && error.key == "db") {
+      return [styles.inputsSmall, styles.errorBorder];
+    } else if (deviceType == "ipad" && error.key == "db") {
+      return [styles.inputsLarge, styles.errorBorder];
+    } else if (deviceType == "mobile") {
+      return styles.inputsSmall;
+    } else if (deviceType == "ipad") {
+      return styles.inputsLarge;
+    }
+  };
+  const [error, setError] = useState({ satus: false, key: null, msg: "" });
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("Logged in");
-        setSignedIn(true);
-        // navigation.navigate("Home");
-        navigation.replace("App");
-      })
-      .catch((error) => {
-        if (error.message === "Firebase: Error (auth/missing-email).") {
-          setError("Please enter your email id.");
-          setPasswordError("");
-        }
-        if (error.message === "Firebase: Error (auth/internal-error).") {
-          setError("Incorrect email or no password.");
-          setPasswordError("");
-        }
-        if (error.message === "Firebase: Error (auth/wrong-password).") {
-          setError("");
-          setPasswordError("Wrong password.");
-        }
-        if (error.message === "Firebase: Error (auth/user-not-found).") {
-          setError("This email is not registered. Sign up first.");
-          setPasswordError("");
-        }
-        console.log(error.message);
-        setSignedIn(false);
+    if (
+      (email == null || email == "") &&
+      (password == null || password == "")
+      //    ||
+      // error.msg == "Firebase: Error (auth/wrong-password)."
+    )
+      setError({
+        satus: true,
+        key: "email&pass",
+        msg: "Please Enter a Valid Email & Password",
       });
+    // else if (error.msg == "auth/wrong-password") {
+    // }
+    else if (!email.includes("@"))
+      setError({
+        satus: true,
+        key: "email",
+        msg: "Please Enter a Valid Email",
+      });
+    else if (password == null || password == "")
+      setError({
+        satus: true,
+        key: "pass",
+        msg: "Please Enter Password",
+      });
+    else {
+      signInWithEmailAndPassword(auth, email, password)
+        .then(async () => {
+          await getUser();
+          setError({ satus: false, key: null, msg: "" });
+        })
+        .catch((error) => {
+          console.log(error.code);
+          console.log(error.message);
+          setError({ satus: true, key: "db", msg: error.message });
+          // setError({ satus: true, key: "db", msg: error.message });
+        });
+    }
   };
 
   return (
-    <Block flex middle>
+    <Block flex middle style={{ backgroundColor: "#3C4DBD" }}>
       <StatusBar hidden />
-      <ImageBackground
-        source={Images.RegisterBackground}
+      {/* <ImageBackground
+        source={require("../assets/Fatima/background.png")}
         style={{ width, height, zIndex: 1 }}
-      >
-        <Block safe flex middle>
-          <Block style={styles.registerContainer}>
-            <Block flex>
-              {/* <Pressable onPress={() => navigation.navigate("Onboarding")}>
-                <Image
-                  style={styles.backButton}
-                  source={{
-                    uri: "https://cdn-icons-png.flaticon.com/512/54/54623.png",
-                  }}
-                ></Image>
-              </Pressable> */}
-              <Text
-                style={{ padding: 20, color: "blue" }}
-                onPress={() => navigation.navigate("Onboarding")}
+      > */}
+      <Block safe flex middle>
+        <Block
+          style={
+            deviceType == "mobile"
+              ? styles.registerContainer
+              : styles.registerContainerLarge
+          }
+        >
+          <Text
+            style={{ padding: 20, color: "blue" }}
+            onPress={() => navigation.goBack()}
+          >
+            Go Back
+          </Text>
+          {/* comment */}
+          <Block flex style={{ marginTop: "4%" }}>
+            <Block flex={0.17} middle>
+              <Image
+                source={require("../../assets/Fatima/black.png")}
+                style={
+                  deviceType == "mobile" ? styles.logoSmall : styles.logoLarge
+                }
+              />
+            </Block>
+            <Block flex center style={{ marginTop: "40%" }}>
+              <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior="padding"
+                enabled
               >
-                Go Back
-              </Text>
-              <Block flex={0.17} middle>
-                <Image
-                  source={require("../../assets/Fatima/BlackLogo.png")}
-                  style={{ width: 250, height: 80 }}
-                />
-              </Block>
-              <Block flex center>
-                <KeyboardAvoidingView
-                  style={{ flex: 1 }}
-                  behavior="padding"
-                  enabled
-                >
-                  <Text style={{ color: "red" }}>{error}</Text>
-                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                    <Input
-                      borderless
-                      placeholder="Email"
-                      value={email}
-                      onChangeText={setEmail}
-                      keyboardType="email-address"
-                      autoCapitalize="none"
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={argonTheme.COLORS.ICON}
-                          name="ic_mail_24px"
-                          family="ArgonExtra"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                  </Block>
+                <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                  <Input
+                    borderless
+                    placeholder="Email"
+                    value={email}
+                    style={EmailErrorStyle()}
+                    onChangeText={setEmail}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={"#5A9DA0"}
+                        name="ic_mail_24px"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                </Block>
+                <Block width={width * 0.8}>
+                  <Input
+                    password
+                    borderless
+                    placeholder="Password"
+                    value={password}
+                    style={PasswordErrorStyle()}
+                    onChangeText={setPassword}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={"#5A9DA0"}
+                        name="padlock-unlocked"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                  {error.key == "email&pass" && error.satus && (
+                    <Text style={styles.errorMessage}>{error.msg}</Text>
+                  )}
+                  {error.key == "pass" && error.satus && (
+                    <Text style={styles.errorMessage}>{error.msg}</Text>
+                  )}
+                  {error.key == "db" && error.satus && (
+                    <Text style={styles.errorMessage}>{error.msg}</Text>
+                  )}
+                  {error.key == "email" && error.satus && (
+                    <Text style={styles.errorMessage}>{error.msg}</Text>
+                  )}
+                </Block>
 
-                  <Text style={{ color: "red" }}>{passwordError}</Text>
-                  <Block width={width * 0.8}>
-                    <Input
-                      password
-                      borderless
-                      placeholder="Password"
-                      value={password}
-                      onChangeText={setPassword}
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={argonTheme.COLORS.ICON}
-                          name="padlock-unlocked"
-                          family="ArgonExtra"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                  </Block>
-
-                  <Block middle>
-                    <Button
-                      color="primary"
-                      style={styles.createButton}
-                      onPress={handleLogin}
-                    >
-                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Log In
-                      </Text>
-                    </Button>
-                    {/* <Text style={{marginTop: 10}}>Don't have an Account ?</Text> */}
-                    <Button
-                      color="primary"
-                      style={styles.createButton}
-                      onPress={() => navigation.navigate("Register")}
-                    >
-                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Sign Up
-                      </Text>
-                    </Button>
-                  </Block>
-                </KeyboardAvoidingView>
-              </Block>
+                <Block middle>
+                  <Button
+                    color="primary"
+                    style={
+                      deviceType == "mobile"
+                        ? styles.loginSmall
+                        : styles.loginLarge
+                    }
+                    onPress={handleLogin}
+                  >
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                      Log In
+                    </Text>
+                  </Button>
+                  <Button
+                    color={"#F0936F"}
+                    style={
+                      deviceType == "mobile"
+                        ? styles.signUpSmall
+                        : styles.signUpLarge
+                    }
+                    onPress={() => navigation.navigate("Register")}
+                  >
+                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                      Sign Up
+                    </Text>
+                  </Button>
+                </Block>
+              </KeyboardAvoidingView>
             </Block>
           </Block>
         </Block>
-      </ImageBackground>
+      </Block>
+      {/* </ImageBackground> */}
     </Block>
   );
 };
 
 const styles = StyleSheet.create({
+  logoLarge: {
+    width: width - theme.SIZES.BASE,
+    height: theme.SIZES.BASE * 9,
+    position: "relative",
+    resizeMode: "contain",
+    marginTop: "35%",
+  },
+  logoSmall: {
+    width: width - theme.SIZES.BASE,
+    height: theme.SIZES.BASE * 6,
+    position: "relative",
+    resizeMode: "contain",
+    marginTop: "35%",
+  },
   registerContainer: {
     width: width * 0.9,
-    height: height * 0.875,
+    height: height * 0.7,
     backgroundColor: "#F4F5F7",
-    borderRadius: 4,
+    borderRadius: 6,
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
@@ -209,16 +312,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     elevation: 1,
     overflow: "hidden",
+    justifyContent: "center",
   },
-  socialConnect: {
-    backgroundColor: argonTheme.COLORS.WHITE,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: "#8898AA",
-  },
-  socialButtons: {
-    width: 120,
-    height: 40,
-    backgroundColor: "#fff",
+  registerContainerLarge: {
+    width: width * 0.7,
+    height: height * 0.7,
+    backgroundColor: "#F4F5F7",
+    borderRadius: 6,
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
@@ -227,12 +327,15 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOpacity: 0.1,
     elevation: 1,
+    overflow: "hidden",
+    justifyContent: "center",
   },
-  socialTextButtons: {
-    color: argonTheme.COLORS.PRIMARY,
-    fontWeight: "800",
-    fontSize: 14,
+  inputsLarge: {
+    width: "70%",
+    // alignSelf: "Center",
+    marginLeft: "16%",
   },
+  inputsSmall: {},
   inputIcons: {
     marginRight: 12,
   },
@@ -241,19 +344,33 @@ const styles = StyleSheet.create({
     paddingTop: 13,
     paddingBottom: 30,
   },
-  createButton: {
-    width: width * 0.5,
+  loginLarge: {
+    width: width * 0.3,
     marginTop: 25,
+    backgroundColor: "#E49D81",
   },
-  backButton: {
-    width: 50,
-    height: 50,
-    backgroundColor: "white",
-    borderRadius: 25,
-    margin: 20,
-    position: "absolute",
-    top: 0,
-    left: 0,
+  signUpLarge: {
+    width: width * 0.3,
+    marginTop: 25,
+    backgroundColor: "#F0936F",
+  },
+  loginSmall: {
+    marginTop: 25,
+    backgroundColor: "#E49D81",
+  },
+  signUpSmall: {
+    marginTop: 25,
+    backgroundColor: "#F0936F",
+  },
+  errorMessage: {
+    // alignSelf: "center",
+    fontWeight: "bold",
+    paddingTop: "4%",
+    color: "red",
+  },
+  errorBorder: {
+    borderColor: "red",
+    borderWidth: 1,
   },
 });
 

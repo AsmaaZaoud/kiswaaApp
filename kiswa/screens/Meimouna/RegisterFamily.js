@@ -204,7 +204,7 @@ export default function RegisterFamily({ navigation }) {
             <Block flex={0.19}>
               <Text
                 style={{ padding: 20, color: "blue" }}
-                onPress={() => navigation.navigate("Onboarding")}
+                onPress={() => navigation.goBack()}
               >
                 Go Back
               </Text>

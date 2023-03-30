@@ -114,6 +114,7 @@ const AboutUs = ({ navigation }) => {
               fontSize: 25,
               marginHorizontal: 20,
               fontWeight: "300",
+              marginTop: 20,
             }}
           >
             Rahma is a free platform on which you can either choose to become a
@@ -121,20 +122,21 @@ const AboutUs = ({ navigation }) => {
           </Text>
           <View style={{ margin: 30 }}></View>
 
+          <Text bold size={30} color="#32325D">
+            You help the environment!
+          </Text>
           <Image
             style={styles.image}
             source={{
               uri: "https://harmony1.com/wp-content/uploads/2016/05/shutterstock_19259410.jpg",
             }}
           ></Image>
-          <Text bold size={30} color="#32325D">
-            You help the environment!
-          </Text>
 
           <Text
             style={{
               fontSize: 18,
               marginHorizontal: 20,
+              marginTop: 20,
             }}
           >
             Artificial fibres such as polyester take anywhere from 20 to 200
@@ -146,6 +148,9 @@ const AboutUs = ({ navigation }) => {
             the carbon footprint and help save the environment.
           </Text>
           <View style={{ margin: 30 }}></View>
+          <Text bold size={30} color="#32325D">
+            You help the people!
+          </Text>
           <Image
             style={styles.image}
             source={{
@@ -154,10 +159,8 @@ const AboutUs = ({ navigation }) => {
               // "https://harmony1.com/wp-content/uploads/2016/05/shutterstock_19259410.jpg",
             }}
           ></Image>
-          <Text bold size={30} color="#32325D">
-            You help the people!
-          </Text>
-          <Text style={{ fontSize: 18, marginHorizontal: 20 }}>
+
+          <Text style={{ fontSize: 18, marginHorizontal: 20, marginTop: 20 }}>
             Whether it may be being able to give clothes to children, an outfit
             to a person, or even warm clothes during the chilly weather, you are
             helping so many people in Qatar that are deprived of necessary
@@ -245,6 +248,7 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     height: height * 0.25,
     borderRadius: 20,
+    marginTop: 20,
   },
   topl: {
     flex: 1,

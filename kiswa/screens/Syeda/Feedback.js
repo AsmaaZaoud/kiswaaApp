@@ -134,10 +134,7 @@ const Feedback = ({ navigation }) => {
             <TouchableOpacity
               style={styles.submitButton}
               onPress={handleSubmit}
-              disabled={
-                !selectedEmoji ||
-                (selectedEmoji.value < 4 && feedbackText === "")
-              }
+              disabled={!selectedEmoji || selectedEmoji.value < 4}
             >
               <Text style={styles.submitButtonText}>Submit</Text>
             </TouchableOpacity>

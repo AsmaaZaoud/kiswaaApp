@@ -1,65 +1,48 @@
 import React, { useState, useEffect } from "react";
-
 import {
   StyleSheet,
   ImageBackground,
   Dimensions,
   StatusBar,
   KeyboardAvoidingView,
-  TextInput,
-  View,
-  Platform,
-  PixelRatio,
-  TouchableOpacity,
   Image,
-  SafeAreaView,
-  ScrollView,
+  View,
+  TextInput,
+  Pressable,
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../../components";
 import { Images, argonTheme } from "../../constants";
-
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../../config";
 
 import {
   doc,
   setDoc,
   addDoc,
   collection,
+  getDocs,
+  getDoc,
   query,
   where,
   deleteDoc,
   updateDoc,
   deleteField,
-  onSnapshot,
-  getDocs,
-  getDoc,
-  Timestamp,
 } from "firebase/firestore";
 import { db } from "../../config";
 
+import { auth } from "../../config";
+
+import validator from "validator";
+// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Dropdown } from "react-native-element-dropdown";
 import * as Location from "expo-location";
-import { Alert } from "react-native";
-
 const { width, height } = Dimensions.get("screen");
-const scale = width / 834;
 
-export function normalize(size) {
-  const newSize = size * scale;
-  if (Platform.OS === "ios") {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize));
-  } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
-  }
-}
-
-const Register = ({ navigation }) => {
+export default function Register({ navigation }) {
   const zones = [
     { label: " All Zones", value: "0" },
     { label: "Duhail", value: "1" },
@@ -74,49 +57,47 @@ const Register = ({ navigation }) => {
     { label: "Al Shahaniya", value: "10" },
   ];
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userNameError, setUserNameError] = useState("");
 
-  const [emailError, setEmailError] = useState("");
-  const [passError, setPassError] = useState("");
-  const [confirmError, setConfirmError] = useState("");
-  const [nameError, setNameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
-
-  const [ZoneError, setZoneError] = useState("");
-  const [zone, setZone] = useState(zones[0].label);
+  const [phone, setPhone] = useState("");
 
   const [location, setLocation] = useState("");
   const [locationError, setLocationError] = useState("");
 
-  const [signedIn, setSignedIn] = useState(false);
-  const [flag, setflag] = useState(0);
+  const [ZoneError, setZoneError] = useState("");
+  const [zone, setZone] = useState(zones[0].label);
 
-  const [stat, setStat] = useState("denied");
+  const [emailErro, setEmailError] = useState("");
+  const [email, setEmail] = useState("");
 
-  let user = auth?.currentUser?.email;
+  const [passError, setPassError] = useState("");
+  const [password, setPassword] = useState("");
 
-  console.log("user logged in: ", user);
+  const [registerError, setRegisteerError] = useState("");
+
+  const [stat, setStat] = useState("denid");
 
   const handleRegister = () => {
-    setflag(0);
+    console.log("in regstr...");
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
-        console.log("registered");
+        console.log("registend done");
+        navigation.navigate("Login");
         add();
-        navigation.replace("App");
       })
-      .catch((error) => console.log(error.message));
+      .catch((error) => {
+        console.log(error.message);
+        setRegisteerError("Email is already in use");
+      });
   };
 
   const add = async () => {
     const docRef = doc(db, "donors", email);
 
     await setDoc(docRef, {
-      userName: name,
+      userName: userName,
       phone: phone,
       location: location,
       email: email,
@@ -132,6 +113,70 @@ const Register = ({ navigation }) => {
     //console.log("Document written with ID: ", docRef.id);
   };
 
+  const [valid, setValid] = useState(false);
+  const emailValidate = async () => {
+    if (validator.isEmail(email)) {
+      setEmailError("");
+    } else {
+      setEmailError("Email is not vaildate");
+    }
+  };
+  const passValidate = async () => {
+    if (password.length >= 5) {
+      setPassError("");
+    } else {
+      setPassError("Password Must Be 6 Chars");
+    }
+  };
+  const userNameValidate = async () => {
+    if (userName.length != 0) {
+      setUserNameError("");
+    } else {
+      setUserNameError("Enter Your user Name");
+    }
+  };
+  const phoneValidate = async () => {
+    if (phone.length >= 7) {
+      console.log(phone);
+      setPhoneError("");
+    } else {
+      console.log(phone);
+      setPhoneError("Number is not valid");
+    }
+  };
+
+  const validation = async () => {
+    userNameValidate();
+    phoneValidate();
+    emailValidate();
+    passValidate();
+    if (zone !== " All Zones") {
+      setZoneError("");
+    } else {
+      setZoneError("Select Zone");
+    }
+    if (stat === "granted") {
+      setLocationError("");
+    } else {
+      setLocationError("Allow Location");
+    }
+    console.log(valid);
+    if (
+      validator.isEmail(email) &&
+      password.length >= 5 &&
+      userName.length != 0 &&
+      phone.length >= 7 &&
+      zone !== " All Zones" &&
+      stat == "granted"
+    ) {
+      console.log(stat);
+      console.log("validated");
+      handleRegister();
+    } else {
+      console.log("not validated");
+    }
+  };
+
   const getLocation = () => {
     const getPermissions = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -140,315 +185,277 @@ const Register = ({ navigation }) => {
       console.log(status);
       if (status !== "granted") {
         console.log("Please grant location permissions");
-        Alert.alert("Please grant location permissions.");
         return;
-      } else {
-        console.log("permitted");
-        Alert.alert("Your location has been recorded.");
       }
 
       let currentLocation = await Location.getCurrentPositionAsync({});
-      console.log(currentLocation);
       setLocation(currentLocation);
     };
     getPermissions();
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-    return passwordRegex.test(password);
-  };
-
-  const validation = () => {
-    if (!name) {
-      setNameError("Please enter your nickname");
-      return;
-    } else {
-      setNameError("");
-    }
-
-    if (!phone) {
-      setPhoneError("Please enter a valid phone number that is 8 digits long");
-      return;
-    } else {
-      setPhoneError("");
-    }
-
-    if (!email) {
-      setEmailError("Please enter an email address");
-      return;
-    } else {
-      setEmailError("");
-    }
-
-    if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address");
-      return;
-    } else {
-      setEmailError("");
-    }
-
-    if (!password) {
-      setPassError("Please enter a password");
-      return;
-    } else {
-      setPassError("");
-    }
-
-    if (!validatePassword(password)) {
-      setPassError(
-        "Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character"
-      );
-      return;
-    } else {
-      setPassError("");
-    }
-
-    if (password !== confirmPassword) {
-      setConfirmError("Passwords do not match");
-      return;
-    } else {
-      setConfirmError("");
-    }
-
-    if (stat !== "granted") {
-      setLocationError("Please Allow Location");
-      return;
-    } else {
-      setLocationError("");
-    }
-
-    if (zone !== " All Zones") {
-      setZoneError("");
-    } else {
-      setZoneError("Select Zone");
-      return;
-    }
-
-    if (
-      name &&
-      phone &&
-      email &&
-      validateEmail &&
-      password &&
-      validatePassword &&
-      stat === "granted" &&
-      zone !== " All Zones"
-    ) {
-      handleRegister();
-    }
-  };
-
   return (
-    <Block flex middle>
-      <ImageBackground
+    <Block flex middle style={{ backgroundColor: "#1a1f87" }}>
+      <StatusBar hidden />
+      {/* <ImageBackground
         source={Images.RegisterBackground}
         style={{ width, height, zIndex: 1 }}
-      >
-        <Block safe flex middle>
-          <Block style={styles.registerContainer}>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.articles}
-            >
-              <TouchableOpacity
-                onPress={() => navigation.navigate("LoginDonor")}
+      > */}
+      <Block safe flex middle>
+        <Block style={styles.registerContainer}>
+          <Block flex>
+            <Block flex={0.19}>
+              <Text
+                style={{ padding: 20, color: "blue" }}
+                onPress={() => navigation.goBack()}
               >
+                Go Back
+              </Text>
+
+              <Block flex={0.17} middle>
                 <Image
-                  style={styles.backButton}
-                  source={{
-                    uri: "https://cdn-icons-png.flaticon.com/512/54/54623.png",
+                  source={require("../../assets/Fatima/black.png")}
+                  style={{
+                    width: width - theme.SIZES.BASE,
+                    height: theme.SIZES.BASE * 5,
+                    position: "relative",
+                    resizeMode: "contain",
+                    marginTop: "25%",
+                    marginBottom: "10%",
                   }}
-                ></Image>
-              </TouchableOpacity>
-              {/* <View style={{marginBottom: 50}}></View> */}
-              <Image
-                source={require("../../assets/Fatima/BlackLogo.png")}
+                />
+              </Block>
+            </Block>
+            <Block flex center style={{ marginTop: "5%" }}>
+              <Text
                 style={{
-                  width: 250,
-                  height: 80,
-                  margin: 50,
                   justifyContent: "flex-start",
                   alignSelf: "center",
+                  fontSize: 18,
+                  margin: "2%",
                 }}
-              />
-              {/* <Text style={{ justifyContent: 'flex-start', alignSelf: 'center', fontSize: 25 }}>Register as Donor</Text> */}
-              <View style={styles.container}>
-                <Text style={styles.error}>{nameError}</Text>
-
-                <Block width={width * 0.8}>
+              >
+                Register as Donor
+              </Text>
+              <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior="padding"
+                enabled
+              >
+                <Block width={width * 0.8} style={{ marginBottom: 10 }}>
                   <Input
                     borderless
-                    value={name}
-                    onChangeText={setName}
-                    autoCapitalize="words"
-                    placeholder="Nickname"
+                    placeholder="NickName"
+                    value={userName}
+                    onChangeText={(name) => {
+                      setUserName(name);
+                      userNameValidate();
+                    }}
                     iconContent={
                       <Icon
                         size={16}
                         color={argonTheme.COLORS.ICON}
-                        name="hat-3"
+                        name="user"
+                        family="Entypo"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
+                    }}
+                  >
+                    {userNameError}
+                  </Text>
+                </Block>
+                <Block width={width * 0.8} style={{ marginBottom: 10 }}>
+                  <Input
+                    phone-pad
+                    borderless
+                    placeholder="Phone Number"
+                    value={phone}
+                    maxLength={8}
+                    onChangeText={(pho) => {
+                      setPhone(pho);
+                      phoneValidate();
+                    }}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="telephone"
+                        family="Foundation"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
+                    }}
+                  >
+                    {phoneError}
+                  </Text>
+                </Block>
+
+                <Block width={width * 0.8} style={{ marginBottom: 10 }}>
+                  <Input
+                    borderless
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={(em) => {
+                      setEmail(em);
+                      emailValidate();
+                    }}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="ic_mail_24px"
                         family="ArgonExtra"
                         style={styles.inputIcons}
                       />
                     }
                   />
-                </Block>
-
-                <Text style={styles.error}>{phoneError}</Text>
-                <Block width={width * 0.8}>
-                  <Input
-                    borderless
-                    value={phone}
-                    onChangeText={setPhone}
-                    keyboardType="numeric"
-                    maxLength={8}
-                    placeholder="Phone Number"
-                    iconContent={
-                      <Icon
-                        size={16}
-                        color={argonTheme.COLORS.ICON}
-                        name="phone"
-                        family="Entypo"
-                        style={styles.inputIcons}
-                      />
-                    }
-                  />
-                </Block>
-
-                <Text style={styles.error}>{emailError}</Text>
-                <Block width={width * 0.8}>
-                  <Input
-                    borderless
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    iconContent={
-                      <Icon
-                        size={16}
-                        color={argonTheme.COLORS.ICON}
-                        name="email"
-                        family="Entypo"
-                        style={styles.inputIcons}
-                      />
-                    }
-                  />
-                </Block>
-
-                <Text style={styles.error}>{passError}</Text>
-                <Block width={width * 0.8}>
-                  <Input
-                    borderless
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                    iconContent={
-                      <Icon
-                        size={16}
-                        color={argonTheme.COLORS.ICON}
-                        name="lock-open"
-                        family="Entypo"
-                        style={styles.inputIcons}
-                      />
-                    }
-                  />
-                </Block>
-
-                <Text style={styles.error}>{confirmError}</Text>
-                <Block width={width * 0.8}>
-                  <Input
-                    borderless
-                    placeholder="Confirm Password"
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                    secureTextEntry
-                    iconContent={
-                      <Icon
-                        size={16}
-                        color={argonTheme.COLORS.ICON}
-                        name="lock"
-                        family="Entypo"
-                        style={styles.inputIcons}
-                      />
-                    }
-                  />
-                </Block>
-
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "red",
-                  }}
-                >
-                  {locationError}
-                </Text>
-                <Block width={width * 0.35}>
-                  <Button
-                    color={stat !== "granted" ? "default" : "primary"}
-                    style={styles.createButton}
-                    onPress={getLocation}
-                  >
-                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                      Get Location
-                    </Text>
-                  </Button>
-                </Block>
-
-                <Block width={width * 0.5} style={{ marginBottom: 0 }}>
-                  <Dropdown
-                    style={styles.dropdown}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    data={zones}
-                    maxHeight={160}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={zone}
-                    value={zone}
-                    onChange={(item) => {
-                      setZone(item.label);
-                    }}
-                  ></Dropdown>
                   <Text
                     style={{
                       textAlign: "center",
                       color: "red",
+                      fontSize: 12,
                     }}
                   >
-                    {ZoneError}
+                    {emailErro}
                   </Text>
                 </Block>
+                <Block width={width * 0.8} style={{ marginBottom: 10 }}>
+                  <Input
+                    password
+                    borderless
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={(pass) => {
+                      setPassword(pass);
+                      passValidate();
+                    }}
+                    iconContent={
+                      <Icon
+                        size={16}
+                        color={argonTheme.COLORS.ICON}
+                        name="padlock-unlocked"
+                        family="ArgonExtra"
+                        style={styles.inputIcons}
+                      />
+                    }
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
+                    }}
+                  >
+                    {passError}
+                  </Text>
+                </Block>
+                <View
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Block width={width * 0.35} style={{ marginBottom: 10 }}>
+                    <Button
+                      color={stat !== "granted" ? "warning" : "success"}
+                      style={{ width: width * 0.4 }}
+                      onPress={() => {
+                        getLocation();
+                      }}
+                    >
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        Location
+                      </Text>
+                    </Button>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {locationError}
+                    </Text>
+                  </Block>
+                  <Block width={width * 0.35} style={{ marginBottom: 0 }}>
+                    <Dropdown
+                      style={styles.dropdown}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      data={zones}
+                      maxHeight={160}
+                      labelField="label"
+                      valueField="value"
+                      placeholder={zone}
+                      value={zone}
+                      // onChange={validation}
+                      onChange={(item) => {
+                        setZone(item.label);
+                        validation();
+                      }}
+                    ></Dropdown>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "red",
+                        fontSize: 12,
+                      }}
+                    >
+                      {ZoneError}
+                    </Text>
+                  </Block>
+                </View>
 
-                <Block width={width * 0.35}>
-                  <Button style={styles.createButton} onPress={validation}>
+                <Block middle>
+                  <Button
+                    // color="primary"
+                    style={styles.createButton}
+                    onPress={validation}
+                  >
                     <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                      Register
+                      CREATE ACCOUNT
                     </Text>
                   </Button>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "red",
+                      fontSize: 12,
+                    }}
+                  >
+                    {registerError}
+                  </Text>
                 </Block>
-              </View>
-            </ScrollView>
+              </KeyboardAvoidingView>
+            </Block>
           </Block>
         </Block>
-      </ImageBackground>
+      </Block>
+      {/* </ImageBackground> */}
     </Block>
   );
-};
+}
 
 const styles = StyleSheet.create({
   registerContainer: {
     width: width * 0.9,
     height: height * 0.875,
     backgroundColor: "#F4F5F7",
-    borderRadius: 10,
+    borderRadius: 4,
     shadowColor: argonTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
@@ -459,41 +466,41 @@ const styles = StyleSheet.create({
     elevation: 1,
     overflow: "hidden",
   },
+  socialConnect: {
+    backgroundColor: argonTheme.COLORS.WHITE,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#8898AA",
+  },
+  socialButtons: {
+    width: 120,
+    height: 40,
+    backgroundColor: "#fff",
+    shadowColor: argonTheme.COLORS.BLACK,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.1,
+    elevation: 1,
+  },
+  socialTextButtons: {
+    color: argonTheme.COLORS.PRIMARY,
+    fontWeight: "800",
+    fontSize: 14,
+  },
+  inputIcons: {
+    marginRight: 12,
+  },
   passwordCheck: {
     paddingLeft: 15,
     paddingTop: 13,
     paddingBottom: 30,
   },
   createButton: {
-    width: width * 0.5,
-    marginTop: 25,
-    alignSelf: "center",
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    //backgroundColor: '#F5FCFF',
-  },
-  input: {
-    width: "80%",
-    height: 40,
-    margin: 15,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-  },
-  error: {
-    color: "red",
-  },
-  button: {
-    width: width - theme.SIZES.BASE * 4,
-    height: theme.SIZES.BASE * 3,
-    shadowRadius: 0,
-    shadowOpacity: 0,
-  },
-  inputIcons: {
-    marginRight: 12,
+    width: width * 0.4,
+    // marginTop: 25,
+    backgroundColor: "#1a1f87",
   },
   dropdown: {
     marginBottom: 10,
@@ -507,6 +514,20 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 0.05,
     elevation: 2,
+    // margin: 16,
+    // height: 50,
+    // backgroundColor: "white",
+    // borderRadius: 12,
+    // padding: 12,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 1.41,
+
+    // elevation: 2,
   },
   placeholderStyle: {
     fontSize: 14,
@@ -515,16 +536,4 @@ const styles = StyleSheet.create({
   selectedTextStyle: {
     fontSize: 12,
   },
-  backButton: {
-    width: 50,
-    height: 50,
-    backgroundColor: "white",
-    borderRadius: 25,
-    margin: 20,
-    position: "absolute",
-    top: 0,
-    left: 0,
-  },
 });
-
-export default Register;

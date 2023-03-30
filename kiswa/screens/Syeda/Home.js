@@ -558,7 +558,7 @@ const Home = ({ route, navigation }) => {
                 marginTop: "3%",
                 marginRight: "2%",
               }}
-              onPress={() => navigation.navigate("Login")}
+              onPress={() => navigation.navigate("LoginDonor")}
             >
               {/* <Feather name="log-in" size={35} color="white" /> */}
               <Text style={{ color: "#FFF", fontSize: normalize(17) }}>
