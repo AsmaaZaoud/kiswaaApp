@@ -59,7 +59,7 @@ const DriverDash = ({ route, navigation }) => {
   const [deviceType, setDeviceType] = useState("");
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-    getNotifications();
+    // getNotifications();
   }, []);
 
   const [index, setIndex] = useState(0);
@@ -95,21 +95,6 @@ const DriverDash = ({ route, navigation }) => {
     return () => unsubscribe();
   };
 
-  const update = async (id) => {
-    await setDoc(
-      doc(db, "drivers", user, "notifications", id),
-      {
-        seen: "true",
-      },
-      { merge: true }
-    )
-      .then(() => {
-        console.log("data updated");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
   return (
     <Block flex>
       <View
@@ -136,21 +121,21 @@ const DriverDash = ({ route, navigation }) => {
         </View>
       </View>
 
-      <TabView value={index} onChange={setIndex} animationType="spring">
+      <TabView value={index} onChange={setIndex} disableTransition disableSwipe>
         {/*--------- Home -------------*/}
         <TabView.Item style={styles.comp}>
           {/* <View style={styles.board}> */}
-          <DriverHome navigation={navigation} email={id} />
+          <DriverHome navigation={navigation} />
           {/* </View> */}
         </TabView.Item>
 
         {/*--------- History -------------*/}
         <TabView.Item style={styles.comp}>
-          <DriverHistory navigation={navigation} email={id} />
+          <DriverHistory navigation={navigation} />
         </TabView.Item>
         {/*--------- Profile -------------*/}
         <TabView.Item style={styles.comp}>
-          <DriverProfile navigation={navigation} email={id} />
+          <DriverProfile navigation={navigation} />
           {/* <Drivers /> */}
         </TabView.Item>
       </TabView>
@@ -159,9 +144,13 @@ const DriverDash = ({ route, navigation }) => {
         onChange={setIndex}
         indicatorStyle={{
           backgroundColor: "#fff",
-          height: 0.1,
+          height: 0.0,
         }}
-        style={{ height: height * 0.08, borderWidth: 0 }}
+        style={{
+          height: 70,
+          // borderWidth: 1,
+          backgroundColor: "white",
+        }}
       >
         <Tab.Item
           onChange={setIndex}

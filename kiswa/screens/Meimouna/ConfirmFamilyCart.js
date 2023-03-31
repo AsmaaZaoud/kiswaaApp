@@ -237,6 +237,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
   ];
 
   const closeRequest = async () => {
+    let trackId = Math.floor(Math.random() * 10000);
     const day = new Date().getDay();
     const docRef = doc(db, "familyRequests", cartId);
 
@@ -267,7 +268,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
         location: Dzone,
         dateSlot: date,
         timeSlot: time,
-        // trackId: trackId,
+        trackId: trackId,
         time: time,
         date: new Date().toLocaleDateString("en-US"),
         // trackId: trackId,

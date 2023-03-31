@@ -68,6 +68,7 @@ const DriverHome = (props) => {
           num: doc.id.split(doc.id[6])[0],
         }))
       );
+      console.log(orders.length);
     });
 
     return () => unsubscribe();
@@ -76,7 +77,7 @@ const DriverHome = (props) => {
   const navigation = props.navigation;
 
   const change = (type) => {
-    console.log("changeeee", orders);
+    console.log("changeeee", orders.length);
     if (type == "deliv") {
       setType("deliv");
 

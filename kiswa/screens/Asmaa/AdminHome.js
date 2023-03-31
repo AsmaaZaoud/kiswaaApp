@@ -98,16 +98,10 @@ const AdminHome = ({ route, navigation }) => {
         </Pressable>
       </View>
 
-      {/* <NavBar
-        //title="Reques Clothes"
-        style={{ height: 0, borderWidth: 0, marginTop: 0, marginBottom: 0 }}
-      /> */}
-
       <Block
         style={{
           backgroundColor: "white",
           flexDirection: "colum",
-          // marginTop: "1%",
           paddingTop: "1%",
         }}
       >

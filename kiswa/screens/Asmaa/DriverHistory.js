@@ -27,7 +27,8 @@ export function normalize(size) {
 }
 
 const DriverHistory = (props, { navigation }) => {
-  const id = props.email;
+  let id = auth?.currentUser?.email;
+
   console.log(id);
   const [deviceType, setDeviceType] = useState("");
 
@@ -78,6 +79,7 @@ const DriverHistory = (props, { navigation }) => {
   };
 
   useEffect(() => {
+    console.log(arr);
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
     // readOrders();
     getOrders();
@@ -93,113 +95,103 @@ const DriverHistory = (props, { navigation }) => {
         <Block flex>
           <Text style={styles.title}>Orders History</Text>
           {arr.length > 0 ? (
-            <FlatList
-              style={styles.notificationList}
-              enableEmptySections={true}
-              data={arr}
-              keyExtractor={(item) => (item != undefined ? item.trackId : 0)}
-              renderItem={({ item }) => {
-                return item != undefined ? (
-                  <View style={styles.notificationBox} key={item.trackId}>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        paddingHorizontal: "2%",
-                        paddingVertical: "1%",
-                      }}
-                    >
-                      <Text style={styles.description}>Order No. </Text>
-                      <Text style={styles.description}>#{item.trackId}</Text>
-                    </View>
+            arr.map((item) =>
+              item != undefined ? (
+                <View style={styles.notificationBox} key={item.trackId}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: "2%",
+                      paddingVertical: "1%",
+                    }}
+                  >
+                    <Text style={styles.description}>Order No. </Text>
+                    <Text style={styles.description}>#{item.trackId}</Text>
+                  </View>
+
+                  <View
+                    style={{
+                      borderWidth: 0.6,
+                      width: width * 0.9,
+                      marginBottom: "4%",
+                    }}
+                  ></View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      margin: "5%",
+                      marginTop: "1%",
+                    }}
+                  >
+                    {item.type == "pickup" ? (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/imgs/pick.png")}
+                      />
+                    ) : (
+                      <Image
+                        style={styles.icon}
+                        source={require("../../assets/imgs/deliv.png")}
+                      />
+                    )}
 
                     <View
                       style={{
-                        borderWidth: 0.6,
-                        width: width * 0.9,
-                        marginBottom: "4%",
-                      }}
-                    ></View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        margin: "5%",
-                        marginTop: "1%",
+                        marginLeft: "5%",
+                        width: "80%",
+                        // borderWidth: 1,
                       }}
                     >
-                      {item.type == "pickup" ? (
-                        <Image
-                          style={styles.icon}
-                          source={require("../../assets/imgs/pick.png")}
-                        />
-                      ) : (
-                        <Image
-                          style={styles.icon}
-                          source={require("../../assets/imgs/deliv.png")}
-                        />
-                      )}
-
                       <View
                         style={{
-                          marginLeft: "5%",
-                          width: "80%",
+                          flexDirection: "row",
+                          width: "40%",
                           // borderWidth: 1,
+                          padding: "1%",
+                          justifyContent: "space-between",
                         }}
                       >
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            width: "40%",
-                            // borderWidth: 1,
-                            padding: "1%",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <MaterialIcons
-                            name="location-pin"
-                            size={25}
-                            color="#1a1f87"
-                          />
-                          <Text style={styles.description}>
-                            {item.location}
-                          </Text>
-                        </View>
-
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            width: "75%",
-                            // borderWidth: 1,
-                            padding: "1%",
-
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <MaterialIcons
-                            name="date-range"
-                            size={25}
-                            color="#1a1f87"
-                          />
-                          <Text style={styles.description}>{item.date}</Text>
-                          <Text style={styles.description}>
-                            {item.timeSlot}
-                          </Text>
-                        </View>
+                        <MaterialIcons
+                          name="location-pin"
+                          size={25}
+                          color="#1a1f87"
+                        />
+                        <Text style={styles.description}>{item.location}</Text>
                       </View>
+
                       <View
                         style={{
-                          justifyContent: "flex-start",
-                          alignContent: "flex-end",
-                          marginLeft: "7%",
+                          flexDirection: "row",
+                          width: "75%",
+                          // borderWidth: 1,
+                          padding: "1%",
+
+                          justifyContent: "space-between",
                         }}
                       >
-                        {/* <AntDesign name="checkcircle" size={35} color="green" /> */}
+                        <MaterialIcons
+                          name="date-range"
+                          size={25}
+                          color="#1a1f87"
+                        />
+                        <Text style={styles.description}>{item.date}</Text>
+                        <Text style={styles.description}>{item.timeSlot}</Text>
                       </View>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "flex-start",
+                        alignContent: "flex-end",
+                        marginLeft: "7%",
+                      }}
+                    >
+                      {/* <AntDesign name="checkcircle" size={35} color="green" /> */}
                     </View>
                   </View>
-                ) : null;
-              }}
-            />
+                </View>
+              ) : null
+            )
           ) : (
             <Text style={styles.noOrder}>No orders yet</Text>
           )}
