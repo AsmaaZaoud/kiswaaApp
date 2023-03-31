@@ -84,6 +84,7 @@ export default function Register({ navigation }) {
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         console.log("registend done");
+        alert("Done!, Now log in please");
         navigation.navigate("Login");
         add();
       })
@@ -94,15 +95,14 @@ export default function Register({ navigation }) {
   };
 
   const add = async () => {
-    const docRef = doc(db, "donors", email);
+    const docRef = doc(db, "donors", email.toLowerCase());
 
     await setDoc(docRef, {
       userName: userName,
       phone: phone,
       location: location,
-      email: email,
+      email: email.toLowerCase(),
       zone: zone,
-      image: "",
     })
       .then(() => {
         console.log("data submitted");
@@ -186,6 +186,10 @@ export default function Register({ navigation }) {
       if (status !== "granted") {
         console.log("Please grant location permissions");
         return;
+      } else {
+        console.log("permitted");
+        alert("Your location has been recorded.");
+        setLocationError("");
       }
 
       let currentLocation = await Location.getCurrentPositionAsync({});
@@ -405,7 +409,7 @@ export default function Register({ navigation }) {
                       // onChange={validation}
                       onChange={(item) => {
                         setZone(item.label);
-                        validation();
+                        setZoneError("");
                       }}
                     ></Dropdown>
                     <Text

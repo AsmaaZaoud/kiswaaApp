@@ -84,6 +84,7 @@ export default function RegisterFamily({ navigation }) {
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         console.log("registend done");
+        alert("Done!, Now log in please");
         navigation.navigate("Login");
         add();
       })
@@ -94,12 +95,12 @@ export default function RegisterFamily({ navigation }) {
   };
 
   const add = async () => {
-    const docRef = doc(db, "families", email);
+    const docRef = doc(db, "families", email.toLowerCase());
     await setDoc(docRef, {
       userName: userName,
       phone: phone,
       location: location,
-      email: email,
+      email: email.toLowerCase(),
       zone: zone,
     })
       .then(() => {
@@ -183,6 +184,10 @@ export default function RegisterFamily({ navigation }) {
       if (status !== "granted") {
         console.log("Please grant location permissions");
         return;
+      } else {
+        console.log("permitted");
+        alert("Your location has been recorded.");
+        setLocationError("");
       }
 
       let currentLocation = await Location.getCurrentPositionAsync({});
@@ -401,6 +406,7 @@ export default function RegisterFamily({ navigation }) {
                       value={zone}
                       onChange={(item) => {
                         setZone(item.label);
+                        setZoneError("");
                       }}
                     ></Dropdown>
                     <Text

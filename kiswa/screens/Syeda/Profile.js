@@ -101,32 +101,8 @@ const Profile = ({ route, navigation }) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
-      setImage(docSnap.data().image);
-      console.log("read image:", image);
     } else {
       console.log("No such document!");
-    }
-  };
-
-  const pickImage = async () => {
-    console.log("pick image");
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-    });
-    if (!result.canceled) {
-      setImage(result.uri);
-      console.log("set image uri: ", image);
-      console.log("result.uri", result.uri);
-      //update function
-      const docRef = doc(db, "donors", user);
-      await setDoc(docRef, { image: result.uri }, { merge: true })
-        .then(() => {
-          //setImage(result.uri);
-          console.log("data updated for image");
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
     }
   };
 
@@ -230,14 +206,6 @@ const Profile = ({ route, navigation }) => {
                       uri: "https://vectorified.com/images/generic-avatar-icon-25.jpg",
                     }}
                   ></Image>
-                  {/* <TouchableOpacity onPress={pickImage}>
-                    <Image
-                      style={styles.addImage}
-                      source={{
-                        uri: "https://cdn-icons-png.flaticon.com/512/61/61183.png",
-                      }}
-                    />
-                  </TouchableOpacity> */}
                 </View>
               </Block>
               <Block style={styles.info}></Block>

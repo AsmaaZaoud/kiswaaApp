@@ -205,7 +205,7 @@ const FamilyRequest = ({ route, navigation }) => {
   const [type, setType] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState(colors[0].label);
-  const [size, setSize] = useState("S");
+  const [size, setSize] = useState("");
   const [gender, setGender] = useState("Male");
 
   // console.log(ageGroup, type, quantity, color, size);
@@ -261,8 +261,16 @@ const FamilyRequest = ({ route, navigation }) => {
     console.log("Request add with ID: ", docRef.id, "for user ", id);
     setCartId(docRef.id);
   };
+  const [sizeError, setSizeError] = useState("");
 
   const Save = async () => {
+    if (size == "") {
+      setSizeError("Please select size");
+      return;
+    }
+    setSizeError("");
+    setModalVisible(!modalVisible);
+
     console.log(cartId);
     const docRef = await addDoc(
       collection(db, "familyRequests", cartId, "Items"),
@@ -450,6 +458,7 @@ const FamilyRequest = ({ route, navigation }) => {
                           style={[styles.circle]}
                           onPress={() => {
                             setModalVisible(true);
+                            setSizeError("");
                             setType(x.value);
                             setAgeGroup(groups[index]);
                           }}
@@ -677,6 +686,9 @@ const FamilyRequest = ({ route, navigation }) => {
                       >
                         What Size?
                       </Text>
+                      <Text style={{ color: "red", fontSize: 15 }}>
+                        {sizeError}
+                      </Text>
                       <View style={styles.modalblocksize}>
                         <Pressable
                           style={[
@@ -686,7 +698,10 @@ const FamilyRequest = ({ route, navigation }) => {
                                 size == "S" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
-                          onPress={() => setSize("S")}
+                          onPress={() => {
+                            setSize("S");
+                            setSizeError("");
+                          }}
                         >
                           <Text
                             style={{ color: size == "S" ? "white" : "black" }}
@@ -702,7 +717,10 @@ const FamilyRequest = ({ route, navigation }) => {
                                 size == "M" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
-                          onPress={() => setSize("M")}
+                          onPress={() => {
+                            setSize("M");
+                            setSizeError("");
+                          }}
                         >
                           <Text
                             style={{ color: size == "M" ? "white" : "black" }}
@@ -718,7 +736,10 @@ const FamilyRequest = ({ route, navigation }) => {
                                 size == "L" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
-                          onPress={() => setSize("L")}
+                          onPress={() => {
+                            setSize("L");
+                            setSizeError("");
+                          }}
                         >
                           <Text
                             style={{ color: size == "L" ? "white" : "black" }}
@@ -734,7 +755,11 @@ const FamilyRequest = ({ route, navigation }) => {
                                 size == "XL" ? "#3042BA" : "#BAD9FC",
                             },
                           ]}
-                          onPress={() => setSize("XL")}
+                          onPress={() => {
+                            setSize("XL");
+
+                            setSizeError("");
+                          }}
                         >
                           <Text
                             style={{ color: size == "XL" ? "white" : "black" }}
@@ -751,7 +776,7 @@ const FamilyRequest = ({ route, navigation }) => {
                         { marginTop: 40 },
                       ]}
                       onPress={() => {
-                        setModalVisible(!modalVisible);
+                        // setModalVisible(!modalVisible);
                         Save();
                       }}
                     >

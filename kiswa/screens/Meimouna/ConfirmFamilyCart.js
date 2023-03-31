@@ -372,7 +372,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               }}
             >
               <Text style={{ fontSize: 20, marginLeft: 15 }}>
-                Select delivary time:
+                Select delivary time interval:
               </Text>
               {timeError !== "" ? (
                 <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
@@ -392,7 +392,10 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                 }}
               >
                 <Pressable
-                  onPress={() => setTime("8AM - 12PM")}
+                  onPress={() => {
+                    setTime("8AM - 12PM");
+                    setTimeError("");
+                  }}
                   style={{
                     backgroundColor:
                       time == "8AM - 12PM" ? "#F9966B" : "#1a1f87",
@@ -408,7 +411,10 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   </Text>
                 </Pressable>
                 <Pressable
-                  onPress={() => setTime("12PM - 6PM")}
+                  onPress={() => {
+                    setTime("12PM - 6PM");
+                    setTimeError("");
+                  }}
                   style={{
                     backgroundColor:
                       time == "12PM - 6PM" ? "#F9966B" : "#1a1f87",
@@ -424,7 +430,10 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   </Text>
                 </Pressable>
                 <Pressable
-                  onPress={() => setTime("6PM - 10PM")}
+                  onPress={() => {
+                    setTime("6PM - 10PM");
+                    setTimeError("");
+                  }}
                   style={{
                     backgroundColor:
                       time == "6PM - 10PM" ? "#F9966B" : "#1a1f87",
@@ -442,7 +451,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               </Block>
 
               <Text style={{ fontSize: 20, marginLeft: 15 }}>
-                Select delivary date:
+                Select delivary date interval:
               </Text>
               {dateError !== "" ? (
                 <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
@@ -458,7 +467,10 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                 }}
               >
                 <Pressable
-                  onPress={() => setDate(`${dateString} - ${first2date}`)}
+                  onPress={() => {
+                    setDate(`${dateString} - ${first2date}`);
+                    setDateError("");
+                  }}
                   style={{
                     backgroundColor:
                       date == `${dateString} - ${first2date}`
@@ -475,7 +487,10 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   </Text>
                 </Pressable>
                 <Pressable
-                  onPress={() => setDate(`${sec1date} - ${sec2date}`)}
+                  onPress={() => {
+                    setDate(`${sec1date} - ${sec2date}`);
+                    setDateError("");
+                  }}
                   style={{
                     backgroundColor:
                       date == `${sec1date} - ${sec2date}`
@@ -492,7 +507,10 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
                   </Text>
                 </Pressable>
                 <Pressable
-                  onPress={() => setDate(`${third1date} - ${third2date}`)}
+                  onPress={() => {
+                    setDate(`${third1date} - ${third2date}`);
+                    setDateError("");
+                  }}
                   style={{
                     backgroundColor:
                       date == `${third1date} - ${third2date}`
@@ -511,15 +529,39 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               </Block>
             </View>
 
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Pressable
+                onPress={() => navigation.navigate("FamilyHome", id)}
+                style={{
+                  marginBottom: "1%",
+                  marginTop: "3%",
+                  backgroundColor: "#ba324f",
+                  height: 50,
+                  width: "45%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  //marginLeft: "10%",
+                  borderRadius: 8,
+                  padding: 5,
+                }}
+              >
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
+                >
+                  Cancel
+                </Text>
+              </Pressable>
               <Pressable
                 onPress={() => validation()}
                 style={{
                   marginBottom: "1%",
-                  marginTop: "9%",
+                  marginTop: "3%",
                   backgroundColor: "#26753F",
                   height: 50,
-                  width: "75%",
+                  width: "45%",
                   alignItems: "center",
                   justifyContent: "center",
                   textAlign: "center",

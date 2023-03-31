@@ -117,33 +117,61 @@ const Login = ({ navigation }) => {
     }
   };
   const [error, setError] = useState({ satus: false, key: null, msg: "" });
-  const handleLogin = () => {
+  const validate = () => {
     if (
       (email == null || email == "") &&
       (password == null || password == "")
       //    ||
       // error.msg == "Firebase: Error (auth/wrong-password)."
-    )
+    ) {
       setError({
         satus: true,
         key: "email&pass",
         msg: "Please Enter a Valid Email & Password",
       });
+      return false;
+    }
+
     // else if (error.msg == "auth/wrong-password") {
     // }
-    else if (!email.includes("@"))
+    else if (!email.includes("@")) {
       setError({
         satus: true,
         key: "email",
         msg: "Please Enter a Valid Email",
       });
-    else if (password == null || password == "")
+      return false;
+    } else if (password == null || password == "") {
       setError({
         satus: true,
         key: "pass",
         msg: "Please Enter Password",
       });
-    else {
+      return false;
+    } else if (password.length < 6) {
+      setError({
+        satus: true,
+        key: "pass",
+        msg: "Password must be at least 6 charc",
+      });
+      return false;
+    } else if (
+      password != null &&
+      password.length >= 6 &&
+      email != null &&
+      email.includes("@")
+    ) {
+      setError({
+        satus: false,
+        key: "",
+        msg: "",
+      });
+      return true;
+    }
+  };
+  const handleLogin = () => {
+    // console.log(validate());
+    if (validate() == true) {
       signInWithEmailAndPassword(auth, email, password)
         .then(async () => {
           await getUser();
@@ -151,10 +179,16 @@ const Login = ({ navigation }) => {
         })
         .catch((error) => {
           console.log(error.code);
-          console.log(error.message);
-          setError({ satus: true, key: "db", msg: error.message });
+          console.log(error.message.split("/")[1]);
+          setError({
+            satus: true,
+            key: "db",
+            msg: error.message.split("/")[1],
+          });
           // setError({ satus: true, key: "db", msg: error.message });
         });
+    } else {
+      validate();
     }
   };
 
@@ -202,6 +236,7 @@ const Login = ({ navigation }) => {
                     value={email}
                     style={EmailErrorStyle()}
                     onChangeText={setEmail}
+                    onBlur={validate}
                     iconContent={
                       <Icon
                         size={16}
@@ -219,6 +254,7 @@ const Login = ({ navigation }) => {
                     borderless
                     placeholder="Password"
                     value={password}
+                    onBlur={validate}
                     style={PasswordErrorStyle()}
                     onChangeText={setPassword}
                     iconContent={
@@ -363,7 +399,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0936F",
   },
   errorMessage: {
-    // alignSelf: "center",
+    alignSelf: "center",
     fontWeight: "bold",
     paddingTop: "4%",
     color: "red",

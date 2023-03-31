@@ -669,7 +669,7 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 30,
     borderRadius: 80,
-    backgroundColor: "#52b678",
+    backgroundColor: "#26753F",
     position: "relative",
     overflow: "hidden",
     width: "48%",
