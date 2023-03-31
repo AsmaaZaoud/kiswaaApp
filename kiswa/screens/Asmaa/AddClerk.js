@@ -142,22 +142,39 @@ const AddClerk = ({ navigation }) => {
     { label: "Al Shamal", value: "9" },
     { label: "Al Shahaniya", value: "10" },
   ];
+  const password = 123456;
 
   const add = async () => {
     alert("Added Succecfully");
-    uploadImage();
-    const docRef = doc(db, "inventoryWorkers", email);
-    await setDoc(docRef, {
-      fname: Fname,
-      email: email,
-      lname: Lname,
-      phone: phone,
-      qId: qId,
-      dob: dob,
-      image: fileName,
-    });
-    console.log("Document written with ID: ", docRef.id);
-    navigation.goBack();
+    try {
+      uploadImage();
+      const docRef = doc(db, "inventoryWorkers", email.toLowerCase());
+      await setDoc(docRef, {
+        fname: Fname,
+        email: email,
+        lname: Lname,
+        phone: phone,
+        qId: qId,
+        dob: dob,
+        image: fileName,
+      });
+      handleRegister();
+      console.log("Document written with ID: ", docRef.id);
+      navigation.goBack();
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const handleRegister = () => {
+    console.log("in regstr...");
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("registend done");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   const validOne = (x) => {
@@ -283,7 +300,7 @@ const AddClerk = ({ navigation }) => {
                   >
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginRight: width > 500 ? 5 : 0,
                       }}
                     >
@@ -303,7 +320,7 @@ const AddClerk = ({ navigation }) => {
 
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginLeft: width > 500 ? 15 : 0,
                       }}
                     >
@@ -331,7 +348,7 @@ const AddClerk = ({ navigation }) => {
                   >
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginRight: width > 500 ? 5 : 0,
                       }}
                     >
@@ -354,7 +371,7 @@ const AddClerk = ({ navigation }) => {
 
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginLeft: width > 500 ? 15 : 0,
                       }}
                     >
@@ -384,7 +401,7 @@ const AddClerk = ({ navigation }) => {
                   >
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginRight: width > 500 ? 5 : 0,
                       }}
                     >
@@ -405,7 +422,7 @@ const AddClerk = ({ navigation }) => {
                     {/* <View style={styles.con}> */}
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginLeft: width > 500 ? 16 : 0,
                       }}
                     >

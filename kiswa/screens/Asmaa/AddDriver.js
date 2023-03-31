@@ -131,7 +131,7 @@ const AddDriver = ({ navigation }) => {
 
   const zones = [
     { label: " All Zones", value: "0" },
-    { label: "Doha", value: "1" },
+    { label: "Duhail", value: "1" },
     { label: "Al Rayyan", value: "2" },
     { label: "Rumeilah", value: "3" },
     { label: "Wadi Al Sail", value: "4" },
@@ -144,23 +144,39 @@ const AddDriver = ({ navigation }) => {
   ];
 
   const add = async () => {
-    alert("add");
-    uploadImage();
-    const docRef = doc(db, "drivers", email);
-    await setDoc(docRef, {
-      fname: Fname,
-      email: email,
-      lname: Lname,
-      phone: phone,
-      qId: qId,
-      dob: dob,
-      zone: zone,
-      image: fileName,
-    });
-    console.log("Document written with ID: ", docRef.id);
-    navigation.goBack();
+    alert("Driver Added");
+    try {
+      uploadImage();
+      const docRef = doc(db, "drivers", email.toLowerCase());
+      await setDoc(docRef, {
+        fname: Fname,
+        email: email,
+        lname: Lname,
+        phone: phone,
+        qId: qId,
+        dob: dob,
+        zone: zone,
+        image: fileName,
+      });
+      handleRegister();
+      console.log("Document written with ID: ", docRef.id);
+      navigation.goBack();
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
+  const password = 123456;
+  const handleRegister = () => {
+    console.log("in regstr...");
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("registend done");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   const validOne = (x) => {
     setFlag(false);
     switch (x) {
@@ -287,7 +303,7 @@ const AddDriver = ({ navigation }) => {
                   >
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginRight: width > 500 ? 5 : 0,
                       }}
                     >
@@ -307,7 +323,7 @@ const AddDriver = ({ navigation }) => {
 
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginLeft: width > 500 ? 15 : 0,
                       }}
                     >
@@ -335,7 +351,7 @@ const AddDriver = ({ navigation }) => {
                   >
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginRight: width > 500 ? 5 : 0,
                       }}
                     >
@@ -358,7 +374,7 @@ const AddDriver = ({ navigation }) => {
 
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginLeft: width > 500 ? 15 : 0,
                       }}
                     >
@@ -388,7 +404,7 @@ const AddDriver = ({ navigation }) => {
                   >
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginRight: width > 500 ? 5 : 0,
                       }}
                     >
@@ -409,7 +425,7 @@ const AddDriver = ({ navigation }) => {
                     {/* <View style={styles.con}> */}
                     <View
                       style={{
-                        width: width > 500 ? "50%" : "100%",
+                        width: width > 500 ? width / 2.5 : width - 10,
                         marginLeft: width > 500 ? 16 : 0,
                       }}
                     >
@@ -470,7 +486,7 @@ const AddDriver = ({ navigation }) => {
                     }}
                   >
                     <Block
-                      width={width > 500 ? "50%" : "100%"}
+                      width={width > 500 ? width / 2.5 : width - 10}
                       style={{ marginTop: 10 }}
                     >
                       <Text style={styles.text}>Zone</Text>

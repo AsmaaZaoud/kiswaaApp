@@ -178,7 +178,7 @@ const Drivers = ({ navigation }) => {
             }}
           >
             {orders.map((item, i) => (
-              <View style={styles.notificationBox} key={i}>
+              <View style={styles.notificationBox} key={item.trackId}>
                 <View
                   style={{
                     flexDirection: "row",
