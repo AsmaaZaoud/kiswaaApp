@@ -253,6 +253,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
     )
       .then(() => {
         console.log("data submitted");
+        alert("your request has been submitted");
       })
       .catch((error) => {
         console.log(error.message);
@@ -443,7 +444,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
               <Text style={{ fontSize: 20, marginLeft: 15 }}>
                 Select delivary date:
               </Text>
-              {timeError !== "" ? (
+              {dateError !== "" ? (
                 <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
                   {dateError}
                 </Text>

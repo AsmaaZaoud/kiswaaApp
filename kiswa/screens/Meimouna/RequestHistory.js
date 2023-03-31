@@ -77,7 +77,7 @@ export default function RequestHistory({ route, navigation }) {
     setStat(stat);
     var temp = [...allRequest];
     if (stat == "done") {
-      temp = temp.filter((x) => x.status == "fullfied");
+      temp = temp.filter((x) => x.status == "done");
     } else {
       temp = temp.filter((x) => x.status == "pending");
     }

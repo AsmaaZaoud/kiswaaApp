@@ -39,12 +39,13 @@ const FeedbackConf = ({ route, navigation }) => {
       <NavBar
         title="Feedback Confirm"
         style={{
-          height: "10%",
+          height: "15%",
           // marginBottom: "1%",
           backgroundColor: "#FFFAFA",
           borderColor: "lightgray",
           borderWidth: 1,
           // marginTop: "1%",
+          paddingTop: "10%",
           width: "100%",
           zIndex: 999,
         }}
@@ -121,14 +122,14 @@ const FeedbackConf = ({ route, navigation }) => {
             style={{ fontSize: 18, textAlign: "center", marginBottom: "6%" }}
           >
             Thank you for reaching out and providing us with valuable feedback.
-            We will try our best to satisfy you
+            We will try our best to satisfy you.
           </Text>
         ) : mood === "Verybad" ? (
           <Text
             style={{ fontSize: 18, textAlign: "center", marginBottom: "6%" }}
           >
             We’re sorry to hear that you didn’t have a great experience with our
-            service. we will try our best to improve
+            service. we will try our best to improve.
           </Text>
         ) : null}
 
