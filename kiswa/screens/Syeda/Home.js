@@ -88,25 +88,11 @@ const Home = ({ route, navigation }) => {
 
     return () => clearInterval(toggle);
   });
-  let Currentuser = auth?.currentUser?.email;
+  let user = auth?.currentUser?.email;
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={{
-            marginRight: 10,
-          }}
-          // onPress={onSignOut}
-        >
-          <Text>Logout</Text>
-        </TouchableOpacity>
-      ),
-    });
-  }, []);
   // console.log("Currentuser: ", Currentuser);
 
-  const [user, setUser] = useState(auth?.currentUser?.email);
+  // const [user, setUser] = useState(auth?.currentUser?.email);
 
   const isFocused = useIsFocused();
 
@@ -533,9 +519,9 @@ const Home = ({ route, navigation }) => {
         <View style={styles.topl}>
           <Image
             source={require("../../assets/Fatima/white.png")}
-            style={{ width: 150, height: 50 }}
-            width={width * 0.35}
-            height={height * 0.05}
+            style={{ width: 120, height: 50 }}
+            width={width > 500 ? width * 0.3 : width * 0.35}
+            height={width > 500 ? height * 0.06 : height * 0.05}
           />
           {user != undefined ? (
             <Pressable
@@ -627,6 +613,7 @@ const Home = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: width > 500 ? 80 : 0,
     justifyContent: "center",
     alignItems: "center",
     // borderWidth: 1,
