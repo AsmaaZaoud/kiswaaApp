@@ -90,7 +90,7 @@ export default function Register({ navigation }) {
       })
       .catch((error) => {
         console.log(error.message);
-        setRegisteerError("Email is already in use");
+        setRegisteerError("Email is Already in Use, Please Login");
       });
   };
 
@@ -118,30 +118,32 @@ export default function Register({ navigation }) {
     if (validator.isEmail(email)) {
       setEmailError("");
     } else {
-      setEmailError("Email is not vaildate");
+      setEmailError("Email is not Valid. Enter a Valid Email Please");
     }
   };
   const passValidate = async () => {
-    if (password.length >= 5) {
+    if (password.length >= 6) {
       setPassError("");
     } else {
-      setPassError("Password Must Be 6 Chars");
+      setPassError("Password Must Be at Least 6 Characters");
     }
   };
   const userNameValidate = async () => {
     if (userName.length != 0) {
       setUserNameError("");
     } else {
-      setUserNameError("Enter Your user Name");
+      setUserNameError("Please Enter Your User Name");
     }
   };
   const phoneValidate = async () => {
-    if (phone.length >= 7) {
+    if (phone.length >= 8) {
       console.log(phone);
       setPhoneError("");
     } else {
       console.log(phone);
-      setPhoneError("Number is not valid");
+      setPhoneError(
+        "Phone Number is not Valid, Please Enter a Valid Phone Number"
+      );
     }
   };
 

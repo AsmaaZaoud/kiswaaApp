@@ -116,30 +116,32 @@ export default function RegisterFamily({ navigation }) {
     if (validator.isEmail(email)) {
       setEmailError("");
     } else {
-      setEmailError("Email is not vaildate");
+      setEmailError("Email is Already in Use, Please Login");
     }
   };
   const passValidate = async () => {
     if (password.length >= 5) {
       setPassError("");
     } else {
-      setPassError("Password Must Be 6 Chars");
+      setPassError("Password Must Be at Least 6 Characters");
     }
   };
   const userNameValidate = async () => {
     if (userName.length != 0) {
       setUserNameError("");
     } else {
-      setUserNameError("Enter Your user Name");
+      setUserNameError("Please Enter Your User Name");
     }
   };
   const phoneValidate = async () => {
-    if (phone.length >= 7) {
+    if (phone.length >= 8) {
       console.log(phone);
       setPhoneError("");
     } else {
       console.log(phone);
-      setPhoneError("Number is not valid");
+      setPhoneError(
+        "Phone Number is not Valid, Please Enter a Valid Phone Number"
+      );
     }
   };
 
@@ -197,7 +199,7 @@ export default function RegisterFamily({ navigation }) {
   };
 
   return (
-    <Block flex middle style={{ backgroundColor: "#1a1f87" }}>
+    <Block flex middle style={{ backgroundColor: "#3C4DBD" }}>
       <StatusBar hidden />
       {/* <ImageBackground
         source={Images.RegisterBackground}
@@ -237,7 +239,7 @@ export default function RegisterFamily({ navigation }) {
                   margin: "2%",
                 }}
               >
-                Register as Family
+                Register as Reciever
               </Text>
               <KeyboardAvoidingView
                 style={{ flex: 1 }}

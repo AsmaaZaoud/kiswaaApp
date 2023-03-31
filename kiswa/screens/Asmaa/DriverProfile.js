@@ -210,7 +210,7 @@ const DriverProfile = (props) => {
 
   const cheack = (value, type) => {
     if (type == "phone") {
-      if (value.length == 8) {
+      if (value.length === 8) {
         setPhoneError(false);
         //setPhone(value)
       }

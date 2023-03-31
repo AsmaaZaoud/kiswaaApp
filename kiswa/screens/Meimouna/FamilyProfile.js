@@ -125,12 +125,12 @@ export default function FamilyProfile({ route, navigation }) {
     if (phonenum.length === 8) {
       setPhoneError("");
     } else {
-      setPhoneError("Number is not valid");
+      setPhoneError("Number is not Valid, Please Enter 8 Digit Number");
     }
     if (userName.length != 0) {
       setNameError("");
     } else {
-      setNameError("Enter User Name");
+      setNameError("please Enter User Name");
     }
 
     if (phonenum.length === 8 && userName.length != 0) {
