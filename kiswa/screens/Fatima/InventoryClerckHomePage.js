@@ -129,11 +129,9 @@ const InventoryClerkHomePage = ({ navigation }) => {
     setColor("");
     setGender("");
     setAge("");
-    addModalVisible
-      ? setAddModalVisibile(!addModalVisible)
-      : editModalVisible
-      ? setEditModalVisible(!editModalVisible)
-      : null;
+    if (addModalVisible) {
+      setAddModalVisible(!addModalVisible);
+    }
   };
 
   // change edit
@@ -212,7 +210,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
           key: "quality",
           msg: "Choose Quality!",
         })
-      : (set(), setError({ satus: false, key: null, msg: "" }));
+      : set() && setError({ satus: false, key: null, msg: "" });
   };
 
   const cancel = () => {
@@ -228,7 +226,6 @@ const InventoryClerkHomePage = ({ navigation }) => {
   return (
     <SafeAreaView
       style={{
-        // flex: 1,
         overflow: "scroll",
         height: height,
       }}
