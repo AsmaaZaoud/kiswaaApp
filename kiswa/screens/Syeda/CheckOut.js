@@ -126,7 +126,7 @@ const CheckOut = ({ route, navigation }) => {
   const [drivers, setDrivers] = useState([]);
 
   const readDriver = async () => {
-    console.log(Dzone);
+    // alert(Dzone);
     // alert(Dzone);
     const q = query(collection(db, "drivers"), where("zone", "==", Dzone));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -177,7 +177,7 @@ const CheckOut = ({ route, navigation }) => {
     if (user != undefined) {
       //Asma: I added this
       const docRefDriver = await addDoc(
-        collection(db, "drivers", "sim@mail.com", "orders"),
+        collection(db, "drivers", drivers[0], "orders"),
         {
           phone: phone,
           userId: email,

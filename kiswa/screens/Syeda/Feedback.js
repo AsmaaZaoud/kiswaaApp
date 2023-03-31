@@ -130,7 +130,7 @@ const Feedback = ({ navigation }) => {
                 </TouchableOpacity>
               ))}
             </View>
-            {renderFeedbackInput()}
+            {/* {renderFeedbackInput()} */}
             <TouchableOpacity
               style={styles.submitButton}
               onPress={handleSubmit}

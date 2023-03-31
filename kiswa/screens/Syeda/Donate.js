@@ -17,7 +17,7 @@ import {
 } from "react-native";
 import { Block, Checkbox, Text, theme, Button } from "galio-framework";
 import { Dropdown } from "react-native-element-dropdown";
-import { auth } from "../../config";
+import { auth, db } from "../../config";
 import {
   MaterialCommunityIcons,
   Ionicons,
@@ -25,6 +25,7 @@ import {
   Feather,
   Entypo,
 } from "react-native-vector-icons";
+import { doc, getDoc } from "firebase/firestore";
 
 const { width, height } = Dimensions.get("screen");
 const scale = width / 428;
@@ -76,7 +77,7 @@ const Donate = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    user != undefined ? getZone : null;
+    user != undefined ? getZone() : null;
     console.log(cloth);
     console.log(amount);
   });
@@ -89,6 +90,7 @@ const Donate = ({ route, navigation }) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setDZone(docSnap.data().zone);
+      // alert(Dzone);
 
       // setLat(docSnap.data().location.coords.latitude);
       // setLog(docSnap.data().location.coords.longitude);
