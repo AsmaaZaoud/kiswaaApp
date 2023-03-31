@@ -65,7 +65,7 @@ import { useIsFocused } from "@react-navigation/native";
 const CheckOut = ({ route, navigation }) => {
   const zones = [
     { label: " All Zones", value: "0" },
-    { label: "Doha", value: "1" },
+    { label: "Duhail", value: "1" },
     { label: "Al Rayyan", value: "2" },
     { label: "Rumeilah", value: "3" },
     { label: "Wadi Al Sail", value: "4" },

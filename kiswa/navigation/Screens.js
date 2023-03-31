@@ -510,6 +510,8 @@ export default function OnboardingStack(props) {
         <Stack.Screen name="AddDriver" component={AddDriver} />
         <Stack.Screen name="DriveProfile" component={DriveProfile} />
         <Stack.Screen name="Donors" component={Donors} />
+        <Stack.Screen name="Profile" component={Profile} />
+
         <Stack.Screen name="Families" component={Families} />
         <Stack.Screen name="DriverHistory" component={DriverHistory} />
         <Stack.Screen name="DriverDash" component={DriverDash} />
