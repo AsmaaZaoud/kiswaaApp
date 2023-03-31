@@ -236,7 +236,6 @@ const Login = ({ navigation }) => {
                     value={email}
                     style={EmailErrorStyle()}
                     onChangeText={setEmail}
-                    onBlur={validate}
                     iconContent={
                       <Icon
                         size={16}
@@ -254,7 +253,6 @@ const Login = ({ navigation }) => {
                     borderless
                     placeholder="Password"
                     value={password}
-                    onBlur={validate}
                     style={PasswordErrorStyle()}
                     onChangeText={setPassword}
                     iconContent={

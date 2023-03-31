@@ -67,7 +67,7 @@ const FeedbackAdmin = (props, { navigation }) => {
     const docf = doc(db, "feedback", id); //remove feedback
     await deleteDoc(docf)
       .then(() => {
-        alert("Comment deleted");
+        alert("Feedbacke removed");
         readFeedback();
       })
       .catch((error) => {

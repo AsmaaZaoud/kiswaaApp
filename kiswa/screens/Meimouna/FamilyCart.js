@@ -741,7 +741,7 @@ const styles = StyleSheet.create({
     padding: 35,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#842DCE",
+    shadowColor: "#1d2f6f",
     shadowOpacity: 3,
     shadowRadius: 10,
     elevation: 10,

@@ -152,7 +152,7 @@ const Inventory = ({ navigation }) => {
             style={{
               width: width,
               height: height * 0.033,
-              backgroundColor: "#F5BD9A",
+              backgroundColor: "#1d2f6f",
               marginTop: "2%",
             }}
           >
@@ -174,7 +174,7 @@ const Inventory = ({ navigation }) => {
               />
               <Text
                 style={{
-                  fontSize: deviceType == "mobile" ? 13 : 18,
+                  fontSize: deviceType == "mobile" ? 15 : 18,
                   marginLeft: "3%",
                   marginTop: "3%",
                 }}
@@ -187,7 +187,7 @@ const Inventory = ({ navigation }) => {
             >
               <AntDesign
                 name="table"
-                color="#80B84B"
+                color="green"
                 size={deviceType == "mobile" ? 40 : 45}
               />
             </Pressable>
@@ -199,7 +199,7 @@ const Inventory = ({ navigation }) => {
                 // flex: 1,
                 // borderWidth: 1,
                 height: height * 0.3,
-                width: width * 1.7,
+                width: width > 500 ? width * 1.7 : width * 2.7,
               }}
             >
               <View
@@ -208,9 +208,7 @@ const Inventory = ({ navigation }) => {
                   { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
                 ]}
               >
-                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-                  Quality
-                </Text>
+                <Text style={styles.pieTitle}>Quality</Text>
                 <View
                   style={{
                     borderWidth: 1,
@@ -275,9 +273,7 @@ const Inventory = ({ navigation }) => {
                   { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
                 ]}
               >
-                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-                  Ages
-                </Text>
+                <Text style={styles.pieTitle}>Ages</Text>
                 <View
                   style={{
                     borderWidth: 1,
@@ -353,9 +349,7 @@ const Inventory = ({ navigation }) => {
                   { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
                 ]}
               >
-                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-                  Type
-                </Text>
+                <Text style={styles.pieTitle}>Type</Text>
                 <View
                   style={{
                     borderWidth: 1,
@@ -456,7 +450,7 @@ const Inventory = ({ navigation }) => {
             style={{
               width: width,
               height: height * 0.033,
-              backgroundColor: "#F5BD9A",
+              backgroundColor: "#1d2f6f",
               marginTop: "2%",
             }}
           >
@@ -471,9 +465,7 @@ const Inventory = ({ navigation }) => {
               borderRadius: 20,
             }}
           >
-            <Text style={{ fontSize: normalize(23), marginLeft: "3%" }}>
-              Items
-            </Text>
+            <Text style={styles.pieTitle}>Items</Text>
             <View
               style={{
                 borderWidth: 1,
@@ -547,13 +539,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   title: {
-    fontSize: normalize(25),
-    marginLeft: 20,
+    fontSize: width > 500 ? normalize(30) : normalize(40),
+    marginLeft: "3%",
     textAlign: "left",
+    color: "#fff",
   },
   formContent: {
     flexDirection: "row",
     marginTop: 30,
+  },
+  pieTitle: {
+    fontSize: width > 500 ? normalize(27) : normalize(37),
+    marginLeft: "7%",
+    padding: 5,
   },
   inputContainer: {
     borderBottomColor: "#F5FCFF",

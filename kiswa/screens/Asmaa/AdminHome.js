@@ -126,14 +126,14 @@ const AdminHome = ({ route, navigation }) => {
             value={0}
             title="Men"
             style={{
-              borderBottomColor: index == 0 ? "#af9ec6" : "white",
+              borderBottomColor: index == 0 ? "#F17A4F" : "white",
               borderBottomWidth: 5,
             }}
           >
             <FontAwesome
               name="home"
               size={deviceType == "mobile" ? 30 : 45}
-              color="#e68d69"
+              color="#F7865E"
             />
             <Text style={{ fontSize: normalize(19) }}>Home</Text>
           </Tab.Item>
@@ -143,12 +143,12 @@ const AdminHome = ({ route, navigation }) => {
             value={1}
             title="Women"
             style={{
-              borderBottomColor: index == 1 ? "#af9ec6" : "white",
+              borderBottomColor: index == 1 ? "#F17A4F" : "white",
               borderBottomWidth: 5,
             }}
           >
             <FontAwesome
-              color="#e68d69"
+              color="#F7865E"
               name="users"
               size={deviceType == "mobile" ? 30 : 45}
             />
@@ -160,12 +160,12 @@ const AdminHome = ({ route, navigation }) => {
             value={2}
             title="Boys"
             style={{
-              borderBottomColor: index == 2 ? "#af9ec6" : "white",
+              borderBottomColor: index == 2 ? "#F17A4F" : "white",
               borderBottomWidth: 5,
             }}
           >
             <FontAwesome5
-              color="#e68d69"
+              color="#F7865E"
               name="user-tie"
               size={deviceType == "mobile" ? 30 : 45}
             />
@@ -177,12 +177,12 @@ const AdminHome = ({ route, navigation }) => {
             value={3}
             title="Girls"
             style={{
-              borderBottomColor: index == 3 ? "#af9ec6" : "white",
+              borderBottomColor: index == 3 ? "#F17A4F" : "white",
               borderBottomWidth: 5,
             }}
           >
             <FontAwesome5
-              color="#e68d69"
+              color="#F7865E"
               name="warehouse"
               size={deviceType == "mobile" ? 30 : 45}
             />
@@ -223,7 +223,7 @@ const AdminHome = ({ route, navigation }) => {
                   onPress={() => setUsers("families")}
                 >
                   <Text style={{ fontSize: normalize(30), color: "#FFF" }}>
-                    Families
+                    Receviers
                   </Text>
                 </Button>
                 <Button

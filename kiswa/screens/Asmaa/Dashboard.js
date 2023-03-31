@@ -303,7 +303,7 @@ const Dashboard = () => {
             style={{
               width: width,
               height: height * 0.033,
-              backgroundColor: "#F5BD9A",
+              backgroundColor: "#1d2f6f",
             }}
           >
             <Text style={styles.title}>Dashboard</Text>
@@ -313,7 +313,7 @@ const Dashboard = () => {
             <View
               style={{
                 flexDirection: "row",
-                width: width * 2,
+                width: width * 1.6,
                 height: deviceType == "mobile" ? height * 0.24 : height * 0.32,
               }}
             >
@@ -353,7 +353,12 @@ const Dashboard = () => {
                         />
                       </View>
                       <View style={styles.text}>
-                        <Text style={{ fontSize: normalize(20) }}>
+                        <Text
+                          style={{
+                            fontSize: normalize(20),
+                            fontWeight: "300",
+                          }}
+                        >
                           {x.title}
                         </Text>
                         <Text></Text>
@@ -409,7 +414,9 @@ const Dashboard = () => {
                         />
                       </View>
                       <View style={styles.text}>
-                        <Text style={{ fontSize: normalize(20) }}>
+                        <Text
+                          style={{ fontSize: normalize(20), fontWeight: "300" }}
+                        >
                           {x.title}
                         </Text>
                         <Text></Text>
@@ -455,8 +462,9 @@ const Dashboard = () => {
           <View
             style={{
               width: width,
-              height: 40,
-              backgroundColor: "#F5BD9A",
+              // height: 40,
+              height: height * 0.033,
+              backgroundColor: "#1d2f6f",
             }}
           >
             <Text style={styles.title}>Orders</Text>
@@ -470,7 +478,7 @@ const Dashboard = () => {
             <Block
               style={{
                 flexDirection: "row",
-                width: width * 1.5,
+                width: deviceType == "mobile" ? width * 2 : width * 1.5,
                 height: height * 0.4,
               }}
             >
@@ -480,9 +488,7 @@ const Dashboard = () => {
                   { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
                 ]}
               >
-                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-                  Orders
-                </Text>
+                <Text style={styles.pieTitle}> Orders</Text>
                 <View
                   style={{
                     borderWidth: 1,
@@ -540,9 +546,7 @@ const Dashboard = () => {
                   { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
                 ]}
               >
-                <Text style={{ fontSize: normalize(27), marginLeft: "7%" }}>
-                  Top Zones
-                </Text>
+                <Text style={styles.pieTitle}>Top Zones</Text>
                 <View
                   style={{
                     borderWidth: 1,
@@ -623,20 +627,21 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   title: {
-    fontSize: normalize(30),
+    fontSize: width > 500 ? normalize(30) : normalize(40),
     marginLeft: "3%",
     textAlign: "left",
+    color: "#fff",
   },
   statistics: {
     borderWidth: 1,
-    width: width * 0.7,
+    width: width * 0.73,
     height: height * 0.27,
-    margin: "1%",
+    margin: 10,
     borderRadius: 20,
     paddingBottom: 0,
   },
   blockss: {
-    // padding: "2%",
+    padding: 5,
     flexDirection: "row",
     flexWrap: "wrap",
     margin: "1%",
@@ -648,8 +653,7 @@ const styles = StyleSheet.create({
     margin: "2%",
     justifyContent: "space-between",
     flexDirection: "row",
-    // borderBottomEndRadius: "15%",
-    // borderTopEndRadius: "15%",
+    borderRadius: 8,
   },
   imgBlock: {
     width: "40%",
@@ -660,6 +664,12 @@ const styles = StyleSheet.create({
   },
   text: {
     width: "55%",
+  },
+
+  pieTitle: {
+    fontSize: width > 500 ? normalize(27) : normalize(37),
+    marginLeft: "7%",
+    padding: 5,
   },
 
   status: {

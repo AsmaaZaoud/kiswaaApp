@@ -283,7 +283,7 @@ const Families = ({ navigation }) => {
                 marginLeft: "5%",
               }}
             >
-              Families
+              Receviers
             </Text>
           </View>
           <Searchbar

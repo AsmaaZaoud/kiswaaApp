@@ -211,6 +211,7 @@ const InventoryTable = ({ navigation }) => {
           </Block>
           <DataTable.Header
             style={{
+              width: width - 20,
               borderWidth: 1,
               backgroundColor: "#1a1f87",
               marginTop: 10,
@@ -411,7 +412,7 @@ const InventoryTable = ({ navigation }) => {
                 maxHeight={400}
                 search
                 searchPlaceholder="Search..."
-                animated={false}
+                // animated={false}
                 // value={type}
                 placeholder={"Quality"}
                 onChange={(item) => {
@@ -432,47 +433,65 @@ const InventoryTable = ({ navigation }) => {
                 inventory.map((i, x) => (
                   <DataTable.Row
                     key={x}
-                    style={{ height: "1%", borderWidth: 0.5 }}
+                    style={{
+                      height: "1%",
+                      borderWidth: 0.5,
+                      width: width - 20,
+                    }}
                   >
                     <DataTable.Cell
                       id={i.id}
-                      textStyle={{ fontSize: normalize(18) }}
+                      textStyle={{
+                        fontSize: width > 500 ? normalize(20) : normalize(30),
+                      }}
                     >
                       {x + 1}
                     </DataTable.Cell>
                     <DataTable.Cell
                       id={i.id}
-                      textStyle={{ fontSize: normalize(18) }}
+                      textStyle={{
+                        fontSize: width > 500 ? normalize(20) : normalize(24),
+                      }}
                     >
                       {i.type}
                     </DataTable.Cell>
                     <DataTable.Cell
                       id={i.id}
-                      textStyle={{ fontSize: normalize(18) }}
+                      textStyle={{
+                        fontSize: width > 500 ? normalize(20) : normalize(24),
+                      }}
                     >
                       {i.size}
                     </DataTable.Cell>
                     <DataTable.Cell
                       id={i.id}
-                      textStyle={{ fontSize: normalize(18) }}
+                      textStyle={{
+                        fontSize: width > 500 ? normalize(20) : normalize(24),
+                      }}
                     >
                       {i.color}
                     </DataTable.Cell>
                     <DataTable.Cell
                       id={i.id}
-                      textStyle={{ fontSize: normalize(18) }}
+                      textStyle={{
+                        fontSize: width > 500 ? normalize(20) : normalize(24),
+                      }}
                     >
                       {i.gender}
                     </DataTable.Cell>
                     <DataTable.Cell
                       id={i.id}
-                      textStyle={{ fontSize: normalize(18) }}
+                      textStyle={{
+                        fontSize: width > 500 ? normalize(20) : normalize(24),
+                      }}
                     >
                       {i.age}
                     </DataTable.Cell>
                     <DataTable.Cell
                       id={i.id}
-                      textStyle={{ fontSize: normalize(18) }}
+                      textStyle={{
+                        fontSize: width > 500 ? normalize(20) : normalize(24),
+                      }}
                     >
                       {i.quality}
                     </DataTable.Cell>
@@ -491,7 +510,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#EBEBEB",
     //paddingTop: 50,
-    paddingHorizontal: "5%",
+    paddingHorizontal: 7,
   },
   head: {
     // flexDirection:"row",

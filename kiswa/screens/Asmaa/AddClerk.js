@@ -144,7 +144,7 @@ const AddClerk = ({ navigation }) => {
   ];
 
   const add = async () => {
-    alert("add");
+    alert("Added Succecfully");
     uploadImage();
     const docRef = doc(db, "inventoryWorkers", email);
     await setDoc(docRef, {
@@ -197,7 +197,6 @@ const AddClerk = ({ navigation }) => {
     !emailError &&
     !phoneError &&
     !qIdError &&
-    zone &&
     image &&
     !flag &&
     !dobError
@@ -496,7 +495,7 @@ const AddClerk = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   smallInput: {
-    width: "100%",
+    // width: "100%",
     backgroundColor: "white",
     borderRadius: 10,
     padding: 15,
@@ -548,8 +547,8 @@ const styles = StyleSheet.create({
   },
 
   imageContainer: {
-    width: "100%",
-    height: "20%",
+    // width: "100%",
+    // height: "20%",
     borderWidth: 2,
   },
   box: {
@@ -596,13 +595,13 @@ const styles = StyleSheet.create({
   con: {
     // borderWidth:1,
     //height:"30%",
-    width: "70%",
+    // width: "70%",
     borderRadius: 10,
     paddingHorizontal: 13,
     fontSize: 20,
   },
   pickedDateContainer: {
-    width: "100%",
+    // width: "100%",
     padding: 17,
     backgroundColor: "#FFF",
     borderRadius: 10,

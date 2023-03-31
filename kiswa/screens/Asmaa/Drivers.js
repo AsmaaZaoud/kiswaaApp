@@ -16,6 +16,7 @@ import {
   FlatList,
   TouchableOpacity,
   Table,
+  Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { DataTable, Searchbar } from "react-native-paper";
@@ -116,12 +117,20 @@ const Drivers = ({ navigation }) => {
     return () => unsubscribe();
   };
 
-  const deleteDriver = async (id) => {
-    const driverDoc = doc(db, "drivers", id); //remove driver
+  const [modalVisible2, setModalVisible2] = useState(false);
+
+  const [idDel, setIdDel] = useState("");
+  const [del, setDel] = useState(false);
+
+  const check = (id) => {
+    setModalVisible2(!modalVisible2);
+    deletClerk(id);
+  };
+  const deletClerk = async (id) => {
+    const driverDoc = doc(db, "drivers", id); //remove clerk
     await deleteDoc(driverDoc)
       .then(() => {
-        alert("data delted");
-        // readAllWhere();
+        alert("Driver removed");
       })
       .catch((error) => {
         console.log(error.message);
@@ -281,6 +290,55 @@ const Drivers = ({ navigation }) => {
   return (
     <Block flex>
       <View style={styles.container}>
+        <Modal
+          style={{ flex: 1 }}
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible2}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible2(!modalVisible2);
+          }}
+        >
+          <View>
+            <View style={styles.modalView2}>
+              <Text style={styles.modalText}>Delete</Text>
+              <Text style={[styles.ct, { color: "black" }]}>
+                Are you sure you want to delete this Worker?
+              </Text>
+              <Text></Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  width: "70%",
+                }}
+              >
+                <Pressable
+                  style={[
+                    styles.button,
+                    styles.buttonClose,
+                    { backgroundColor: "#808080" },
+                  ]}
+                  onPress={() => setModalVisible2(!modalVisible2)}
+                >
+                  <Text style={styles.textStyle}>Cancel</Text>
+                </Pressable>
+
+                <Pressable
+                  style={[
+                    styles.button,
+                    styles.buttonClose,
+                    { backgroundColor: "red" },
+                  ]}
+                  onPress={() => check(idDel)}
+                >
+                  <Text style={styles.textStyle}>Delete</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <DataTable>
           <Block
             style={[
@@ -341,12 +399,13 @@ const Drivers = ({ navigation }) => {
           </Block>
 
           <DataTable.Header
-            key={1}
+            key={10000}
             style={{
               borderTopWidth: 0,
               borderBottomWidth: 2,
               borderColor: "black",
               width: "100%",
+              height: 50,
               // marginLeft: "3%",
               // backgroundColor: "#4b0095",
               // borderWidth: 1,
@@ -414,7 +473,10 @@ const Drivers = ({ navigation }) => {
                     </DataTable.Cell>
                     <DataTable.Cell numeric>
                       <Pressable
-                        onPress={() => deleteDriver(x.email)}
+                        onPress={() => {
+                          setModalVisible2(true);
+                          setIdDel(x.email);
+                        }}
                         style={{
                           paddingLeft: "70%",
                         }}
@@ -507,6 +569,53 @@ const styles = StyleSheet.create({
   formContent: {
     flexDirection: "row",
     marginTop: 30,
+  },
+  ct: {
+    color: "#1a1f87",
+    fontSize: normalize(25),
+    // fontWeight: "bold",
+  },
+  modalView2: {
+    // margin: 35,
+    width: "80%",
+    marginTop: height / 3,
+    height: height / 5,
+    backgroundColor: "white",
+    borderRadius: 15,
+    padding: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#1d2f6f",
+    shadowOpacity: 3,
+    shadowRadius: 10,
+    elevation: 10,
+    borderColor: "#1a1f87",
+    borderWidth: 2,
+    marginLeft: "10%",
+  },
+  modalText: {
+    marginBottom: 18,
+    textAlign: "center",
+    fontSize: normalize(35),
+    fontWeight: "bold",
+    color: "#1a1f87",
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    marginHorizontal: 5,
+    elevation: 2,
+    width: width / 4,
+  },
+  buttonClose: {
+    backgroundColor: "#1a1f87",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 2,
+    fontSize: normalize(25),
   },
   inputContainer: {
     borderBottomColor: "#F5FCFF",
