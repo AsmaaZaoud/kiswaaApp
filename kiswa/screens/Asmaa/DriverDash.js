@@ -59,7 +59,7 @@ const DriverDash = ({ route, navigation }) => {
   const [deviceType, setDeviceType] = useState("");
   useEffect(() => {
     width < 500 ? setDeviceType("mobile") : setDeviceType("ipad");
-    // getNotifications();
+    getNotifications();
   }, []);
 
   const [index, setIndex] = useState(0);
