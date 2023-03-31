@@ -130,11 +130,10 @@ const Feedback = ({ navigation }) => {
                 </TouchableOpacity>
               ))}
             </View>
-            {/* {renderFeedbackInput()} */}
+            {renderFeedbackInput()}
             <TouchableOpacity
               style={styles.submitButton}
               onPress={handleSubmit}
-              disabled={!selectedEmoji || selectedEmoji.value < 4}
             >
               <Text style={styles.submitButtonText}>Submit</Text>
             </TouchableOpacity>
