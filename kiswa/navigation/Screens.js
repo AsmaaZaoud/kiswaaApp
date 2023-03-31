@@ -313,50 +313,50 @@ function DonateStack(props) {
   </Stack.Navigator>;
 }
 
-function DonorHistoryStack(props) {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        mode: "card",
-        headerShown: "screen",
-      }}
-    >
-      <Stack.Screen
-        name="DonorHistory"
-        component={DonorHistory}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title="DonorHistory"
-              search
-              options
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#F8F9FE" },
-        }}
-      />
-      <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true,
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
+// function DonorHistoryStack(props) {
+//   return (
+//     <Stack.Navigator
+//       screenOptions={{
+//         mode: "card",
+//         headerShown: "screen",
+//       }}
+//     >
+//       <Stack.Screen
+//         name="DonorHistory"
+//         component={DonorHistory}
+//         options={{
+//           header: ({ navigation, scene }) => (
+//             <Header
+//               title="DonorHistory"
+//               search
+//               options
+//               navigation={navigation}
+//               scene={scene}
+//             />
+//           ),
+//           cardStyle: { backgroundColor: "#F8F9FE" },
+//         }}
+//       />
+//       <Stack.Screen
+//         name="Pro"
+//         component={Pro}
+//         options={{
+//           header: ({ navigation, scene }) => (
+//             <Header
+//               title=""
+//               back
+//               white
+//               transparent
+//               navigation={navigation}
+//               scene={scene}
+//             />
+//           ),
+//           headerTransparent: true,
+//         }}
+//       />
+//     </Stack.Navigator>
+//   );
+// }
 
 function ProfileStack(props) {
   return (
@@ -653,13 +653,13 @@ function AppStack(props) {
           headerShown: false,
         }}
       /> */}
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="DonorHistory"
         component={DonorHistoryStack}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
       <Drawer.Screen
         name="Profile"
         component={ProfileStack}

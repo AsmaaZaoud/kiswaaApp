@@ -268,6 +268,12 @@ const Profile = ({ route, navigation }) => {
                     </Block>
                   )}
                 </Block>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate("DonorHistory")}
+                >
+                  <Text style={styles.buttonText}>View My Donations</Text>
+                </TouchableOpacity>
                 <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
                   <Block style={styles.divider} />
                 </Block>
@@ -366,14 +372,17 @@ const Profile = ({ route, navigation }) => {
               // paddingLeft: "1%",
             }}
           >
-            <Pressable
-              style={{ width: "14%" }}
-              onPress={() => {
-                navigation.navigate("Onboarding");
-              }}
-            >
-              <Ionicons name="home-outline" size={40} />
-            </Pressable>
+            {user != undefined ? null : (
+              <Pressable
+                style={{ width: "14%" }}
+                onPress={() => {
+                  navigation.navigate("Onboarding");
+                }}
+              >
+                <Ionicons name="home-outline" size={40} />
+              </Pressable>
+            )}
+
             <Pressable
               style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
               onPress={() => {
@@ -510,6 +519,24 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 100 / 2,
     alignSelf: "flex-end",
+  },
+  button: {
+    padding: 5,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    backgroundColor: "#3C4DBD",
+    position: "relative",
+    overflow: "hidden",
+    width: width * 0.5,
+    alignItems: "center",
+    alignSelf: "center",
+    marginTop: 10,
+    // marginLeft: "40%",
+  },
+  buttonText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "white",
   },
 });
 

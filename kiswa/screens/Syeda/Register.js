@@ -201,7 +201,7 @@ export default function Register({ navigation }) {
   };
 
   return (
-    <Block flex middle style={{ backgroundColor: "#1a1f87" }}>
+    <Block flex middle style={{ backgroundColor: "#3C4DBD" }}>
       <StatusBar hidden />
       {/* <ImageBackground
         source={Images.RegisterBackground}

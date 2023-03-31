@@ -293,19 +293,6 @@ const Login = ({ navigation }) => {
                       Log In
                     </Text>
                   </Button>
-                  <Button
-                    color={"#F0936F"}
-                    style={
-                      deviceType == "mobile"
-                        ? styles.signUpSmall
-                        : styles.signUpLarge
-                    }
-                    onPress={() => navigation.navigate("RegisterFamily")}
-                  >
-                    <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                      Sign Up
-                    </Text>
-                  </Button>
                 </Block>
               </KeyboardAvoidingView>
             </Block>

@@ -205,7 +205,7 @@ const FamilyRequest = ({ route, navigation }) => {
   const [type, setType] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState(colors[0].label);
-  const [size, setSize] = useState("");
+  const [size, setSize] = useState("S");
   const [gender, setGender] = useState("Male");
 
   // console.log(ageGroup, type, quantity, color, size);

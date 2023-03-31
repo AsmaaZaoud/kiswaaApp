@@ -185,14 +185,17 @@ const AboutUs = ({ navigation }) => {
           // paddingLeft: "1%",
         }}
       >
-        <Pressable
-          style={{ width: "14%" }}
-          onPress={() => {
-            navigation.navigate("Onboarding");
-          }}
-        >
-          <Ionicons name="home-outline" size={40} />
-        </Pressable>
+        {user != undefined ? null : (
+          <Pressable
+            style={{ width: "14%" }}
+            onPress={() => {
+              navigation.navigate("Onboarding");
+            }}
+          >
+            <Ionicons name="home-outline" size={40} />
+          </Pressable>
+        )}
+
         <Pressable
           style={{ width: "14%", marginRight: "7%", marginLeft: "7%" }}
           onPress={() => {

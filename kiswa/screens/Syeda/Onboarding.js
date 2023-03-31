@@ -84,7 +84,7 @@ const Onboarding = ({ navigation }) => {
             <Text style={styles.lable}>DONATE</Text>
           </Block>
           <Block style={{ marginLeft: "17%" }}>
-            <TouchableOpacity onPress={() => navigation.replace("Login")}>
+            <TouchableOpacity onPress={() => navigation.replace("LoginFamily")}>
               <Image
                 style={
                   deviceType == "mobile" ? styles.images : styles.imagesIpad
