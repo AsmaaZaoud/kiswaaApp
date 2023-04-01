@@ -420,7 +420,7 @@ const Home = ({ route, navigation }) => {
               <Block center style={{ borderWidth: 0 }}>
                 <Text
                   style={{
-                    fontSize: 25,
+                    fontSize: normalize(25),
                     // alignSelf: "right",
                     fontWeight: "bold",
                     marginLeft: 40,
@@ -440,7 +440,7 @@ const Home = ({ route, navigation }) => {
                     {number === 1 ? (
                       <Text
                         style={{
-                          fontSize: 15,
+                          fontSize: normalize(20),
                           alignSelf: "center",
                           marginTop: 15,
                         }}
@@ -450,7 +450,7 @@ const Home = ({ route, navigation }) => {
                     ) : (
                       <Text
                         style={{
-                          fontSize: 15,
+                          fontSize: normalize(20),
                           alignSelf: "center",
                           marginTop: 15,
                         }}
@@ -472,7 +472,7 @@ const Home = ({ route, navigation }) => {
                   </Block>
                 ) : (
                   <Text
-                    style={{ fontSize: 15, alignSelf: "center", marginTop: 15 }}
+                    style={{ fontSize: normalize(20), alignSelf: "center", marginTop: 15 }}
                   >
                     0 Donations
                   </Text>
@@ -483,7 +483,7 @@ const Home = ({ route, navigation }) => {
             <Slideshow position={position} dataSource={dataSource} />
 
             <Block style={styles.box3}>
-              <Text style={{ fontSize: 16 }}>
+              <Text style={{ fontSize: normalize(18) }}>
                 Rahma is a platform that simplifies the process of clothing
                 donation by allowing users to specify the items they wish to
                 donate and the preferred pickup time. After that, we will
@@ -698,8 +698,8 @@ const styles = StyleSheet.create({
     // borderColor: "red",
   },
   avatar: {
-    width: 80,
-    height: 80,
+    width: width * 0.2,
+    height: height * 0.1,
     margin: "4%",
     marginTop: "30%",
     borderRadius: 30,
@@ -721,7 +721,7 @@ const styles = StyleSheet.create({
     // marginLeft: "40%",
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: normalize(20),
     fontWeight: "bold",
     color: "white",
   },
