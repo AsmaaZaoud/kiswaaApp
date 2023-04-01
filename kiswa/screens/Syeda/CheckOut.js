@@ -105,6 +105,8 @@ const CheckOut = ({ route, navigation }) => {
 
   console.log("user logged in: ", user);
 
+  const [long, setlong] = useState("");
+  const [lat, setLat] = useState("");
   const readName = async () => {
     let user = auth?.currentUser?.email;
     console.log("readName");
@@ -121,6 +123,9 @@ const CheckOut = ({ route, navigation }) => {
       setLocation(doc.data().location);
       console.log("location: ", location);
       setZone(doc.data().zone);
+      setLat(doc.data().location.coords.latitude);
+      setlong(doc.data().location.coords.longitude);
+      console.log(doc.data().location.coords.longitude);
     });
   };
   const [drivers, setDrivers] = useState([]);
@@ -171,6 +176,8 @@ const CheckOut = ({ route, navigation }) => {
       dateSlot: route.params.date,
       trackId: trackId,
       donatedItems: confirm,
+      long: long,
+      lat: lat,
     });
     console.log("Document written with ID: ", docRef.id);
 

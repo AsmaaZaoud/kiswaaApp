@@ -211,17 +211,21 @@ const AddDriver = ({ navigation }) => {
   };
 
   const validCreate = () => {
-    !FnameError &&
-    !LnameError &&
-    !emailError &&
-    !phoneError &&
-    !qIdError &&
-    zone &&
-    image &&
-    !flag &&
-    !dobError
-      ? add()
-      : setMsg(true);
+    try {
+      !FnameError &&
+      !LnameError &&
+      !emailError &&
+      !phoneError &&
+      !qIdError &&
+      zone &&
+      image &&
+      !flag &&
+      !dobError
+        ? add()
+        : setMsg(true);
+    } catch (err) {
+      console.log("Errrorrrrr is", err.message);
+    }
   };
 
   const cheack = (value, type) => {
