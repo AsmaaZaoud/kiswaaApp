@@ -506,7 +506,7 @@ const Donate = ({ route, navigation }) => {
           </TouchableOpacity> */}
             </ImageBackground>
 
-            <Text style={{ fontSize: 15, color: "red" }}>{dropError}</Text>
+            <Text style={{ fontSize: normalize(20), color: "red" }}>{dropError}</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -526,7 +526,7 @@ const Donate = ({ route, navigation }) => {
               }}
             />
 
-            <Text style={{ fontSize: 15, color: "red" }}>{amountError}</Text>
+            <Text style={{ fontSize: normalize(20), color: "red" }}>{amountError}</Text>
             <TextInput
               style={styles.input}
               placeholder={"Enter Quantity"}
@@ -546,7 +546,7 @@ const Donate = ({ route, navigation }) => {
                   borderWidth: 0.5,
                   borderColor: "black",
                   margin: 10,
-                  width: "100%",
+                  width: width,
                 }}
               ></Block>
             ) : null}
@@ -593,12 +593,12 @@ const Donate = ({ route, navigation }) => {
           </Block>
         ) : (
           <Block style={{ marginTop: "9%", width: width }}>
-            <Text style={{ fontSize: 20, marginLeft: 6 }}>My cart</Text>
+            <Text style={{ fontSize: normalize(25), marginLeft: 6 }}>My cart</Text>
             <Block
               style={{
                 flexDirection: "row",
                 flexWrap: "wrap",
-                height: height * 0.15,
+                height: height * 0.20,
                 // borderWidth: 1,
                 width: width,
               }}
@@ -625,11 +625,11 @@ const Donate = ({ route, navigation }) => {
               </ScrollView>
             </Block>
 
-            <Text style={{ fontSize: 20, marginLeft: 15 }}>
+            <Text style={{ fontSize: normalize(25), marginLeft: 15 }}>
               Select pick-up time interval:
             </Text>
 
-            <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
+            <Text style={{ fontSize: normalize(20), color: "red", marginLeft: 20 }}>
               {timeError}
             </Text>
             <Block
@@ -655,10 +655,10 @@ const Donate = ({ route, navigation }) => {
               </Button>
             </Block>
 
-            <Text style={{ fontSize: 20, marginLeft: 15 }}>
+            <Text style={{ fontSize: normalize(25), marginLeft: 15 }}>
               Select pick-up date interval:
             </Text>
-            <Text style={{ fontSize: 15, color: "red", marginLeft: 20 }}>
+            <Text style={{ fontSize: normalize(20), color: "red", marginLeft: 20 }}>
               {dateError}
             </Text>
             <Block
@@ -799,7 +799,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3C4DBD",
     // position: "relative",
     // overflow: "hidden",
-    width: "70%",
+    width: width * 0.7,
     alignItems: "center",
     alignSelf: "center",
     marginVertical: 30,
@@ -811,13 +811,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#3c4dbd",
     position: "relative",
     overflow: "hidden",
-    width: "45%",
+    width: width * 0.4,
     alignItems: "center",
     alignSelf: "center",
     marginVertical: 30,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: normalize(20),
     fontWeight: "bold",
     color: "white",
   },
@@ -839,20 +839,20 @@ const styles = StyleSheet.create({
   smallSquare: {
     backgroundColor: "white",
     borderRadius: 10,
-    width: 120,
-    height: 120,
+    width: width * 0.25,
+    height: height * 0.18,
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
   },
   smallImage: {
-    width: 60,
-    height: 60,
+    width: width * 0.15,
+    height: width * 0.15,
     //borderRadius: 10,
   },
   smallText: {
     //marginTop: 5,
-    fontSize: 14,
+    fontSize: normalize(18),
     //fontWeight: 'bold',
   },
   smallCloseButton: {

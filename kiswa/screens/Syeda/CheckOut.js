@@ -356,7 +356,7 @@ const CheckOut = ({ route, navigation }) => {
               <Text
                 style={{
                   alignSelf: "center",
-                  fontSize: 40,
+                  fontSize: normalize(80),
                   fontWeight: "bold",
                   marginTop: "6%",
                 }}
@@ -365,12 +365,12 @@ const CheckOut = ({ route, navigation }) => {
               </Text>
 
               <Block style={{ marginLeft: "5%" }}>
-                <Text style={{ fontSize: 20, margin: "5%" }}>
+                <Text style={{ fontSize: normalize(45), margin: "5%" }}>
                   <Ionicons name="time-outline" size={30} color="#1a1f87" />{" "}
                   {route.params.time}
                 </Text>
 
-                <Text style={{ fontSize: 20, margin: "5%" }}>
+                <Text style={{ fontSize: normalize(45), margin: "5%" }}>
                   <Ionicons name="md-today-sharp" size={30} color="#1a1f87" />
                   {route.params.date}
                 </Text>
@@ -406,7 +406,7 @@ const CheckOut = ({ route, navigation }) => {
                 <Pressable onPress={() => navigation.goBack()}>
                   <Text
                     style={{
-                      fontSize: 18,
+                      fontSize: normalize(40),
                       textAlign: "center",
                       //marginRight: "6%",
                       color: "blue",
@@ -506,11 +506,11 @@ const CheckOut = ({ route, navigation }) => {
                         onPress={getLocation}
                       >
                         {stat != "granted" ? (
-                          <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          <Text bold size={normalize(30)} color={argonTheme.COLORS.WHITE}>
                             Get Location
                           </Text>
                         ) : (
-                          <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          <Text bold size={normalize(30)} color={argonTheme.COLORS.WHITE}>
                             Location Done
                           </Text>
                         )}
