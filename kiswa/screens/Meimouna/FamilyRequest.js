@@ -16,6 +16,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { Images, argonTheme } from "../../constants";
 
 import NumericInput from "react-native-numeric-input";
+import { normalize } from "../Syeda/Home";
 
 import { useState, useEffect } from "react";
 import { Tab, TabView } from "@rneui/themed";
@@ -342,10 +343,14 @@ const FamilyRequest = ({ route, navigation }) => {
               borderWidth: 1,
               // marginTop: "1%",
             }}
-            titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
+            titleStyle={{
+              color: "#4C4AAB",
+              fontSize: normalize(22),
+              fontWeight: "bold",
+            }}
           />
           <Block style={{ alignItems: "center" }}>
-            <Text style={{ color: "#3c4dbd", fontSize: 20 }}>
+            <Text style={{ color: "#3c4dbd", fontSize: normalize(20) }}>
               Please Select Catagory
             </Text>
           </Block>
@@ -376,7 +381,7 @@ const FamilyRequest = ({ route, navigation }) => {
               dense={true}
               disableIndicator={true}
             >
-              <Tab.Item title="Adults" titleStyle={{ fontSize: 14 }}>
+              <Tab.Item title="Adults" titleStyle={{ fontSize: normalize(14) }}>
                 <Image
                   source={require("../../assets/imgs/teens.jpeg")}
                   style={{
@@ -391,13 +396,16 @@ const FamilyRequest = ({ route, navigation }) => {
                   style={{
                     color: ageGroup == "Adults" ? "#F9966B" : "black",
                     fontWeight: ageGroup == "Adults" ? "bold" : "normal",
-                    fontSize: 16,
+                    fontSize: normalize(16),
                   }}
                 >
                   Adults
                 </Text>
               </Tab.Item>
-              <Tab.Item title="Teenagers" titleStyle={{ fontSize: 12 }}>
+              <Tab.Item
+                title="Teenagers"
+                titleStyle={{ fontSize: normalize(12) }}
+              >
                 <Image
                   source={require("../../assets/imgs/adult.png")}
                   style={{
@@ -413,13 +421,13 @@ const FamilyRequest = ({ route, navigation }) => {
                   style={{
                     color: ageGroup == "Teenagers" ? "#F9966B" : "black",
                     fontWeight: ageGroup == "Teenagers" ? "bold" : "normal",
-                    fontSize: 15,
+                    fontSize: normalize(15),
                   }}
                 >
                   Teenagers
                 </Text>
               </Tab.Item>
-              <Tab.Item title="Kids" titleStyle={{ fontSize: 12 }}>
+              <Tab.Item title="Kids" titleStyle={{ fontSize: normalize(12) }}>
                 <Image
                   source={require("../../assets/imgs/kidss.jpeg")}
                   style={{
@@ -434,13 +442,13 @@ const FamilyRequest = ({ route, navigation }) => {
                   style={{
                     color: ageGroup == "Kids" ? "#F9966B" : "black",
                     fontWeight: ageGroup == "Kids" ? "bold" : "normal",
-                    fontSize: 16,
+                    fontSize: normalize(16),
                   }}
                 >
                   Kids
                 </Text>
               </Tab.Item>
-              <Tab.Item title="Baby" titleStyle={{ fontSize: 12 }}>
+              <Tab.Item title="Baby" titleStyle={{ fontSize: normalize(12) }}>
                 <Image
                   source={require("../../assets/imgs/baby.png")}
                   style={{
@@ -455,7 +463,7 @@ const FamilyRequest = ({ route, navigation }) => {
                   style={{
                     color: ageGroup == "Baby" ? "#F9966B" : "black",
                     fontWeight: ageGroup == "Baby" ? "bold" : "normal",
-                    fontSize: 16,
+                    fontSize: normalize(16),
                   }}
                 >
                   Babys
@@ -583,7 +591,7 @@ const FamilyRequest = ({ route, navigation }) => {
                       </Text>
                       <Text
                         style={{
-                          fontSize: 18,
+                          fontSize: normalize(18),
                           fontWeight: "bold",
                           textAlign: "right",
                         }}
@@ -599,7 +607,7 @@ const FamilyRequest = ({ route, navigation }) => {
                     <Block>
                       <Text
                         style={{
-                          fontSize: 16,
+                          fontSize: normalize(16),
                           marginBottom: "3%",
                           marginTop: "3%",
                         }}
@@ -619,6 +627,7 @@ const FamilyRequest = ({ route, navigation }) => {
                         >
                           <Text
                             style={{
+                              fontSize: normalize(13),
                               color: gender == "Male" ? "white" : "black",
                             }}
                           >
@@ -637,6 +646,7 @@ const FamilyRequest = ({ route, navigation }) => {
                         >
                           <Text
                             style={{
+                              fontSize: normalize(13),
                               color: gender == "Female" ? "white" : "black",
                             }}
                           >
@@ -646,7 +656,7 @@ const FamilyRequest = ({ route, navigation }) => {
                       </View>
                       <Text
                         style={{
-                          fontSize: 16,
+                          fontSize: normalize(16),
                           marginBottom: "3%",
                           marginTop: "3%",
                         }}
@@ -657,7 +667,7 @@ const FamilyRequest = ({ route, navigation }) => {
                         iconStyle={{
                           color: "white",
                           fontWeight: "bold",
-                          fontSize: 20,
+                          fontSize: normalize(22),
                         }}
                         minValue={1}
                         value={quantity}
@@ -666,15 +676,15 @@ const FamilyRequest = ({ route, navigation }) => {
                         rounded
                         rightButtonBackgroundColor="#BAD9FC"
                         leftButtonBackgroundColor="#BAD9FC"
-                        totalWidth={280}
-                        totalHeight={40}
+                        totalWidth={width > 500 ? width / 2.3 : width / 1.5}
+                        totalHeight={width < 500 ? 40 : 50}
                         iconSize={20}
                         // step={1.5}
                       />
                       <KeyboardAvoidingView>
                         <Text
                           style={{
-                            fontSize: 16,
+                            fontSize: normalize(16),
                             marginBottom: "3%",
                             marginTop: "7%",
                           }}
@@ -683,7 +693,7 @@ const FamilyRequest = ({ route, navigation }) => {
                         </Text>
                         <Dropdown
                           // search
-                          // selectedTextStyle={{ fontSize: 30 }}
+                          // selectedTextStyle={{ fontSize:normalize(30) }}
                           // searchPlaceholder="Search..."
                           style={styles.dropdown}
                           placeholderStyle={styles.placeholderStyle}
@@ -701,14 +711,14 @@ const FamilyRequest = ({ route, navigation }) => {
                       </KeyboardAvoidingView>
                       <Text
                         style={{
-                          fontSize: 16,
+                          fontSize: normalize(16),
                           marginBottom: "3%",
                           marginTop: "3%",
                         }}
                       >
                         What Size?
                       </Text>
-                      <Text style={{ color: "red", fontSize: 15 }}>
+                      <Text style={{ color: "red", fontSize: normalize(15) }}>
                         {sizeError}
                       </Text>
                       <View style={styles.modalblocksize}>
@@ -726,7 +736,10 @@ const FamilyRequest = ({ route, navigation }) => {
                           }}
                         >
                           <Text
-                            style={{ color: size == "S" ? "white" : "black" }}
+                            style={{
+                              fontSize: normalize(12),
+                              color: size == "S" ? "white" : "black",
+                            }}
                           >
                             S
                           </Text>
@@ -745,7 +758,10 @@ const FamilyRequest = ({ route, navigation }) => {
                           }}
                         >
                           <Text
-                            style={{ color: size == "M" ? "white" : "black" }}
+                            style={{
+                              fontSize: normalize(12),
+                              color: size == "M" ? "white" : "black",
+                            }}
                           >
                             M
                           </Text>
@@ -764,7 +780,10 @@ const FamilyRequest = ({ route, navigation }) => {
                           }}
                         >
                           <Text
-                            style={{ color: size == "L" ? "white" : "black" }}
+                            style={{
+                              fontSize: normalize(12),
+                              color: size == "L" ? "white" : "black",
+                            }}
                           >
                             L
                           </Text>
@@ -784,7 +803,10 @@ const FamilyRequest = ({ route, navigation }) => {
                           }}
                         >
                           <Text
-                            style={{ color: size == "XL" ? "white" : "black" }}
+                            style={{
+                              fontSize: normalize(12),
+                              color: size == "XL" ? "white" : "black",
+                            }}
                           >
                             XL
                           </Text>
@@ -826,7 +848,11 @@ const FamilyRequest = ({ route, navigation }) => {
               }}
             >
               <Text
-                style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: normalize(16),
+                }}
               >
                 View Cart
               </Text>
@@ -847,7 +873,11 @@ const FamilyRequest = ({ route, navigation }) => {
               }}
             >
               <Text
-                style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: normalize(16),
+                }}
               >
                 Home
               </Text>
@@ -923,7 +953,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     color: "#fff",
-    fontSize: 30,
+    fontSize: normalize(30),
     fontWeight: "bold",
   },
   board: {
@@ -950,7 +980,7 @@ const styles = StyleSheet.create({
   ct: {
     textAlign: "center",
     color: "white",
-    fontSize: 16,
+    fontSize: width > 500 ? normalize(11) : normalize(16),
     fontWeight: "bold",
   },
   scr: {
@@ -960,13 +990,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   txt: {
-    fontSize: 20,
+    fontSize: normalize(20),
     color: "blue",
   },
   modalView: {
     margin: 15,
     marginTop: "20%",
-    height: "85%",
+    height: "84%",
     backgroundColor: "white",
     borderRadius: 15,
     padding: "5%",
@@ -998,18 +1028,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     padding: "2%",
+    fontSize: normalize(15),
   },
   modalText: {
     marginBottom: "3%",
     textAlign: "center",
-    fontSize: 25,
+    fontSize: normalize(25),
     fontWeight: "bold",
     color: "#1a1f87",
   },
   modalText1: {
     marginBottom: 15,
     textAlign: "center",
-    fontSize: 18,
+    fontSize: normalize(18),
   },
   modalblock: {
     alignItems: "center",
@@ -1069,10 +1100,10 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   placeholderStyle: {
-    fontSize: 14,
+    fontSize: normalize(14),
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: normalize(16),
   },
   size: {
     backgroundColor: "#BAD9FC",

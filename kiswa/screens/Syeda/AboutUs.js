@@ -63,9 +63,13 @@ const AboutUs = ({ navigation }) => {
         <View style={styles.topl}>
           <Image
             source={require("../../assets/Fatima/white.png")}
-            style={{ width: 150, height: 50 }}
-            width={width * 0.35}
-            height={height * 0.05}
+            style={{
+              width: 150,
+              height: 50,
+              position: width > 500 ? "absolute" : "relative",
+            }}
+            width={width > 500 ? width * 0.25 : width * 0.35}
+            height={width > 500 ? height * 0.06 : height * 0.05}
           />
           {user != undefined ? (
             <Pressable
@@ -91,8 +95,13 @@ const AboutUs = ({ navigation }) => {
               onPress={() => navigation.navigate("Login")}
             >
               {/* <Feather name="log-in" size={35} color="white" /> */}
-              <Text style={{ color: "#FFF", fontSize: normalize(17) }}>
-                Login
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: normalize(17),
+                }}
+              >
+                Login /SignUp
               </Text>
             </Pressable>
           )}

@@ -40,6 +40,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../config";
 const { width } = Dimensions.get("screen");
+import { normalize } from "../Syeda/Home";
 
 const FamilyCart = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -179,7 +180,11 @@ const FamilyCart = ({ route, navigation }) => {
               marginTop: "1%",
               width: "100%",
             }}
-            titleStyle={{ color: "#4C4AAB", fontSize: 22, fontWeight: "bold" }}
+            titleStyle={{
+              color: "#4C4AAB",
+              fontSize: normalize(22),
+              fontWeight: "bold",
+            }}
           />
           <View style={styles.main}>
             <Block style={styles.hed1}>
@@ -188,7 +193,7 @@ const FamilyCart = ({ route, navigation }) => {
             </Block>
             <Text
               style={{
-                fontSize: 19,
+                fontSize: normalize(19),
                 fontWeight: "bold",
                 margin: "2%",
                 marginLeft: "5%",
@@ -198,7 +203,7 @@ const FamilyCart = ({ route, navigation }) => {
               Total:{" "}
               <Text
                 style={{
-                  fontSize: 17,
+                  fontSize: normalize(17),
                   fontWeight: "normal",
                 }}
               >
@@ -300,7 +305,11 @@ const FamilyCart = ({ route, navigation }) => {
                 }}
               >
                 <Text
-                  style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: normalize(18),
+                  }}
                 >
                   {cart.length >= 1 ? "Add More Items" : "Add Items"}
                 </Text>
@@ -333,7 +342,11 @@ const FamilyCart = ({ route, navigation }) => {
                 }}
               >
                 <Text
-                  style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: normalize(18),
+                  }}
                 >
                   Submit Request
                 </Text>
@@ -367,7 +380,7 @@ const FamilyCart = ({ route, navigation }) => {
                       </Text>
                       <Text
                         style={{
-                          fontSize: 18,
+                          fontSize: normalize(18),
                           fontWeight: "bold",
                           textAlign: "right",
                         }}
@@ -384,7 +397,7 @@ const FamilyCart = ({ route, navigation }) => {
                     <Block>
                       <Text
                         style={{
-                          fontSize: 16,
+                          fontSize: normalize(16),
                           marginBottom: 15,
                           marginTop: 20,
                         }}
@@ -395,7 +408,7 @@ const FamilyCart = ({ route, navigation }) => {
                         iconStyle={{
                           color: "white",
                           fontWeight: "bold",
-                          fontSize: 20,
+                          fontSize: normalize(20),
                         }}
                         minValue={1}
                         value={quantity}
@@ -411,7 +424,7 @@ const FamilyCart = ({ route, navigation }) => {
                       />
                       <Text
                         style={{
-                          fontSize: 16,
+                          fontSize: normalize(16),
                           marginBottom: 10,
                           marginTop: 20,
                         }}
@@ -420,7 +433,7 @@ const FamilyCart = ({ route, navigation }) => {
                       </Text>
                       <Dropdown
                         search
-                        // selectedTextStyle={{ fontSize: 30 }}
+                        // selectedTextStyle={{ fontSize: normalize(30) }}
                         searchPlaceholder="Search..."
                         style={styles.dropdown}
                         placeholderStyle={styles.placeholderStyle}
@@ -437,7 +450,7 @@ const FamilyCart = ({ route, navigation }) => {
                       ></Dropdown>
                       <Text
                         style={{
-                          fontSize: 16,
+                          fontSize: normalize(16),
                           marginBottom: 10,
                           marginTop: 20,
                         }}
@@ -657,7 +670,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     color: "#1a1f87",
-    fontSize: 24,
+    fontSize: normalize(24),
     fontWeight: "bold",
   },
   board1: {
@@ -705,11 +718,11 @@ const styles = StyleSheet.create({
   },
   ct: {
     color: "#1a1f87",
-    fontSize: 18,
+    fontSize: normalize(18),
     // fontWeight: "bold",
   },
   ctt: {
-    fontSize: 16,
+    fontSize: normalize(16),
     // fontWeight: "bold",
   },
   modalView: {
@@ -769,14 +782,14 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 18,
     textAlign: "center",
-    fontSize: 25,
+    fontSize: normalize(25),
     fontWeight: "bold",
     color: "#1a1f87",
   },
   modalText1: {
     marginBottom: 15,
     textAlign: "center",
-    fontSize: 18,
+    fontSize: normalize(18),
   },
   modalblock: {
     alignItems: "center",
@@ -833,10 +846,10 @@ const styles = StyleSheet.create({
     // elevation: 2,
   },
   placeholderStyle: {
-    fontSize: 14,
+    fontSize: normalize(14),
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: normalize(16),
   },
   size: {
     backgroundColor: "#DCD0FF",

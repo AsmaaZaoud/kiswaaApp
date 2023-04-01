@@ -194,10 +194,18 @@ const FamilyHome = ({ route, navigation }) => {
         </Block>
         {/* about rahma */}
         <Block style={styles.header2}>
-          <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
+          <Text
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              fontSize: normalize(20),
+            }}
+          >
             Rahma
           </Text>
-          <Text style={{ width: "66%", color: "white", fontSize: 15 }}>
+          <Text
+            style={{ width: "66%", color: "white", fontSize: normalize(15) }}
+          >
             We connect with clothing donators to fulfill your requests while
             protecting your privacy and security.
           </Text>
@@ -212,11 +220,11 @@ const FamilyHome = ({ route, navigation }) => {
                 <Image
                   source={require("../../assets/imgs/requstClothes.png")}
                   style={{
-                    width: 100,
+                    width: width / 5.4,
                     height: 100,
                   }}
                 ></Image>
-                <Text>Request Clothes</Text>
+                <Text style={styles.tit}>Request Clothes</Text>
               </Block>
             </TouchableOpacity>
             <TouchableOpacity
@@ -226,11 +234,12 @@ const FamilyHome = ({ route, navigation }) => {
                 <Image
                   source={require("../../assets/imgs/rqustHistory.png")}
                   style={{
-                    width: 100,
+                    width: width / 5.4,
+
                     height: 100,
                   }}
                 ></Image>
-                <Text>Requests History</Text>
+                <Text style={styles.tit}>Requests History</Text>
               </Block>
             </TouchableOpacity>
           </Block>
@@ -244,11 +253,13 @@ const FamilyHome = ({ route, navigation }) => {
               <Image
                 source={require("../../assets/imgs/feedback.png")}
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: width > 500 ? width / 7 : 100,
+
+                  height: width > 500 ? height / 10 : 100,
+                  marginLeft: width > 500 ? 20 : 0,
                 }}
               ></Image>
-              <Text>Give Feedback</Text>
+              <Text style={styles.tit}>Give Feedback</Text>
             </Pressable>
           </Block>
         </Block>
@@ -269,14 +280,14 @@ const FamilyHome = ({ route, navigation }) => {
           <Image
             source={require("../../assets/Fatima/white.png")}
             style={{ width: 150, height: 50 }}
-            width={width * 0.35}
-            height={height * 0.05}
+            width={width < 500 ? width * 0.35 : width * 0.25}
+            height={width < 500 ? height * 0.05 : height * 0.06}
           />
 
           <Pressable
             style={{
               justifyContent: "center",
-              marginTop: "3%",
+              // marginTop: "3%",
               marginRight: "2%",
             }}
             onPress={onSignOut}
@@ -340,7 +351,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#3C4DBD",
-    marginTop: "6%",
+    marginTop: width < 500 ? 10 : 3,
+  },
+  tit: {
+    fontSize: normalize(15),
   },
   header1: {
     // marginTop: "10%",
@@ -384,8 +398,8 @@ const styles = StyleSheet.create({
     color: "#B21807",
   },
   box1: {
-    width: 160,
-    height: 150,
+    width: width / 2.5,
+    height: height / 6,
     backgroundColor: "#E6EBFD",
     alignItems: "center",
     justifyContent: "center",
@@ -394,8 +408,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   box2: {
-    width: 160,
-    height: 150,
+    // width: 160,
+    width: width / 2.5,
+
+    // height: 150,
+    height: height / 6,
+
     backgroundColor: "#FFF8E5",
     alignItems: "center",
     justifyContent: "center",
@@ -404,8 +422,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   box3: {
-    width: 160,
-    height: 150,
+    // width: 160,
+    width: width / 2.5,
+    height: height / 6,
+
+    // height: 150,
     marginLeft: "7%",
     marginTop: "7%",
     backgroundColor: "#EDFDF9",

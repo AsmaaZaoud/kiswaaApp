@@ -39,6 +39,7 @@ import { Badge, Button } from "react-native-paper";
 import { Block } from "galio-framework";
 import * as Location from "expo-location";
 const { width } = Dimensions.get("screen");
+import { normalize } from "../Syeda/Home";
 
 export default function FamilyProfile({ route, navigation }) {
   const id = route.params;
@@ -154,23 +155,31 @@ export default function FamilyProfile({ route, navigation }) {
           marginTop: "5%",
         }}
       >
-        <View style={{ width: "100%", height: "100%" }}>
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            alignContent: "center",
+            alignSelf: "center",
+            alignItems: "center",
+          }}
+        >
           <View style={styles.header}>
             <NavBar
               title="Profile"
               right={
-                <View style={{ marginRight: "8%" }}>
+                <View style={{ marginRight: 0 }}>
                   {/* <Entypo
                     name="log-out"
                     color="#F9966B"
-                    size={30}
+                    size={normalize(30)}
                     onPress={() => onSignOut()}
                     style={{ marginLeft: "25%" }}
                   /> */}
                   {/* <Text
                     style={{
                       color: "#F9966B",
-                      fontSize: 13,
+                      fontSize:normalize(13),
                       fontWeight: "bold",
                     }}
                   >
@@ -189,7 +198,7 @@ export default function FamilyProfile({ route, navigation }) {
               }}
               titleStyle={{
                 color: "#4C4AAB",
-                fontSize: 24,
+                fontSize: normalize(24),
                 fontWeight: "bold",
               }}
             />
@@ -210,7 +219,7 @@ export default function FamilyProfile({ route, navigation }) {
               >
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: normalize(18),
                     color: "#F9966B",
                     fontWeight: "bold",
                     textAlign: "center",
@@ -218,7 +227,7 @@ export default function FamilyProfile({ route, navigation }) {
                 >
                   Edit Profile
                 </Text>
-                {/* <Avatar.Accessory size={25} /> */}
+                {/* <Avatar.Accessory size={normalize(25)} /> */}
               </Pressable>
             </View>
           </View>
@@ -236,14 +245,18 @@ export default function FamilyProfile({ route, navigation }) {
               <View
                 style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Entypo name="user" color="#1a1f87" size={29} />
+                <Entypo name="user" color="#1a1f87" size={normalize(29)} />
                 <Text
-                  style={{ marginLeft: "7%", fontSize: 20, marginTop: "1%" }}
+                  style={{
+                    marginLeft: "7%",
+                    fontSize: normalize(20),
+                    marginTop: "1%",
+                  }}
                 >
                   Name:{"  "}
                   <Text
                     style={{
-                      fontSize: 20,
+                      fontSize: normalize(20),
                       marginLeft: "20%",
                       fontWeight: "bold",
                     }}
@@ -260,12 +273,18 @@ export default function FamilyProfile({ route, navigation }) {
               <View
                 style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Entypo name="location" color="#1a1f87" size={29} />
-                <Text style={{ margin: "7%", fontSize: 20, marginTop: "1%" }}>
+                <Entypo name="location" color="#1a1f87" size={normalize(29)} />
+                <Text
+                  style={{
+                    margin: "7%",
+                    fontSize: normalize(20),
+                    marginTop: "1%",
+                  }}
+                >
                   Zone:{"  "}
                   <Text
                     style={{
-                      fontSize: 20,
+                      fontSize: normalize(20),
                       marginLeft: "20%",
                       fontWeight: "bold",
                     }}
@@ -281,12 +300,22 @@ export default function FamilyProfile({ route, navigation }) {
               <View
                 style={{ width: "95%", flexDirection: "row", marginLeft: "4%" }}
               >
-                <Entypo name="old-mobile" color="#1a1f87" size={29} />
-                <Text style={{ margin: "7%", fontSize: 20, marginTop: "1%" }}>
+                <Entypo
+                  name="old-mobile"
+                  color="#1a1f87"
+                  size={normalize(29)}
+                />
+                <Text
+                  style={{
+                    margin: "7%",
+                    fontSize: normalize(20),
+                    marginTop: "1%",
+                  }}
+                >
                   Number:{"  "}
                   <Text
                     style={{
-                      fontSize: 20,
+                      fontSize: normalize(20),
                       marginLeft: "20%",
                       fontWeight: "bold",
                     }}
@@ -321,7 +350,7 @@ export default function FamilyProfile({ route, navigation }) {
                   <Entypo
                     name="chevron-with-circle-left"
                     color="#1a1f92"
-                    size={40}
+                    size={normalize(40)}
                   />
                 </Pressable>
                 <View>
@@ -330,7 +359,7 @@ export default function FamilyProfile({ route, navigation }) {
                   </Text>
                   <Text
                     style={{
-                      fontSize: 18,
+                      fontSize: normalize(18),
                       fontWeight: "bold",
                       textAlign: "right",
                     }}
@@ -344,14 +373,14 @@ export default function FamilyProfile({ route, navigation }) {
                 <Text style={styles.modalText}>{id}</Text>
 
                 <Block>
-                  {/* <Text style={{ fontSize: 16, marginBottom: 10, marginTop: 20 }}>
+                  {/* <Text style={{ fontSize:normalize(16), marginBottom: 10, marginTop: 20 }}>
                   What Color?
                 </Text> */}
                   <Text
                     style={{
                       // textAlign: "center",
                       color: "red",
-                      fontSize: 14,
+                      fontSize: normalize(14),
                     }}
                   >
                     {phoneError}
@@ -367,7 +396,7 @@ export default function FamilyProfile({ route, navigation }) {
                     style={{
                       // textAlign: "center",
                       color: "red",
-                      fontSize: 14,
+                      fontSize: normalize(14),
                     }}
                   >
                     {nameError}
@@ -403,7 +432,7 @@ export default function FamilyProfile({ route, navigation }) {
                       getLocation();
                     }}
                   >
-                    <Text bold size={20} color="white">
+                    <Text bold size={normalize(20)} color="white">
                       New Location
                     </Text>
                   </Button>
@@ -502,7 +531,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   title: {
-    fontSize: 18,
+    fontSize: normalize(18),
     color: "#EE82EE",
     marginLeft: 10,
   },
@@ -538,7 +567,7 @@ const styles = StyleSheet.create({
   },
   username: {
     // color: "#842DCE",
-    fontSize: 22,
+    fontSize: normalize(22),
     alignSelf: "center",
     //marginLeft: 10,
   },
@@ -581,7 +610,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 18,
     textAlign: "center",
-    fontSize: 25,
+    fontSize: normalize(25),
     fontWeight: "bold",
     color: "#1a1f87",
   },
@@ -614,11 +643,11 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   placeholderStyle: {
-    fontSize: 14,
+    fontSize: normalize(14),
     // color: argonTheme.COLORS.HEADER,
   },
   selectedTextStyle: {
-    fontSize: 12,
+    fontSize: normalize(12),
   },
   createButton: {
     width: "100%",
