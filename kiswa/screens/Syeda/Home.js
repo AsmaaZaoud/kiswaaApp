@@ -472,7 +472,11 @@ const Home = ({ route, navigation }) => {
                   </Block>
                 ) : (
                   <Text
-                    style={{ fontSize: normalize(20), alignSelf: "center", marginTop: 15 }}
+                    style={{
+                      fontSize: normalize(20),
+                      alignSelf: "center",
+                      marginTop: 15,
+                    }}
                   >
                     0 Donations
                   </Text>
@@ -483,7 +487,11 @@ const Home = ({ route, navigation }) => {
             <Slideshow position={position} dataSource={dataSource} />
 
             <Block style={styles.box3}>
-              <Text style={{ fontSize: normalize(18) }}>
+              <Text
+                style={{
+                  fontSize: width < 500 ? normalize(18) : normalize(15),
+                }}
+              >
                 Rahma is a platform that simplifies the process of clothing
                 donation by allowing users to specify the items they wish to
                 donate and the preferred pickup time. After that, we will
@@ -616,7 +624,7 @@ const Home = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: width > 500 ? 80 : 0,
+    marginTop: width > 500 ? 70 : 0,
     justifyContent: "center",
     alignItems: "center",
     // borderWidth: 1,
@@ -664,8 +672,8 @@ const styles = StyleSheet.create({
   box3: {
     width: width * 0.8,
     // height: 150,
-    marginLeft: "7%",
-    marginTop: "15%",
+    marginLeft: 20,
+    marginTop: 25,
     // backgroundColor: "#EDFDF9",
     justifyContent: "center",
     alignItems: "center",
@@ -698,10 +706,10 @@ const styles = StyleSheet.create({
     // borderColor: "red",
   },
   avatar: {
-    width: width * 0.2,
-    height: height * 0.1,
+    width: width * 0.22,
+    height: width < 500 ? height * 0.1 : height * 0.13,
     margin: "4%",
-    marginTop: "30%",
+    marginTop: 30,
     borderRadius: 30,
     // borderWidth: 2,
   },

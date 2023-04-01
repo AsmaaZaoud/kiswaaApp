@@ -506,7 +506,9 @@ const Donate = ({ route, navigation }) => {
           </TouchableOpacity> */}
             </ImageBackground>
 
-            <Text style={{ fontSize: normalize(20), color: "red" }}>{dropError}</Text>
+            <Text style={{ fontSize: normalize(20), color: "red" }}>
+              {dropError}
+            </Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -526,7 +528,9 @@ const Donate = ({ route, navigation }) => {
               }}
             />
 
-            <Text style={{ fontSize: normalize(20), color: "red" }}>{amountError}</Text>
+            <Text style={{ fontSize: normalize(20), color: "red" }}>
+              {amountError}
+            </Text>
             <TextInput
               style={styles.input}
               placeholder={"Enter Quantity"}
@@ -593,12 +597,14 @@ const Donate = ({ route, navigation }) => {
           </Block>
         ) : (
           <Block style={{ marginTop: "9%", width: width }}>
-            <Text style={{ fontSize: normalize(25), marginLeft: 6 }}>My cart</Text>
+            <Text style={{ fontSize: normalize(22), marginLeft: 6 }}>
+              My cart
+            </Text>
             <Block
               style={{
                 flexDirection: "row",
                 flexWrap: "wrap",
-                height: height * 0.20,
+                height: height * 0.2,
                 // borderWidth: 1,
                 width: width,
               }}
@@ -625,11 +631,13 @@ const Donate = ({ route, navigation }) => {
               </ScrollView>
             </Block>
 
-            <Text style={{ fontSize: normalize(25), marginLeft: 15 }}>
+            <Text style={{ fontSize: normalize(22), marginLeft: 15 }}>
               Select pick-up time interval:
             </Text>
 
-            <Text style={{ fontSize: normalize(20), color: "red", marginLeft: 20 }}>
+            <Text
+              style={{ fontSize: normalize(16), color: "red", marginLeft: 20 }}
+            >
               {timeError}
             </Text>
             <Block
@@ -637,28 +645,32 @@ const Donate = ({ route, navigation }) => {
             >
               <Button
                 onPress={changeColor1}
-                style={{ backgroundColor: flag1 === 0 ? "#1a1f87" : "#f8a069" }}
+                style={{
+                  backgroundColor: flag1 === 0 ? "#1a1f87" : "#f8a069",
+                }}
               >
-                8AM - 12PM
+                <Text style={styles.timepick}>8AM - 12PM</Text>
               </Button>
               <Button
                 onPress={changeColor2}
                 style={{ backgroundColor: flag2 === 0 ? "#1a1f87" : "#f8a069" }}
               >
-                12PM - 6PM
+                <Text style={styles.timepick}> 12PM - 6PM</Text>
               </Button>
               <Button
                 onPress={changeColor3}
                 style={{ backgroundColor: flag3 === 0 ? "#1a1f87" : "#f8a069" }}
               >
-                6PM - 10PM
+                <Text style={styles.timepick}>6PM - 10PM</Text>
               </Button>
             </Block>
 
-            <Text style={{ fontSize: normalize(25), marginLeft: 15 }}>
+            <Text style={{ fontSize: normalize(22), marginLeft: 15 }}>
               Select pick-up date interval:
             </Text>
-            <Text style={{ fontSize: normalize(20), color: "red", marginLeft: 20 }}>
+            <Text
+              style={{ fontSize: normalize(16), color: "red", marginLeft: 20 }}
+            >
               {dateError}
             </Text>
             <Block
@@ -670,7 +682,7 @@ const Donate = ({ route, navigation }) => {
                   backgroundColor: check1 === 0 ? "#1a1f87" : "#f8a069",
                 }}
               >
-                <Text style={{ color: "white" }}>
+                <Text style={styles.timepick}>
                   {dateString} - {first2date}
                 </Text>
               </Button>
@@ -680,7 +692,7 @@ const Donate = ({ route, navigation }) => {
                   backgroundColor: check2 === 0 ? "#1a1f87" : "#f8a069",
                 }}
               >
-                <Text style={{ color: "white" }}>
+                <Text style={styles.timepick}>
                   {sec1date} - {sec2date}
                 </Text>
               </Button>
@@ -690,7 +702,7 @@ const Donate = ({ route, navigation }) => {
                   backgroundColor: check3 === 0 ? "#1a1f87" : "#f8a069",
                 }}
               >
-                <Text style={{ color: "white" }}>
+                <Text style={styles.timepick}>
                   {third1date} - {third2date}
                 </Text>
               </Button>
@@ -756,6 +768,10 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     padding: 5,
   },
+  timepick: {
+    color: "#fff",
+    fontSize: width > 500 ? normalize(12) : normalize(15),
+  },
   icon: {
     marginRight: 5,
   },
@@ -802,7 +818,7 @@ const styles = StyleSheet.create({
     width: width * 0.7,
     alignItems: "center",
     alignSelf: "center",
-    marginVertical: 30,
+    marginVertical: width > 500 ? 40 : 25,
   },
   buttonSmall: {
     padding: 15,
@@ -839,15 +855,15 @@ const styles = StyleSheet.create({
   smallSquare: {
     backgroundColor: "white",
     borderRadius: 10,
-    width: width * 0.25,
-    height: height * 0.18,
+    width: width > 500 ? width * 0.25 : width * 0.3,
+    height: width > 500 ? width * 0.25 : width * 0.35,
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
   },
   smallImage: {
-    width: width * 0.15,
-    height: width * 0.15,
+    width: width < 500 ? width * 0.15 : width * 0.1,
+    height: width < 500 ? width * 0.15 : width * 0.1,
     //borderRadius: 10,
   },
   smallText: {

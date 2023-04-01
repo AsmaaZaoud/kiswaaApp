@@ -334,225 +334,238 @@ const CheckOut = ({ route, navigation }) => {
         style={{ width, height, zIndex: 1 }}
       >
         <Block safe flex middle> */}
-          <SafeAreaView style={styles.registerContainer}>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.articles}
+      <SafeAreaView style={styles.registerContainer}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.articles}
+        >
+          <Block row>
+            <Pressable
+              style={{ marginHorizontal: "3%" }}
+              onPress={() => navigation.navigate("Donate")}
             >
-              <Block row>
-                <Pressable
-                  style={{ marginHorizontal: "3%" }}
-                  onPress={() => navigation.navigate("Donate")}
-                >
-                  {/* <Image
+              {/* <Image
                     style={styles.backButton}
                     source={{
                       uri: "https://cdn-icons-png.flaticon.com/512/54/54623.png",
                     }}
                   ></Image> */}
-                  {/* <Ionicons name="arrow-back" size={40} /> */}
-                </Pressable>
-              </Block>
+              {/* <Ionicons name="arrow-back" size={40} /> */}
+            </Pressable>
+          </Block>
+          <Text
+            style={{
+              alignSelf: "center",
+              fontSize: normalize(80),
+              fontWeight: "bold",
+              marginTop: "6%",
+            }}
+          >
+            Checkout
+          </Text>
+
+          <Block style={{ marginLeft: "5%" }}>
+            <Text style={{ fontSize: normalize(40), margin: "5%" }}>
+              <Ionicons
+                name="time-outline"
+                size={normalize(45)}
+                color="#1a1f87"
+              />
+              {route.params.time}
+            </Text>
+
+            <Text style={{ fontSize: normalize(40), margin: "5%" }}>
+              <Ionicons
+                name="md-today-sharp"
+                size={normalize(45)}
+                color="#1a1f87"
+              />
+              {route.params.date}
+            </Text>
+            <Block
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                height: height * 0.15,
+                // borderWidth: 1,
+                width: width,
+              }}
+            >
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator
+                indicatorStyle="black"
+                bounces
+              >
+                {route.params.itemsArray.map((item, index) => (
+                  <View key={index} style={styles.smallContainer}>
+                    <View style={styles.smallSquare}>
+                      <Image
+                        style={styles.smallImage}
+                        source={{ uri: item.icon }}
+                      />
+                      <Text style={styles.smallText}>{item.cloth}</Text>
+                      <Text style={styles.smallText}>x{item.amount}</Text>
+                    </View>
+                  </View>
+                ))}
+              </ScrollView>
+            </Block>
+            <Pressable onPress={() => navigation.goBack()}>
               <Text
                 style={{
-                  alignSelf: "center",
-                  fontSize: normalize(80),
-                  fontWeight: "bold",
-                  marginTop: "6%",
+                  fontSize: normalize(40),
+                  textAlign: "center",
+                  //marginRight: "6%",
+                  color: "blue",
                 }}
               >
-                Checkout
+                Edit cart
               </Text>
+            </Pressable>
+          </Block>
 
-              <Block style={{ marginLeft: "5%" }}>
-                <Text style={{ fontSize: normalize(45), margin: "5%" }}>
-                  <Ionicons name="time-outline" size={30} color="#1a1f87" />{" "}
-                  {route.params.time}
-                </Text>
-
-                <Text style={{ fontSize: normalize(45), margin: "5%" }}>
-                  <Ionicons name="md-today-sharp" size={30} color="#1a1f87" />
-                  {route.params.date}
-                </Text>
-                <Block
-                  style={{
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    height: height * 0.15,
-                    // borderWidth: 1,
-                    width: width,
-                  }}
+          {user !== undefined ? (
+            <View style={styles.container}>
+              <Block width={width * 0.8}>
+                <TouchableOpacity
+                  style={styles.donateButton}
+                  onPress={() => donate()}
                 >
-                  <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator
-                    indicatorStyle="black"
-                    bounces
-                  >
-                    {route.params.itemsArray.map((item, index) => (
-                      <View key={index} style={styles.smallContainer}>
-                        <View style={styles.smallSquare}>
-                          <Image
-                            style={styles.smallImage}
-                            source={{ uri: item.icon }}
-                          />
-                          <Text style={styles.smallText}>{item.cloth}</Text>
-                          <Text style={styles.smallText}>x{item.amount}</Text>
-                        </View>
-                      </View>
-                    ))}
-                  </ScrollView>
-                </Block>
-                <Pressable onPress={() => navigation.goBack()}>
-                  <Text
-                    style={{
-                      fontSize: normalize(40),
-                      textAlign: "center",
-                      //marginRight: "6%",
-                      color: "blue",
-                    }}
-                  >
-                    Edit cart
-                  </Text>
-                </Pressable>
+                  <Text style={styles.donateButtonText}>Donate</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.donateButton, { backgroundColor: "#ba324f" }]}
+                  onPress={() => navigation.navigate("Home")}
+                >
+                  <Text style={styles.donateButtonText}>Cancel</Text>
+                </TouchableOpacity>
+                {/* <Button
+                                                style={styles.createButton}
+                                                onPress={validation}
+                                            >
+                                                <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                                                    DONE
+                                                </Text>
+                                            </Button> */}
+              </Block>
+            </View>
+          ) : (
+            <View style={styles.container}>
+              <Text></Text>
+
+              <Text style={styles.error}>{phoneError}</Text>
+              <Block width={width * 0.8}>
+                <Input
+                  borderless
+                  value={phone}
+                  onChangeText={setPhone}
+                  keyboardType="numeric"
+                  maxLength={8}
+                  placeholder="Phone Number"
+                  iconContent={
+                    <Icon
+                      size={16}
+                      color={argonTheme.COLORS.ICON}
+                      name="phone"
+                      family="Entypo"
+                      style={styles.inputIcons}
+                    />
+                  }
+                />
+              </Block>
+              <Text></Text>
+              <Text style={styles.error}>{emailError}</Text>
+              <Block width={width * 0.8}>
+                <Input
+                  borderless
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  iconContent={
+                    <Icon
+                      size={16}
+                      color={argonTheme.COLORS.ICON}
+                      name="email"
+                      family="Entypo"
+                      style={styles.inputIcons}
+                    />
+                  }
+                />
               </Block>
 
-              {user !== undefined ? (
-                <View style={styles.container}>
-                  <Block width={width * 0.8}>
-                    <TouchableOpacity
-                      style={styles.donateButton}
-                      onPress={() => donate()}
-                    >
-                      <Text style={styles.donateButtonText}>Donate</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[
-                        styles.donateButton,
-                        { backgroundColor: "#ba324f" },
-                      ]}
-                      onPress={() => navigation.navigate("Home")}
-                    >
-                      <Text style={styles.donateButtonText}>Cancel</Text>
-                    </TouchableOpacity>
-                    {/* <Button
-                                                style={styles.createButton}
-                                                onPress={validation}
-                                            >
-                                                <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                                                    DONE
-                                                </Text>
-                                            </Button> */}
-                  </Block>
-                </View>
-              ) : (
-                <View style={styles.container}>
-                  <Text></Text>
-
-                  <Text style={styles.error}>{phoneError}</Text>
-                  <Block width={width * 0.8}>
-                    <Input
-                      borderless
-                      value={phone}
-                      onChangeText={setPhone}
-                      keyboardType="numeric"
-                      maxLength={8}
-                      placeholder="Phone Number"
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={argonTheme.COLORS.ICON}
-                          name="phone"
-                          family="Entypo"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                  </Block>
-                  <Text></Text>
-                  <Text style={styles.error}>{emailError}</Text>
-                  <Block width={width * 0.8}>
-                    <Input
-                      borderless
-                      placeholder="Email"
-                      value={email}
-                      onChangeText={setEmail}
-                      keyboardType="email-address"
-                      autoCapitalize="none"
-                      iconContent={
-                        <Icon
-                          size={16}
-                          color={argonTheme.COLORS.ICON}
-                          name="email"
-                          family="Entypo"
-                          style={styles.inputIcons}
-                        />
-                      }
-                    />
-                  </Block>
-
-                  <Block
-                    style={{
-                      flexDirection: "row",
-                      width: width * 0.85,
-                      justifyContent: "space-between",
-                    }}
+              <Block
+                style={{
+                  flexDirection: "row",
+                  width: width * 0.85,
+                  justifyContent: "space-between",
+                }}
+              >
+                <Block width={width * 0.2}>
+                  <Button
+                    small
+                    color={stat !== "granted" ? "default" : "success"}
+                    style={[styles.createButton, { width: width * 0.08 }]}
+                    onPress={getLocation}
                   >
-                    <Block width={width * 0.2}>
-                      <Button
-                        small
-                        color={stat !== "granted" ? "default" : "success"}
-                        style={[styles.createButton, { width: width * 0.08 }]}
-                        onPress={getLocation}
-                      >
-                        {stat != "granted" ? (
-                          <Text bold size={normalize(30)} color={argonTheme.COLORS.WHITE}>
-                            Get Location
-                          </Text>
-                        ) : (
-                          <Text bold size={normalize(30)} color={argonTheme.COLORS.WHITE}>
-                            Location Done
-                          </Text>
-                        )}
-                      </Button>
-                      <Text style={styles.error}>{locationError}</Text>
-                    </Block>
-
-                    <Block width={width * 0.4}>
-                      <Dropdown
-                        style={styles.dropdown}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        data={zones}
-                        maxHeight={160}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={zone}
-                        value={zone}
-                        onChange={(item) => {
-                          setZone(item.label);
-                          setZoneError("");
-                        }}
-                      ></Dropdown>
+                    {stat != "granted" ? (
                       <Text
-                        style={{
-                          textAlign: "center",
-                          color: "red",
-                        }}
+                        bold
+                        // size={normalize(30)}
+                        color={argonTheme.COLORS.WHITE}
                       >
-                        {ZoneError}
+                        Get Location
                       </Text>
-                    </Block>
-                  </Block>
+                    ) : (
+                      <Text
+                        bold
+                        size={normalize(30)}
+                        color={argonTheme.COLORS.WHITE}
+                      >
+                        Location Done
+                      </Text>
+                    )}
+                  </Button>
+                  <Text style={styles.error}>{locationError}</Text>
+                </Block>
 
-                  <Block
-                    width={width * 0.75}
+                <Block width={width * 0.4}>
+                  <Dropdown
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    data={zones}
+                    maxHeight={160}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={zone}
+                    value={zone}
+                    onChange={(item) => {
+                      setZone(item.label);
+                      setZoneError("");
+                    }}
+                  ></Dropdown>
+                  <Text
                     style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
+                      textAlign: "center",
+                      color: "red",
                     }}
                   >
-                    {/* <Button
+                    {ZoneError}
+                  </Text>
+                </Block>
+              </Block>
+
+              <Block
+                width={width * 0.75}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                {/* <Button
                                                 style={styles.createButton}
                                                 onPress={validation}
                                             >
@@ -560,28 +573,25 @@ const CheckOut = ({ route, navigation }) => {
                                                     DONE
                                                 </Text>
                                             </Button> */}
-                    <TouchableOpacity
-                      style={[
-                        styles.donateButton,
-                        { backgroundColor: "#ba324f" },
-                      ]}
-                      onPress={() => navigation.navigate("Home")}
-                    >
-                      <Text style={styles.donateButtonText}>Cancel</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.donateButton, { backgroundColor: "#ba324f" }]}
+                  onPress={() => navigation.navigate("Home")}
+                >
+                  <Text style={styles.donateButtonText}>Cancel</Text>
+                </TouchableOpacity>
 
-                    <TouchableOpacity
-                      style={styles.donateButton}
-                      onPress={validation}
-                    >
-                      <Text style={styles.donateButtonText}>Donate</Text>
-                    </TouchableOpacity>
-                  </Block>
-                </View>
-              )}
-            </ScrollView>
-          </SafeAreaView>
-        {/* </Block>
+                <TouchableOpacity
+                  style={styles.donateButton}
+                  onPress={validation}
+                >
+                  <Text style={styles.donateButtonText}>Donate</Text>
+                </TouchableOpacity>
+              </Block>
+            </View>
+          )}
+        </ScrollView>
+      </SafeAreaView>
+      {/* </Block>
       </ImageBackground> */}
     </Block>
   );
