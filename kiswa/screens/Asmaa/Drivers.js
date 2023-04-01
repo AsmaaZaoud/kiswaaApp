@@ -399,7 +399,7 @@ const Drivers = ({ navigation }) => {
           </Block>
 
           <DataTable.Header
-            key={10000}
+            // key={10000}
             style={{
               borderTopWidth: 0,
               borderBottomWidth: 2,

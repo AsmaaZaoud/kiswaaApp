@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: normalize(18),
     textAlign: "center",
-    fontFamily: "serif",
+    // fontFamily: Platform.OS === "ios" ? "Cochin" : "",
     fontWeight: "600",
   },
   subTit: {
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: normalize(14),
     textAlign: "center",
-    fontFamily: "serif",
+    // fontFamily: Platform.OS === "ios" ? "Cochin" : "",
     fontWeight: "300",
   },
 });

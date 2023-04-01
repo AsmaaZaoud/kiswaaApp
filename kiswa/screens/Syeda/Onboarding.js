@@ -48,15 +48,17 @@ const Onboarding = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.replace("Login")}>
           <Text
             style={{
-              marginTop: "17%",
-              marginLeft: "80%",
+              marginTop: height / 13,
+              // marginLeft: "80%",
+              textAlign: "right",
+              marginRight: 20,
               color: "#FAF9F6",
               fontFamily: Platform.OS === "ios" ? "Cochin" : "",
               fontSize: normalize(18),
             }}
             bold
           >
-            Login
+            Staff Login
           </Text>
         </TouchableOpacity>
         <Block center style={{ marginTop: "20%" }}>

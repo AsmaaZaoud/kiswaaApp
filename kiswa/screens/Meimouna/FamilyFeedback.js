@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 import React from "react";
 import { useState, useEffect } from "react";
@@ -19,6 +20,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../../config";
 import { Checkbox, theme, NavBar, Icon } from "galio-framework";
+const { width, height } = Dimensions.get("screen");
 
 const FamilyFeedback = ({ route, navigation }) => {
   const [feedback, setfeedback] = useState("");
@@ -96,9 +98,9 @@ const FamilyFeedback = ({ route, navigation }) => {
           {/* <Text></Text> */}
           <LinearGradient
             colors={[
-              "rgba(222,190,299,1)",
-              "rgba(222,190,299,1)",
-              "rgba(222,190,299,1)",
+              "rgba(26, 31, 135)",
+              "rgba(26, 31, 135",
+              "rgba(26, 31, 135)",
             ]}
             style={[
               StyleSheet.absoluteFill,
@@ -108,7 +110,7 @@ const FamilyFeedback = ({ route, navigation }) => {
                 width: "100%",
                 justifyContent: "center",
                 alignItems: "center",
-                // backgroundColor: "#debee3",
+                backgroundColor: "#C0DAF0",
               },
             ]}
           />
@@ -121,13 +123,13 @@ const FamilyFeedback = ({ route, navigation }) => {
               borderWidth: 2,
               borderColor: "#fff",
               padding: 20,
-              //borderRadius: 25,
+              // borderRadius: 25,
               //zIndex: 999,
             }}
           >
             <View
               style={{
-                width: "100%",
+                // width: "100%",
                 // height: "16%",
                 backgroundColor: "red",
                 alignItems: "center",
@@ -156,7 +158,7 @@ const FamilyFeedback = ({ route, navigation }) => {
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-around",
-                width: "100%",
+                // width: "100%",
                 //justifyContent: "center",
                 //backgroundColor: "red",
                 height: 90,
@@ -166,15 +168,15 @@ const FamilyFeedback = ({ route, navigation }) => {
                 // style={{ width: "30%" }}
                 style={{
                   backgroundColor: "white",
-                  width: "31%",
+                  width: width / 4.5,
                   borderRadius: 50,
                   justifyContent: "center",
                   alignItems: "center",
                   textAlign: "center",
                   borderWidth: 2,
                   borderColor:
-                    feedback == "Excellent" ? "#842DCE" : "lightgray",
-                  padding: "1%",
+                    feedback == "Excellent" ? "#1a1f87" : "lightgray",
+                  padding: 2,
                 }}
                 onPress={() => setfeedback("Excellent")}
               >
@@ -189,14 +191,14 @@ const FamilyFeedback = ({ route, navigation }) => {
               <TouchableOpacity
                 style={{
                   backgroundColor: "white",
-                  width: "30%",
+                  width: width / 4.5,
                   borderRadius: 50,
                   justifyContent: "center",
                   alignItems: "center",
                   textAlign: "center",
                   borderWidth: 2,
-                  borderColor: feedback == "Mid" ? "#842DCE" : "lightgray",
-                  padding: "1%",
+                  borderColor: feedback == "Mid" ? "#1a1f87" : "lightgray",
+                  padding: 2,
                 }}
                 onPress={() => setfeedback("Mid")}
               >
@@ -211,14 +213,15 @@ const FamilyFeedback = ({ route, navigation }) => {
               <TouchableOpacity
                 style={{
                   backgroundColor: "white",
-                  width: "30%",
+                  width: width / 4.5,
+
                   borderRadius: 50,
                   justifyContent: "center",
                   alignItems: "center",
                   textAlign: "center",
                   borderWidth: 2,
-                  borderColor: feedback == "Verybad" ? "#842DCE" : "lightgray",
-                  padding: "1%",
+                  borderColor: feedback == "Verybad" ? "#1a1f87" : "lightgray",
+                  padding: 2,
                 }}
                 onPress={() => setfeedback("Verybad")}
               >
@@ -255,14 +258,13 @@ const FamilyFeedback = ({ route, navigation }) => {
               multiline={true}
               // textAlignVertical={"top"}
               style={{
-                height: 40,
                 // margin: 8,
                 borderWidth: 2,
                 padding: 10,
                 borderRadius: 20,
-                backgroundColor: "#e6e3e3",
+                backgroundColor: "#fff",
                 height: 200,
-                paddingTop: "5%",
+                paddingTop: 8,
                 fontSize: 16,
                 borderColor: "white",
               }}
@@ -314,7 +316,7 @@ const FamilyFeedback = ({ route, navigation }) => {
               <Pressable
                 style={{
                   // marginBottom: "10%",
-                  backgroundColor: "#842DCE",
+                  backgroundColor: "#1a1f87",
                   height: 50,
                   width: "40%",
                   alignItems: "center",
