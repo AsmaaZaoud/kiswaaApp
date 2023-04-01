@@ -160,14 +160,14 @@ export default function FamilyProfile({ route, navigation }) {
               title="Profile"
               right={
                 <View style={{ marginRight: "8%" }}>
-                  <Entypo
+                  {/* <Entypo
                     name="log-out"
                     color="#F9966B"
                     size={30}
                     onPress={() => onSignOut()}
                     style={{ marginLeft: "25%" }}
-                  />
-                  <Text
+                  /> */}
+                  {/* <Text
                     style={{
                       color: "#F9966B",
                       fontSize: 13,
@@ -175,7 +175,7 @@ export default function FamilyProfile({ route, navigation }) {
                     }}
                   >
                     Sign Out
-                  </Text>
+                  </Text> */}
                 </View>
               }
               style={{

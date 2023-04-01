@@ -58,24 +58,30 @@ const LoginDonor = ({ navigation }) => {
       navigation.navigate("AdminHome");
       return;
     }
-    const driver = doc(db, "drivers", email.toLowerCase());
-    const clerk = doc(db, "inventoryWorkers", email.toLowerCase());
-    const family = doc(db, "families", email);
+    // const driver = doc(db, "drivers", email.toLowerCase());
+    // const clerk = doc(db, "inventoryWorkers", email.toLowerCase());
+    // const family = doc(db, "families", email);
     const donor = doc(db, "donors", email.toLowerCase());
 
-    const driverSnap = await getDoc(driver);
-    const clerkSnap = await getDoc(clerk);
-    const familySnap = await getDoc(family);
+    // const driverSnap = await getDoc(driver);
+    // const clerkSnap = await getDoc(clerk);
+    // const familySnap = await getDoc(family);
     const donorSnap = await getDoc(donor);
 
-    if (driverSnap.exists()) {
-      navigation.navigate("DriverDash", email);
-    } else if (clerkSnap.exists()) {
-      navigation.navigate("InventoryClerkHomePage");
-    } else if (familySnap.exists()) {
-      navigation.navigate("FamilyHome", email);
-    } else if (donorSnap.exists()) {
-      navigation.navigate("App");
+    // if (driverSnap.exists()) {
+    //   navigation.navigate("DriverDash", email);
+    // } else if (clerkSnap.exists()) {
+    //   navigation.navigate("InventoryClerkHomePage");
+    // } else if (familySnap.exists()) {
+    //   navigation.navigate("FamilyHome", email);
+    // } else
+    if (donorSnap.exists()) {
+      // navigation.navigate("Home");
+      console.log("exists");
+      return true;
+    } else {
+      console.log("Not Found");
+      return false;
     }
   };
   const EmailErrorStyle = () => {
@@ -117,7 +123,7 @@ const LoginDonor = ({ navigation }) => {
     }
   };
   const [error, setError] = useState({ satus: false, key: null, msg: "" });
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (
       (email == null || email == "") &&
       (password == null || password == "")
@@ -143,11 +149,19 @@ const LoginDonor = ({ navigation }) => {
         key: "pass",
         msg: "Please Enter Password",
       });
-    else {
+    else if (await getUser()) {
       signInWithEmailAndPassword(auth, email, password)
         .then(async () => {
-          await getUser();
+          // if (await getUser()) {
+          navigation.navigate("Home", email);
           setError({ satus: false, key: null, msg: "" });
+          // } else {
+          //   setError({
+          //     satus: true,
+          //     key: "email",
+          //     msg: "Email is not registerd",
+          //   });
+          // }
         })
         .catch((error) => {
           console.log(error.code);
@@ -155,6 +169,12 @@ const LoginDonor = ({ navigation }) => {
           setError({ satus: true, key: "db", msg: error.message });
           // setError({ satus: true, key: "db", msg: error.message });
         });
+    } else {
+      setError({
+        satus: true,
+        key: "email",
+        msg: "Email is not registerd",
+      });
     }
   };
 

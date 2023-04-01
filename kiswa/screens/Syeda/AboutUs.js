@@ -71,7 +71,7 @@ const AboutUs = ({ navigation }) => {
             <Pressable
               style={{
                 justifyContent: "center",
-                marginTop: "3%",
+                marginTop: "1%",
                 marginRight: "2%",
               }}
               onPress={onSignOut}
@@ -85,7 +85,7 @@ const AboutUs = ({ navigation }) => {
             <Pressable
               style={{
                 justifyContent: "center",
-                marginTop: "3%",
+                marginTop: "1%",
                 marginRight: "2%",
               }}
               onPress={() => navigation.navigate("Login")}

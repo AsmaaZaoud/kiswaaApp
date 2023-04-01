@@ -58,12 +58,32 @@ const FamilyRequest = ({ route, navigation }) => {
   }, [id]);
 
   const data = [
-    { label: "👔Blouse", value: "Blouse" },
-    { label: "👘Caftan", value: "Caftan" },
-    { label: "🧕🏻Abaya", value: "Abaya" },
+    { label: "👖Jeans", value: "Jeans" },
+    { label: "👚Tops", value: "Tops" },
+    { label: "🧕🏻Abaya", value: "Tracksuit" },
+    { label: "🧕🏻Scarfe", value: "Abaya" },
     { label: "🧥Coat", value: "Coat" },
     { label: "👗Dress", value: "Dress" },
-    { label: "👖Jeans", value: "Jeans" },
+    { label: "😴Pajamas", value: "Pajamas" },
+    { label: "👕Shirt", value: "Shirt" },
+    { label: "🩳Shorts", value: "Shorts" },
+    { label: "🧦Sock", value: "Sock" },
+    { label: "🥶Sweater", value: "Sweater" },
+    { label: "👖Leggings", value: "Leggings" },
+    { label: "👖Pants", value: "Pants" },
+
+    { label: "👔Ties", value: "Tie" },
+    { label: "🧣Tights", value: "Tights" },
+
+    { label: "👕T-Shirt", value: "T-Shirt" },
+    { label: "👔Blouse", value: "Blouse" },
+    { label: "👘Caftan", value: "Caftan" },
+  ];
+  const dataBaby = [
+    // { label: "🧕🏻Abaya", value: "Abaya" },
+    { label: "🧥Coat", value: "Coat" },
+    { label: "👗Dress", value: "Dress" },
+    // { label: "👖Jeans", value: "Jeans" },
     { label: "👖Leggings", value: "Leggings" },
     { label: "👖Pants", value: "Pants" },
     { label: "😴Pajamas", value: "Pajamas" },
@@ -74,8 +94,10 @@ const FamilyRequest = ({ route, navigation }) => {
     { label: "👔Tie", value: "Tie" },
     { label: "🧣Tights", value: "Tights" },
     { label: "👚Tops", value: "Tops" },
-    { label: "🧕🏻Abaya", value: "Tracksuit" },
+    // { label: "🧕🏻Abaya", value: "Tracksuit" },
     { label: "👕T-Shirt", value: "T-Shirt" },
+    { label: "👔Blouse", value: "Blouse" },
+    { label: "👘Caftan", value: "Caftan" },
   ];
 
   // { label: " All Colors", value: "0" },
@@ -516,7 +538,7 @@ const FamilyRequest = ({ route, navigation }) => {
                 <View>
                   <ScrollView>
                     <View style={styles.board}>
-                      {data.map((x, i) => (
+                      {dataBaby.map((x, i) => (
                         <Pressable
                           key={i}
                           style={[styles.circle]}

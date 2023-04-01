@@ -58,13 +58,18 @@ const LoginFamily = ({ navigation }) => {
       return;
     }
 
-    const family = doc(db, "families", email.toLowerCase());
+    const family = doc(db, "families", email);
 
     const familySnap = await getDoc(family);
 
     if (familySnap.exists()) {
       console.log("exist");
-      navigation.navigate("FamilyHome", email);
+      // navigation.navigate("FamilyHome", email);
+      return true;
+    } else {
+      console.log("not found");
+
+      return false;
     }
   };
   const EmailErrorStyle = () => {
@@ -158,12 +163,12 @@ const LoginFamily = ({ navigation }) => {
       return true;
     }
   };
-  const handleLogin = () => {
+  const handleLogin = async () => {
     console.log("loggg");
-    if (validate()) {
+    if (validate() && (await getUser())) {
       signInWithEmailAndPassword(auth, email, password)
         .then(async () => {
-          await getUser();
+          navigation.navigate("FamilyHome", email);
           setError({ satus: false, key: null, msg: "" });
         })
         .catch((error) => {
@@ -177,7 +182,11 @@ const LoginFamily = ({ navigation }) => {
           // setError({ satus: true, key: "db", msg: error.message });
         });
     } else {
-      validate();
+      setError({
+        satus: true,
+        key: "email",
+        msg: "Email is not registerd",
+      });
     }
   };
 
