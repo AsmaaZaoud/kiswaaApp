@@ -273,7 +273,7 @@ const ConfirmFamilyCart = ({ route, navigation }) => {
         date: new Date().toLocaleDateString("en-US"),
         // trackId: trackId,
         status: "pending",
-        type: "pickup",
+        type: "deliver",
         long: long,
         lat: lat,
       }
