@@ -111,9 +111,6 @@ const DonorHistory = ({ route, navigation }) => {
   const renderArticles = () => {
     return (
       <SafeAreaView style={styles.container}>
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
         {number === 0 ? (
           <Block>
             <Text
@@ -145,7 +142,7 @@ const DonorHistory = ({ route, navigation }) => {
               bold
               size={28}
               color="#32325D"
-              style={{ alignSelf: "center", margin: 10 }}
+              style={{ alignSelf: "center"}}
             >
               View Past Donations
             </Text>
