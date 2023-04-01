@@ -41,6 +41,8 @@ export function normalize(size) {
 const Donate = ({ route, navigation }) => {
   const [selected, setSelected] = useState("Donate");
 
+  useEffect(() => handleDonatePress(), []);
+
   useEffect(() => {
     // alert("donate");
     if (
@@ -104,6 +106,12 @@ const Donate = ({ route, navigation }) => {
   const [cloth, setCloth] = useState("");
 
   const ClothTypeData = [
+    {
+      label: "🧕🏻Abaya",
+      value: "Abaya",
+      icon: "https://cdn-icons-png.flaticon.com/512/4185/4185577.png",
+      uri: "https://i.pinimg.com/564x/bd/be/d1/bdbed16a24645a3ad9f42d2a528f6b3b.jpg",
+    },
     {
       label: "👔Blouse",
       value: "Blouse",
@@ -197,12 +205,7 @@ const Donate = ({ route, navigation }) => {
       icon: "https://cdn-icons-png.flaticon.com/128/3258/3258170.png",
       uri: "https://i.pinimg.com/564x/5c/ad/15/5cad15407e6c1e9b393337dc7d17c530.jpg",
     },
-    {
-      label: "🧕🏻Abaya",
-      value: "Abaya",
-      icon: "https://cdn-icons-png.flaticon.com/128/5783/5783203.png",
-      uri: "https://i.pinimg.com/564x/bd/be/d1/bdbed16a24645a3ad9f42d2a528f6b3b.jpg",
-    },
+
     {
       label: "👕T-Shirt",
       value: "T-Shirt",
@@ -324,7 +327,8 @@ const Donate = ({ route, navigation }) => {
         });
       }
     }
-    handleDonatePress();
+
+    // handleDonatePress();
   };
 
   const handleDonatePress = () => {

@@ -546,7 +546,16 @@ export default function OnboardingStack(props) {
         />
         <Stack.Screen name="CheckOut" component={CheckOut} />
         <Stack.Screen name="Feedback" component={Feedback} />
-        <Stack.Screen name="DonorHistory" component={DonorHistory} />
+        <Stack.Screen
+          name="DonorHistory"
+          component={DonorHistory}
+          options={{
+            headerShown: true,
+            title: "",
+            headerBackTitle: "Back",
+            // headerTintColor: "#5e1e7f",
+          }}
+        />
         <Stack.Screen
           name="AboutUs"
           component={AboutUs}

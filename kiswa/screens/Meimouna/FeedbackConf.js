@@ -75,9 +75,9 @@ const FeedbackConf = ({ route, navigation }) => {
       <Text></Text>
       <LinearGradient
         colors={[
-          "rgba(222,190,299,1)",
-          "rgba(222,190,299,1)",
-          "rgba(222,190,299,1)",
+          "rgba(192, 218, 240)",
+          "rgba(192, 218, 240)",
+          "rgba(192, 218, 240)",
         ]}
         style={[
           StyleSheet.absoluteFill,
@@ -87,7 +87,7 @@ const FeedbackConf = ({ route, navigation }) => {
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
-            // backgroundColor: "#debee3",
+            backgroundColor: "#c0daf0",
           },
         ]}
       />
@@ -145,7 +145,7 @@ const FeedbackConf = ({ route, navigation }) => {
             textAlign: "center",
           }}
         >
-          <Pressable
+          {/* <Pressable
             style={{
               // marginBottom: "10%",
               backgroundColor: "#842DCE",
@@ -162,7 +162,7 @@ const FeedbackConf = ({ route, navigation }) => {
             <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
               More Feedback
             </Text>
-          </Pressable>
+          </Pressable> */}
         </View>
 
         <View
