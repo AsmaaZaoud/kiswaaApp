@@ -548,7 +548,7 @@ const Home = ({ route, navigation }) => {
             >
               {/* <Feather name="log-in" size={35} color="white" /> */}
               <Text style={{ color: "#FFF", fontSize: normalize(17) }}>
-                Login
+                Login/ SignUp
               </Text>
             </Pressable>
           )}

@@ -85,7 +85,7 @@ export default function Register({ navigation }) {
       .then(() => {
         console.log("registend done");
         alert("Done!, Now log in please");
-        navigation.navigate("Login");
+        navigation.navigate("LoginDonor");
         add();
       })
       .catch((error) => {
@@ -118,7 +118,7 @@ export default function Register({ navigation }) {
     if (validator.isEmail(email)) {
       setEmailError("");
     } else {
-      setEmailError("Email is not Valid. Enter a Valid Email Please");
+      setEmailError("Please Enter a Valid Email");
     }
   };
   const passValidate = async () => {

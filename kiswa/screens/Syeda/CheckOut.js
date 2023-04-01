@@ -180,6 +180,7 @@ const CheckOut = ({ route, navigation }) => {
       lat: lat,
     });
     console.log("Document written with ID: ", docRef.id);
+    navigation.navigate("Feedback");
 
     if (user != undefined) {
       //Asma: I added this
@@ -220,7 +221,7 @@ const CheckOut = ({ route, navigation }) => {
     //     console.log("Document written with ID: ", docRef2.id);
     // })
 
-    navigation.navigate("Feedback");
+    // navigation.navigate("Feedback");
   };
 
   const done = async () => {
@@ -327,12 +328,12 @@ const CheckOut = ({ route, navigation }) => {
 
   return (
     <Block flex middle>
-      <ImageBackground
+      {/* <ImageBackground
         resizeMode="cover"
         source={require("../../assets/Fatima/back.png")}
         style={{ width, height, zIndex: 1 }}
       >
-        <Block safe flex middle>
+        <Block safe flex middle> */}
           <SafeAreaView style={styles.registerContainer}>
             <ScrollView
               showsVerticalScrollIndicator={false}
@@ -406,8 +407,8 @@ const CheckOut = ({ route, navigation }) => {
                   <Text
                     style={{
                       fontSize: 18,
-                      textAlign: "right",
-                      marginRight: "6%",
+                      textAlign: "center",
+                      //marginRight: "6%",
                       color: "blue",
                     }}
                   >
@@ -580,16 +581,16 @@ const CheckOut = ({ route, navigation }) => {
               )}
             </ScrollView>
           </SafeAreaView>
-        </Block>
-      </ImageBackground>
+        {/* </Block>
+      </ImageBackground> */}
     </Block>
   );
 };
 
 const styles = StyleSheet.create({
   registerContainer: {
-    width: width * 0.9,
-    height: height * 0.875,
+    width: width,
+    height: height * 0.9,
     backgroundColor: "#F4F5F7",
     borderRadius: 10,
     shadowColor: argonTheme.COLORS.BLACK,

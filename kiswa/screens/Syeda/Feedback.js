@@ -61,7 +61,7 @@ const Feedback = ({ navigation }) => {
 
   const exit = () => {
     setModalVisible(false);
-    navigation.navigate("App");
+    navigation.navigate("Home");
   };
 
   const handleSubmit = () => {
@@ -69,7 +69,7 @@ const Feedback = ({ navigation }) => {
     console.log("Feedback Text:", feedbackText);
     add();
     setModalVisible(false);
-    navigation.navigate("App");
+    navigation.navigate("Home");
   };
 
   const add = async () => {
@@ -134,6 +134,7 @@ const Feedback = ({ navigation }) => {
             <TouchableOpacity
               style={styles.submitButton}
               onPress={handleSubmit}
+              disabled={!selectedEmoji}
             >
               <Text style={styles.submitButtonText}>Submit</Text>
             </TouchableOpacity>
