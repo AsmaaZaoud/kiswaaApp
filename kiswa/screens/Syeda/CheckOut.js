@@ -176,8 +176,6 @@ const CheckOut = ({ route, navigation }) => {
       dateSlot: route.params.date,
       trackId: trackId,
       donatedItems: confirm,
-      long: long,
-      lat: lat,
     });
     console.log("Document written with ID: ", docRef.id);
     navigation.navigate("Feedback");
@@ -194,10 +192,12 @@ const CheckOut = ({ route, navigation }) => {
           dateSlot: route.params.date,
           trackId: trackId,
           time: route.params.time,
-          date: route.params.date,
+          date: route.params.date.split("-")[0],
           trackId: trackId,
           status: "pending",
           type: "pickup",
+          long: long,
+          lat: lat,
         }
       );
       console.log("driver orders add ID: ", docRefDriver.id);

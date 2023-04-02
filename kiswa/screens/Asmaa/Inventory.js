@@ -143,7 +143,7 @@ const Inventory = ({ navigation }) => {
     <SafeAreaView
       style={{
         backgroundColor: "white",
-        height: deviceType == "mobile" ? 700 : 900,
+        height: deviceType == "mobile" ? 700 : height - 100,
       }}
     >
       <ScrollView>

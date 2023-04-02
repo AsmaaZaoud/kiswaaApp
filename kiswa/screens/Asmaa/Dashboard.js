@@ -291,7 +291,7 @@ const Dashboard = () => {
     <SafeAreaView
       style={{
         backgroundColor: "white",
-        height: deviceType == "mobile" ? 800 : 1000,
+        height: deviceType == "mobile" ? 800 : height - 100,
       }}
     >
       <ScrollView
@@ -566,7 +566,7 @@ const Dashboard = () => {
                     },
                     {
                       name: "Al Rayyan",
-                      population: families.filter(
+                      population: donors.filter(
                         (item) => item.zone === "Al Rayyan"
                       ).length,
                       color: "#ffd166",
@@ -575,8 +575,8 @@ const Dashboard = () => {
                     },
                     {
                       name: "Rumeilah",
-                      population: families.filter(
-                        (item) => item.zone === "Rumeilah"
+                      population: donors.filter(
+                        (item) => item.zone === "Al Khor"
                       ).length,
                       color: "#06d6a0",
                       legendFontColor: "#7F7F7F",
