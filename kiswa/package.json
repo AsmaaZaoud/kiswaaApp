@@ -1,7 +1,7 @@
 {
-  "name": "rahma",
-  "version": "1.8.0",
-  "description": "Kisaw capstone",
+  "name": "rahma2",
+  "version": "1.0.0",
+  "description": "Rahma2 UDST Capstone 2023",
   "main": "App.js",
   "scripts": {
     "start": "expo start",
@@ -38,6 +38,7 @@
     "expo-location": "~14.3.0",
     "expo-modules-core": "~0.11.10",
     "expo-notifications": "~0.16.1",
+    "expo-updates": "~0.14.7",
     "firebase": "^9.17.1",
     "formik": "^2.2.9",
     "galio-framework": "^0.8.0",
@@ -85,10 +86,7 @@
     "argon expo react native",
     "react native ui template"
   ],
-  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
+  "author": "UDST Capstone 2023 - Rahma",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/argon-react-native/issues"
-  },
-  "homepage": "https://demos.creative-tim.com/argon-react-native"
+  "bugs": {}
 }

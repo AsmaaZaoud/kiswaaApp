@@ -10,7 +10,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/Fatima/splash2.png",
@@ -18,7 +18,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/57410b70-3a96-4cbf-8d57-6086da6bb649"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -28,7 +29,7 @@
     },
     "android": {
       "package": "com.rahma2.Rahma2",
-      "versionCode": 1,
+      "versionCode": 2,
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
@@ -40,6 +41,9 @@
       "eas": {
         "projectId": "57410b70-3a96-4cbf-8d57-6086da6bb649"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

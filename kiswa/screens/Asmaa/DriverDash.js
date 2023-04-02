@@ -147,8 +147,8 @@ const DriverDash = ({ route, navigation }) => {
           height: 0.0,
         }}
         style={{
-          height: 70,
-          // borderWidth: 1,
+          height: 90,
+
           backgroundColor: "white",
         }}
       >
