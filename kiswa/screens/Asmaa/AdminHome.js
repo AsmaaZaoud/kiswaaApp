@@ -101,7 +101,7 @@ const AdminHome = ({ route, navigation }) => {
       <Block
         style={{
           backgroundColor: "white",
-          flexDirection: "colum",
+
           paddingTop: "1%",
         }}
       >

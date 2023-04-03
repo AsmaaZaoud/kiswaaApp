@@ -249,10 +249,10 @@ const InventoryClerkHomePage = ({ navigation }) => {
         <Block style={{ justifyContent: "center", marginLeft: "21%" }}>
           <Text style={{ color: "white", fontSize: 20 }}>Inventory Clerk</Text>
         </Block>
-        <Block style={{ alignSelf: "right", marginLeft: "30%", width: "5%" }}>
+        <Block style={{ marginLeft: "30%", width: "5%" }}>
           <Icon name="sign-out" size={30} color="white" onPress={onSignOut} />
         </Block>
-        <Block style={{ justifyContent: "right", width: "5%" }}>
+        <Block style={{ width: "5%" }}>
           <Icon
             name="user"
             size={30}
@@ -267,7 +267,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
           shadowless
           color={Theme.COLORS.SUCCESS}
           onPress={() => setAddModalVisible(!addModalVisible)}
-          style={{ alignSelf: "right", marginLeft: "1%", marginBottom: "2%" }}
+          style={{ marginLeft: "1%", marginBottom: "2%" }}
         >
           Add Item
         </Button>

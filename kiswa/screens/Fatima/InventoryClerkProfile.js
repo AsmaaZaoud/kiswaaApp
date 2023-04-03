@@ -290,14 +290,14 @@ const InventoryClerkProfile = ({ navigation }) => {
           <Text style={{ color: "white", fontSize: 20 }}>Profile</Text>
         </Block>
         <Block
-          style={{ alignSelf: "right", marginLeft: "28%", width: "5%" }}
+          style={{ marginLeft: "28%", width: "5%" }}
           width={width * 0.2}
           height={height * 0.04}
         >
           <Icon name="sign-out" size={30} color="white" onPress={onSignOut} />
         </Block>
         <Block
-          style={{ justifyContent: "right", width: "5%" }}
+          style={{ width: "5%" }}
           width={width * 0.2}
           height={height * 0.04}
         >
