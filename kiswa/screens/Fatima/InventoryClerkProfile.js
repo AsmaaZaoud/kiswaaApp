@@ -272,8 +272,8 @@ const InventoryClerkProfile = ({ navigation }) => {
       >
         <Block>
           <Image
-            source={require("../../assets/Fatima/WhiteLogo.png")}
-            style={{ width: "1%", height: "2%" }}
+            source={require("../../assets/Fatima/white.png")}
+            style={{ width: 150, height: 50 }}
             width={width * 0.2}
             height={height * 0.04}
           />
@@ -311,7 +311,6 @@ const InventoryClerkProfile = ({ navigation }) => {
           marginTop: 50,
           flex: 1,
         }}
-        height
       >
         <Block style={[styles.registerContainer]}>
           <Block flex>

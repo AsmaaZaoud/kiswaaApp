@@ -241,7 +241,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
         <Block>
           <Image
             source={require("../../assets/Fatima/white.png")}
-            style={{ width: "1%", height: "2%" }}
+            style={{ width: 150, height: 50 }}
             width={width * 0.23}
             height={height * 0.05}
           />
@@ -286,7 +286,7 @@ const InventoryClerkHomePage = ({ navigation }) => {
           <ScrollView vertical="true" style={{ height: height / 1.35 }}>
             {items.map((i, x) =>
               i.available == true ? (
-                <DataTable.Row style={{ height: "1%" }}>
+                <DataTable.Row key={x} style={{ height: "1%" }}>
                   <DataTable.Cell id={i.id}>{[x + 1]}</DataTable.Cell>
                   <DataTable.Cell id={i.id}>{i.type}</DataTable.Cell>
                   <DataTable.Cell id={i.id}>{i.size}</DataTable.Cell>
