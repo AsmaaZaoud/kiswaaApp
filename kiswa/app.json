@@ -11,7 +11,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon":"./assets/Fatima/Rahma2Icon.png",
     "splash": {
@@ -34,7 +34,7 @@
     },
     "android": {
       "package": "com.rahma2.Rahma2",
-      "versionCode": 1,
+      "versionCode": 3,
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },

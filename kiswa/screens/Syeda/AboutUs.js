@@ -66,7 +66,7 @@ const AboutUs = ({ navigation }) => {
             style={{
               width: 150,
               height: 50,
-              position: width > 500 ? "absolute" : "relative",
+              // position: width > 500 ? "absolute" : "relative",
             }}
             width={width > 500 ? width * 0.25 : width * 0.35}
             height={width > 500 ? height * 0.06 : height * 0.05}
@@ -74,7 +74,7 @@ const AboutUs = ({ navigation }) => {
           {user != undefined ? (
             <Pressable
               style={{
-                justifyContent: "center",
+                // justifyContent: "center",
                 marginTop: "1%",
                 marginRight: "2%",
               }}
@@ -263,9 +263,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   topl: {
-    flex: 1,
+    // flex: 1,
     width: width,
-    padding: "4%",
+    // padding: "4%",
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#3C4DBD",

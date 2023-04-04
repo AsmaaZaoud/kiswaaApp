@@ -311,7 +311,6 @@ const InventoryClerkProfile = ({ navigation }) => {
           marginTop: 50,
           flex: 1,
         }}
-        height
       >
         <Block style={[styles.registerContainer]}>
           <Block flex>
