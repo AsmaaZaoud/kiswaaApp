@@ -547,11 +547,13 @@ const Home = ({ route, navigation }) => {
             </Pressable>
           ) : (
             <Pressable
-              style={{
-                justifyContent: "center",
-                marginTop: "3%",
-                marginRight: "2%",
-              }}
+              style={
+                {
+                  // justifyContent: "center",
+                  // marginTop: "3%",
+                  // marginRight: "2%",
+                }
+              }
               onPress={() => navigation.navigate("LoginDonor")}
             >
               {/* <Feather name="log-in" size={35} color="white" /> */}
@@ -624,7 +626,7 @@ const Home = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: width > 500 ? 70 : 0,
+    marginTop: width > 500 ? height / 12 : 0,
     justifyContent: "center",
     alignItems: "center",
     // borderWidth: 1,
@@ -722,11 +724,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#3C4DBD",
     position: "relative",
     overflow: "hidden",
-    width: width * 0.7,
+    width: width * 0.65,
     alignItems: "center",
     alignSelf: "center",
     marginTop: 30,
-    // marginLeft: "40%",
+    marginLeft: width > 500 ? height / 11 : 0,
   },
   buttonText: {
     fontSize: normalize(20),

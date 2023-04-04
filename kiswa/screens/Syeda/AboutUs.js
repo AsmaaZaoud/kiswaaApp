@@ -64,9 +64,9 @@ const AboutUs = ({ navigation }) => {
           <Image
             source={require("../../assets/Fatima/white.png")}
             style={{
-              width: 150,
+              width: 120,
               height: 50,
-              position: width > 500 ? "absolute" : "relative",
+              // position: width > 500 ? "absolute" : "relative",
             }}
             width={width > 500 ? width * 0.25 : width * 0.35}
             height={width > 500 ? height * 0.06 : height * 0.05}
@@ -75,7 +75,7 @@ const AboutUs = ({ navigation }) => {
             <Pressable
               style={{
                 justifyContent: "center",
-                marginTop: "1%",
+                // marginTop: "1%",
                 marginRight: "2%",
               }}
               onPress={onSignOut}
@@ -89,7 +89,7 @@ const AboutUs = ({ navigation }) => {
             <Pressable
               style={{
                 justifyContent: "center",
-                marginTop: "1%",
+                // marginTop: "3%",
                 marginRight: "2%",
               }}
               onPress={() => navigation.navigate("Login")}
@@ -265,11 +265,11 @@ const styles = StyleSheet.create({
   topl: {
     flex: 1,
     width: width,
-    padding: "4%",
+    // padding: "1%",
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#3C4DBD",
-    marginTop: "6%",
+    marginTop: 40,
   },
 });
 
