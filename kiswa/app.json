@@ -1,5 +1,6 @@
 {
   "expo": {
+    
     "name": "Rahma2",
     "slug": "Rahma2",
     "plugins": [
@@ -12,6 +13,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon":"./assets/Fatima/Rahma2Icon.png",
     "splash": {
       "image": "./assets/Fatima/splash2.png",
       "resizeMode": "cover",
@@ -24,7 +26,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      
+      "supportsTablet": true,
+      
+      "bundleIdentifier": "com.rahma2.Rahma2",
+      "buildNumber":"2"
     },
     "android": {
       "package": "com.rahma2.Rahma2",
@@ -36,10 +42,12 @@
         "android.permission.RECORD_AUDIO"
       ]
     },
+   
     "extra": {
       "eas": {
         "projectId": "57410b70-3a96-4cbf-8d57-6086da6bb649"
       }
     }
   }
+ 
 }

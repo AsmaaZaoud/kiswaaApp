@@ -8,8 +8,10 @@
       "distribution": "internal",
       "ios": {
         "resourceClass": "m-medium"
+       
       }
     },
+    
     "preview": {
       "distribution": "internal",
       "ios": {
@@ -22,7 +24,15 @@
       }
     }
   },
+  
   "submit": {
-    "production": {}
+    "production": {
+      "ios":{
+        "appleId":"udst.urep1@gmail.com",
+        "ascAppId":"6447015512",
+        "appleTeamId":"4XLJ97337G"
+    }
   }
+  
+}
 }
