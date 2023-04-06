@@ -14,6 +14,7 @@ import React from "react";
 import { Button, Icon } from "react-native-elements";
 import Onboarding from "react-native-onboarding-swiper";
 import MaterialIcons from "react-native-vector-icons";
+import { useEffect } from "react";
 const { width, height } = Dimensions.get("screen");
 
 const scale = width / 428;
@@ -28,6 +29,9 @@ export function normalize(size) {
 
 //onboarding page to welcome first time users and give them a introduction of what the app is for
 const AppOnboard = ({ route, navigation }) => {
+  useEffect(() => {
+    alert("This app is capstone project for year 2023");
+  }, []);
   return (
     <Onboarding
       showDone={true}
