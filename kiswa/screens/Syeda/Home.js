@@ -535,7 +535,7 @@ const Home = ({ route, navigation }) => {
             <Pressable
               style={{
                 justifyContent: "center",
-                marginTop: "3%",
+                // marginTop: "2%",
                 marginRight: "2%",
               }}
               onPress={onSignOut}
@@ -549,7 +549,7 @@ const Home = ({ route, navigation }) => {
             <Pressable
               style={{
                 justifyContent: "center",
-                marginTop: "3%",
+                // marginTop: "3%",
                 marginRight: "2%",
               }}
               onPress={() => navigation.navigate("LoginDonor")}

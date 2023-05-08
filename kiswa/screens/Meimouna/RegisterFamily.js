@@ -134,7 +134,7 @@ export default function RegisterFamily({ navigation }) {
     }
   };
   const phoneValidate = async () => {
-    if (phone.length >= 8) {
+    if (phone.length >= 7) {
       console.log(phone);
       setPhoneError("");
     } else {

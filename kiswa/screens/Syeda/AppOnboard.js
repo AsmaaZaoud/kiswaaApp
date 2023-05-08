@@ -30,7 +30,9 @@ export function normalize(size) {
 //onboarding page to welcome first time users and give them a introduction of what the app is for
 const AppOnboard = ({ route, navigation }) => {
   useEffect(() => {
-    alert("This app is capstone project for year 2023");
+    alert(
+      "This APP is a capstone project for 2023, developed by UDST students."
+    );
   }, []);
   return (
     <Onboarding

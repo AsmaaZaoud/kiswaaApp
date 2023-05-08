@@ -222,6 +222,7 @@ const Dashboard = () => {
   };
   const [donations, setDonations] = useState([]);
   const readDonations = async () => {
+    let d;
     const collectionRef = collection(db, "donorDonation");
     const q = query(collectionRef);
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -294,9 +295,11 @@ const Dashboard = () => {
         height: deviceType == "mobile" ? 800 : 1000,
       }}
     >
+      {/* <View style={{ flex: 1 }}> */}
       <ScrollView
-        style={{ backgroundColor: "white" }}
-        showsVerticalScrollIndicator={false}
+        style={{ backgroundColor: "white", flex: 1 }}
+        showsVerticalScrollIndicator={true}
+        gestureEnabled={false}
       >
         <View style={styles.container}>
           <View
@@ -309,9 +312,14 @@ const Dashboard = () => {
             <Text style={styles.title}>Dashboard</Text>
           </View>
 
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
+          <ScrollView
+            style={{ flex: 1 }}
+            horizontal={true}
+            showsHorizontalScrollIndicator={true}
+          >
             <View
               style={{
+                flex: 1,
                 flexDirection: "row",
                 width: width * 1.6,
                 height: deviceType == "mobile" ? height * 0.24 : height * 0.32,
@@ -322,7 +330,7 @@ const Dashboard = () => {
                   styles.statistics,
                   {
                     height:
-                      deviceType == "mobile" ? height * 0.2 : height * 0.27,
+                      deviceType == "mobile" ? height * 0.2 : height * 0.25,
                   },
                 ]}
               >
@@ -347,9 +355,14 @@ const Dashboard = () => {
                       <View style={styles.imgBlock}>
                         <Image
                           source={x.img}
-                          style={{ width: 150, height: 50 }}
-                          width={"90%"}
-                          height={"90%"}
+                          style={{
+                            width: "90%",
+                            height: "90%",
+                            position: "relative",
+                            resizeMode: "contain",
+                          }}
+                          width="90%"
+                          height="90%"
                         />
                       </View>
                       <View style={styles.text}>
@@ -383,7 +396,7 @@ const Dashboard = () => {
                   styles.statistics,
                   {
                     height:
-                      deviceType == "mobile" ? height * 0.2 : height * 0.27,
+                      deviceType == "mobile" ? height * 0.2 : height * 0.25,
                   },
                 ]}
               >
@@ -408,14 +421,22 @@ const Dashboard = () => {
                       <View style={styles.imgBlock}>
                         <Image
                           source={x.img}
-                          style={{ width: 150, height: 50 }}
-                          width={"90%"}
-                          height={"90%"}
+                          style={{
+                            width: "90%",
+                            height: "90%",
+                            position: "relative",
+                            resizeMode: "contain",
+                          }}
+                          width="90%"
+                          height="90%"
                         />
                       </View>
                       <View style={styles.text}>
                         <Text
-                          style={{ fontSize: normalize(20), fontWeight: "300" }}
+                          style={{
+                            fontSize: normalize(20),
+                            fontWeight: "300",
+                          }}
                         >
                           {x.title}
                         </Text>
@@ -485,7 +506,9 @@ const Dashboard = () => {
               <View
                 style={[
                   styles.status,
-                  { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
+                  {
+                    width: deviceType == "mobile" ? width * 0.8 : width * 0.5,
+                  },
                 ]}
               >
                 <Text style={styles.pieTitle}> Orders</Text>
@@ -543,7 +566,9 @@ const Dashboard = () => {
               <View
                 style={[
                   styles.status,
-                  { width: deviceType == "mobile" ? width * 0.8 : width * 0.5 },
+                  {
+                    width: deviceType == "mobile" ? width * 0.8 : width * 0.5,
+                  },
                 ]}
               >
                 <Text style={styles.pieTitle}>Top Zones</Text>
@@ -610,6 +635,7 @@ const Dashboard = () => {
           </ScrollView>
         </View>
       </ScrollView>
+      {/* </View> */}
     </SafeAreaView>
   );
 };
@@ -618,6 +644,7 @@ export default Dashboard;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingVertical: "2%",
     // height: height * 1.2,
   },
@@ -635,21 +662,21 @@ const styles = StyleSheet.create({
   statistics: {
     borderWidth: 1,
     width: width * 0.73,
-    height: height * 0.27,
+    height: height * 0.3,
     margin: 10,
     borderRadius: 20,
     paddingBottom: 0,
   },
   blockss: {
-    padding: 5,
+    // padding: 5,
     flexDirection: "row",
     flexWrap: "wrap",
-    margin: "1%",
+    // margin: "1%",
   },
   block: {
     width: "46%",
     borderWidth: 1,
-    height: "55%",
+    height: Platform.OS === "ios" ? "55%" : "50%",
     margin: "2%",
     justifyContent: "space-between",
     flexDirection: "row",
